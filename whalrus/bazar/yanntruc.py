@@ -1,5 +1,5 @@
 import numpy as np
-
+from collections import Iterable
 
 class Ballot(object):
     pass
@@ -29,9 +29,12 @@ class RankingBallot(NumericBallot):
         """
         if type(b) == dict:
             super().__init__(b)
-        elif type(b) == list:  # changer en iterable
-            super().__init__({x: i for i, x in enumerate(reversed(list(b)))})
 
+        elif type(b) in [list,tuple,set]:  # changer en iterable
+            super().__init__( {x: i for i, x in enumerate(reversed(list(b)))} )
+
+        else:
+            raise TypeError('expecting dict,list,tuple or set')
 
 ######################################
 
