@@ -9,7 +9,7 @@ from typing import Dict,Any
 from functools import lru_cache
 
 
-class EmptyLruCacheMixin(object):
+class LruCacheMixin(object):
     def empty_lru_caches(self):
         """
         """
@@ -19,7 +19,7 @@ class EmptyLruCacheMixin(object):
                 f.cache_clear()
 
 
-class TestEmptyLruCacheMixin(EmptyLruCacheMixin):
+class TestLruCacheMixin(LruCacheMixin):
     def __init__(self):
         assert tuple(self.g.cache_info()) == (0, 0, 1, 0)
         self.g(3)
@@ -35,7 +35,7 @@ class TestEmptyLruCacheMixin(EmptyLruCacheMixin):
         print('h')
 
 
-t = TestEmptyLruCacheMixin()
+t = TestLruCacheMixin()
 
 ######################################
 
@@ -77,7 +77,7 @@ class RankingBallot(NumericBallot):
 
 ######################################
 
-class VotingRule(EmptyLruCacheMixin):
+class VotingRule(LruCacheMixin):
 
     def __init__(self):
         raise NotImplementedError()
