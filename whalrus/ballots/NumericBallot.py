@@ -19,6 +19,7 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Dict, Any
 from whalrus.ballots.Ballot import Ballot
 
 
@@ -27,6 +28,6 @@ class NumericBallot(Ballot):
     Abstract class, do not instantiate
     """
 
-    def __init__(self, b: Dict[Any,float]):
+    def __init__(self, b: Dict[Any, float]):
         self.ballot = b
 

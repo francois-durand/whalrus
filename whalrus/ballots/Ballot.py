@@ -21,7 +21,6 @@ This file is part of Whalrus.
 """
 
 
-
 class Ballot(object):
     pass
 

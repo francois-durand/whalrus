@@ -19,12 +19,12 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Dict, Any
 from whalrus.ballots.NumericBallot import NumericBallot
 
 
-
 class GradeBallot(NumericBallot):
-    def __init__(self, b: Dict[Any,float]):
+    def __init__(self, b: Dict[Any, float]):
         """
         myBallot = GradeBallot({'jean':23,'pie':12})
         """
