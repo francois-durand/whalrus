@@ -1,0 +1,7 @@
+
+
+
+
+class Ballot(object):
+    pass
+
