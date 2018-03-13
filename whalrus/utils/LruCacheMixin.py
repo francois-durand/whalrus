@@ -14,6 +14,7 @@ class LruCacheMixin(object):
     ...     def big_computation(self,n):
     ...         print('I have to do the big computation...')
     ...         return n*n
+    >>>
     >>> t = TestLru()
     >>> t.big_computation(3)
     I have to do the big computation...
