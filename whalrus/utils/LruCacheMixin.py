@@ -11,15 +11,18 @@ class LruCacheMixin(object):
     >>> class TestLru(LruCacheMixin):
     ...     @lru_cache()
     ...     def big_computation(self,n):
-    ...         print('doing the big computation...')
+    ...         print('I have to do the big computation...')
     ...         return n*n
     >>> t = TestLru()
-    >>> x = t.big_computation(3)
-    doing the big computation...
-    >>> x = t.big_computation(3)
+    >>> t.big_computation(3)
+    I have to do the big computation...
+    9
+    >>> t.big_computation(3)
+    9
     >>> t.empty_lru_caches()
-    >>> x = t.big_computation(3)
-    doing the big computation...
+    >>> t.big_computation(3)
+    I have to do the big computation...
+    9
     """
 
 
