@@ -8,6 +8,7 @@ class LruCacheMixin(object):
     Example:
 
     >>> from functools import lru_cache
+    >>>
     >>> class TestLru(LruCacheMixin):
     ...     @lru_cache()
     ...     def big_computation(self,n):
