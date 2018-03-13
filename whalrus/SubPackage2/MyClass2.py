@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand
-fradurand@gmail.com
+sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com
 
 This file is part of Whalrus.
 
