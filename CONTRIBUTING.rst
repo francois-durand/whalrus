@@ -126,3 +126,9 @@ $ git push
 $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.
+
+Useful links
+------------
+
+https://github.com/francois-durand/whalrus
+https://readthedocs.org/projects/whalrus/builds/
