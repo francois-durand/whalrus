@@ -2,8 +2,6 @@ import numpy as np
 from collections import Iterable
 from typing import Dict,Any
 
-Num = Union[int, float]
-
 
 ######################################
 
@@ -51,12 +49,12 @@ class NumericBallot(Ballot):
     Abstract class, do not instantiate
     """
 
-    def __init__(self, b: Dict[Any,Num]):
+    def __init__(self, b: Dict[Any,float]):
         self.ballot = b
 
 
 class GradeBallot(NumericBallot):
-    def __init__(self, b: Dict[Any,Num]):
+    def __init__(self, b: Dict[Any,float]):
         """
         myBallot = GradeBallot({'jean':23,'pie':12})
         """
