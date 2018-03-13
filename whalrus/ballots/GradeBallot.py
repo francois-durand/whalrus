@@ -22,6 +22,7 @@ This file is part of Whalrus.
 from whalrus.ballots.NumericBallot import NumericBallot
 
 
+
 class GradeBallot(NumericBallot):
     def __init__(self, b: Dict[Any,float]):
         """
