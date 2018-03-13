@@ -22,5 +22,8 @@ This file is part of Whalrus.
 
 
 class Ballot(object):
+    """
+    Abstract class, do not instantiate
+    """
     pass
 

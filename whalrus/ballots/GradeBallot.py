@@ -26,6 +26,8 @@ from whalrus.ballots.NumericBallot import NumericBallot
 class GradeBallot(NumericBallot):
     def __init__(self, b: Dict[Any, float]):
         """
-        myBallot = GradeBallot({'jean':23,'pie':12})
+        Class used to create a ballot where each item has a utility
+
+        >>> myBallot = GradeBallot({'jean':23,'pie':12,'doublas':42})
         """
         super().__init__(b)

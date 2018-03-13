@@ -23,10 +23,14 @@ from whalrus.ballots.NumericBallot import NumericBallot
 
 
 class RankingBallot(NumericBallot):
+    """
+    Class used to create a ballot where items are ranked according to a linear order.
+    The first item of the list is the prefered one.
+
+    >>> myBallot = RankingBallot(['jean','pie','doug'])
+    """
+
     def __init__(self, b):
-        """
-        >>> myBallot = RankingBallot(['jean','pie'])
-        """
         if type(b) == dict:
             super().__init__(b)
 
