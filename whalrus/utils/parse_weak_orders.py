@@ -1,5 +1,5 @@
 from pyparsing import Group, Word, ZeroOrMore, alphas, nums, ParseException
-
+from toolz import merge
 
 def parse_weak_order(s):
     """
@@ -27,11 +27,14 @@ def parse_weak_order(s):
     equiv_class = Group(candidate + ZeroOrMore(Word('~').suppress() + candidate))
     weakpref = equiv_class + ZeroOrMore(Word('>').suppress() + equiv_class)
 
+    # if s = 'Jean ~ Titi ~ tata32 > moi > toi ~ nous > eux', then
+    # parsed = [['Jean', 'Titi', 'tata32'], ['moi'], ['toi', 'nous'], ['eux']]
     parsed = weakpref.parseString(s, parseAll=True).asList()
-    lst = []
 
+    lst = []
     for v, t in enumerate(reversed(parsed)):
         lst = [(c, v) for c in t] + lst
+
     return dict(lst)
 
 
