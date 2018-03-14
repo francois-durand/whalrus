@@ -26,13 +26,18 @@ from whalrus.ballots.SingleCandidateBallot import SingleCandidateBallot
 
 
 class UtilityBallot(Ballot):
-    def __init__(self, b,weight=None):
-        """
-        Class used to create a ballot where each item has a utility
+    """
+    Class used to create a ballot where each item has a utility
 
-        >>> myBallot  = UtilityBallot({'jean':23,'pie':12,'doublas':42})
-        >>> myBallot2 = UtilityBallot(['jean','pie','doug'])
-        """
+    >>> b1  = UtilityBallot({'jean':23,'pie':12,'doublas':42})
+    >>> b2 = UtilityBallot(['jean','pie','doug'])
+    >>> b3 = UtilityBallot('jean')
+
+    You can also add a weight to your ballot
+    >>> b4 = UtilityBallot(['jean','pie','doug'],weight=2.0)
+    """
+
+    def __init__(self, b,weight=None):
         self.weight = weight
 
         if type(b) == dict and type_set(b.values()) <= {int,float}:
