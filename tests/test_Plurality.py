@@ -3,8 +3,9 @@ from whalrus import Plurality
 
 
 def test_plurality_unweighted_winner():
-    """Test the Plurality rule (co-winners)"""
+    """Test the unweighted Plurality rule (single winner)"""
     assert Plurality(["A", "A", "B", "A", "C"]).winner() == "A"
+    assert Plurality(["A", "A", "B", "C", "", "", ""]).winner() == "A"
     assert Plurality({"e1": "A", "e2": "A", "e3": "B",
                       "e4": "A", "e5": "C"}).winner() == "A"
     # If we use linear orders as input, it should also
@@ -21,10 +22,13 @@ def test_plurality_unweighted_winner():
                       "e5": ["A", "B", "C"]}).winner() == "A"
 
 
+
 def test_plurality_weighted_winner():
-    """Test the Plurality rule (co-winners)"""
+    """Test the weighted Plurality rule (single winner)"""
     assert Plurality(["A", "A", "B", "A", "C"],
                      weights=[1, 1, 10, 1, 2]).winner() == "B"
+    assert Plurality(["A", "A", "B", "A", "C", "", "", ""],
+                     weights=[1, 1, 10, 1, 2, 1, 42, 1]).winner() == "B"
     assert Plurality({"e1": "A", "e2": "A", "e3": "B",
                       "e4": "A", "e5": "C"},
                      weights={"e1": 1, "e2": 1, "e3": 10,
@@ -51,4 +55,10 @@ def test_plurality_weighted_winner():
                       "e5": ["A", "B", "C"]},
                      weights={"e1": 1, "e2": 1, "e3": 10,
                               "e4": 1, "e5": 2}).winner() == "B"
+
+    assert Plurality([SingleCandidateBallot("A", 1),
+                      SingleCandidateBallot("A", 1),
+                      SingleCandidateBallot("B", 10),
+                      SingleCandidateBallot("A", 1),
+                      SingleCandidateBallot("C", 2)]).winner() == "B"
 
