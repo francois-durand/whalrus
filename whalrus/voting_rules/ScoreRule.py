@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand
@@ -19,25 +18,11 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-class Profile(dict):
-    pass
-
-    def __init__(self,votes,weights=None,candidates=None):
-        if isinstance(votes,list):
-            votes = dict(enumerate(votes))
-        
-        if isinstance(votes,dict):
-            super().__init__(votes)
-        elif isinstance(votes,list):
-            super().__init__( dict(enumerate(votes)) )
-        pass
-    #    if candidates is None:
-    #        candidates = ...
-    ##        candidates = ...
-     #   pass
-    def candidates(self):
-        pass
+from whalrus.voting_rules.VotingRule import VotingRule
 
 
+class ScoreRule(VotingRule):
 
+    def cowinners(self):
+        d = self.scores()
+        return {k for k, v in d.items() if v == max(d.values())}
