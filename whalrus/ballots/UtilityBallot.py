@@ -23,6 +23,8 @@ from typing import Dict, Any
 from whalrus.ballots.Ballot import Ballot
 from whalrus.utils.check_types import type_set
 from whalrus.ballots.SingleCandidateBallot import SingleCandidateBallot
+from toolz import first
+
 
 
 class UtilityBallot(Ballot):
@@ -58,6 +60,12 @@ class UtilityBallot(Ballot):
         arg_mins     = [c for c,v in self.items() if v==smallest_val]
 
         if len(arg_mins) > 1:
-            raise 'Failed to convert ballot to plurality ballot because many candidates have the same score'
+            raise Exception('Failed to convert ballot to plurality ballot because many candidates have the same score')
 
         return SingleCandidateBallot( first(arg_mins) , weight=self.weight )
+
+
+
+if __name__ ==  '__main__':
+    import doctest
+    doctest.testmod()
