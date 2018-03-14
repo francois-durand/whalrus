@@ -24,6 +24,7 @@ from whalrus.utils.LruCacheMixin import LruCacheMixin
 class VotingRule(LruCacheMixin):
 
     def __init__(self, p=None):
+        self.p = None
         if p is not None:
             self.load_profile(p)
 

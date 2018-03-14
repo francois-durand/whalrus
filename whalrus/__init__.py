@@ -19,4 +19,4 @@ from .ballots.UtilityBallot import UtilityBallot
 from .voting_rules.VotingRule import VotingRule
 from .voting_rules.Plurality import Plurality
 
-from .Profile import Profile
+from .profile import Profile
