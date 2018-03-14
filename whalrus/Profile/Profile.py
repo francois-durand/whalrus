@@ -23,8 +23,14 @@ This file is part of Whalrus.
 class Profile(dict):
     pass
 
-    def __init__(self,candidates=None):
-        super
+    def __init__(self,votes,weights=None,candidates=None):
+        if isinstance(votes,list):
+            votes = dict(enumerate(votes))
+        
+        if isinstance(votes,dict):
+            super().__init__(votes)
+        elif isinstance(votes,list):
+            super().__init__( dict(enumerate(votes)) )
         pass
     #    if candidates is None:
     #        candidates = ...
