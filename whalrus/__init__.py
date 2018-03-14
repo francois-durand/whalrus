@@ -11,11 +11,12 @@ from .SubPackage2.MyClass2 import MyClass2
 from .SubPackage2.MyClass3 import MyClass3
 
 from .ballots.Ballot import Ballot
-from .ballots.Ballot import UtilityBallot
+from .ballots.UtilityBallot import UtilityBallot
 
 #from .ballots.GradeBallot import GradeBallot
 #from .ballots.RankingBallot import RankingBallot
 
 from .voting_rules.VotingRule import VotingRule
+from .voting_rules.Plurality import Plurality
 
 from .Profile import Profile
