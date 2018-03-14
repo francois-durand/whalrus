@@ -56,13 +56,13 @@ class UtilityBallot(Ballot):
 
     def to_plurality_ballot(self):
 
-        smallest_val = min(self.values())
-        arg_mins     = [c for c,v in self.items() if v==smallest_val]
+        biggest_val  = max(self.values())
+        arg_maxs     = [c for c,v in self.items() if v==biggest_val]
 
-        if len(arg_mins) > 1:
+        if len(arg_maxs) > 1:
             raise Exception('Failed to convert ballot to plurality ballot because many candidates have the same score')
 
-        return SingleCandidateBallot( first(arg_mins) , weight=self.weight )
+        return SingleCandidateBallot( first(arg_maxs) , weight=self.weight )
 
 
 
