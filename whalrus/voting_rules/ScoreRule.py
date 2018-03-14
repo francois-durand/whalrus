@@ -18,23 +18,11 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.utils.LruCacheMixin import LruCacheMixin
+from whalrus.voting_rules.VotingRule import VotingRule
 
 
-class VotingRule(LruCacheMixin):
-
-    def load_profile(self, p):
-        self.p = p
-        self.empty_lru_caches()
-
-    def winner(self):
-        raise NotImplemented
+class ScoreRule(VotingRule):
 
     def cowinners(self):
-        raise NotImplemented
-
-    def scores(self):
-        raise NotImplemented
-
-    def winner_ranking(self):
-        raise NotImplemented
+        d = self.scores()
+        return {k for k, v in d.items() if v == max(d.values())}
