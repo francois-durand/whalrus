@@ -4,9 +4,10 @@ from toolz import first
 class SingleCandidateBallot(UtilityBallot):
 
     @staticmethod
-    def create_plurality_ballot(b):
+    def make_plurality_ballot(b):
 
-        assert isinstance(b,UtilityBallot)
+        if not isinstance(b,UtilityBallot):
+            b = UtilityBallot(b)
 
         biggest_val  = max(b.values())
         arg_maxs     = [c for c,v in b.items() if v==biggest_val]
