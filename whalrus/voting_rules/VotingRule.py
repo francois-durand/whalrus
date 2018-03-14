@@ -18,6 +18,7 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+from functools import lru_cache
 from whalrus.utils.LruCacheMixin import LruCacheMixin
 
 
@@ -32,8 +33,12 @@ class VotingRule(LruCacheMixin):
         self.p = p
         self.empty_lru_caches()
 
+    @lru_cache(maxsize=1)
     def winner(self):
-        raise NotImplemented
+        if len(self.cowinners()) == 1:
+            return list(self.cowinners())[0]
+        else:
+            raise NotImplemented('Tie-breaking rule not implemented')
 
     def cowinners(self):
         raise NotImplemented
