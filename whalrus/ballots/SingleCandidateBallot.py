@@ -1,8 +1,9 @@
 from whalrus.ballots.UtilityBallot import UtilityBallot
+from toolz import first
 
 class SingleCandidateBallot(UtilityBallot):
 
-    def to_plurality_ballot(self):
-        min(self.values())
+    def candidate(self):
+        return first(self.values())
 
 
