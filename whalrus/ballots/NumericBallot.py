@@ -32,3 +32,4 @@ class NumericBallot(Ballot):
 
         self.ballot = b
 
+    def top(self):

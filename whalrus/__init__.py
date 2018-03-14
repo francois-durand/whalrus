@@ -16,3 +16,5 @@ from .ballots.NumericBallot import NumericBallot
 from .ballots.RankingBallot import RankingBallot
 
 from .voting_rules.VotingRule import VotingRule
+
+from .voting_rules.Profile import Profile
