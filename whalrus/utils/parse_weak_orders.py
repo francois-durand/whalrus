@@ -4,7 +4,7 @@ from pyparsing import Group, Word, ZeroOrMore, alphas, nums, ParseException
 def parse_weak_order(s):
     """
     Converts a string representing a weak-order to a dictionary
-    Throws a 'ParseException' if the string cannot be parsed
+    Throws a 'ParseException' if the string is not a valid weak-order
 
     Example:
 
@@ -12,13 +12,14 @@ def parse_weak_order(s):
     >>> parse_weak_order(s)
     {'Jean': 3, 'Titi': 3, 'tata32': 3, 'moi': 2, 'toi': 1, 'nous': 1, 'eux': 0}
 
-    Other example, in which an exception is thrown because the string is incorrect:
+    Another example.
+    Here, an exception is thrown because the string is not a valid weak-order:
 
     >>> try:
     ...    parse_weak_order('a * b')
     ... except ParseException:
-    ...    print('Failed')
-    Failed
+    ...    print('invalid')
+    invalid
 
     """
 
