@@ -31,5 +31,3 @@ class NumericBallot(Ballot):
     def __init__(self, b: Dict[Any, float]):
 
         self.ballot = b
-
-    def top(self):

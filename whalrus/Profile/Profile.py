@@ -24,6 +24,7 @@ class Profile(dict):
     pass
 
     def __init__(self,candidates=None):
+        super
         pass
     #    if candidates is None:
     #        candidates = ...
