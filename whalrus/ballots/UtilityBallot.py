@@ -21,13 +21,28 @@ This file is part of Whalrus.
 """
 from typing import Dict, Any
 from whalrus.ballots.Ballot import Ballot
+from whalrus.utils.check_types import type_set
 
 
-class NumericBallot(Ballot):
-    """
-    Abstract class, do not instantiate
-    """
+class UtilityBallot(Ballot):
+    def __init__(self, b,weight=None):
+        """
+        Class used to create a ballot where each item has a utility
 
-    def __init__(self, b: Dict[Any, float]):
+        >>> myBallot  = UtilityBallot({'jean':23,'pie':12,'doublas':42})
+        >>> myBallot2 = UtilityBallot(['jean','pie','doug'])
+        """
+        self.weight = weight
 
-        self.ballot = b
+        if type(b) == dict and type_set(b.values) <= [int,float]:
+            super().__init__(b)
+
+        elif type(b) in [list, tuple, set] and type_set(b) <= [str]: # changer en iterable
+            super().__init__({x: i for i, x in enumerate(reversed(list(b)))})
+
+        elif type(b) == str:
+            super().__init__({b:0})
+        else:
+            raise TypeError('expecting dict,list,tuple or set')
+
+

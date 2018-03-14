@@ -20,7 +20,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Dict, Any
-from whalrus.ballots.NumericBallot import NumericBallot
+from whalrus.ballots.UtilityBallot import NumericBallot
 
 
 class GradeBallot(NumericBallot):
