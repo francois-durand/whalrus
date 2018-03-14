@@ -35,10 +35,10 @@ class UtilityBallot(Ballot):
         """
         self.weight = weight
 
-        if type(b) == dict and type_set(b.values()) <= [int,float]:
+        if type(b) == dict and type_set(b.values()) <= {int,float}:
             super().__init__(b)
 
-        elif type(b) in [list, tuple, set] and type_set(b) <= [str]: # changer en iterable
+        elif type(b) in [list, tuple, set] and type_set(b) <= {str}: # changer en iterable
             super().__init__({x: i for i, x in enumerate(reversed(list(b)))})
 
         elif type(b) == str:
