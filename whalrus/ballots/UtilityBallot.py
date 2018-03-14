@@ -35,7 +35,7 @@ class UtilityBallot(Ballot):
         """
         self.weight = weight
 
-        if type(b) == dict and type_set(b.values) <= [int,float]:
+        if type(b) == dict and type_set(b.values()) <= [int,float]:
             super().__init__(b)
 
         elif type(b) in [list, tuple, set] and type_set(b) <= [str]: # changer en iterable
@@ -51,7 +51,7 @@ class UtilityBallot(Ballot):
 
         smallest_val = min(self.values())
         arg_mins     = [c for c,v in self.items() if v==smallest_val]
-        
+
         if len(arg_mins) > 1:
             raise 'Failed to convert ballot to plurality ballot because many candidates have the same score'
 
