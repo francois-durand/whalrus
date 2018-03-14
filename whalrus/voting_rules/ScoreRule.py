@@ -23,6 +23,9 @@ from whalrus.voting_rules.VotingRule import VotingRule
 
 class ScoreRule(VotingRule):
 
+    def __init__(self, p=None):
+        super().__init__(p)
+
     def cowinners(self):
         d = self.scores()
         return {k for k, v in d.items() if v == max(d.values())}

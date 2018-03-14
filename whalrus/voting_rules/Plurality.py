@@ -24,6 +24,9 @@ from whalrus.voting_rules.ScoreRule import ScoreRule
 
 class Plurality(ScoreRule):
 
+    def __init__(self, p=None):
+        super().__init__(p)
+
     def load_profile(self, p):
         self.p = p
         self.ballots = {voter: ballot.to_plurality_ballot()
