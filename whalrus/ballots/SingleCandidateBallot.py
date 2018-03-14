@@ -1,8 +1,8 @@
+from whalrus.ballots.UtilityBallot import UtilityBallot
 
-def singleCandidateBallotFactory(b,w=None):
-    pass
+class SingleCandidateBallot(UtilityBallot):
 
-class SingleCandidateBallot(object):
-    pass
+    def to_plurality_ballot(self):
+        min(self.values())
 
 
