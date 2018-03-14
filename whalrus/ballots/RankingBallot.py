@@ -24,7 +24,7 @@ from whalrus.ballots.NumericBallot import NumericBallot
 
 class RankingBallot(NumericBallot):
     """
-    Class used to create a ballot where items are ranked according to a linear order.
+    A ballot giving a pre-order on a subsets of candidates.
     The first item of the list is the prefered one.
 
     >>> myBallot = RankingBallot(['jean','pie','doug'])
