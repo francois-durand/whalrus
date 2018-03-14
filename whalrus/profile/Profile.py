@@ -20,13 +20,14 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+
 class Profile(dict):
     pass
 
     def __init__(self,votes,weights=None,candidates=None):
         if isinstance(votes,list):
             votes = dict(enumerate(votes))
-        
+
         if isinstance(votes,dict):
             super().__init__(votes)
         elif isinstance(votes,list):
