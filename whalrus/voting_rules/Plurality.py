@@ -20,6 +20,7 @@ This file is part of Whalrus.
 """
 from functools import lru_cache
 from whalrus.voting_rules.ScoreRule import ScoreRule
+from whalrus.ballots.SingleCandidateBallot import create_plurality_ballot
 
 
 class Plurality(ScoreRule):
@@ -29,7 +30,7 @@ class Plurality(ScoreRule):
 
     def load_profile(self, p):
         self.p = p
-        self.ballots = {voter: ballot.to_plurality_ballot()
+        self.ballots = {voter: create_plurality_ballot(ballot)
                         for voter, ballot in p}
         self.empty_lru_caches()
 
