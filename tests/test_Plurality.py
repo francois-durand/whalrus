@@ -62,3 +62,25 @@ def test_plurality_weighted_winner():
                       SingleCandidateBallot("A", 1),
                       SingleCandidateBallot("C", 2)]).winner() == "B"
 
+
+def test_plurality_unweighted_cowinners():
+    """Test the unweighted Plurality rule (co-winners)"""
+    assert "A" in Plurality(["A", "A", "B", "A", "C", "B", "B"]).cowinners()
+    assert "B" in Plurality(["A", "A", "B", "A", "C", "B", "B"]).cowinners()
+    assert "A" in Plurality(["A", "A", "B", "C", "C", "", ""]).cowinners()
+    assert "C" in Plurality(["A", "A", "B", "C", "C", "", ""]).cowinners()
+    assert "A" in Plurality({"e1": "A", "e2": "A", "e3": "B",
+                             "e4": "A", "e5": "C"}).cowinners()
+    # If we use linear orders as input, it should also
+    # work as expected
+    assert "A" in Plurality([["A", "B", "C"],
+                             ["A", "B", "C"],
+                             ["B", "A", "C"],
+                             ["B", "C", "A"],
+                             ["A", "B", "C"]]).cowinners()
+    assert "B" in  Plurality({"e1": ["A", "B", "C"],
+                              "e2": ["A", "B", "C"],
+                              "e3": ["B", "A", "C"],
+                              "e4": ["B", "C", "A"],
+                              "e5": ["A", "B", "C"]}).cowinners()
+
