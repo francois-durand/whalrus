@@ -22,6 +22,7 @@ This file is part of Whalrus.
 from typing import Dict, Any
 from whalrus.ballots.Ballot import Ballot
 from whalrus.utils.check_types import type_set
+from whalrus.ballots.SingleCandidateBallot import SingleCandidateBallot
 
 
 class UtilityBallot(Ballot):
@@ -46,3 +47,12 @@ class UtilityBallot(Ballot):
             raise TypeError('expecting dict,list,tuple or set')
 
 
+    def to_plurality_ballot(self):
+
+        smallest_val = min(self.values())
+        arg_mins     = [c for c,v in self.items() if v==smallest_val]
+        
+        if len(arg_mins) > 1:
+            raise 'Failed to convert ballot to plurality ballot because many candidates have the same score'
+
+        return SingleCandidateBallot( first(arg_mins) , weight=self.weight )
