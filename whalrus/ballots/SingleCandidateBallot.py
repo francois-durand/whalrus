@@ -3,8 +3,8 @@ from toolz import first
 
 class SingleCandidateBallot(UtilityBallot):
 
-    @classmethod
-    def create_plurality_ballot(cls,b):
+    @staticmethod
+    def create_plurality_ballot(b):
 
         assert isinstance(b,UtilityBallot)
 
@@ -14,7 +14,8 @@ class SingleCandidateBallot(UtilityBallot):
         if len(arg_maxs) > 1:
             raise Exception('Failed to convert ballot to plurality ballot because many candidates have the same score')
 
-        return SingleCandidateBallot( first(arg_maxs) , weight=self.weight )
+        return SingleCandidateBallot( first(arg_maxs) , weight=b.weight )
+
 
 
     def candidate(self):
