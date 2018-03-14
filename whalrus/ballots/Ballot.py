@@ -21,7 +21,7 @@ This file is part of Whalrus.
 """
 
 
-class Ballot(dict):
+class Ballot():
     """
     Abstract class, do not instantiate
     """

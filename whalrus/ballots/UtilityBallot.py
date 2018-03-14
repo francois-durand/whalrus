@@ -23,7 +23,7 @@ from whalrus.ballots.Ballot import Ballot
 from whalrus.utils.check_types import type_set
 
 
-class UtilityBallot(Ballot):
+class UtilityBallot(Ballot,dict):
     """
     Class used to create a ballot where each item has a utility
 
