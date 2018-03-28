@@ -19,10 +19,7 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.ballots.UtilityBallot import UtilityBallot
-
-
-class RankingBallot(NumericBallot):
+class RankingBallot():
     """
     A ballot giving a pre-order on a subsets of candidates.
     The first item of the list is the prefered one.
@@ -31,14 +28,15 @@ class RankingBallot(NumericBallot):
     """
 
     def __init__(self, b):
-        if type(b) == dict:
-            super().__init__(b)
-
-        elif type(b) in [list, tuple, set]:  # changer en iterable
-            super().__init__({x: i for i, x in enumerate(reversed(list(b)))})
-
-        else:
-            raise TypeError('expecting dict,list,tuple or set')
+        # if type(b) == dict:
+        #     super().__init__(b)
+        #
+        # elif type(b) in [list, tuple, set]:  # changer en iterable
+        #     super().__init__({x: i for i, x in enumerate(reversed(list(b)))})
+        #
+        # else:
+        #     raise TypeError('expecting dict,list,tuple or set')
+        pass
 
 
 if __name__ == '__main__':

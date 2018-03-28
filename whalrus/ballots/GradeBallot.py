@@ -20,14 +20,14 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Dict, Any
-from whalrus.ballots.UtilityBallot import NumericBallot
 
 
-class GradeBallot(NumericBallot):
+class GradeBallot():
     def __init__(self, b: Dict[Any, float]):
         """
         Class used to create a ballot where each item has a utility
 
         >>> myBallot = GradeBallot({'jean':23,'pie':12,'doublas':42})
         """
-        super().__init__(b)
+        # super().__init__(b)
+        pass
