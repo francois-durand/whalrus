@@ -29,10 +29,12 @@ class Ballot:
     and a scale of grades from 0 to 100. If the voter emits a ballot where 'a' has grade 60 and 'b' has grade 30, then
     the Ballot object simply records all this: what candidates were present, what was the scale of authorized grades,
     and what the voter indicated in her ballot. But, for example:
+
     * It makes no assumption whether the voter prefers 'a' to 'c'. Maybe she did not mention 'c' because she didn't like
       her, maybe because she didn't know her.
     * It makes no assumption about what would be the voter's ballot with a scale from 0 to 10. Maybe it would be
       {'a': 6, 'b': 3}, maybe not.
+
     Ballot converters will be used each time we need an information that is beyond what the ballot clearly indicated,
     in order to make these choices explicit.
     """
