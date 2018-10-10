@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
+"""
+Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand
+sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com
+
+This file is part of Whalrus.
+
+    Whalrus is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Whalrus is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import random
 from typing import Sequence, Union
 
@@ -26,7 +46,7 @@ class Priority:
 
         :param x: the list, set, etc where the element is to be chosen.
         :param reverse: if False (default), then we choose the "first" or "best" element in this priority order. For
-            example, if this is the ascending priority setting, we choose the lowest element. If True, then we
+            example, if this is the ascending priority, we choose the lowest element. If True, then we
             choose the "last" or "worst" element. This is used, for example, in the veto rule.
         :return: the chosen element (or None). When x is empty, return None. When x has one element, return this
             element.

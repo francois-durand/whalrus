@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand
@@ -21,9 +20,8 @@ This file is part of Whalrus.
 """
 
 
-class Ballot():
+class Ballot:
     """
     Abstract class, do not instantiate
     """
     pass
-

@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand
