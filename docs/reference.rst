@@ -26,28 +26,6 @@ Priority
 .. autoclass:: whalrus.Priority
     :members:
 
-Ballots
--------
-
-.. autoclass:: whalrus.Ballot
-    :members:
-
-.. autoclass:: whalrus.NumericBallot
-    :members:
-
-.. autoclass:: whalrus.GradeBallot
-    :members:
-
-.. autoclass:: whalrus.RankingBallot
-    :members:
-
-
-Voting Rules
-------------
-
-.. autoclass:: whalrus.VotingRule
-    :members:
-
 Utils (will probably be removed from documentation)
 ---------------------------------------------------
 
