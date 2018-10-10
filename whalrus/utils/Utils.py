@@ -4,21 +4,24 @@ from pyparsing import Group, Word, ZeroOrMore, alphas, nums, ParseException
 # noinspection PyPep8Naming
 class cached_property:
     """
-    Descriptor (non-data) for building an attribute on-demand on first use.
+    Decorator used in replacement of @property to put the value in cache automatically.
+
+    The first time the attribute is used, it is computed on-demand and put in cache. Later accesses to the
+    attributes will use the cached value.
 
     Adapted from https://stackoverflow.com/questions/4037481/caching-attributes-of-classes-in-python.
 
-    This is used as a decorator. Cf. DeleteCacheMixin for an example.
+    Cf. :class:`DeleteCacheMixin` for an example.
     """
 
     def __init__(self, factory):
         """
-        This code runs when the decorator is applied to the function (i.e. when it is defined).
+        This code runs when the decorator is applied to the function (i.e. when the function is defined).
 
-        <factory> is called such: factory(instance) to build the attribute.
+        :meth:`factory` is the function.
         """
-        self._attr_name = factory.__name__
         self._factory = factory
+        self._attr_name = factory.__name__
 
     def __get__(self, instance, owner):
         """
@@ -42,6 +45,8 @@ class cached_property:
 class DeleteCacheMixin:
     """
     Mixin used to delete cached properties.
+
+    Cf. decorator :class:`cached_property`.
 
     >>> class Example(DeleteCacheMixin):
     ...     @cached_property
@@ -70,14 +75,14 @@ class DeleteCacheMixin:
 
 def parse_weak_order(s):
     """
-    Convert a string representing a weak order to a list of sets
+    Convert a string representing a weak order to a list of sets.
 
     :param s: a string.
-    :return: a list of sets, where each set is an indifference class. The first set contains the top (= preferred)
-        candidates, while the last set of the list contains the bottom (= most disliked) candidates.
+    :return: a list of sets, where each set is an indifference class. The first set of the list contains the top
+        (= most liked) candidates, while the last set of the list contains the bottom (= most disliked) candidates.
 
-    >>> s = 'Jean ~ Titi ~ tata32 > me > you ~ us > them'
-    >>> parse_weak_order(s) == [{'Jean', 'Titi', 'tata32'}, {'me'}, {'you', 'us'}, {'them'}]
+    >>> s = 'Alice ~ Bob ~ Catherine32 > me > you ~ us > them'
+    >>> parse_weak_order(s) == [{'Alice', 'Bob', 'Catherine32'}, {'me'}, {'you', 'us'}, {'them'}]
     True
     """
 
@@ -100,7 +105,7 @@ def parse_weak_order(s):
 
 def set_to_list(s):
     """
-    Convert set to list.
+    Convert a set to a list.
 
     :param s: a set.
     :return: a list. The result is similar to list(s), but if the elements of the set are comparable, they appear in
@@ -117,7 +122,7 @@ def set_to_list(s):
 
 def set_to_str(s):
     """
-    Convert set to string.
+    Convert a set to a string.
 
     :param s: a set.
     :return: a string. The result is similar to str(s), but if the elements of the set are comparable, they appear in
@@ -134,10 +139,10 @@ def set_to_str(s):
 
 def dict_to_items(d):
     """
-    Convert dict to list of items (key, value).
+    Convert a dict to a list of pairs (key, value).
 
     :param d: a dictionary.
-    :return: a list of couples. The result is similar to d.items(), but if the keys are comparable, they appear in
+    :return: a list of pairs. The result is similar to d.items(), but if the keys are comparable, they appear in
         ascending order.
 
     >>> dict_to_items({'b': 2, 'c': 0, 'a': 1})

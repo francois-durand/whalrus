@@ -24,8 +24,8 @@ Voting Rules
 .. autoclass:: whalrus.VotingRule
     :members:
 
-Utils (will be removed from documentation)
-------------------------------------------
+Utils (will probably be removed from documentation)
+---------------------------------------------------
 
 .. autoclass:: whalrus.utils.Utils.cached_property
     :members:
@@ -33,7 +33,7 @@ Utils (will be removed from documentation)
 .. autoclass:: whalrus.utils.Utils.DeleteCacheMixin
     :members:
 
-.. function:: whalrus.parse_weak_order
+.. autofunction:: whalrus.parse_weak_order
 
 How to write documentation
 --------------------------
