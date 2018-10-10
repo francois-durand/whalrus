@@ -26,6 +26,27 @@ Priority
 .. autoclass:: whalrus.Priority
     :members:
 
+Ballots
+-------
+
+.. autoclass:: whalrus.Ballot
+    :members:
+
+.. autoclass:: whalrus.BallotOrders
+    :members:
+
+.. autoclass:: whalrus.BallotLevels
+    :members:
+
+.. autoclass:: whalrus.BallotOneName
+    :members:
+
+.. autoclass:: whalrus.BallotPlurality
+    :members:
+
+.. autoclass:: whalrus.BallotVeto
+    :members:
+
 Utils (will probably be removed from documentation)
 ---------------------------------------------------
 
