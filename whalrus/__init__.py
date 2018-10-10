@@ -17,6 +17,9 @@ from .scales.ScaleFromSet import ScaleFromSet
 from .scales.ScaleRange import ScaleRange
 from .scales.ScaleInterval import ScaleInterval
 
+# Priority
+from .priority.Priority import Priority
+
 from .SubPackage1.MyClass1 import MyClass1
 from .SubPackage2.MyClass2 import MyClass2
 from .SubPackage2.MyClass3 import MyClass3

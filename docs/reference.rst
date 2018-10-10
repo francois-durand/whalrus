@@ -20,6 +20,12 @@ Scales
 .. autoclass:: whalrus.ScaleInterval
     :members:
 
+Priority
+--------
+
+.. autoclass:: whalrus.Priority
+    :members:
+
 Ballots
 -------
 

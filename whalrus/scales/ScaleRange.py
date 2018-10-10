@@ -8,7 +8,7 @@ class ScaleRange(Scale):
     :param low: lowest integer.
     :param high: highest integer.
 
-    Remark: for a scale of non-consecutive integers, such as {-1, 0, 2}, use the class ScaleFromSet.
+    Remark: for a scale of non-consecutive integers, such as {-1, 0, 2}, use the class :class:`ScaleFromSet`.
 
     >>> ScaleRange(low=0, high=5)
     ScaleRange(low=0, high=5)
