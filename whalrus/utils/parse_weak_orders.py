@@ -6,6 +6,8 @@ def parse_weak_order(s):
     Converts a string representing a weak-order to a dictionary
     Throws a 'ParseException' if the string is not a valid weak-order
 
+    TODO: remove when obsolete
+
     Example:
 
     >>> s = 'Jean ~ Titi ~ tata32 > moi > toi ~ nous > eux'

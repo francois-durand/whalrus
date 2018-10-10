@@ -2,6 +2,24 @@
 Reference
 =========
 
+Scales
+------
+
+.. autoclass:: whalrus.Scale
+    :members:
+
+.. autoclass:: whalrus.ScaleFromList
+    :members:
+
+.. autoclass:: whalrus.ScaleFromSet
+    :members:
+
+.. autoclass:: whalrus.ScaleRange
+    :members:
+
+.. autoclass:: whalrus.ScaleInterval
+    :members:
+
 Ballots
 -------
 

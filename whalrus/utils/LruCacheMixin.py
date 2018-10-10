@@ -5,6 +5,8 @@ from functools import lru_cache
 class LruCacheMixin(object):
     """A mixin that allows you to empty caches from lru_cached methods.
 
+    TODO: remove when obsolete
+
     Example:
 
     >>> from functools import lru_cache
