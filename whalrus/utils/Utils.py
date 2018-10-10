@@ -9,12 +9,14 @@ class cached_property:
     The first time the attribute is used, it is computed on-demand and put in cache. Later accesses to the
     attributes will use the cached value.
 
+    Technically, this is a "descriptor".
+
     Adapted from https://stackoverflow.com/questions/4037481/caching-attributes-of-classes-in-python.
 
     Cf. :class:`DeleteCacheMixin` for an example.
     """
 
-    def __init__(self, factory):
+    def __init__(self, factory: callable):
         """
         This code runs when the decorator is applied to the function (i.e. when the function is defined).
 
@@ -23,7 +25,7 @@ class cached_property:
         self._factory = factory
         self._attr_name = factory.__name__
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance: object, owner: object) -> object:
         """
         This code runs only when the decorated function is directly called (which happens only when the value is not
         in cache).
@@ -64,7 +66,7 @@ class DeleteCacheMixin:
     Big computation...
     42
     """
-    def delete_cache(self):
+    def delete_cache(self) -> None:
         if not hasattr(self, 'cached_properties'):
             return
         for p in self.cached_properties:
@@ -73,7 +75,7 @@ class DeleteCacheMixin:
         self.cached_properties = set()
 
 
-def parse_weak_order(s):
+def parse_weak_order(s: str) -> list:
     """
     Convert a string representing a weak order to a list of sets.
 
@@ -103,7 +105,7 @@ def parse_weak_order(s):
     return [set(s) for s in parsed]
 
 
-def set_to_list(s):
+def set_to_list(s: set) -> list:
     """
     Convert a set to a list.
 
@@ -120,7 +122,7 @@ def set_to_list(s):
         return list(s)
 
 
-def set_to_str(s):
+def set_to_str(s: set) -> str:
     """
     Convert a set to a string.
 
@@ -137,7 +139,7 @@ def set_to_str(s):
         return str(s)
 
 
-def dict_to_items(d):
+def dict_to_items(d: dict) -> list:
     """
     Convert a dict to a list of pairs (key, value).
 
@@ -151,10 +153,10 @@ def dict_to_items(d):
     try:
         return [(k, d[k]) for k in sorted(d.keys())]
     except TypeError:
-        return d.keys()
+        return list(d.items())
 
 
-def dict_to_str(d):
+def dict_to_str(d: dict) -> str:
     """
     Convert dict to string.
 

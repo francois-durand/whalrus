@@ -35,6 +35,14 @@ Utils (will probably be removed from documentation)
 
 .. autofunction:: whalrus.parse_weak_order
 
+.. autofunction:: whalrus.set_to_list
+
+.. autofunction:: whalrus.set_to_str
+
+.. autofunction:: whalrus.dict_to_items
+
+.. autofunction:: whalrus.dict_to_str
+
 How to write documentation
 --------------------------
 
