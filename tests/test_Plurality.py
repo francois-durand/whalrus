@@ -1,7 +1,3 @@
-import pytest
-from whalrus import Plurality
-
-
 def test_plurality_unweighted_winner():
     # """Test the unweighted Plurality rule (single winner)"""
     # assert Plurality(["A", "A", "B", "A", "C"]).winner() == "A"

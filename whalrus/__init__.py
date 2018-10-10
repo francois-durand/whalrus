@@ -20,6 +20,14 @@ from .scales.ScaleInterval import ScaleInterval
 # Priority
 from .priority.Priority import Priority
 
+# Ballots
+from .ballots.Ballot import Ballot
+from .ballots.BallotOrder import BallotOrder
+from .ballots.BallotLevels import BallotLevels
+from .ballots.BallotOneName import BallotOneName
+from .ballots.BallotPlurality import BallotPlurality
+from .ballots.BallotVeto import BallotVeto
+
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
 from .SubPackage2.MyClass2 import MyClass2
