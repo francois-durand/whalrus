@@ -3,7 +3,7 @@ Reference
 =========
 
 Ballots
---------------
+-------
 
 .. autoclass:: whalrus.Ballot
     :members:
@@ -19,20 +19,24 @@ Ballots
 
 
 Voting Rules
---------------------
+------------
 
 .. autoclass:: whalrus.VotingRule
     :members:
 
-Others
---------------------
+Utils (will be removed from documentation)
+------------------------------------------
 
-.. autoclass:: whalrus.utils.LruCacheMixin.LruCacheMixin
+.. autoclass:: whalrus.utils.Utils.cached_property
     :members:
 
+.. autoclass:: whalrus.utils.Utils.DeleteCacheMixin
+    :members:
+
+.. function:: whalrus.parse_weak_order
 
 How to write documentation
---------------------
+--------------------------
 
 .. autoclass:: whalrus.MyClass1
     :members:
