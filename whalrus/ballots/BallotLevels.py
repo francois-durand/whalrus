@@ -41,10 +41,12 @@ class BallotLevels(BallotOrder):
         If not specified, Whalrus tries to infer it.
 
     Most general syntax:
+
     >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}, scale=ScaleRange(low=0, high=10))
     BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}, scale=ScaleRange(low=0, high=10))
 
     Other examples of syntax:
+
     >>> BallotLevels({'a': 10, 'b': 7, 'c': 3})
     BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c'}, scale=ScaleRange(low=3, high=10))
     >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'}, scale=ScaleFromList(['Bad', 'Medium', 'Good']))
