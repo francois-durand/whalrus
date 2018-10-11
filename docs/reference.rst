@@ -101,6 +101,12 @@ ConverterBallotToPlurality
 .. autoclass:: whalrus.ConverterBallotToPlurality
     :members:
 
+Profile
+=======
+
+.. autoclass:: whalrus.Profile
+    :members:
+
 Utils
 =====
 
