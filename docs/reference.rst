@@ -120,7 +120,7 @@ RuleScore
 ---------
 
 .. autoclass:: whalrus.RuleScore
-    :members:
+    :members: scores_
 
 RulePlurality
 -------------
