@@ -9,5 +9,5 @@ class ConverterBallot:
     subclass.
     """
 
-    def __call__(self, x: object) -> Ballot:
+    def __call__(self, x: object, candidates: set=None) -> Ballot:
         raise NotImplementedError
