@@ -40,6 +40,36 @@ class Profile(DeleteCacheMixin):
     a > b > c
     b > c > a
     c > a > b
+
+    Profiles have a list-like behavior in the sense that they implement `__len__`, `__getitem__`, `__setitem__` and
+    `__delitem__`.
+
+    >>> profile = Profile(['a > b', 'b > a', 'a ~ b'])
+    >>> len(profile)
+    3
+    >>> profile[0]
+    BallotOrder(['a', 'b'], candidates={'a', 'b'})
+    >>> profile[0] = 'a ~ b'
+    >>> print(profile)
+    a ~ b
+    b > a
+    a ~ b
+    >>> del profile[0]
+    >>> print(profile)
+    b > a
+    a ~ b
+
+    Profiles can be concatenated or multiplied by a scalar (which multiplies the weights).
+
+    >>> profile = Profile(['a > b', 'b > a']) + ['a ~ b']
+    >>> print(profile)
+    a > b
+    b > a
+    a ~ b
+    >>> profile = Profile(['a > b', 'b > a']) * 3
+    >>> print(profile)
+    (3): a > b
+    (3): b > a
     """
 
     def __init__(self, ballots: Union[list, 'Profile'], weights: list=None, voters: list=None):
