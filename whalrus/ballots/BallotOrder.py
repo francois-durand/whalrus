@@ -30,7 +30,7 @@ class BallotOrder(Ballot):
 
     :param b: the ballot. Cf. examples below for the format.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
-        candidates that are explicitly mentioned in the ballot.
+        candidates that are explicitly mentioned in the ballot :attr:`b`.
 
     Most general syntax:
     >>> ballot = BallotOrder([{'a', 'b'}, {'c'}], candidates={'a', 'b', 'c', 'd', 'e'})

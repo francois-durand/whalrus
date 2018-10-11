@@ -35,8 +35,7 @@ class Ballot:
     * It makes no assumption about what would be the voter's ballot with a scale from 0 to 10. Maybe it would be
       {'a': 6, 'b': 3}, maybe not.
 
-    Ballot converters will be used each time we need an information that is beyond what the ballot clearly indicated,
-    in order to make these choices explicit.
+    Ballot converters will be used each time we need an information that is beyond what the ballot clearly indicated.
     """
 
     @property
@@ -51,11 +50,11 @@ class Ballot:
     @property
     def first(self, candidates: set=None, **kwargs) -> object:
         """
-        The first (= most liked) candidate.
+        The first (= most liked) candidate. Implementation is optional.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
             `self.candidates`). Default is `self.candidates`.
-        :param kwargs: some options (depending of the subclass).
+        :param kwargs: some options (depending on the subclass).
         :return: the first (= most liked) candidate, chosen in the intersection of `self.candidates` and the argument
             `candidates`. Can return None for an "abstention".
 
@@ -64,7 +63,7 @@ class Ballot:
         use this method with the optional argument `candidates = {'b', 'c', 'd'}` to know who is the most liked
         candidate of the voter in this new context.
 
-        In most subclasses, this method needs some options (`kwargs`) to solve ambiguities in this conversions. In
+        In most subclasses, this method needs some options (`kwargs`) to solve ambiguities in this conversion. In
         some other subclasses, this method may even stay unimplemented.
         """
         raise NotImplementedError
@@ -72,11 +71,11 @@ class Ballot:
     @property
     def last(self, candidates: set=None, **kwargs) -> object:
         """
-        The last (= most disliked) candidate.
+        The last (= most disliked) candidate. Implementation is optional.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
             `self.candidates`). Default is `self.candidates`.
-        :param kwargs: some options (depending of the subclass).
+        :param kwargs: some options (depending on the subclass).
         :return: the last (= most disliked) candidate, chosen in the intersection of `self.candidates` and the argument
             `candidates`. Can return None for an "abstention".
 
@@ -86,12 +85,12 @@ class Ballot:
 
     def restrict(self, candidates=None, **kwargs) -> 'Ballot':
         """
-        Restrict the ballot to less candidates.
+        Restrict the ballot to less candidates. Implementation is optional.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
             `self.candidates`). Default is `self.candidates`.
         :param kwargs: some options (depending of the subclass).
-        :return: the same ballot, 'restricted' to the candidates given.
+        :return: the same ballot, "restricted" to the candidates given.
 
         Additional candidates (that are in the argument `candidates` but not in `self.candidates`) are generally not
         taken into account in the restricted ballot. For example, in a election with candidates 'a', 'b', 'c', assume

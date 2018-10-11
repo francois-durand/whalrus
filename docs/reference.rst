@@ -32,7 +32,7 @@ Ballots
 .. autoclass:: whalrus.Ballot
     :members:
 
-.. autoclass:: whalrus.BallotOrders
+.. autoclass:: whalrus.BallotOrder
     :members:
 
 .. autoclass:: whalrus.BallotLevels

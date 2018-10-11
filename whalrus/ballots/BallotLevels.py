@@ -36,7 +36,7 @@ class BallotLevels(BallotOrder):
     :param b: a dictionary whose keys are candidates and whose values represent some form of evaluation. The keys and
         the values must be hashable.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
-        candidates that are explicitly mentioned in the ballot.
+        candidates that are explicitly mentioned in the ballot :attr:`b`.
     :param scale: a Scale object, representing the authorized scale at the moment when the voter cast her ballot.
         If not specified, Whalrus tries to infer it.
 
