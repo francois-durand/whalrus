@@ -81,19 +81,19 @@ def test_ballot_mixed_types():
             return self.name
     john = Candidate('John Doe', 42)
     jane = Candidate('Jane Doe', 51)
-    ballot = BallotOrder([{0, (1, 2)}, john, 'a'], candidates={0, (1, 2), john, 'a', jane})
+    ballot = BallotOrder([{0, 42}, (1, 2), john, 'a'], candidates={0, 42, (1, 2), john, 'a', jane})
     assert isinstance(repr(ballot), str)
-    assert str(ballot) == "0 ~ (1, 2) > John Doe > a (unordered: Jane Doe)"
-    assert ballot.as_weak_order == [{0, (1, 2)}, {john}, {'a'}]
-    assert ballot.candidates_in_b == {0, (1, 2), john, 'a'}
-    assert ballot.candidates == {0, (1, 2), john, jane, 'a'}
+    assert str(ballot) == "0 ~ 42 > (1, 2) > John Doe > a (unordered: Jane Doe)"
+    assert ballot.as_weak_order == [{0, 42}, {(1, 2)}, {john}, {'a'}]
+    assert ballot.candidates_in_b == {0, 42, (1, 2), john, 'a'}
+    assert ballot.candidates == {0, 42, (1, 2), john, jane, 'a'}
     assert ballot.candidates_not_in_b == {jane}
-    assert len(ballot) == 4
+    assert len(ballot) == 5
     assert john in ballot
     with pytest.raises(ValueError):
         _ = ballot.first()
     assert ballot.last() == jane
-    assert ballot.first(priority=Priority.RANDOM) in {0, (1, 2)}
+    assert ballot.first(priority=Priority.RANDOM) in {0, 42}
     assert ballot.last(include_unordered=True) == jane
     assert ballot.last(include_unordered=False) == 'a'
     assert not ballot.is_strict
