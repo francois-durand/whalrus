@@ -19,7 +19,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import random
-from typing import Sequence, Union
+from typing import Collection, Union
 
 
 class Priority:
@@ -40,7 +40,7 @@ class Priority:
     def __str__(self) -> str:
         return self.name
 
-    def choice(self, x: Sequence, reverse: bool = False) -> object:
+    def choice(self, x: Collection, reverse: bool = False) -> object:
         """
         Choose an element from a list, set, etc.
 
@@ -57,7 +57,7 @@ class Priority:
             return list(x)[0]
         return self._choice(x, reverse=reverse)
 
-    def _choice(self, x: Sequence, reverse: bool) -> object:
+    def _choice(self, x: Collection, reverse: bool) -> object:
         """
         Auxiliary function for :meth:`choice`.
 
@@ -65,7 +65,7 @@ class Priority:
         """
         raise NotImplementedError
 
-    def sort(self, x: Sequence, reverse: bool = False) -> Union[list, None]:
+    def sort(self, x: Collection, reverse: bool = False) -> Union[list, None]:
         """
         Sort a list, set, etc.
 
@@ -79,7 +79,7 @@ class Priority:
             return list(x)
         return self._sort(x, reverse=reverse)
 
-    def _sort(self, x: Sequence, reverse: bool) -> Union[list, None]:
+    def _sort(self, x: Collection, reverse: bool) -> Union[list, None]:
         """
         Auxiliary function for :meth:`sort`.
 
@@ -111,10 +111,10 @@ class PriorityUnambiguous(Priority):
     def __repr__(self):
         return 'Priority.UNAMBIGUOUS'
 
-    def _choice(self, x: Sequence, reverse: bool) -> object:
+    def _choice(self, x: Collection, reverse: bool) -> object:
         raise ValueError("Cannot choose from %r with priority set to Unambiguous." % x)
 
-    def _sort(self, x: Sequence, reverse: bool) -> Union[list, None]:
+    def _sort(self, x: Collection, reverse: bool) -> Union[list, None]:
         raise ValueError("Cannot sort %r with priority set to Unambiguous." % x)
 
 
@@ -129,10 +129,10 @@ class PriorityAbstain(Priority):
     def __repr__(self):
         return 'Priority.ABSTAIN'
 
-    def _choice(self, x: Sequence, reverse: bool) -> object:
+    def _choice(self, x: Collection, reverse: bool) -> object:
         return None
 
-    def _sort(self, x: Sequence, reverse: bool) -> Union[list, None]:
+    def _sort(self, x: Collection, reverse: bool) -> Union[list, None]:
         return None
 
 
@@ -147,12 +147,12 @@ class PriorityAscending(Priority):
     def __repr__(self):
         return 'Priority.ASCENDING'
 
-    def _choice(self, x: Sequence, reverse: bool) -> object:
+    def _choice(self, x: Collection, reverse: bool) -> object:
         if reverse:
             return max(x)
         return min(x)
 
-    def _sort(self, x: Sequence, reverse: bool) -> Union[list, None]:
+    def _sort(self, x: Collection, reverse: bool) -> Union[list, None]:
         return sorted(x, reverse=reverse)
 
 
@@ -167,12 +167,12 @@ class PriorityDescending(Priority):
     def __repr__(self):
         return 'Priority.DESCENDING'
 
-    def _choice(self, x: Sequence, reverse: bool) -> object:
+    def _choice(self, x: Collection, reverse: bool) -> object:
         if reverse:
             return min(x)
         return max(x)
 
-    def _sort(self, x: Sequence, reverse: bool) -> Union[list, None]:
+    def _sort(self, x: Collection, reverse: bool) -> Union[list, None]:
         return sorted(x, reverse=not reverse)
 
 
@@ -187,10 +187,10 @@ class PriorityRandom(Priority):
     def __repr__(self):
         return 'Priority.RANDOM'
 
-    def _choice(self, x: Sequence, reverse: bool) -> object:
+    def _choice(self, x: Collection, reverse: bool) -> object:
         return random.choice(list(x))
 
-    def _sort(self, x: Sequence, reverse: bool) -> Union[list, None]:
+    def _sort(self, x: Collection, reverse: bool) -> Union[list, None]:
         return random.sample(x, len(x))
 
 

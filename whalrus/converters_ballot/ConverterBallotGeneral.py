@@ -56,13 +56,15 @@ class ConverterBallotGeneral(ConverterBallot):
     """
 
     # noinspection PyUnresolvedReferences
-    def __init__(self, plurality_priority=Priority.UNAMBIGUOUS, veto_priority=Priority.UNAMBIGUOUS,
-                 one_name_priority=Priority.UNAMBIGUOUS):
+    def __init__(self,
+                 plurality_priority: Priority = Priority.UNAMBIGUOUS,
+                 veto_priority: Priority=Priority.UNAMBIGUOUS,
+                 one_name_priority: Priority=Priority.UNAMBIGUOUS):
         self.plurality_priority = plurality_priority
         self.veto_priority = veto_priority
         self.one_name_priority = one_name_priority
 
-    def __call__(self, x, candidates=None):
+    def __call__(self, x: object, candidates: set=None) -> Ballot:
         # If it is a ballot, deal with the restriction to the candidates.
         if isinstance(x, Ballot):
             if candidates is None:

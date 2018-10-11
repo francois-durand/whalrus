@@ -36,5 +36,4 @@ class BallotPlurality(BallotOneName):
 
     # Remark: this only difference with a member of the mother class BallotOneName is precisely that here, the object
     # is an instance of BallotPlurality. As such, it will be treated differently in some contexts.
-    def toto(self):
-        return self.candidate
+    pass

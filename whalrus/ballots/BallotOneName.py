@@ -134,7 +134,7 @@ class BallotOneName(Ballot):
             return self.__class__(self.candidate, self.candidates & candidates)
         return self._restrict(restricted_candidates=self.candidates & candidates, priority=priority)
 
-    def _restrict(self, restricted_candidates, priority):
+    def _restrict(self, restricted_candidates: set, priority: Priority) -> 'BallotOneName':
         """
         Auxiliary function of `restrict`.
 

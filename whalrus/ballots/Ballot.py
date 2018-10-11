@@ -47,7 +47,6 @@ class Ballot:
         """
         raise NotImplementedError
 
-    @property
     def first(self, candidates: set=None, **kwargs) -> object:
         """
         The first (= most liked) candidate. Implementation is optional.
@@ -68,7 +67,6 @@ class Ballot:
         """
         raise NotImplementedError
 
-    @property
     def last(self, candidates: set=None, **kwargs) -> object:
         """
         The last (= most disliked) candidate. Implementation is optional.

@@ -1,3 +1,6 @@
+from whalrus.ballots.Ballot import Ballot
+
+
 class ConverterBallot:
     """
     A ballot converter.
@@ -6,5 +9,5 @@ class ConverterBallot:
     subclass.
     """
 
-    def __call__(self, x):
+    def __call__(self, x: object) -> Ballot:
         raise NotImplementedError

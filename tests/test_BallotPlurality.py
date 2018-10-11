@@ -23,7 +23,6 @@ from whalrus import BallotPlurality
 from whalrus import Priority
 
 
-# noinspection PyCallingNonCallable
 def test():
     ballot = BallotPlurality('a', candidates={'a', 'b', 'c'})
     assert ballot.first() == 'a'
@@ -36,7 +35,6 @@ def test():
     assert BallotPlurality('a', candidates={'a', 'b'}).last() == 'b'
 
 
-# noinspection PyCallingNonCallable
 def test_empty_ballot():
     ballot = BallotPlurality(None, candidates={'a', 'b', 'c'})
     assert ballot.first() is None
