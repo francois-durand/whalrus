@@ -48,7 +48,7 @@ class Rule(DeleteCacheMixin):
             self(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
     def __call__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None) -> 'Rule':
+                 candidates: set=None, converter: ConverterBallot=None):
         self.profile_ = Profile(ballots, weights=weights, voters=voters)
         if converter is None:
             converter = self.default_converter
@@ -70,7 +70,7 @@ class Rule(DeleteCacheMixin):
         """
         Cowinners of the election.
 
-        :return: the set of ex-aequo winners.
+        :return: the set of cowinners.
         """
         raise NotImplementedError
 

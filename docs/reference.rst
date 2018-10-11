@@ -107,8 +107,8 @@ Profile
 .. autoclass:: whalrus.Profile
     :members:
 
-Rule: Abstract classes
-======================
+Rule
+====
 
 Rule
 ----
@@ -120,6 +120,12 @@ RuleScore
 ---------
 
 .. autoclass:: whalrus.RuleScore
+    :members:
+
+RulePlurality
+-------------
+
+.. autoclass:: whalrus.RulePlurality
     :members:
 
 Utils
