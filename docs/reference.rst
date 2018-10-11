@@ -47,6 +47,18 @@ Ballots
 .. autoclass:: whalrus.BallotVeto
     :members:
 
+Ballot converters
+-----------------
+
+.. autoclass:: whalrus.ConverterBallot
+    :members:
+
+.. autoclass:: whalrus.ConverterBallotGeneral
+    :members:
+
+.. autoclass:: whalrus.ConverterBallotToPlurality
+    :members:
+
 Utils (will probably be removed from documentation)
 ---------------------------------------------------
 

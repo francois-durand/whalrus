@@ -28,6 +28,11 @@ from .ballots.BallotOneName import BallotOneName
 from .ballots.BallotPlurality import BallotPlurality
 from .ballots.BallotVeto import BallotVeto
 
+# Ballot Converters
+from .converters_ballot.ConverterBallot import ConverterBallot
+from .converters_ballot.ConverterBallotGeneral import ConverterBallotGeneral
+from .converters_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
+
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
 from .SubPackage2.MyClass2 import MyClass2
