@@ -14,7 +14,9 @@ class ConverterBallotToPlurality(ConverterBallot):
     Default converter to plurality ballot.
 
     :param order_priority: option passed to :meth:`BallotOrder.first`.
+    :param plurality_priority: option passed to :meth:`BallotPlurality.first`.
     :param veto_priority: option passed to :meth:`BallotVeto.first`.
+    :param one_name_priority: option passed to :meth:`BallotOneName.first`.
 
     This is a default converter to a plurality ballot. It tries to infer the type of input and converts it to
     a plurality ballot.
@@ -35,20 +37,17 @@ class ConverterBallotToPlurality(ConverterBallot):
 
     Use options for the restrictions:
 
-    >>> converter = ConverterBallotToPlurality(order_priority=Priority.ASCENDING,
-    ...                                        veto_priority=Priority.ASCENDING)
+    >>> converter = ConverterBallotToPlurality(order_priority=Priority.ASCENDING)
     >>> converter(BallotOrder('a ~ b > c'))
     BallotPlurality('a', candidates={'a', 'b', 'c'})
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}))
-    BallotPlurality('b', candidates={'a', 'b', 'c'})
     """
 
-    def __init__(self, order_priority=Priority.UNAMBIGUOUS, veto_priority=Priority.UNAMBIGUOUS,
-                 one_name_priority=Priority.UNAMBIGUOUS, plurality_priority=Priority.UNAMBIGUOUS):
-        self.veto_priority = veto_priority
+    def __init__(self, order_priority=Priority.UNAMBIGUOUS, plurality_priority=Priority.UNAMBIGUOUS,
+                 veto_priority=Priority.UNAMBIGUOUS, one_name_priority=Priority.UNAMBIGUOUS):
         self.order_priority = order_priority
-        self.one_name_priority = one_name_priority
         self.plurality_priority = plurality_priority
+        self.veto_priority = veto_priority
+        self.one_name_priority = one_name_priority
 
     def __call__(self, x, candidates=None):
         x = ConverterBallotGeneral()(x, candidates=None)

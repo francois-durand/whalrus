@@ -33,13 +33,13 @@ class ConverterBallotGeneral(ConverterBallot):
     >>> converter('Alice')
     BallotOneName('Alice', candidates={'Alice'})
 
-    It is also possible to "restrict" of the set of candidates on-the-fly. Cf. :meth:`Ballot.restrict` for more details.
+    It is also possible to "restrict" the set of candidates on-the-fly. Cf. :meth:`Ballot.restrict` for more details.
     Examples:
 
     >>> converter = ConverterBallotGeneral()
-    >>> converter('a ~ b > c', candidates={'b', 'c', 'd'})
+    >>> converter('a ~ b > c', candidates={'b', 'c'})
     BallotOrder(['b', 'c'], candidates={'b', 'c'})
-    >>> converter({'a': 10, 'b': 7, 'c': 0}, candidates={'b', 'c', 'd'})
+    >>> converter({'a': 10, 'b': 7, 'c': 0}, candidates={'b', 'c'})
     BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=ScaleRange(low=0, high=10))
 
     Use options for the restrictions:
@@ -47,11 +47,11 @@ class ConverterBallotGeneral(ConverterBallot):
     >>> converter = ConverterBallotGeneral(one_name_priority=Priority.ASCENDING,
     ...                                    plurality_priority=Priority.ASCENDING,
     ...                                    veto_priority=Priority.ASCENDING)
-    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c', 'd'})
+    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
     BallotOneName('b', candidates={'b', 'c'})
-    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c', 'd'})
+    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
     BallotPlurality('b', candidates={'b', 'c'})
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c', 'd'})
+    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
     BallotVeto('c', candidates={'b', 'c'})
     """
 
