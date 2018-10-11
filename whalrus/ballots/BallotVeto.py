@@ -71,7 +71,8 @@ class BallotVeto(BallotOneName):
         """
         >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last()
         'a'
-        >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last(candidates={'b', 'c'}, priority=Priority.ASCENDING)
+        >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last(candidates={'b', 'c'},
+        ...                                                  priority=Priority.ASCENDING)
         'c'
         """
         # noinspection PyUnresolvedReferences

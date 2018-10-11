@@ -33,6 +33,7 @@ class BallotOrder(Ballot):
         candidates that are explicitly mentioned in the ballot :attr:`b`.
 
     Most general syntax:
+
     >>> ballot = BallotOrder([{'a', 'b'}, {'c'}], candidates={'a', 'b', 'c', 'd', 'e'})
     >>> ballot
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c', 'd', 'e'})
@@ -40,6 +41,7 @@ class BallotOrder(Ballot):
     a ~ b > c (unordered: d, e)
 
     Other examples of inputs:
+
     >>> BallotOrder({'a': 10, 'b': 10, 'c': 7})
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
     >>> BallotOrder('a ~ b > c')
@@ -173,12 +175,14 @@ class BallotOrder(Ballot):
             all the others, and therefore give points to other candidates.
         :param unordered_receive_points: if is is True, it means that unordered candidates are considered as tied. Hence
             if `unordered_give_points` is True, they receive .5 point per other unordered candidate.
-        :return: a dictionary that, to each candidate, assigns her Borda score.
+        :return: a dictionary that, to each candidate, assigns her Borda points.
 
         >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
-        >>> ballot.borda() == {'a': 4., 'b': 2.5, 'c': 2.5, 'd': .5, 'e': .5}
+        >>> ballot.borda() == {
+        ...     'a': 4., 'b': 2.5, 'c': 2.5, 'd': .5, 'e': .5}
         True
-        >>> ballot.borda(unordered_receive_points=False) == {'a': 4., 'b': 2.5, 'c': 2.5, 'd': 0., 'e': 0.}
+        >>> ballot.borda(unordered_receive_points=False) == {
+        ...     'a': 4., 'b': 2.5, 'c': 2.5, 'd': 0., 'e': 0.}
         True
         >>> ballot.borda(unordered_give_points=False, unordered_receive_points=False) == {
         ...     'a': 2., 'b': .5, 'c': .5, 'd': 0., 'e': 0.}
@@ -231,6 +235,26 @@ class BallotOrder(Ballot):
     # ===================
 
     def restrict(self, candidates: set=None, **kwargs) -> 'BallotOrder':
+        """
+        Typical usage:
+
+        >>> ballot = BallotOrder('a ~ b > c')
+        >>> ballot
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+        >>> ballot.restrict(candidates={'b', 'c'})
+        BallotOrder(['b', 'c'], candidates={'b', 'c'})
+
+        More general usage:
+
+        >>> ballot = BallotOrder('a ~ b > c')
+        >>> ballot
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+        >>> ballot.restrict(candidates={'b', 'c', 'd'})
+        BallotOrder(['b', 'c'], candidates={'b', 'c'})
+
+        In the last example above, note that `d` is not in the candidates of the restricted ballot, as she was not
+        available at the moment when the voter cast her ballot.
+        """
         if kwargs:
             raise TypeError("restrict() got an unexpected keyword argument %r" % list(kwargs.keys())[0])
         if candidates is None:
@@ -246,18 +270,21 @@ class BallotOrder(Ballot):
         """
         The first (= most liked) candidate.
 
-        :param candidates: a set of candidates.
+        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
+            `self.candidates`). Default is `self.candidates`.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.Unambiguous`.
-            * `include_unordered`: if True, then unordered candidates are considered present but below the others.
-              Default: True.
-        :return: the first (= most liked) candidate.
+            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
+            * `include_unordered`: if True (default), then unordered candidates are considered present but below the
+              others.
+        :return: the first (= most liked) candidate, chosen in the intersection of `self.candidates` and the argument
+            `candidates`. Can return None for an "abstention".
 
         >>> print(BallotOrder('a ~ b').first(priority=Priority.ASCENDING))
         a
         >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'}))
         c
-        >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'}, include_unordered=False))
+        >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'},
+        ...                                                              include_unordered=False))
         None
         """
         # noinspection PyUnresolvedReferences
@@ -280,12 +307,14 @@ class BallotOrder(Ballot):
         """
         The last (= most disliked) candidate.
 
-        :param candidates: a set of candidates.
+        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
+            `self.candidates`). Default is `self.candidates`.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.Unambiguous`.
-            * `include_unordered`: if True, then unordered candidates are considered present but below the others.
-              Default: True.
-        :return: the last (= most disliked) candidate.
+            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
+            * `include_unordered`: if True (default), then unordered candidates are considered present but below the
+              others.
+        :return: the last (= most disliked) candidate, chosen in the intersection of `self.candidates` and the argument
+            `candidates`. Can return None for an "abstention".
 
         >>> print(BallotOrder('a ~ b').last(priority=Priority.ASCENDING))
         b

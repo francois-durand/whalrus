@@ -95,6 +95,7 @@ class Ballot:
         Additional candidates (that are in the argument `candidates` but not in `self.candidates`) are generally not
         taken into account in the restricted ballot. For example, in a election with candidates 'a', 'b', 'c', assume
         that the voter emits an ordered ballot a > b > c. Later, candidate 'a' is removed and candidate 'd' is added.
-        Then the "restricted" ballot to {'b, 'c', 'd'} is b > c. For more details, see for example :class:`BallotOrder`.
+        Then the "restricted" ballot to {'b, 'c', 'd'} is b > c. For more details, see for example
+        :meth:`BallotOrder.restrict`.
         """
         raise NotImplementedError

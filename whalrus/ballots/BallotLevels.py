@@ -37,19 +37,21 @@ class BallotLevels(BallotOrder):
         the values must be hashable.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
         candidates that are explicitly mentioned in the ballot :attr:`b`.
-    :param scale: a Scale object, representing the authorized scale at the moment when the voter cast her ballot.
-        If not specified, Whalrus tries to infer it.
+    :param scale: the authorized scale at the moment when the voter cast her ballot. If not specified, Whalrus tries
+        to infer it.
 
     Most general syntax:
 
-    >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}, scale=ScaleRange(low=0, high=10))
+    >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'},
+    ...              scale=ScaleRange(low=0, high=10))
     BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}, scale=ScaleRange(low=0, high=10))
 
     Other examples of syntax:
 
     >>> BallotLevels({'a': 10, 'b': 7, 'c': 3})
     BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c'}, scale=ScaleRange(low=3, high=10))
-    >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'}, scale=ScaleFromList(['Bad', 'Medium', 'Good']))
+    >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'},
+    ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
     >>> ballot.as_weak_order == [{'a'}, {'b', 'c'}]
     True
     """
@@ -155,7 +157,10 @@ class BallotLevels(BallotOrder):
         """
         Keys of the ballot.
 
-        :return: self.as_dict.keys().
+        :return: This is a shortcut for `self.as_dict.keys()`.
+
+        >>> sorted(BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}).keys())
+        ['a', 'b', 'c']
         """
         return self.as_dict.keys()
 
@@ -163,7 +168,10 @@ class BallotLevels(BallotOrder):
         """
         Values of the ballot.
 
-        :return: self.as_dict.values().
+        :return: This is a shortcut for `self.as_dict.values()`.
+
+        >>> sorted(BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}).values())
+        [3, 7, 10]
         """
         return self.as_dict.values()
 
@@ -171,6 +179,9 @@ class BallotLevels(BallotOrder):
         """
         Items of the ballot.
 
-        :return: self.as_dict.items().
+        :return: This is a shortcut for `self.as_dict.items()`.
+
+        >>> sorted(BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}).items())
+        [('a', 10), ('b', 7), ('c', 3)]
         """
         return self.as_dict.items()

@@ -26,9 +26,9 @@ from whalrus.priority.Priority import Priority
 
 class BallotOneName(Ballot):
     """
-    A ballot in a mono-nominal context (typically, plurality or veto).
+    A ballot in a mono-nominal context (typically plurality or veto).
 
-    :param b: the candidate (or None).
+    :param b: the candidate (or None for an abstention).
     :param candidates: the candidates that were available at the moment when the voter cast her ballot.
 
     >>> ballot = BallotOneName('a', candidates={'a', 'b', 'c'})
@@ -115,12 +115,13 @@ class BallotOneName(Ballot):
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
             `self.candidates`). Default is `self.candidates`.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.Unambiguous`.
+            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
         :return: the same ballot, 'restricted' to the candidates given.
 
         >>> BallotOneName('a', candidates={'a', 'b'}).restrict(candidates={'b'})
         BallotOneName('b', candidates={'b'})
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'}, priority=Priority.ASCENDING)
+        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'},
+        ...                                                         priority=Priority.ASCENDING)
         BallotOneName('b', candidates={'b', 'c'})
         """
         # noinspection PyUnresolvedReferences
@@ -155,7 +156,7 @@ class BallotOneName(Ballot):
 
         :param candidates: a set of candidates.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.Unambiguous`.
+            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
         :return: the first (= most liked) candidate.
 
         In this mother class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
@@ -163,7 +164,8 @@ class BallotOneName(Ballot):
 
         >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first()
         'a'
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first(candidates={'b', 'c'}, priority=Priority.ASCENDING)
+        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first(candidates={'b', 'c'},
+        ...                                                      priority=Priority.ASCENDING)
         'b'
         """
         # noinspection PyUnresolvedReferences
@@ -179,7 +181,7 @@ class BallotOneName(Ballot):
 
         :param candidates: a set of candidates.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.Unambiguous`.
+            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
         :return: the last (= most disliked) candidate.
 
         In this mother class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
