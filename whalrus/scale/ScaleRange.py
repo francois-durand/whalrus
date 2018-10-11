@@ -18,22 +18,25 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.ballots.BallotOneName import BallotOneName
+from whalrus.scale.Scale import Scale
 
 
-class BallotPlurality(BallotOneName):
+class ScaleRange(Scale):
     """
-    A plurality ballot.
+    A scale of consecutive integers.
 
-    >>> ballot = BallotPlurality('a', candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    a
+    :param low: lowest integer.
+    :param high: highest integer.
 
-    >>> ballot = BallotPlurality(None, candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    None
+    Remark: for a scale of non-consecutive integers, such as {-1, 0, 2}, use the class :class:`ScaleFromSet`.
+
+    >>> ScaleRange(low=0, high=5)
+    ScaleRange(low=0, high=5)
     """
 
-    # Remark: this only difference with a member of the mother class BallotOneName is precisely that here, the object
-    # is an instance of BallotPlurality. As such, it will be treated differently in some contexts.
-    pass
+    def __init__(self, low: int, high: int):
+        self.low = low
+        self.high = high
+
+    def __repr__(self):
+        return 'ScaleRange(low=%s, high=%s)' % (self.low, self.high)

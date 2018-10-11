@@ -18,23 +18,22 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.scales.Scale import Scale
+from whalrus.ballot.BallotOneName import BallotOneName
 
 
-class ScaleInterval(Scale):
+class BallotPlurality(BallotOneName):
     """
-    A scale given by an interval of floats.
+    A plurality ballot.
 
-    :param low: lowest float.
-    :param high: highest float.
+    >>> ballot = BallotPlurality('a', candidates={'a', 'b', 'c'})
+    >>> print(ballot)
+    a
 
-    >>> ScaleInterval(low=0., high=10.)
-    ScaleInterval(low=0.0, high=10.0)
+    >>> ballot = BallotPlurality(None, candidates={'a', 'b', 'c'})
+    >>> print(ballot)
+    None
     """
 
-    def __init__(self, low: float = 0., high: float = 1.):
-        self.low = low
-        self.high = high
-
-    def __repr__(self):
-        return 'ScaleInterval(low=%s, high=%s)' % (self.low, self.high)
+    # Remark: this only difference with a member of the mother class BallotOneName is precisely that here, the object
+    # is an instance of BallotPlurality. As such, it will be treated differently in some contexts.
+    pass

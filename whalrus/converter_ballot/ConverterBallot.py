@@ -1,4 +1,4 @@
-from whalrus.ballots.Ballot import Ballot
+from whalrus.ballot.Ballot import Ballot
 
 
 class ConverterBallot:

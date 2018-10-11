@@ -18,7 +18,7 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.ballots.BallotOneName import BallotOneName
+from whalrus.ballot.BallotOneName import BallotOneName
 from whalrus.priority.Priority import Priority
 
 

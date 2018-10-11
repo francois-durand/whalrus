@@ -18,25 +18,23 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.scales.Scale import Scale
+from whalrus.scale.Scale import Scale
 
 
-class ScaleRange(Scale):
+class ScaleInterval(Scale):
     """
-    A scale of consecutive integers.
+    A scale given by an interval of floats.
 
-    :param low: lowest integer.
-    :param high: highest integer.
+    :param low: lowest float.
+    :param high: highest float.
 
-    Remark: for a scale of non-consecutive integers, such as {-1, 0, 2}, use the class :class:`ScaleFromSet`.
-
-    >>> ScaleRange(low=0, high=5)
-    ScaleRange(low=0, high=5)
+    >>> ScaleInterval(low=0., high=10.)
+    ScaleInterval(low=0.0, high=10.0)
     """
 
-    def __init__(self, low: int, high: int):
+    def __init__(self, low: float = 0., high: float = 1.):
         self.low = low
         self.high = high
 
     def __repr__(self):
-        return 'ScaleRange(low=%s, high=%s)' % (self.low, self.high)
+        return 'ScaleInterval(low=%s, high=%s)' % (self.low, self.high)

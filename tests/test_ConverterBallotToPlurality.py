@@ -1,6 +1,6 @@
-from whalrus.converters_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
-from whalrus.ballots.BallotPlurality import BallotPlurality
-from whalrus.ballots.BallotOrder import BallotOrder
+from whalrus.converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
+from whalrus.ballot.BallotPlurality import BallotPlurality
+from whalrus.ballot.BallotOrder import BallotOrder
 
 
 def test():

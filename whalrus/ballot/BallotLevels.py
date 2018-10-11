@@ -20,12 +20,12 @@ This file is part of Whalrus.
 """
 import numbers
 from typing import KeysView, ValuesView, ItemsView
-from whalrus.ballots.BallotOrder import BallotOrder
-from whalrus.scales.Scale import Scale
-from whalrus.scales.ScaleRange import ScaleRange
-from whalrus.scales.ScaleInterval import ScaleInterval
-from whalrus.scales.ScaleFromList import ScaleFromList
-from whalrus.scales.ScaleFromSet import ScaleFromSet
+from whalrus.ballot.BallotOrder import BallotOrder
+from whalrus.scale.Scale import Scale
+from whalrus.scale.ScaleRange import ScaleRange
+from whalrus.scale.ScaleInterval import ScaleInterval
+from whalrus.scale.ScaleFromList import ScaleFromList
+from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.utils.Utils import cached_property, set_to_str, dict_to_str, dict_to_items
 
 

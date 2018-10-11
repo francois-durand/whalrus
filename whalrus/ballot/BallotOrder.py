@@ -19,7 +19,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Iterable
-from whalrus.ballots.Ballot import Ballot
+from whalrus.ballot.Ballot import Ballot
 from whalrus.utils.Utils import parse_weak_order, cached_property, set_to_str, set_to_list
 from whalrus.priority.Priority import Priority
 

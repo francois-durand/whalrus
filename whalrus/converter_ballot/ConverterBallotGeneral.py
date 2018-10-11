@@ -1,11 +1,11 @@
 from pyparsing import ParseException
-from whalrus.converters_ballot.ConverterBallot import ConverterBallot
-from whalrus.ballots.Ballot import Ballot
-from whalrus.ballots.BallotOneName import BallotOneName
-from whalrus.ballots.BallotOrder import BallotOrder
-from whalrus.ballots.BallotLevels import BallotLevels
-from whalrus.ballots.BallotPlurality import BallotPlurality
-from whalrus.ballots.BallotVeto import BallotVeto
+from whalrus.converter_ballot.ConverterBallot import ConverterBallot
+from whalrus.ballot.Ballot import Ballot
+from whalrus.ballot.BallotOneName import BallotOneName
+from whalrus.ballot.BallotOrder import BallotOrder
+from whalrus.ballot.BallotLevels import BallotLevels
+from whalrus.ballot.BallotPlurality import BallotPlurality
+from whalrus.ballot.BallotVeto import BallotVeto
 from whalrus.priority.Priority import Priority
 
 

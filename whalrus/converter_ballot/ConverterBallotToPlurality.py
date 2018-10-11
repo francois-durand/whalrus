@@ -1,10 +1,10 @@
-from whalrus.converters_ballot.ConverterBallot import ConverterBallot
-from whalrus.converters_ballot.ConverterBallotGeneral import ConverterBallotGeneral
-from whalrus.ballots.Ballot import Ballot
-from whalrus.ballots.BallotPlurality import BallotPlurality
-from whalrus.ballots.BallotVeto import BallotVeto
-from whalrus.ballots.BallotOneName import BallotOneName
-from whalrus.ballots.BallotOrder import BallotOrder
+from whalrus.converter_ballot.ConverterBallot import ConverterBallot
+from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
+from whalrus.ballot.Ballot import Ballot
+from whalrus.ballot.BallotPlurality import BallotPlurality
+from whalrus.ballot.BallotVeto import BallotVeto
+from whalrus.ballot.BallotOneName import BallotOneName
+from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.priority.Priority import Priority
 
 

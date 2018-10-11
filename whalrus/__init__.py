@@ -11,27 +11,27 @@ from .utils.Utils import cached_property, DeleteCacheMixin, parse_weak_order, se
     dict_to_str
 
 # Scales
-from .scales.Scale import Scale
-from .scales.ScaleFromList import ScaleFromList
-from .scales.ScaleFromSet import ScaleFromSet
-from .scales.ScaleRange import ScaleRange
-from .scales.ScaleInterval import ScaleInterval
+from .scale.Scale import Scale
+from .scale.ScaleFromList import ScaleFromList
+from .scale.ScaleFromSet import ScaleFromSet
+from .scale.ScaleRange import ScaleRange
+from .scale.ScaleInterval import ScaleInterval
 
 # Priority
 from .priority.Priority import Priority
 
 # Ballots
-from .ballots.Ballot import Ballot
-from .ballots.BallotOrder import BallotOrder
-from .ballots.BallotLevels import BallotLevels
-from .ballots.BallotOneName import BallotOneName
-from .ballots.BallotPlurality import BallotPlurality
-from .ballots.BallotVeto import BallotVeto
+from .ballot.Ballot import Ballot
+from .ballot.BallotOrder import BallotOrder
+from .ballot.BallotLevels import BallotLevels
+from .ballot.BallotOneName import BallotOneName
+from .ballot.BallotPlurality import BallotPlurality
+from .ballot.BallotVeto import BallotVeto
 
 # Ballot Converters
-from .converters_ballot.ConverterBallot import ConverterBallot
-from .converters_ballot.ConverterBallotGeneral import ConverterBallotGeneral
-from .converters_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
+from .converter_ballot.ConverterBallot import ConverterBallot
+from .converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
+from .converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1

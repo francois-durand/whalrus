@@ -19,7 +19,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import logging
-from whalrus.ballots.Ballot import Ballot
+from whalrus.ballot.Ballot import Ballot
 from whalrus.utils.Utils import cached_property, set_to_str
 from whalrus.priority.Priority import Priority
 
