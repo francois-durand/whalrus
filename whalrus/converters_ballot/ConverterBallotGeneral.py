@@ -14,12 +14,9 @@ class ConverterBallotGeneral(ConverterBallot):
     """
     General ballot converter.
 
-    :param plurality_priority: option passed to :meth:`BallotPlurality.restrict` when restricting the ballot. Default:
-        :attr:`Priority.UNAMBIGUOUS`.
-    :param veto_priority: option passed to :meth:`BallotVeto.restrict` when restricting the ballot. Default:
-        :attr:`Priority.UNAMBIGUOUS`.
-    :param one_name_priority: option passed to :meth:`BallotOneName.restrict` when restricting the ballot. Default:
-        :attr:`Priority.UNAMBIGUOUS`.
+    :param plurality_priority: option passed to :meth:`BallotPlurality.restrict` when restricting the ballot.
+    :param veto_priority: option passed to :meth:`BallotVeto.restrict` when restricting the ballot.
+    :param one_name_priority: option passed to :meth:`BallotOneName.restrict` when restricting the ballot.
 
     This is a default generalist converter. It tries to infer the type of input and converts it to an object of the
     relevant subclass of :class:`Ballot`.

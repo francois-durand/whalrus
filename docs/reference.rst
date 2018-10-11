@@ -3,31 +3,46 @@ Reference
 =========
 
 Scales
-------
+======
+
+Scale
+-----
 
 .. autoclass:: whalrus.Scale
     :members:
 
+ScaleFromList
+-------------
+
 .. autoclass:: whalrus.ScaleFromList
     :members:
+
+ScaleFromSet
+------------
 
 .. autoclass:: whalrus.ScaleFromSet
     :members:
 
+ScaleRange
+----------
+
 .. autoclass:: whalrus.ScaleRange
     :members:
+
+ScaleInterval
+-------------
 
 .. autoclass:: whalrus.ScaleInterval
     :members:
 
 Priority
---------
+========
 
 .. autoclass:: whalrus.Priority
     :members:
 
 Ballots
--------
+=======
 
 .. autoclass:: whalrus.Ballot
     :members:
@@ -48,7 +63,7 @@ Ballots
     :members:
 
 Ballot converters
------------------
+=================
 
 .. autoclass:: whalrus.ConverterBallot
     :members:
@@ -59,8 +74,8 @@ Ballot converters
 .. autoclass:: whalrus.ConverterBallotToPlurality
     :members:
 
-Utils (will probably be removed from documentation)
----------------------------------------------------
+Utils
+=====
 
 .. autoclass:: whalrus.utils.Utils.cached_property
     :members:
@@ -79,7 +94,7 @@ Utils (will probably be removed from documentation)
 .. autofunction:: whalrus.dict_to_str
 
 How to write documentation
---------------------------
+==========================
 
 .. autoclass:: whalrus.MyClass1
     :members:
