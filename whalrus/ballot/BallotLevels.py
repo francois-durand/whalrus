@@ -30,6 +30,7 @@ from whalrus.utils.Utils import cached_property, set_to_str, dict_to_str, dict_t
 
 
 class BallotLevels(BallotOrder):
+    # noinspection PyRedeclaration
     """
     Ballot with an evaluation of candidates.
 
@@ -53,6 +54,13 @@ class BallotLevels(BallotOrder):
     ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
     >>> ballot.as_weak_order == [{'a'}, {'b', 'c'}]
     True
+
+    In addition to the set-like and list-like behaviors defined in mother class :class:`BallotOrder`, it also has
+    a dict-like behavior in the sense that it implements `__getitem__`.
+
+    >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
+    >>> ballot['a']
+    10
     """
 
     # Core features: ballot and candidates

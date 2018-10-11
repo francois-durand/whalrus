@@ -46,6 +46,23 @@ class BallotOrder(Ballot):
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
     >>> BallotOrder('a ~ b > c')
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+
+    The ballot has set-like behavior in the sense that it implements `__len__` and `__contains__`.
+
+    >>> ballot = BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
+    >>> len(ballot)
+    3
+    >>> 'd' in ballot
+    False
+
+    If the order is strict, then the ballot is iterable.
+
+    >>> ballot = BallotOrder('a > b > c')
+    >>> for candidate in ballot:
+    ...     print(candidate)
+    a
+    b
+    c
     """
 
     # Core features: ballot and candidates

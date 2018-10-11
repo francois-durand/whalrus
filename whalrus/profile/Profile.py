@@ -292,7 +292,7 @@ class Profile(DeleteCacheMixin):
     # Dict-like behavior
     def items(self) -> Iterator:
         """
-        Items of the ballot.
+        Items of the profile.
 
         Returns: an iterator (zip) of triples (ballot, weight, voter).
 
