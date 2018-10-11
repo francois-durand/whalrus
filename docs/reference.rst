@@ -44,20 +44,38 @@ Priority
 Ballots
 =======
 
+Ballot
+------
+
 .. autoclass:: whalrus.Ballot
     :members:
+
+BallotOrder
+-----------
 
 .. autoclass:: whalrus.BallotOrder
     :members:
 
+BallotLevels
+------------
+
 .. autoclass:: whalrus.BallotLevels
     :members:
+
+BallotOneName
+-------------
 
 .. autoclass:: whalrus.BallotOneName
     :members:
 
+BallotPlurality
+---------------
+
 .. autoclass:: whalrus.BallotPlurality
     :members:
+
+BallotVeto
+----------
 
 .. autoclass:: whalrus.BallotVeto
     :members:
@@ -65,11 +83,20 @@ Ballots
 Ballot converters
 =================
 
+ConverterBallot
+---------------
+
 .. autoclass:: whalrus.ConverterBallot
     :members:
 
+ConverterBallotGeneral
+----------------------
+
 .. autoclass:: whalrus.ConverterBallotGeneral
     :members:
+
+ConverterBallotToPlurality
+--------------------------
 
 .. autoclass:: whalrus.ConverterBallotToPlurality
     :members:
