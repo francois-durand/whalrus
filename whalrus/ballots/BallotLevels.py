@@ -42,14 +42,13 @@ class BallotLevels(BallotOrder):
 
     Most general syntax:
 
-    >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'},
-    ...              scale=ScaleRange(low=0, high=10))
-    BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}, scale=ScaleRange(low=0, high=10))
+    >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3},
+    ...                       candidates={'a', 'b', 'c', 'd', 'e'},
+    ...                       scale=ScaleRange(low=0, high=10))
 
     Other examples of syntax:
 
-    >>> BallotLevels({'a': 10, 'b': 7, 'c': 3})
-    BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c'}, scale=ScaleRange(low=3, high=10))
+    >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
     >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'},
     ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
     >>> ballot.as_weak_order == [{'a'}, {'b', 'c'}]
@@ -159,7 +158,8 @@ class BallotLevels(BallotOrder):
 
         :return: This is a shortcut for `self.as_dict.keys()`.
 
-        >>> sorted(BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}).keys())
+        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> sorted(ballot.keys())
         ['a', 'b', 'c']
         """
         return self.as_dict.keys()
@@ -170,7 +170,8 @@ class BallotLevels(BallotOrder):
 
         :return: This is a shortcut for `self.as_dict.values()`.
 
-        >>> sorted(BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}).values())
+        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> sorted(ballot.values())
         [3, 7, 10]
         """
         return self.as_dict.values()
@@ -181,7 +182,8 @@ class BallotLevels(BallotOrder):
 
         :return: This is a shortcut for `self.as_dict.items()`.
 
-        >>> sorted(BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'}).items())
+        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> sorted(ballot.items())
         [('a', 10), ('b', 7), ('c', 3)]
         """
         return self.as_dict.items()

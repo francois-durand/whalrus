@@ -45,7 +45,8 @@ class ScaleFromSet(ScaleFromList):
     ...         return hash(self.x)
     ...     def __lt__(self, other):
     ...         return Appreciation.VALUES[self.x] < Appreciation.VALUES[other.x]
-    >>> scale = ScaleFromSet({Appreciation('Excellent'), Appreciation('Good'), Appreciation('Medium')})
+    >>> scale = ScaleFromSet({Appreciation('Excellent'), Appreciation('Good'),
+    ...                      Appreciation('Medium')})
     >>> scale
     ScaleFromSet(levels={Appreciation('Medium'), Appreciation('Good'), Appreciation('Excellent')})
     >>> scale.lt(Appreciation('Medium'), Appreciation('Good'))
