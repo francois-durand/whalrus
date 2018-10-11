@@ -107,6 +107,21 @@ Profile
 .. autoclass:: whalrus.Profile
     :members:
 
+Rule: Abstract classes
+======================
+
+Rule
+----
+
+.. autoclass:: whalrus.Rule
+    :members:
+
+RuleScore
+---------
+
+.. autoclass:: whalrus.RuleScore
+    :members:
+
 Utils
 =====
 
