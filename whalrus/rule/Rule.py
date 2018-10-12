@@ -82,3 +82,21 @@ class Rule(DeleteCacheMixin):
         :return: the winner of the election (which may use a tie-breaking rule).
         """
         return self.tie_break.choice(self.cowinners_)
+
+    @cached_property
+    def order_(self) -> list:
+        """
+        Result of the election as a (weak) order over the candidates.
+
+        :return: a list of sets. The first set contains the candidates that are tied for victory, etc.
+        """
+        raise NotImplementedError
+
+    @cached_property
+    def strict_order_(self) -> list:
+        """
+        Result of the election as a strict order over the candidates.
+
+        :return: a list whose first element is the winner, etc (which may use a tie-breaking rule).
+        """
+        return [candidate for tie_class in self.order_ for candidate in self.tie_break.sort(tie_class)]

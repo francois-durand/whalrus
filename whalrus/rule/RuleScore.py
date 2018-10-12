@@ -37,3 +37,14 @@ class RuleScore(Rule):
         :return: the set of candidates with the best score.
         """
         return {k for k, v in self.scores_.items() if v == self.best_score_}
+
+    @cached_property
+    def order_(self) -> list:
+        """
+        Result of the election as a (weak) order over the candidates.
+
+        :return: a list of sets. The first set contains the candidates that have the best score, the second set
+            contains those with the second best score, etc.
+        """
+        return [{k for k in self.scores_.keys() if self.scores_[k] == v}
+                for v in sorted(set(self.scores_.values()), reverse=True)]

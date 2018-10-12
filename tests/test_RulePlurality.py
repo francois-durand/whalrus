@@ -1,5 +1,6 @@
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.ballot.BallotOneName import BallotOneName
+from whalrus.priority.Priority import Priority
 
 
 def test():
@@ -30,6 +31,16 @@ def test():
     assert plurality(profile, candidates={'b', 'c'}).scores_ == {'b': 1, 'c': 1}
     assert plurality(profile, candidates={'a', 'b', 'c', 'd'}).scores_ == {'a': 1, 'b': 0, 'c': 1, 'd': 0}
     assert plurality(profile, candidates={'b', 'c', 'd'}).scores_ == {'b': 1, 'c': 1, 'd': 0}
+
+
+def test_order():
+    plurality = RulePlurality(
+        ballots=['a', 'b', 'c', 'd', 'e'],
+        weights=[2, 3, 1, 3, 2],
+        tie_break=Priority.ASCENDING
+    )
+    assert plurality.order_ == [{'b', 'd'}, {'a', 'e'}, {'c'}]
+    assert plurality.strict_order_ == ['b', 'd', 'a', 'e', 'c']
 
 
 def test_old_plurality_unweighted_winner():
