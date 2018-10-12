@@ -167,9 +167,15 @@ Utils
 
 .. autofunction:: whalrus.set_to_str
 
+.. autoclass:: whalrus.NiceSet
+    :members:
+
 .. autofunction:: whalrus.dict_to_items
 
 .. autofunction:: whalrus.dict_to_str
+
+.. autoclass:: whalrus.NiceDict
+    :members:
 
 How to write documentation
 ==========================

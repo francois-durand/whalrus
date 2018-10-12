@@ -8,6 +8,7 @@ Welcome to Whalrus's documentation!
    readme
    installation
    usage
+   tutorial
    reference
    modules
    contributing
