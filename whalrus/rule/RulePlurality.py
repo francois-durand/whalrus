@@ -24,8 +24,8 @@ class RulePlurality(RuleScore):
 
     Finally, you can access the computed variables:
 
-    >>> plurality.scores_ == {'a': 2, 'b': 2, 'c': 1, 'd': 0}
-    True
+    >>> plurality.scores_
+    {'a': 2, 'b': 2, 'c': 1, 'd': 0}
     >>> plurality.winner_
     'a'
 

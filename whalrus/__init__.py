@@ -55,4 +55,5 @@ from .SubPackage2.MyClass2 import MyClass2
 from .SubPackage2.MyClass3 import MyClass3
 
 # Tutorials
-from .tutorial.tutorial import quick_start, computed_attributes
+from .tutorial.tutorial import quick_start, computed_attributes, general_syntax, under_the_hood, combine_rules, \
+    change_candidates
