@@ -53,7 +53,7 @@ class Rule(DeleteCacheMixin):
         if converter is None:
             converter = self.default_converter
         self.profile_converted_ = Profile([converter(b, candidates) for b in self.profile_],
-                                          weights=weights, voters=voters)
+                                          weights=self.profile_.weights, voters=self.profile_.voters)
         if candidates is None:
             candidates = set().union(*[b.candidates for b in self.profile_converted_])
         self.candidates_ = candidates
@@ -72,7 +72,7 @@ class Rule(DeleteCacheMixin):
 
         :return: the set of cowinners.
         """
-        raise NotImplementedError
+        return self.order_[0]
 
     @cached_property
     def winner_(self) -> object:
@@ -93,7 +93,7 @@ class Rule(DeleteCacheMixin):
 
         :return: the set of "cotrailers".
         """
-        raise NotImplementedError
+        return self.order_[-1]
 
     @cached_property
     def trailer_(self) -> object:

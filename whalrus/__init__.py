@@ -45,6 +45,9 @@ from .rule.RuleScore import RuleScore
 from .rule.RulePlurality import RulePlurality
 from .rule.RuleBorda import RuleBorda
 
+# Voting Rules: "meta-rules"
+from .rule.RuleSequentialElimination import RuleSequentialElimination
+
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
 from .SubPackage2.MyClass2 import MyClass2

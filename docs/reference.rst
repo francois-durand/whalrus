@@ -128,6 +128,12 @@ RuleScore
 .. autoclass:: whalrus.RuleScore
     :members:
 
+RuleSequentialElimination
+-------------------------
+
+.. autoclass:: whalrus.RuleSequentialElimination
+    :members:
+
 RulePlurality
 -------------
 
