@@ -18,6 +18,7 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+from whalrus.utils.Utils import NiceSet
 
 
 class Ballot:
@@ -39,11 +40,12 @@ class Ballot:
     """
 
     @property
-    def candidates(self) -> set:
+    def candidates(self) -> NiceSet:
         """
         The candidates that were available at the moment when the voter cast her ballot.
 
-        :return: the set of candidates. As a consequence, candidates must be hashable objects.
+        :return: the set of candidates (or, more exactly, a :class:`NiceSet`). As a consequence, candidates must be
+            hashable objects.
         """
         raise NotImplementedError
 

@@ -1,5 +1,5 @@
 import logging
-from whalrus.utils.Utils import DeleteCacheMixin, cached_property
+from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.profile.Profile import Profile
@@ -55,7 +55,7 @@ class Rule(DeleteCacheMixin):
         self.profile_converted_ = Profile([converter(b, candidates) for b in self.profile_],
                                           weights=self.profile_.weights, voters=self.profile_.voters)
         if candidates is None:
-            candidates = set().union(*[b.candidates for b in self.profile_converted_])
+            candidates = NiceSet(set().union(*[b.candidates for b in self.profile_converted_]))
         self.candidates_ = candidates
         self._check_profile(candidates)
         self.delete_cache()
@@ -66,7 +66,7 @@ class Rule(DeleteCacheMixin):
             logging.warning('Some ballots do not have the same set of candidates as the whole election.')
 
     @cached_property
-    def cowinners_(self) -> set:
+    def cowinners_(self) -> NiceSet:
         """
         Cowinners of the election.
 
@@ -84,7 +84,7 @@ class Rule(DeleteCacheMixin):
         return self.tie_break.choice(self.cowinners_)
 
     @cached_property
-    def cotrailers_(self) -> set:
+    def cotrailers_(self) -> NiceSet:
         """
         "Cotrailers" of the election.
 
@@ -109,7 +109,8 @@ class Rule(DeleteCacheMixin):
         """
         Result of the election as a (weak) order over the candidates.
 
-        :return: a list of sets. The first set contains the candidates that are tied for victory, etc.
+        :return: a list of sets (or, more exactly, :class:`NiceSet` objects). The first set contains the candidates
+            that are tied for victory, etc.
         """
         raise NotImplementedError
 

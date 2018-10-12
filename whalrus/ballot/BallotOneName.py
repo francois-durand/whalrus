@@ -20,7 +20,7 @@ This file is part of Whalrus.
 """
 import logging
 from whalrus.ballot.Ballot import Ballot
-from whalrus.utils.Utils import cached_property, set_to_str
+from whalrus.utils.Utils import cached_property, NiceSet
 from whalrus.priority.Priority import Priority
 
 
@@ -49,43 +49,44 @@ class BallotOneName(Ballot):
         super().__init__()
 
     @cached_property
-    def candidates(self) -> set:
+    def candidates(self) -> NiceSet:
         if self._input_candidates is None:
             if self.candidate is None:
                 logging.debug('The list of candidates was not explicitly given. Using the empty set instead.')
-                return set()
+                return NiceSet()
             else:
                 logging.debug('The list of candidates was not explicitly given. Using singleton {%s} instead.'
                               % self.candidate)
-                return {self.candidate}
-        return self._input_candidates
+                return NiceSet({self.candidate})
+        return NiceSet(self._input_candidates)
 
     @cached_property
-    def candidates_in_b(self) -> set:
+    def candidates_in_b(self) -> NiceSet:
         """
         Candidate explicitly mentioned in the ballot.
 
-        :return: a set containing the only candidate contained in the ballot (or an empty set if there was none).
+        :return: a set (or, more exactly, a :class:`NiceSet`) containing the only candidate contained in the ballot
+            (or an empty set if there was none).
 
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_in_b == {'a'}
-        True
+        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_in_b
+        {'a'}
         """
         if self.candidate is None:
-            return set()
+            return NiceSet()
         else:
-            return {self.candidate}
+            return NiceSet({self.candidate})
 
     @cached_property
-    def candidates_not_in_b(self) -> set:
+    def candidates_not_in_b(self) -> NiceSet:
         """
         Candidates that were available at the moment of the vote, but not explicitly mentioned in the ballot.
 
-        :return: a set of candidates.
+        :return: a set of candidates (or, more exactly, a :class:`NiceSet`).
 
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_not_in_b == {'b', 'c'}
-        True
+        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_not_in_b
+        {'b', 'c'}
         """
-        return self.candidates - {self.candidate}
+        return NiceSet(self.candidates - {self.candidate})
 
     def __eq__(self, other: object) -> bool:
         if type(self) != type(other):
@@ -100,7 +101,7 @@ class BallotOneName(Ballot):
     # ==============
 
     def __repr__(self) -> str:
-        return '%s(%s, candidates=%s)' % (self.__class__.__name__, repr(self.candidate), set_to_str(self.candidates))
+        return '%s(%s, candidates=%s)' % (self.__class__.__name__, repr(self.candidate), repr(self.candidates))
 
     def __str__(self) -> str:
         return str(self.candidate)
@@ -131,10 +132,10 @@ class BallotOneName(Ballot):
         if candidates is None:
             return self
         if self.candidate in candidates:
-            return self.__class__(self.candidate, self.candidates & candidates)
-        return self._restrict(restricted_candidates=self.candidates & candidates, priority=priority)
+            return self.__class__(self.candidate, NiceSet(self.candidates & candidates))
+        return self._restrict(restricted_candidates=NiceSet(self.candidates & candidates), priority=priority)
 
-    def _restrict(self, restricted_candidates: set, priority: Priority) -> 'BallotOneName':
+    def _restrict(self, restricted_candidates: NiceSet, priority: Priority) -> 'BallotOneName':
         """
         Auxiliary function of `restrict`.
 

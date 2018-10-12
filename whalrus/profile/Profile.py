@@ -307,7 +307,7 @@ class Profile(DeleteCacheMixin):
     # Some basic operations
     # =====================
 
-    def __add__(self, other: 'Profile') -> 'Profile':
+    def __add__(self, other: Union['Profile', list]) -> 'Profile':
         """
         Concatenate with another profile.
 

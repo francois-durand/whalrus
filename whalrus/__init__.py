@@ -8,7 +8,7 @@ __version__ = '0.1.0'
 
 # Utils
 from .utils.Utils import cached_property, DeleteCacheMixin, parse_weak_order, set_to_list, set_to_str, dict_to_items, \
-    dict_to_str
+    dict_to_str, NiceSet, NiceDict
 
 # Scales
 from .scale.Scale import Scale

@@ -1,4 +1,4 @@
-from whalrus.utils.Utils import cached_property
+from whalrus.utils.Utils import cached_property, NiceSet
 from whalrus.rule.Rule import Rule
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.profile.Profile import Profile
@@ -36,6 +36,6 @@ class RuleSequentialElimination(Rule):
         result = []
         while candidates:
             trailer = self.base_rule(self.profile_converted_, candidates=candidates).trailer_
-            result.insert(0, {trailer})
+            result.insert(0, NiceSet({trailer}))
             candidates.remove(trailer)
         return result

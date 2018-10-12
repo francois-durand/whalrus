@@ -1,4 +1,4 @@
-from whalrus.utils.Utils import cached_property
+from whalrus.utils.Utils import cached_property, NiceSet
 from whalrus.rule.Rule import Rule
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.rule.RuleBorda import RuleBorda
@@ -32,7 +32,7 @@ class RuleSequentialTieBreak(Rule):
     True
     >>> rule(profile).order_ == [{'a', 'b'}, {'c'}, {'d'}, {'e'}]
     True
-    >>> rule(profile).winner_
+    >>> rule.winner_
     'a'
     """
 
@@ -57,7 +57,7 @@ class RuleSequentialTieBreak(Rule):
                     rank_tuples[c].append(i)
         rank_tuples = {k: tuple(v) for k, v in rank_tuples.items()}
         # Now, sort by lexicographic order of "rank tuples"
-        return [{k for k in rank_tuples.keys() if rank_tuples[k] == v}
+        return [NiceSet(k for k in rank_tuples.keys() if rank_tuples[k] == v)
                 for v in sorted(set(rank_tuples.values()))]
 
     # TODO: some methods such as cowinners_ might be overridden for a better performance.

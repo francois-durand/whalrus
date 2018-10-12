@@ -128,8 +128,8 @@ def parse_weak_order(s: str) -> list:
     except ParseException:
         parsed = weak_preference.parseString(s, parseAll=True).asList()
 
-    # Final conversion to format [{'Jean', 'Titi', 'tata32'}, {'me'}, {'you', 'us'}, {'them'}]
-    return [set(s) for s in parsed]
+    # Final conversion to format [{'Jean', 'tata32', 'Titi'}, {'me'}, {'us', 'you'}, {'them'}]
+    return [NiceSet(s) for s in parsed]
 
 
 def set_to_list(s: set) -> list:
@@ -166,6 +166,18 @@ def set_to_str(s: set) -> str:
         return str(s)
 
 
+class NiceSet(set):
+    """
+    A set that prints in order (when the elements are comparable).
+    """
+
+    def __repr__(self):
+        try:
+            return '{' + str(sorted(self))[1:-1] + '}'
+        except TypeError:
+            return str(set(self))
+
+
 def dict_to_items(d: dict) -> list:
     """
     Convert a dict to a list of pairs (key, value).
@@ -197,3 +209,12 @@ def dict_to_str(d: dict) -> str:
         return '{' + ', '.join(['%r: %r' % (k, d[k]) for k in sorted(d.keys())]) + '}'
     except TypeError:
         return str(d)
+
+
+class NiceDict(dict):
+    """
+    A dict that prints in the order of the keys (when they are comparable).
+    """
+
+    def __repr__(self) -> str:
+        return dict_to_str(self)

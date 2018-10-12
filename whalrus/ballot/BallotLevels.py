@@ -26,7 +26,7 @@ from whalrus.scale.ScaleRange import ScaleRange
 from whalrus.scale.ScaleInterval import ScaleInterval
 from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.scale.ScaleFromSet import ScaleFromSet
-from whalrus.utils.Utils import cached_property, set_to_str, dict_to_str, dict_to_items
+from whalrus.utils.Utils import cached_property, dict_to_items, NiceSet, NiceDict
 
 
 class BallotLevels(BallotOrder):
@@ -52,8 +52,8 @@ class BallotLevels(BallotOrder):
     >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
     >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'},
     ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
-    >>> ballot.as_weak_order == [{'a'}, {'b', 'c'}]
-    True
+    >>> ballot.as_weak_order
+    [{'a'}, {'b', 'c'}]
 
     In addition to the set-like and list-like behaviors defined in mother class :class:`BallotOrder`, it also has
     a dict-like behavior in the sense that it implements `__getitem__`.
@@ -76,30 +76,30 @@ class BallotLevels(BallotOrder):
         that a has evaluation 10; b, 7; and c, 3.
 
         :param b: a dictionary.
-        :return: the dictionary itself.
+        :return: the dictionary itself (converted to :class:`NiceDict`).
         """
-        self._internal_representation = b
+        self._internal_representation = NiceDict(b)
 
     @cached_property
-    def as_dict(self) -> dict:
+    def as_dict(self) -> NiceDict:
         """
         Evaluation format.
 
-        :return: a dictionary whose keys are candidates and values are evaluations.
+        :return: a dict (or more exactly a :class:`NiceDict`), whose keys are candidates and values are evaluations.
 
-        >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}).as_dict == {'a': 10, 'b': 7, 'c': 3}
-        True
+        >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}).as_dict
+        {'a': 10, 'b': 7, 'c': 3}
         """
         return self._internal_representation
 
     @cached_property
     def as_weak_order(self) -> list:
-        return [{k for k in self.as_dict.keys() if self.as_dict[k] == v}
+        return [NiceSet(k for k in self.as_dict.keys() if self.as_dict[k] == v)
                 for v in sorted(set(self.as_dict.values()), reverse=True)]
 
     @cached_property
-    def candidates_in_b(self) -> set:
-        return set(self.as_dict.keys())
+    def candidates_in_b(self) -> NiceSet:
+        return NiceSet(self.as_dict.keys())
 
     @cached_property
     def scale(self) -> Scale:
@@ -127,7 +127,7 @@ class BallotLevels(BallotOrder):
 
     def __repr__(self) -> str:
         return 'BallotLevels(%s, candidates=%s, scale=%s)' % (
-            dict_to_str(self.as_dict), set_to_str(self.candidates), repr(self.scale)
+            self.as_dict, self.candidates, repr(self.scale)
         )
 
     def __str__(self) -> str:
@@ -142,7 +142,7 @@ class BallotLevels(BallotOrder):
         if candidates is None:
             return self
         return BallotLevels({k: v for k, v in self.as_dict.items() if k in candidates},
-                            candidates=self.candidates & candidates, scale=self.scale)
+                            candidates=NiceSet(self.candidates & candidates), scale=self.scale)
 
     # Dictionary behavior
     # ===================

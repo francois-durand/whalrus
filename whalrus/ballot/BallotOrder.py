@@ -20,7 +20,7 @@ This file is part of Whalrus.
 """
 from typing import Iterable
 from whalrus.ballot.Ballot import Ballot
-from whalrus.utils.Utils import parse_weak_order, cached_property, set_to_str, set_to_list
+from whalrus.utils.Utils import parse_weak_order, cached_property, set_to_list, NiceDict, NiceSet
 from whalrus.priority.Priority import Priority
 
 
@@ -86,9 +86,9 @@ class BallotOrder(Ballot):
         if isinstance(b, tuple):
             b = list(b)
         if isinstance(b, list):
-            self._internal_representation = [s if isinstance(s, set) else {s} for s in b]
+            self._internal_representation = [NiceSet(s) if isinstance(s, set) else NiceSet({s}) for s in b]
         elif isinstance(b, dict):
-            self._internal_representation = [{k for k in b.keys() if b[k] == v}
+            self._internal_representation = [NiceSet({k for k in b.keys() if b[k] == v})
                                              for v in sorted(set(b.values()), reverse=True)]
         elif isinstance(b, str):
             self._internal_representation = parse_weak_order(b)
@@ -102,53 +102,53 @@ class BallotOrder(Ballot):
 
         :return: a list of sets. For example, [{'a', 'b'}, {'c'}], meaning that 'a' ~ 'b' > 'c'.
 
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).as_weak_order == [{'a', 'b'}, {'c'}]
-        True
+        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).as_weak_order
+        [{'a', 'b'}, {'c'}]
         """
         return self._internal_representation
 
     @cached_property
-    def candidates_in_b(self) -> set:
+    def candidates_in_b(self) -> NiceSet:
         """
         Candidates explicitly mentioned in the ballot.
 
         :return: a set of candidates.
 
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_in_b == {'a', 'b', 'c'}
-        True
+        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_in_b
+        {'a', 'b', 'c'}
         """
-        return {c for indifference_class in self.as_weak_order for c in indifference_class}
+        return NiceSet(c for indifference_class in self.as_weak_order for c in indifference_class)
 
     @cached_property
-    def candidates(self) -> set:
+    def candidates(self) -> NiceSet:
         """
         The candidates.
 
         :return: a set of candidates. If the set was not explicitly given, infer the candidates from the ballot.
 
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates == {'a', 'b', 'c', 'd', 'e'}
-        True
-        >>> BallotOrder('a ~ b > c').candidates == {'a', 'b', 'c'}
-        True
+        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates
+        {'a', 'b', 'c', 'd', 'e'}
+        >>> BallotOrder('a ~ b > c').candidates
+        {'a', 'b', 'c'}
         """
         if self._input_candidates is None:
             return self.candidates_in_b
-        return self._input_candidates
+        return NiceSet(self._input_candidates)
 
     # Misc
     # ====
 
     @cached_property
-    def candidates_not_in_b(self) -> set:
+    def candidates_not_in_b(self) -> NiceSet:
         """
         Candidates that were available at the moment of the vote, but not explicitly mentioned in the ballot.
 
         :return: a set of candidates.
 
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_not_in_b == {'d', 'e'}
-        True
+        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_not_in_b
+        {'d', 'e'}
         """
-        return self.candidates - self.candidates_in_b
+        return NiceSet(self.candidates - self.candidates_in_b)
 
     def __len__(self) -> int:
         """
@@ -182,7 +182,7 @@ class BallotOrder(Ballot):
     def __hash__(self) -> int:
         return hash((self.candidates, self._internal_representation))
 
-    def borda(self, unordered_give_points: bool=True, unordered_receive_points: bool=True) -> dict:
+    def borda(self, unordered_give_points: bool=True, unordered_receive_points: bool=True) -> NiceDict:
         """
         Borda points given by the ballot.
 
@@ -195,17 +195,14 @@ class BallotOrder(Ballot):
         :return: a dictionary that, to each candidate, assigns her Borda points.
 
         >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
-        >>> ballot.borda() == {
-        ...     'a': 4., 'b': 2.5, 'c': 2.5, 'd': .5, 'e': .5}
-        True
-        >>> ballot.borda(unordered_receive_points=False) == {
-        ...     'a': 4., 'b': 2.5, 'c': 2.5, 'd': 0., 'e': 0.}
-        True
-        >>> ballot.borda(unordered_give_points=False, unordered_receive_points=False) == {
-        ...     'a': 2., 'b': .5, 'c': .5, 'd': 0., 'e': 0.}
-        True
+        >>> ballot.borda()
+        {'a': 4.0, 'b': 2.5, 'c': 2.5, 'd': 0.5, 'e': 0.5}
+        >>> ballot.borda(unordered_receive_points=False)
+        {'a': 4.0, 'b': 2.5, 'c': 2.5, 'd': 0, 'e': 0}
+        >>> ballot.borda(unordered_give_points=False, unordered_receive_points=False)
+        {'a': 2.0, 'b': 0.5, 'c': 0.5, 'd': 0, 'e': 0}
         """
-        borda_ = {}
+        borda_ = NiceDict({})
         # Unordered candidates
         n = len(self.candidates_not_in_b)
         points_temp = (n - 1) / 2 if unordered_give_points and unordered_receive_points else 0
@@ -227,10 +224,10 @@ class BallotOrder(Ballot):
     def __repr__(self) -> str:
         return 'BallotOrder(%s, candidates=%s)' % (
             '[' + ', '.join([
-                set_to_str(indifference_class) if len(indifference_class) > 1 else repr(list(indifference_class)[0])
+                repr(indifference_class) if len(indifference_class) > 1 else repr(list(indifference_class)[0])
                 for indifference_class in self.as_weak_order
             ]) + ']',
-            set_to_str(self.candidates)
+            repr(self.candidates)
         )
 
     def __str__(self) -> str:

@@ -2,7 +2,7 @@ from whalrus.rule.RuleScore import RuleScore
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.profile.Profile import Profile
 from whalrus.priority.Priority import Priority
-from whalrus.utils.Utils import cached_property
+from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.ballot.BallotOrder import BallotOrder
 
 
@@ -34,30 +34,30 @@ class RuleBorda(RuleScore):
     >>> candidates_election = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}
     >>> RuleBorda(
     ...     profile, candidates=candidates_election
-    ... ).scores_ == {'a': 6, 'b': 4.5, 'c': 4.5, 'd': 2.5, 'e': 2.5, 'f': .5, 'g': .5}
-    True
+    ... ).scores_
+    {'a': 6.0, 'b': 4.5, 'c': 4.5, 'd': 2.5, 'e': 2.5, 'f': 0.5, 'g': 0.5}
     >>> RuleBorda(
     ...     profile, candidates=candidates_election,
     ...     absent_receive_points=False
-    ... ).scores_ == {'a': 6, 'b': 4.5, 'c': 4.5, 'd': 2.5, 'e': 2.5, 'f': 0, 'g': 0}
-    True
+    ... ).scores_
+    {'a': 6.0, 'b': 4.5, 'c': 4.5, 'd': 2.5, 'e': 2.5, 'f': 0.0, 'g': 0.0}
     >>> RuleBorda(
     ...     profile, candidates=candidates_election,
     ...     absent_receive_points=False, absent_give_points=False
-    ... ).scores_ == {'a': 4, 'b': 2.5, 'c': 2.5, 'd': .5, 'e': .5, 'f': 0, 'g': 0}
-    True
+    ... ).scores_
+    {'a': 4.0, 'b': 2.5, 'c': 2.5, 'd': 0.5, 'e': 0.5, 'f': 0.0, 'g': 0.0}
     >>> RuleBorda(
     ...     profile, candidates=candidates_election,
     ...     absent_receive_points=False, absent_give_points=False,
     ...     unordered_receive_points=False
-    ... ).scores_ == {'a': 4, 'b': 2.5, 'c': 2.5, 'd': 0, 'e': 0, 'f': 0, 'g': 0}
-    True
+    ... ).scores_
+    {'a': 4.0, 'b': 2.5, 'c': 2.5, 'd': 0.0, 'e': 0.0, 'f': 0.0, 'g': 0.0}
     >>> RuleBorda(
     ...     profile, candidates=candidates_election,
     ...     absent_receive_points=False, absent_give_points=False,
     ...     unordered_receive_points=False, unordered_give_points=False
-    ... ).scores_ == {'a': 2, 'b': .5, 'c': .5, 'd': 0, 'e': 0, 'f': 0, 'g': 0}
-    True
+    ... ).scores_
+    {'a': 2.0, 'b': 0.5, 'c': 0.5, 'd': 0.0, 'e': 0.0, 'f': 0.0, 'g': 0.0}
     """
 
     def __init__(self, ballots=None, weights=None, voters=None, candidates=None, converter=None,
@@ -74,8 +74,8 @@ class RuleBorda(RuleScore):
         )
 
     @cached_property
-    def scores_(self):
-        scores_ = {c: 0 for c in self.candidates_}
+    def scores_(self) -> NiceDict:
+        scores_ = NiceDict({c: 0. for c in self.candidates_})
         for ballot, weight, _ in self.profile_converted_.items():
             if not isinstance(ballot, BallotOrder):
                 raise ValueError
