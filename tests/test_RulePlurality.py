@@ -33,14 +33,16 @@ def test():
     assert plurality(profile, candidates={'b', 'c', 'd'}).scores_ == {'b': 1, 'c': 1, 'd': 0}
 
 
-def test_order():
+def test_order_and_trailers():
     plurality = RulePlurality(
         ballots=['a', 'b', 'c', 'd', 'e'],
-        weights=[2, 3, 1, 3, 2],
+        weights=[2, 3, 1, 3, 1],
         tie_break=Priority.ASCENDING
     )
-    assert plurality.order_ == [{'b', 'd'}, {'a', 'e'}, {'c'}]
-    assert plurality.strict_order_ == ['b', 'd', 'a', 'e', 'c']
+    assert plurality.order_ == [{'b', 'd'}, {'a'}, {'c', 'e'}]
+    assert plurality.strict_order_ == ['b', 'd', 'a', 'c', 'e']
+    assert plurality.cotrailers_ == {'c', 'e'}
+    assert plurality.trailer_ == 'e'
 
 
 def test_old_plurality_unweighted_winner():

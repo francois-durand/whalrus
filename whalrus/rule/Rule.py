@@ -84,6 +84,27 @@ class Rule(DeleteCacheMixin):
         return self.tie_break.choice(self.cowinners_)
 
     @cached_property
+    def cotrailers_(self) -> set:
+        """
+        "Cotrailers" of the election.
+
+        The candidates that fare worst in the election. For example, in a rule based on a notion of score, it would
+        be the candidates that are tied for worst score.
+
+        :return: the set of "cotrailers".
+        """
+        raise NotImplementedError
+
+    @cached_property
+    def trailer_(self) -> object:
+        """
+        "Trailer" of the election.
+
+        :return: the "trailer" of the election (which may use a tie-breaking rule).
+        """
+        return self.tie_break.choice(self.cotrailers_, reverse=True)
+
+    @cached_property
     def order_(self) -> list:
         """
         Result of the election as a (weak) order over the candidates.

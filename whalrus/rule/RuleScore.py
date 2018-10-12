@@ -30,6 +30,15 @@ class RuleScore(Rule):
         return max(self.scores_.values())
 
     @cached_property
+    def worst_score_(self) -> Number:
+        """
+        The worst score.
+
+        :return: the worst score.
+        """
+        return min(self.scores_.values())
+
+    @cached_property
     def cowinners_(self):
         """
         Cowinners
@@ -37,6 +46,15 @@ class RuleScore(Rule):
         :return: the set of candidates with the best score.
         """
         return {k for k, v in self.scores_.items() if v == self.best_score_}
+
+    @cached_property
+    def cotrailers_(self):
+        """
+        "Cotrailers"
+
+        :return: the set of candidates with the worst score.
+        """
+        return {k for k, v in self.scores_.items() if v == self.worst_score_}
 
     @cached_property
     def order_(self) -> list:
