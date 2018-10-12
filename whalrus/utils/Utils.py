@@ -52,7 +52,10 @@ class cached_property:
         """
         # This hack is used so that the decorated function has the same docstring as the original function.
         if instance is None:
-            return type('DummyType', (object, ), {'__doc__': self._factory.__doc__})
+            def f():
+                pass
+            f.__doc__ = self._factory.__doc__
+            return f
         # Compute the value.
         value = self._factory(instance)
         # Create the attribute and assign the value.
