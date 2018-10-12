@@ -3,6 +3,7 @@ from whalrus.rule.RuleBorda import RuleBorda
 from whalrus.rule.RuleSequentialElimination import RuleSequentialElimination
 from whalrus.priority.Priority import Priority
 from whalrus.profile.Profile import Profile
+from whalrus.ballot.BallotOrder import BallotOrder
 
 
 def quick_start():
