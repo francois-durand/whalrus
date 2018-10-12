@@ -55,6 +55,7 @@ class cached_property:
             def f():
                 pass
             f.__doc__ = self._factory.__doc__
+            property(f)
             return f
         # Compute the value.
         value = self._factory(instance)
