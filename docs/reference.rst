@@ -134,6 +134,12 @@ RuleSequentialElimination
 .. autoclass:: whalrus.RuleSequentialElimination
     :members:
 
+RuleSequentialTieBreak
+----------------------
+
+.. autoclass:: whalrus.RuleSequentialTieBreak
+    :members:
+
 RulePlurality
 -------------
 

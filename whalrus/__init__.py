@@ -47,6 +47,7 @@ from .rule.RuleBorda import RuleBorda
 
 # Voting Rules: "meta-rules"
 from .rule.RuleSequentialElimination import RuleSequentialElimination
+from .rule.RuleSequentialTieBreak import RuleSequentialTieBreak
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
