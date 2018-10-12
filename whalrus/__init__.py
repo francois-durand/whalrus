@@ -53,3 +53,6 @@ from .rule.RuleSequentialTieBreak import RuleSequentialTieBreak
 from .SubPackage1.MyClass1 import MyClass1
 from .SubPackage2.MyClass2 import MyClass2
 from .SubPackage2.MyClass3 import MyClass3
+
+# Tutorials
+from .tutorial.quick_start import quick_start
