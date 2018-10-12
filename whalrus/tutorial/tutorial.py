@@ -82,7 +82,7 @@ def general_syntax():
 def under_the_hood():
     """
     Internally, a voting rule is always applied to a :class:`Profile`. A :class:`Profile` contains a list of
-    :class:`Ballot` objects, a list of weights and a list of voters. A :class:`Ballot` is contains the message emitted
+    :class:`Ballot` objects, a list of weights and a list of voters. A :class:`Ballot` contains the message emitted
     by the voter, but also some contextual information such as the set of candidates that were available at the moment
     when she cast her ballot: this architecture allows Whalrus to deal with asynchronous elections where the set
     of candidates may vary during the election itself (such as some asynchronous online polls).
@@ -103,6 +103,11 @@ def under_the_hood():
     then considered that only candidates a, b and c were available when this voter cast her ballot. If you want to give
     more detailed information, the most general syntax consists in using the constructors of classes :class:`Profile`,
     :class:`Ballot` and their subclasses.
+
+    >>> a_more_complex_ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
+
+    The type of ballot above means that the voter emitted the message 'a > b ~ c' in a context where the candidates
+    d and e where also available, thus abstaining about these two candidates.
     """
 
 
