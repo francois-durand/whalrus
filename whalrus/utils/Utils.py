@@ -50,6 +50,9 @@ class cached_property:
         This code runs only when the decorated function is directly called (which happens only when the value is not
         in cache).
         """
+        # This hack is used so that the decorated function has the same docstring as the original function.
+        if instance is None:
+            return type('DummyType', (object, ), {'__doc__': self._factory.__doc__})
         # Compute the value.
         value = self._factory(instance)
         # Create the attribute and assign the value.
