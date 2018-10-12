@@ -43,7 +43,7 @@ from .rule.RuleScore import RuleScore
 
 # Voting Rules
 from .rule.RulePlurality import RulePlurality
-# from .rule.RuleBorda import RuleBorda
+from .rule.RuleBorda import RuleBorda
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1

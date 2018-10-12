@@ -134,6 +134,12 @@ RulePlurality
 .. autoclass:: whalrus.RulePlurality
     :members:
 
+RuleBorda
+---------
+
+.. autoclass:: whalrus.RuleBorda
+    :members:
+
 Utils
 =====
 

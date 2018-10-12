@@ -389,6 +389,8 @@ class BallotOrder(Ballot):
 
         :return: a list of candidates. For example, ['a', 'b', 'c'] means that 'a' > 'b' > 'c'.
 
+        If the ballot is not a strict order, it raises a ValueError.
+
         >>> BallotOrder('a > b > c').as_strict_order
         ['a', 'b', 'c']
         """
