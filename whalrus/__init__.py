@@ -31,6 +31,7 @@ from .ballot.BallotVeto import BallotVeto
 # Ballot Converters
 from .converter_ballot.ConverterBallot import ConverterBallot
 from .converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
+from .converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from .converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
 
 # Profile

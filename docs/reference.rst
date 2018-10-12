@@ -95,6 +95,12 @@ ConverterBallotGeneral
 .. autoclass:: whalrus.ConverterBallotGeneral
     :members:
 
+ConverterBallotToOrder
+--------------------------
+
+.. autoclass:: whalrus.ConverterBallotToOrder
+    :members:
+
 ConverterBallotToPlurality
 --------------------------
 
@@ -120,7 +126,7 @@ RuleScore
 ---------
 
 .. autoclass:: whalrus.RuleScore
-    :members: scores_
+    :members:
 
 RulePlurality
 -------------

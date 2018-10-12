@@ -8,7 +8,6 @@ from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.priority.Priority import Priority
 
 
-# noinspection PyUnresolvedReferences
 class ConverterBallotToPlurality(ConverterBallot):
     """
     Default converter to plurality ballot.
