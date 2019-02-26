@@ -33,6 +33,7 @@ from .converter_ballot.ConverterBallot import ConverterBallot
 from .converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from .converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from .converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
+from .converter_ballot.ConverterBallotToInterval import ConverterBallotToInterval
 
 # Profile
 from .profile.Profile import Profile

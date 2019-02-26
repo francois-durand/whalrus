@@ -42,10 +42,10 @@ class ScaleFromList(Scale):
 
     def __init__(self, levels: list):
         self.levels = list(levels)
-        self._as_dict = {evaluation: rank for rank, evaluation in enumerate(levels)}
+        self.as_dict = {evaluation: rank for rank, evaluation in enumerate(levels)}
 
     def lt(self, one: object, another: object) -> bool:
-        return self._as_dict[one] < self._as_dict[another]
+        return self.as_dict[one] < self.as_dict[another]
 
     @property
     def low(self) -> object:

@@ -55,7 +55,6 @@ class ConverterBallotGeneral(ConverterBallot):
     BallotVeto('c', candidates={'b', 'c'})
     """
 
-    # noinspection PyUnresolvedReferences
     def __init__(self,
                  plurality_priority: Priority = Priority.UNAMBIGUOUS,
                  veto_priority: Priority=Priority.UNAMBIGUOUS,
