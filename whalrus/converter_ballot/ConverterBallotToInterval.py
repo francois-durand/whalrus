@@ -14,7 +14,7 @@ from whalrus.scale.ScaleRange import ScaleRange
 
 class ConverterBallotToInterval(ConverterBallot):
     """
-    Default converter to an ``interval'' ballot, i.e. a ballot suitable for Range Voting.
+    Default converter to an ``interval'' ballot (suitable for Range Voting).
 
     :param low: the lowest grade in the scale.
     :param high: the highest grade in the scale.
@@ -37,7 +37,6 @@ class ConverterBallotToInterval(ConverterBallot):
     >>> converter(BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
     ...                        scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Excellent'])))
     BallotLevels({'a': 1.0, 'b': 0.75}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-
     >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))
     BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
     >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))
@@ -80,8 +79,9 @@ class ConverterBallotToInterval(ConverterBallot):
                 if all([isinstance(v, numbers.Number) for v in x.values()]):
                     x_min, x_max = min(x.values()), max(x.values())
                     if x_min >= self.low and x_max <= self.high:
-                        return BallotLevels(x.as_dict, candidates=x.candidates,
-                                            scale=ScaleInterval(low=self.low, high=self.high))
+                        return BallotLevels(
+                            x.as_dict, candidates=x.candidates,
+                            scale=ScaleInterval(low=self.low, high=self.high)).restrict(candidates=candidates)
                     else:
                         x = BallotLevels(x.as_dict, candidates=x.candidates,
                                          scale=ScaleInterval(low=min(x.values()), high=max(x.values())))
