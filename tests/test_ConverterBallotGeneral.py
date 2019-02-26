@@ -10,4 +10,4 @@ def test():
         _ = converter(BallotOneName('c', candidates={'a', 'b', 'c'}), candidates={'a', 'b', 'd'})
     assert repr(converter('a ~ b > c', candidates={'b', 'c', 'd'})) == "BallotOrder(['b', 'c'], candidates={'b', 'c'})"
     assert repr(converter({'a': 10, 'b': 7, 'c': 0}, candidates={'b', 'c', 'd'})
-                ) == "BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=ScaleRange(low=0, high=10))"
+                ) == "BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=Scale())"

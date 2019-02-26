@@ -21,7 +21,7 @@ class ConverterBallotToOrder(ConverterBallot):
     >>> converter(['a', {'b', 'c'}])
     BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
     >>> converter({'a': 10, 'b': 7, 'c': 0})
-    BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=ScaleRange(low=0, high=10))
+    BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=Scale())
     >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))
     BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
     >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))

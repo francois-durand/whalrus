@@ -113,13 +113,14 @@ class BallotLevels(BallotOrder):
         ScaleRange(low=3, high=10)
         """
         if self._input_scale is None:
-            if len(self) == 0:
-                return ScaleFromSet(set())
-            if all([isinstance(v, int) for v in self.as_dict.values()]):
-                return ScaleRange(low=min(self.as_dict.values()), high=max(self.as_dict.values()))
-            if all([isinstance(v, numbers.Number) for v in self.as_dict.values()]):
-                return ScaleInterval(low=min(self.as_dict.values()), high=max(self.as_dict.values()))
-            return ScaleFromSet(set(self.as_dict.values()))
+            return Scale()
+            # if len(self) == 0:
+            #     return Scale(set())
+            # if all([isinstance(v, int) for v in self.as_dict.values()]):
+            #     return ScaleRange(low=min(self.as_dict.values()), high=max(self.as_dict.values()))
+            # if all([isinstance(v, numbers.Number) for v in self.as_dict.values()]):
+            #     return ScaleInterval(low=min(self.as_dict.values()), high=max(self.as_dict.values()))
+            # return ScaleFromSet(set(self.as_dict.values()))
         return self._input_scale
 
     # Representation

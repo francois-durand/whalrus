@@ -106,3 +106,6 @@ class Scale:
     @property
     def is_bounded(self):
         return (self.low is not None) and (self.high is not None)
+
+    def __repr__(self):
+        return '%s()' % type(self).__name__

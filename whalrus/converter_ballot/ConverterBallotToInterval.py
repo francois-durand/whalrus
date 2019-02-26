@@ -1,3 +1,4 @@
+import numbers
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.ballot.BallotVeto import BallotVeto
@@ -27,8 +28,6 @@ class ConverterBallotToInterval(ConverterBallot):
     Typical usages:
 
     >>> converter = ConverterBallotToInterval()
-    >>> converter({'a': 10, 'b': 7, 'c': 0})
-    BallotLevels({'a': 1.0, 'b': 0.7, 'c': 0.0}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
     >>> converter(BallotLevels({'a': 1., 'b': 0.5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.)))
     BallotLevels({'a': 1.0, 'b': 0.75}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
     >>> converter(BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5)))
@@ -61,24 +60,34 @@ class ConverterBallotToInterval(ConverterBallot):
     def __init__(self, low=0., high=1., borda_unordered_give_points: bool=True):
         self.low = low
         self.high = high
-        self.scale = ScaleInterval(low=0., high=1.)
+        self.scale = ScaleInterval(low=low, high=high)
         self.borda_unordered_give_points = borda_unordered_give_points
 
-    def __call__(self, x: object, candidates: set =None) -> BallotOrder:
+    def __call__(self, x: object, candidates: set=None) -> BallotLevels:
         x = ConverterBallotGeneral()(x, candidates=None)
         if isinstance(x, BallotVeto):
             if x.candidate is None:
                 return BallotLevels(dict(), candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)
-            return BallotLevels({c: 0. if c == x.candidate else 1. for c in x.candidates},
+            return BallotLevels({c: self.low if c == x.candidate else self.high for c in x.candidates},
                                 candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)
         if isinstance(x, BallotOneName):  # Including Plurality
             if x.candidate is None:
                 return BallotLevels(dict(), candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)
-            return BallotLevels({c: 1. if c == x.candidate else 0. for c in x.candidates},
+            return BallotLevels({c: self.high if c == x.candidate else self.low for c in x.candidates},
                                 candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)
         if isinstance(x, BallotLevels):
+            if not x.scale.is_bounded:
+                if all([isinstance(v, numbers.Number) for v in x.values()]):
+                    x_min, x_max = min(x.values()), max(x.values())
+                    if x_min >= self.low and x_max <= self.high:
+                        return BallotLevels(x.as_dict, candidates=x.candidates,
+                                            scale=ScaleInterval(low=self.low, high=self.high))
+                    else:
+                        x = BallotLevels(x.as_dict, candidates=x.candidates,
+                                         scale=ScaleInterval(low=min(x.values()), high=max(x.values())))
+                else:
+                    x = BallotLevels(x.as_dict, candidates=x.candidates, scale=ScaleFromSet(set(x.values())))
             try:  # Interpret as a cardinal ballot
-                # noinspection PyUnresolvedReferences
                 return BallotLevels(
                     {c: self.low + (self.high - self.low) * (v - x.scale.low) / (x.scale.high - x.scale.low)
                      for c, v in x.items()},

@@ -43,12 +43,12 @@ def test():
 
 
 def test_inferred_scale():
-    assert repr(BallotLevels({'a': 10, 'b': 7, 'c': 0}).scale) == 'ScaleRange(low=0, high=10)'
-    assert repr(BallotLevels({'a': 10, 'b': 7., 'c': 0}).scale) == 'ScaleInterval(low=0, high=10)'
-    assert repr(BallotLevels({'a': 'B', 'b': 'C', 'c': 'A'}).scale) == "ScaleFromSet(levels={'A', 'B', 'C'})"
+    assert repr(BallotLevels({'a': 10, 'b': 7, 'c': 0}).scale) == 'Scale()'
+    assert repr(BallotLevels({'a': 10, 'b': 7., 'c': 0}).scale) == 'Scale()'
+    assert repr(BallotLevels({'a': 'B', 'b': 'C', 'c': 'A'}).scale) == 'Scale()'
 
 
 def test_empty_ballot():
     ballot = BallotLevels({}, candidates={'a', 'b', 'c'})
     assert ballot.as_dict == {}
-    assert repr(ballot.scale) == 'ScaleFromSet(levels={})'
+    assert repr(ballot.scale) == 'Scale()'

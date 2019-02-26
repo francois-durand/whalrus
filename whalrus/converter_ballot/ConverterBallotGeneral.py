@@ -25,7 +25,7 @@ class ConverterBallotGeneral(ConverterBallot):
 
     >>> converter = ConverterBallotGeneral()
     >>> converter({'a': 10, 'b': 7, 'c': 0})
-    BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=ScaleRange(low=0, high=10))
+    BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=Scale())
     >>> converter([{'a', 'b'}, {'c'}])
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
     >>> converter('a ~ b > c')
@@ -40,7 +40,7 @@ class ConverterBallotGeneral(ConverterBallot):
     >>> converter('a ~ b > c', candidates={'b', 'c'})
     BallotOrder(['b', 'c'], candidates={'b', 'c'})
     >>> converter({'a': 10, 'b': 7, 'c': 0}, candidates={'b', 'c'})
-    BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=ScaleRange(low=0, high=10))
+    BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=Scale())
 
     Use options for the restrictions:
 
