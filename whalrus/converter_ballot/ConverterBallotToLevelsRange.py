@@ -1,4 +1,3 @@
-import numbers
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToLevelsInterval
 from whalrus.ballot.BallotVeto import BallotVeto
