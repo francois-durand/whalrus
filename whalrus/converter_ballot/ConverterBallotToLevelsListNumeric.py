@@ -1,5 +1,5 @@
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.converter_ballot.ConverterBallotToLevelsRange import ConverterBallotToLevelsRange
+from whalrus.converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToLevelsInterval
 from whalrus.ballot.BallotVeto import BallotVeto
 from whalrus.ballot.BallotPlurality import BallotPlurality
 from whalrus.ballot.BallotOneName import BallotOneName
@@ -8,39 +8,39 @@ from whalrus.scale.ScaleInterval import ScaleInterval
 from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.scale.ScaleRange import ScaleRange
+from whalrus.utils.Utils import take_closest
 
 
-class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
+class ConverterBallotToLevelsListNumeric(ConverterBallot):
     """
-    Default converter to a ``level / non-numeric'' ballot (suitable for Majority Judgment).
+    Default converter to a ``level / numeric'' ballot (suitable for Range Voting).
 
     :param scale: the scale.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores (normalized
         to the interval ``[low, high]`` and rounded). This parameter decides whether unordered candidates of the ballot
         give points to ordered candidates. Cf. meth:`BallotOrder.borda`.
 
-    This is a default converter to a ballot using non-numeric levels. It tries to infer the type of input and converts
-    it to a :class:`BallotLevels`, where the scale is of class :class:`ScaleFromList`. Its functions essentially the
-    same as class:`ConverterBallotToLevelsInterval`, but it then maps to non-numeric levels.
+    This is a default converter to a ballot using a list of numeric levels. It tries to infer the type of input and
+    converts it to a :class:`BallotLevels`, where the scale is of class :class:`ScaleFromList`. Its functions
+    essentially the same as class:`ConverterBallotToLevelsInterval`, but it then maps to the levels.
 
     Typical usages:
 
-    >>> converter = ConverterBallotToLevelsListNonNumeric(scale=ScaleFromList([
-    ...     'Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))
+    >>> converter = ConverterBallotToLevelsListNumeric(scale=ScaleFromList([-1, 0, 3, 4]))
     >>> converter(BallotLevels({'a': 1., 'b': 0.2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))).as_dict
-    {'a': 'Excellent', 'b': 'Very Good'}
+    {'a': 4, 'b': 3}
     >>> converter(BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))).as_dict
-    {'a': 'Excellent', 'b': 'Great'}
+    {'a': 4, 'b': 3}
     >>> converter(BallotLevels({'a': 4, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 4}))).as_dict
-    {'a': 'Excellent', 'b': 'Medium'}
+    {'a': 4, 'b': 0}
     >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'})).as_dict
-    {'a': 'Excellent', 'b': 'Bad', 'c': 'Bad'}
+    {'a': 4, 'b': -1, 'c': -1}
     >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'})).as_dict
-    {'a': 'Excellent', 'b': 'Bad', 'c': 'Bad'}
+    {'a': 4, 'b': -1, 'c': -1}
     >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'})).as_dict
-    {'a': 'Bad', 'b': 'Excellent', 'c': 'Excellent'}
+    {'a': -1, 'b': 4, 'c': 4}
     >>> converter('a > b > c > d').as_dict
-    {'a': 'Excellent', 'b': 'Very Good', 'c': 'Good', 'd': 'Bad'}
+    {'a': 4, 'b': 3, 'c': 0, 'd': -1}
     """
 
     def __init__(self, scale, borda_unordered_give_points: bool=True):
@@ -48,8 +48,8 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
         self.borda_unordered_give_points = borda_unordered_give_points
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
-        x = ConverterBallotToLevelsRange(
-            low=0, high=len(self.scale.levels) - 1, borda_unordered_give_points=self.borda_unordered_give_points
+        x = ConverterBallotToLevelsInterval(
+            low=self.scale.low, high=self.scale.high, borda_unordered_give_points=self.borda_unordered_give_points
         )(x, candidates=None)
-        return BallotLevels({c: self.scale.levels[v] for c, v in x.items()},
+        return BallotLevels({c: take_closest(self.scale.levels, v) for c, v in x.items()},
                             candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)

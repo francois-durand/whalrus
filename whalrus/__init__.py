@@ -36,6 +36,7 @@ from .converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlural
 from .converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToLevelsInterval
 from .converter_ballot.ConverterBallotToLevelsRange import ConverterBallotToLevelsRange
 from .converter_ballot.ConverterBallotToLevelsListNonNumeric import ConverterBallotToLevelsListNonNumeric
+from .converter_ballot.ConverterBallotToLevelsListNumeric import ConverterBallotToLevelsListNumeric
 
 # Profile
 from .profile.Profile import Profile

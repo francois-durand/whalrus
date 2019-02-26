@@ -19,6 +19,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from pyparsing import Group, Word, ZeroOrMore, alphas, nums, ParseException
+from bisect import bisect_left
 
 
 # noinspection PyPep8Naming
@@ -218,3 +219,23 @@ class NiceDict(dict):
 
     def __repr__(self) -> str:
         return dict_to_str(self)
+
+
+def take_closest(my_list, my_number):
+    """
+    Assumes my_list is sorted. Returns closest value to my_number.
+    If two numbers are equally close, return the smallest number.
+
+    From https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value .
+    """
+    pos = bisect_left(my_list, my_number)
+    if pos == 0:
+        return my_list[0]
+    if pos == len(my_list):
+        return my_list[-1]
+    before = my_list[pos - 1]
+    after = my_list[pos]
+    if after - my_number < my_number - before:
+        return after
+    else:
+        return before

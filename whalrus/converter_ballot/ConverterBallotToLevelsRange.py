@@ -13,7 +13,7 @@ from whalrus.scale.ScaleRange import ScaleRange
 
 class ConverterBallotToLevelsRange(ConverterBallot):
     """
-    Default converter to an ``range'' ballot (suitable for Range Voting).
+    Default converter to a ``range'' ballot (suitable for Range Voting).
 
     :param low: the lowest grade in the scale.
     :param high: the highest grade in the scale.
