@@ -12,7 +12,7 @@ from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.scale.ScaleRange import ScaleRange
 
 
-class ConverterBallotToInterval(ConverterBallot):
+class ConverterBallotToLevelsInterval(ConverterBallot):
     """
     Default converter to an ``interval'' ballot (suitable for Range Voting).
 
@@ -27,7 +27,7 @@ class ConverterBallotToInterval(ConverterBallot):
 
     Typical usages:
 
-    >>> converter = ConverterBallotToInterval()
+    >>> converter = ConverterBallotToLevelsInterval()
     >>> converter(BallotLevels({'a': 1., 'b': 0.5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.)))
     BallotLevels({'a': 1.0, 'b': 0.75}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
     >>> converter(BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5)))
@@ -48,10 +48,10 @@ class ConverterBallotToInterval(ConverterBallot):
 
     Options for converting ordered ballots:
 
-    >>> converter = ConverterBallotToInterval(borda_unordered_give_points=False)
+    >>> converter = ConverterBallotToLevelsInterval(borda_unordered_give_points=False)
     >>> converter(BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'}))  #doctest: +ELLIPSIS
     BallotLevels({'a': 1.0, 'b': 0.5, 'c': 0.0}, candidates={'a', ..., 'e'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter = ConverterBallotToInterval(borda_unordered_give_points=True)
+    >>> converter = ConverterBallotToLevelsInterval(borda_unordered_give_points=True)
     >>> converter(BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'}))  #doctest: +ELLIPSIS
     BallotLevels({'a': 1.0, 'b': 0.75, 'c': 0.5}, candidates={'a', ..., 'e'}, scale=ScaleInterval(low=0.0, high=1.0))
     """

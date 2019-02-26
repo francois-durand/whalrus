@@ -1,6 +1,6 @@
 import numbers
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.converter_ballot.ConverterBallotToInterval import ConverterBallotToInterval
+from whalrus.converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToLevelsInterval
 from whalrus.ballot.BallotVeto import BallotVeto
 from whalrus.ballot.BallotPlurality import BallotPlurality
 from whalrus.ballot.BallotOneName import BallotOneName
@@ -12,7 +12,7 @@ from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.scale.ScaleRange import ScaleRange
 
 
-class ConverterBallotToRange(ConverterBallot):
+class ConverterBallotToLevelsRange(ConverterBallot):
     """
     Default converter to an ``range'' ballot (suitable for Range Voting).
 
@@ -24,11 +24,11 @@ class ConverterBallotToRange(ConverterBallot):
 
     This is a default converter to a range ballot. It tries to infer the type of input and converts it to
     a :class:`BallotLevels`, where the scale is of class :class:`ScaleRange`. Its functions essentially the same
-    as class:`ConverterBallotToInterval`, but it rounds the grades to the nearest integers.
+    as class:`ConverterBallotToLevelsInterval`, but it rounds the grades to the nearest integers.
 
     Typical usages:
 
-    >>> converter = ConverterBallotToRange(low=0, high=10)
+    >>> converter = ConverterBallotToLevelsRange(low=0, high=10)
     >>> converter(BallotLevels({'a': 1., 'b': 0.4}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.)))
     BallotLevels({'a': 10, 'b': 7}, candidates={'a', 'b', 'c'}, scale=ScaleRange(low=0, high=10))
     >>> converter(BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5)))
@@ -49,10 +49,10 @@ class ConverterBallotToRange(ConverterBallot):
 
     Options for converting ordered ballots:
 
-    >>> converter = ConverterBallotToRange(low=0, high=10, borda_unordered_give_points=False)
+    >>> converter = ConverterBallotToLevelsRange(low=0, high=10, borda_unordered_give_points=False)
     >>> converter(BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e', 'f'}))  #doctest: +ELLIPSIS
     BallotLevels({'a': 10, 'b': 5, 'c': 0}, candidates={'a', ..., 'f'}, scale=ScaleRange(low=0, high=10))
-    >>> converter = ConverterBallotToRange(low=0, high=10, borda_unordered_give_points=True)
+    >>> converter = ConverterBallotToLevelsRange(low=0, high=10, borda_unordered_give_points=True)
     >>> converter(BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e', 'f'}))  #doctest: +ELLIPSIS
     BallotLevels({'a': 10, 'b': 8, 'c': 6}, candidates={'a', ..., 'f'}, scale=ScaleRange(low=0, high=10))
     """
@@ -64,7 +64,7 @@ class ConverterBallotToRange(ConverterBallot):
         self.borda_unordered_give_points = borda_unordered_give_points
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
-        x = ConverterBallotToInterval(
+        x = ConverterBallotToLevelsInterval(
             low=self.low, high=self.high, borda_unordered_give_points=self.borda_unordered_give_points
         )(x, candidates=None)
         return BallotLevels({c: round(v) for c, v in x.items()},
