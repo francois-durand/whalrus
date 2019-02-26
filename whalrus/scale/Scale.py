@@ -33,6 +33,8 @@ class Scale:
     >>> scale = Scale()
     >>> scale.lt(1, 7)
     True
+    >>> scale.is_bounded
+    False
     """
 
     # noinspection PyMethodMayBeStatic
@@ -82,3 +84,25 @@ class Scale:
         Test 'greater or equal'. Cf. :meth:`lt`.
         """
         return self.le(another, one)
+
+    @property
+    def low(self):
+        """
+        The lowest element of the scale.
+
+        :return: the lowest element (or None if the scale is unbounded below).
+        """
+        return None
+
+    @property
+    def high(self):
+        """
+        The highest element of the scale.
+
+        :return: the highest element (or None if the scale is unbounded above).
+        """
+        return None
+
+    @property
+    def is_bounded(self):
+        return (self.low is not None) and (self.high is not None)

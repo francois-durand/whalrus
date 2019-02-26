@@ -49,21 +49,15 @@ class ScaleFromList(Scale):
 
     @property
     def low(self) -> object:
-        """
-        Lowest level of the scale.
-
-        :return: the lowest level.
-        """
         return self.levels[0]
 
     @property
     def high(self) -> object:
-        """
-        Highest level of the scale.
-
-        :return: the highest level.
-        """
         return self.levels[-1]
+
+    @property
+    def is_bounded(self):
+        return True
 
     def __repr__(self):
         return 'ScaleFromList(levels=%s)' % self.levels

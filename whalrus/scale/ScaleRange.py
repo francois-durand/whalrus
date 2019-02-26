@@ -35,8 +35,20 @@ class ScaleRange(Scale):
     """
 
     def __init__(self, low: int, high: int):
-        self.low = low
-        self.high = high
+        self._low = low
+        self._high = high
+
+    @property
+    def low(self) -> object:
+        return self._low
+
+    @property
+    def high(self) -> object:
+        return self._high
+
+    @property
+    def is_bounded(self):
+        return True
 
     def __repr__(self):
         return 'ScaleRange(low=%s, high=%s)' % (self.low, self.high)

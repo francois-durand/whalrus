@@ -33,8 +33,20 @@ class ScaleInterval(Scale):
     """
 
     def __init__(self, low: float = 0., high: float = 1.):
-        self.low = low
-        self.high = high
+        self._low = low
+        self._high = high
+
+    @property
+    def low(self) -> object:
+        return self._low
+
+    @property
+    def high(self) -> object:
+        return self._high
+
+    @property
+    def is_bounded(self):
+        return True
 
     def __repr__(self):
         return 'ScaleInterval(low=%s, high=%s)' % (self.low, self.high)
