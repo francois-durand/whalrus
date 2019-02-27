@@ -123,6 +123,10 @@ class BallotLevels(BallotOrder):
             # return ScaleFromSet(set(self.as_dict.values()))
         return self._input_scale
 
+    @cached_property
+    def is_numeric(self):
+        return all([isinstance(v, numbers.Number) for k, v in self.items()])
+
     # Representation
     # ==============
 
