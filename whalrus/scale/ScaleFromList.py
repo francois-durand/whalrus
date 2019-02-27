@@ -18,7 +18,9 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+import numbers
 from whalrus.scale.Scale import Scale
+from whalrus.utils.Utils import cached_property
 
 
 class ScaleFromList(Scale):
@@ -58,6 +60,10 @@ class ScaleFromList(Scale):
     @property
     def is_bounded(self):
         return True
+
+    @cached_property
+    def is_numeric(self):
+        return all([isinstance(v, numbers.Number) for v in self.levels])
 
     def __repr__(self):
         return 'ScaleFromList(levels=%s)' % self.levels

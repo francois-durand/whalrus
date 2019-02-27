@@ -15,9 +15,9 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
     Default converter to a ``level / non-numeric'' ballot (suitable for Majority Judgment).
 
     :param scale: the scale.
-    :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores (normalized
-        to the interval ``[low, high]`` and rounded). This parameter decides whether unordered candidates of the ballot
-        give points to ordered candidates. Cf. meth:`BallotOrder.borda`.
+    :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores as a calculation
+        step. This parameter decides whether unordered candidates of the ballot give points to ordered candidates.
+        Cf. meth:`BallotOrder.borda`.
 
     This is a default converter to a ballot using non-numeric levels. It tries to infer the type of input and converts
     it to a :class:`BallotLevels`, where the scale is of class :class:`ScaleFromList`. Its functions essentially the
