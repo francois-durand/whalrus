@@ -1,3 +1,4 @@
+from whalrus.scale.ScaleRange import ScaleRange
 from whalrus.ballot.BallotLevels import BallotLevels
 from whalrus.rule.RuleScore import RuleScore
 from whalrus.converter_ballot.ConverterBallotToGrades import ConverterBallotToGrades
@@ -23,6 +24,13 @@ class RuleRangeVoting(RuleScore):
     {'a': 0.5, 'b': 0.7, 'c': 0.6}
     >>> RuleRangeVoting([{'a': 10, 'b': 8, 'c': 2}, {'a': 0, 'b': 6, 'c': 10}]).scores_
     {'a': 5.0, 'b': 7.0, 'c': 6.0}
+
+    With ballot conversion:
+
+    >>> RuleRangeVoting(['a > b > c', 'c > a > b']).scores_
+    {'a': 0.75, 'b': 0.25, 'c': 0.5}
+    >>> RuleRangeVoting(['a > b > c', 'c > a > b'], converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))).scores_
+    {'a': 7.5, 'b': 2.5, 'c': 5.0}
 
     About the options:
 
