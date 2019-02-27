@@ -16,8 +16,7 @@ class ConverterBallotToLevelsInterval(ConverterBallot):
     """
     Default converter to an ``interval'' ballot (suitable for Range Voting).
 
-    :param low: the lowest grade in the scale.
-    :param high: the highest grade in the scale.
+    :param scale: a :class:`ScaleInterval`.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores (normalized
         to the interval ``[low, high]``). This parameter decides whether unordered candidates of the ballot
         give points to ordered candidates. Cf. meth:`BallotOrder.borda`.
@@ -56,10 +55,10 @@ class ConverterBallotToLevelsInterval(ConverterBallot):
     BallotLevels({'a': 1.0, 'b': 0.75, 'c': 0.5}, candidates={'a', ..., 'e'}, scale=ScaleInterval(low=0.0, high=1.0))
     """
 
-    def __init__(self, low=0., high=1., borda_unordered_give_points: bool=True):
-        self.low = low
-        self.high = high
-        self.scale = ScaleInterval(low=low, high=high)
+    def __init__(self, scale=ScaleInterval(0., 1.), borda_unordered_give_points: bool=True):
+        self.scale = scale
+        self.low = scale.low
+        self.high = scale.high
         self.borda_unordered_give_points = borda_unordered_give_points
 
     def __call__(self, x: object, candidates: set=None) -> BallotLevels:

@@ -49,7 +49,8 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
         x = ConverterBallotToLevelsRange(
-            low=0, high=len(self.scale.levels) - 1, borda_unordered_give_points=self.borda_unordered_give_points
+            scale=ScaleRange(low=0, high=len(self.scale.levels) - 1),
+            borda_unordered_give_points=self.borda_unordered_give_points
         )(x, candidates=None)
         return BallotLevels({c: self.scale.levels[v] for c, v in x.items()},
                             candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)
