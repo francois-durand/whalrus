@@ -41,6 +41,10 @@ from .converter_ballot.ConverterBallotToLevelsListNumeric import ConverterBallot
 # Profile
 from .profile.Profile import Profile
 
+# Matrix
+from .matrix.Matrix import Matrix
+from .matrix.MatrixWeightedMajority import MatrixWeightedMajority
+
 # Voting Rules: abstract classes
 from .rule.Rule import Rule
 from .rule.RuleScore import RuleScore
