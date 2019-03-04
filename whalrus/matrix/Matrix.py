@@ -1,7 +1,7 @@
 import logging
 import numpy as np
 import pandas as pd
-from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet, set_to_list
+from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet, set_to_list, NiceDict
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
@@ -23,19 +23,20 @@ class Matrix(DeleteCacheMixin):
     A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters, candidates and a
     converter. When it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
     But after the call, you can access to the computed variables (ending with an underscore), such as
-    :attr:`data_`.
+    :attr:`as_dict_` or :attr:`as_df_`.
 
     At the initialization of a :class:`Matrix` object, some options can be given, such as a default converter. In
     some subclasses, there can also be other options.
 
     Cf. :class:`MatrixWeightedMajority` for some examples.
-
-    Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
     """
 
     def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
                  candidates: set=None, converter: ConverterBallot=None,
                  default_converter: ConverterBallot=ConverterBallotGeneral()):
+        """
+        Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
+        """
         # Parameters
         self.default_converter = default_converter
         # Computed variables
@@ -65,24 +66,32 @@ class Matrix(DeleteCacheMixin):
             logging.warning('Some ballots do not have the same set of candidates as the whole election.')
 
     @cached_property
-    def as_dict_(self) -> dict:
+    def as_dict_(self) -> NiceDict:
         """
-        The matrix, as a dictionary.
+        The matrix, as a dictionary (more exactly, a :class:`NiceDict`).
 
-        :return: a dictionary. Keys are pairs of candidates, and values are the coefficients of the matrix.
+        :return: a :class:`NiceDict`. Keys are pairs of candidates, and values are the coefficients of the matrix.
         """
         raise NotImplementedError
+
+    @cached_property
+    def candidates_as_list_(self):
+        """
+        The list of candidates.
+
+        :return: a list. Candidates are sorted if possible.
+        """
+        return set_to_list(self.candidates_)
 
     @cached_property
     def as_array_(self) -> np.array:
         """
         The matrix, as a numpy array.
 
-        :return: a numpy array. Each row and each column corresponds to a candidate (candidates are sorted if
-            possible).
+        :return: a numpy array. Each row and each column corresponds to a candidate (in the order of
+            :attr:`candidates_as_list_`).
         """
-        candidates_as_list = set_to_list(self.candidates_)
-        return np.array([[self.as_dict_[(c, d)] for d in candidates_as_list] for c in candidates_as_list])
+        return np.array([[self.as_dict_[(c, d)] for d in self.candidates_as_list_] for c in self.candidates_as_list_])
 
     @cached_property
     def as_df_(self) -> pd.DataFrame:
@@ -91,5 +100,4 @@ class Matrix(DeleteCacheMixin):
 
         :return: a pandas dataframe, whose rows and columns represent the candidates.
         """
-        candidates_as_list = set_to_list(self.candidates_)
-        return pd.DataFrame(self.as_array_, index=candidates_as_list, columns=candidates_as_list)
+        return pd.DataFrame(self.as_array_, index=self.candidates_as_list_, columns=self.candidates_as_list_)

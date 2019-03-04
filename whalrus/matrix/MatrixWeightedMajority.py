@@ -1,4 +1,4 @@
-from whalrus.utils.Utils import cached_property
+from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.profile.Profile import Profile
 from whalrus.ballot.BallotOrder import BallotOrder
@@ -23,13 +23,16 @@ class MatrixWeightedMajority(Matrix):
     :param absent_vs_unordered: number of points for candidate ``c`` when it absent and ``d`` is unordered.
     :param absent_vs_absent: number of points for candidate ``c`` when it absent and ``d`` is absent.
     :param default_score: default score in the matrix in case of division by 0.
+    :param antisymmetric: if True, then an antisymmetric version of the matrix is computed (by subtracting the
+        transposed matrix).
 
     An 'unordered' candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
     attribute :attr:`candidates_not_in_b` of the ballot. An 'absent' candidate is a candidate that the voter has not
     even seen; i.e. it is in ``self.candidates_``, but not the attribute :attr:`candidates` of the ballot.
 
-    For all the parameters above, the value None can be used. In that case, the corresponding occurrences are not
-    taken into account in the average (neither the numerator, not the denominator). Cf. examples below.
+    For all the `scoring' parameters (from ``higher_vs_lower`` to ``absent_vs_absent``), the value None can be used.
+    In that case, the corresponding occurrences are not taken into account in the average (neither the numerator,
+    not the denominator). Cf. examples below.
 
     Basic usage:
 
@@ -63,7 +66,7 @@ class MatrixWeightedMajority(Matrix):
 
     Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.
 
-    Using the options:
+    Using the scoring parameters:
 
     >>> # With ``indifference = .5`` (default), the ratio of voters who like ``a`` better than ``b`` is 1.5 / 2 = 0.75
     >>> # (the indifferent voter gives .5 point and is counted in the denominator):
@@ -83,6 +86,12 @@ class MatrixWeightedMajority(Matrix):
          a    b
     a  0.0  1.0
     b  0.0  0.0
+
+    Antisymmetric version:
+    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None, antisymmetric=True).as_df_
+         a    b
+    a  0.0  1.0
+    b -1.0  0.0
     """
 
     def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
@@ -95,7 +104,7 @@ class MatrixWeightedMajority(Matrix):
                  ordered_vs_absent: Union[float, None] = None, absent_vs_ordered: Union[float, None] = None,
                  unordered_vs_absent: Union[float, None] = None, absent_vs_unordered: Union[float, None] = None,
                  absent_vs_absent: Union[float, None] = None,
-                 default_score: float = 0.):
+                 default_score: float = 0., antisymmetric=False):
         self.higher_vs_lower = higher_vs_lower
         self.lower_vs_higher = lower_vs_higher
         self.indifference = indifference
@@ -108,13 +117,14 @@ class MatrixWeightedMajority(Matrix):
         self.absent_vs_unordered = absent_vs_unordered
         self.absent_vs_absent = absent_vs_absent
         self.default_score = default_score
+        self.antisymmetric = antisymmetric
         super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
                          default_converter=default_converter)
 
     @cached_property
     def _gross_and_weights_(self):
-        gross = {(c, d): 0. for c in self.candidates_ for d in self.candidates_}
-        weights = {(c, d): 0. for c in self.candidates_ for d in self.candidates_}
+        gross = NiceDict({(c, d): 0. for c in self.candidates_ for d in self.candidates_})
+        weights = NiceDict({(c, d): 0. for c in self.candidates_ for d in self.candidates_})
         for ballot, weight, _ in self.profile_converted_.items():
             absent = self.candidates_ - ballot.candidates
             for i_class, indifference_class in enumerate(ballot.as_weak_order):
@@ -187,13 +197,45 @@ class MatrixWeightedMajority(Matrix):
 
     @cached_property
     def gross_(self):
+        """
+        The `gross' matrix.
+
+        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (without
+            dividing by the total weight).
+
+        >>> from whalrus import MatrixWeightedMajority
+        >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1]).gross_
+        {('a', 'a'): 0.0, ('a', 'b'): 2.5, ('b', 'a'): 0.5, ('b', 'b'): 0.0}
+        """
         return self._gross_and_weights_['gross']
 
     @cached_property
     def weights_(self):
+        """
+        The matrix of weights.
+
+        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the total weight (used as a
+            denominator in the average).
+
+        In most usual cases, all non-diagonal coefficients are equal, and are equal to the total weight of all voters:
+
+        >>> from whalrus import MatrixWeightedMajority
+        >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1]).weights_
+        {('a', 'a'): 0.0, ('a', 'b'): 3.0, ('b', 'a'): 3.0, ('b', 'b'): 0.0}
+
+        However, if some scoring parameters are None, some weights can be lower than the total weight of all voters:
+
+        >>> from whalrus import MatrixWeightedMajority
+        >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1], indifference=None).weights_
+        {('a', 'a'): 0.0, ('a', 'b'): 2.0, ('b', 'a'): 2.0, ('b', 'b'): 0.0}
+        """
         return self._gross_and_weights_['weights']
 
     @cached_property
     def as_dict_(self):
-        return {pair: self.gross_[pair] / w if w != 0 else self.default_score
-                for pair, w in self.weights_.items()}
+        net_matrix = {pair: self.gross_[pair] / w if w != 0 else self.default_score
+                      for pair, w in self.weights_.items()}
+        if self.antisymmetric:
+            return {(c, d): net_matrix[(c, d)] - net_matrix[(d, c)] for (c, d) in net_matrix.keys()}
+        else:
+            return net_matrix
