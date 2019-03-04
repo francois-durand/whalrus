@@ -108,9 +108,6 @@ class BallotLevels(BallotOrder):
 
         :return: a Scale object, representing the authorized scale at the moment when the voter cast her ballot. If
             the scale was not explicitly given, try to infer the scale from the ballot.
-
-        >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}).scale
-        ScaleRange(low=3, high=10)
         """
         if self._input_scale is None:
             return Scale()
