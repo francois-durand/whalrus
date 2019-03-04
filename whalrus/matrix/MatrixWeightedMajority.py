@@ -22,7 +22,8 @@ class MatrixWeightedMajority(Matrix):
     :param unordered_vs_absent: number of points for candidate ``c`` when it unordered and ``d`` is absent.
     :param absent_vs_unordered: number of points for candidate ``c`` when it absent and ``d`` is unordered.
     :param absent_vs_absent: number of points for candidate ``c`` when it absent and ``d`` is absent.
-    :param default_score: default score in the matrix in case of division by 0.
+    :param default_score: default score in the matrix in case of division by 0. In particular, this is used for
+        the diagonal coefficients.
     :param antisymmetric: if True, then an antisymmetric version of the matrix is computed (by subtracting the
         transposed matrix).
 
