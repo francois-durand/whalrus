@@ -44,6 +44,7 @@ from .profile.Profile import Profile
 # Matrix
 from .matrix.Matrix import Matrix
 from .matrix.MatrixWeightedMajority import MatrixWeightedMajority
+from .matrix.MatrixMajority import MatrixMajority
 
 # Voting Rules: abstract classes
 from .rule.Rule import Rule

@@ -152,6 +152,28 @@ RuleBorda
 .. autoclass:: whalrus.RuleBorda
     :members:
 
+Matrix
+======
+
+Matrix
+----
+
+.. autoclass:: whalrus.Matrix
+    :members:
+
+MatrixWeightedMajority
+----------------------
+
+.. autoclass:: whalrus.MatrixWeightedMajority
+    :members:
+
+MatrixMajority
+--------------
+
+.. autoclass:: whalrus.MatrixMajority
+    :members:
+
+
 Utils
 =====
 
