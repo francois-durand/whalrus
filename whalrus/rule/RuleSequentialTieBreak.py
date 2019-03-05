@@ -4,7 +4,6 @@ from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.rule.RuleBorda import RuleBorda
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.priority.Priority import Priority
 from typing import Union
 
