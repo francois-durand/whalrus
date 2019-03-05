@@ -53,6 +53,7 @@ from .rule.RuleScore import RuleScore
 # Voting Rules
 from .rule.RulePlurality import RulePlurality
 from .rule.RuleBorda import RuleBorda
+from .rule.RuleMaximin import RuleMaximin
 
 # Voting Rules: "meta-rules"
 from .rule.RuleSequentialElimination import RuleSequentialElimination
