@@ -89,6 +89,7 @@ class MatrixWeightedMajority(Matrix):
     b  0.0  0.0
 
     Antisymmetric version:
+
     >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None, antisymmetric=True).as_df_
          a    b
     a  0.0  1.0
