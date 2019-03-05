@@ -51,6 +51,7 @@ from .rule.Rule import Rule
 from .rule.RuleScore import RuleScore
 
 # Voting Rules
+from .rule.RuleCondorcet import RuleCondorcet
 from .rule.RulePlurality import RulePlurality
 from .rule.RuleBorda import RuleBorda
 from .rule.RuleMaximin import RuleMaximin
