@@ -11,6 +11,7 @@ class MatrixWeightedMajority(Matrix):
     """
     The weighted majority matrix.
 
+    :param default_converter: the default is :class:`ConverterBallotToOrder`.
     :param higher_vs_lower: number of points for candidate ``c`` when it is ordered higher than candidate ``d``.
     :param lower_vs_higher: number of points for candidate ``c`` when it is ordered lower than candidate ``d``.
     :param indifference: number of points for candidate ``c`` when it is ordered the same as candidate ``d``.
@@ -96,9 +97,9 @@ class MatrixWeightedMajority(Matrix):
     b -1.0  0.0
     """
 
-    def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None,
-                 default_converter: ConverterBallot=ConverterBallotToOrder(),
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 default_converter: ConverterBallot = None,
                  higher_vs_lower: Union[float, None] = 1., lower_vs_higher: Union[float, None] = 0.,
                  indifference: Union[float, None] = .5,
                  ordered_vs_unordered: Union[float, None] = 1., unordered_vs_ordered: Union[float, None] = 0.,
@@ -106,7 +107,9 @@ class MatrixWeightedMajority(Matrix):
                  ordered_vs_absent: Union[float, None] = None, absent_vs_ordered: Union[float, None] = None,
                  unordered_vs_absent: Union[float, None] = None, absent_vs_unordered: Union[float, None] = None,
                  absent_vs_absent: Union[float, None] = None,
-                 default_score: float = 0., antisymmetric=False):
+                 default_score: float = 0., antisymmetric: bool = False):
+        if default_converter is None:
+            default_converter = ConverterBallotToOrder()
         self.higher_vs_lower = higher_vs_lower
         self.lower_vs_higher = lower_vs_higher
         self.indifference = indifference

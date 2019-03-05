@@ -43,7 +43,7 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
     {'a': 'Excellent', 'b': 'Very Good', 'c': 'Good', 'd': 'Bad'}
     """
 
-    def __init__(self, scale, borda_unordered_give_points: bool=True):
+    def __init__(self, scale: ScaleFromList, borda_unordered_give_points: bool = True):
         self.scale = scale
         self.borda_unordered_give_points = borda_unordered_give_points
 

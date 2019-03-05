@@ -18,7 +18,7 @@ class Matrix(DeleteCacheMixin):
     :param candidates: if mentioned, will be passed to `__call__` immediately after initialization.
     :param converter: if mentioned, will be passed to `__call__` immediately after initialization.
     :param default_converter: the default converter that is used to convert input ballots. This converter is
-        used when no converter is explicitly given to `__call__`.
+        used when no converter is explicitly given to `__call__`. Default: :class:`ConverterBallotGeneral`.
 
     A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters, candidates and a
     converter. When it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
@@ -31,13 +31,15 @@ class Matrix(DeleteCacheMixin):
     Cf. :class:`MatrixWeightedMajority` for some examples.
     """
 
-    def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None,
-                 default_converter: ConverterBallot=ConverterBallotGeneral()):
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 default_converter: ConverterBallot = None):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
         """
         # Parameters
+        if default_converter is None:
+            default_converter = ConverterBallotGeneral()
         self.default_converter = default_converter
         # Computed variables
         self.profile_ = None
@@ -47,8 +49,8 @@ class Matrix(DeleteCacheMixin):
         if ballots is not None:
             self(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
-    def __call__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None):
+    def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None):
         self.profile_ = Profile(ballots, weights=weights, voters=voters)
         if converter is None:
             converter = self.default_converter

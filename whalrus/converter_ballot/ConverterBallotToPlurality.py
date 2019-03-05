@@ -42,16 +42,16 @@ class ConverterBallotToPlurality(ConverterBallot):
     """
 
     def __init__(self,
-                 order_priority: Priority=Priority.UNAMBIGUOUS,
-                 plurality_priority: Priority=Priority.UNAMBIGUOUS,
-                 veto_priority: Priority=Priority.UNAMBIGUOUS,
-                 one_name_priority: Priority=Priority.UNAMBIGUOUS):
+                 order_priority: Priority = Priority.UNAMBIGUOUS,
+                 plurality_priority: Priority = Priority.UNAMBIGUOUS,
+                 veto_priority: Priority = Priority.UNAMBIGUOUS,
+                 one_name_priority: Priority = Priority.UNAMBIGUOUS):
         self.order_priority = order_priority
         self.plurality_priority = plurality_priority
         self.veto_priority = veto_priority
         self.one_name_priority = one_name_priority
 
-    def __call__(self, x: object, candidates: set =None) -> BallotPlurality:
+    def __call__(self, x: object, candidates: set = None) -> BallotPlurality:
         x = ConverterBallotGeneral()(x, candidates=None)
         if isinstance(x, BallotPlurality):
             return x.restrict(candidates=candidates, priority=self.plurality_priority)

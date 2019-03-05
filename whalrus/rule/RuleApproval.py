@@ -1,12 +1,18 @@
 from whalrus.scale.ScaleRange import ScaleRange
 from whalrus.rule.RuleRangeVoting import RuleRangeVoting
+from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.converter_ballot.ConverterBallotToGrades import ConverterBallotToGrades
 from whalrus.priority.Priority import Priority
+from whalrus.profile.Profile import Profile
+from typing import Union
+import numbers
 
 
 class RuleApproval(RuleRangeVoting):
     """
     Approval voting.
+
+    :param default_converter: the default is ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``.
 
     Cf. :class:`RulePlurality` and :class:`Rule` for the general syntax.
 
@@ -19,9 +25,14 @@ class RuleApproval(RuleRangeVoting):
     {'a': 1.0, 'b': 0.5, 'c': 0.5, 'd': 0.0}
     """
 
-    def __init__(self, ballots=None, weights=None, voters=None, candidates=None, converter=None,
-                 tie_break=Priority.UNAMBIGUOUS, default_converter=ConverterBallotToGrades(scale=ScaleRange(0, 1)),
-                 grade_ungraded=None, grade_absent=None, default_average=0.):
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 grade_ungraded: Union[numbers.Number, None] = None,
+                 grade_absent: Union[numbers.Number, None] = None,
+                 default_average: numbers.Number = 0.):
+        if default_converter is None:
+            default_converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
         super().__init__(
             ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
             tie_break=tie_break, default_converter=default_converter,

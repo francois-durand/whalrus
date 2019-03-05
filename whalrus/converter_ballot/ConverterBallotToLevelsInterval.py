@@ -6,6 +6,7 @@ from whalrus.ballot.BallotPlurality import BallotPlurality
 from whalrus.ballot.BallotOneName import BallotOneName
 from whalrus.ballot.BallotLevels import BallotLevels
 from whalrus.ballot.BallotOrder import BallotOrder
+from whalrus.scale.Scale import Scale
 from whalrus.scale.ScaleInterval import ScaleInterval
 from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.scale.ScaleFromSet import ScaleFromSet
@@ -55,7 +56,7 @@ class ConverterBallotToLevelsInterval(ConverterBallot):
     BallotLevels({'a': 1.0, 'b': 0.75, 'c': 0.5}, candidates={'a', ..., 'e'}, scale=ScaleInterval(low=0.0, high=1.0))
     """
 
-    def __init__(self, scale=ScaleInterval(0., 1.), borda_unordered_give_points: bool=True):
+    def __init__(self, scale: Scale = ScaleInterval(0., 1.), borda_unordered_give_points: bool = True):
         self.scale = scale
         self.low = scale.low
         self.high = scale.high

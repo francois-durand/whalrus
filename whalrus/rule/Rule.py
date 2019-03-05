@@ -18,7 +18,7 @@ class Rule(DeleteCacheMixin):
     :param converter: if mentioned, will be passed to `__call__` immediately after initialization.
     :param tie_break: a tie-break rule.
     :param default_converter: the default converter that is used to convert input ballots. This converter is
-        used when no converter is explicitly given to `__call__`.
+        used when no converter is explicitly given to `__call__`. Default: :class:`ConverterBallotGeneral`.
 
     A :class:`Rule` object is a callable whose inputs are ballots and optionally weights, voters, candidates and a
     converter. When the rule is called, it loads the profile. The output of the call is the rule itself. But
@@ -33,9 +33,11 @@ class Rule(DeleteCacheMixin):
     Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
     """
 
-    def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None,
-                 tie_break: Priority=Priority.UNAMBIGUOUS, default_converter: ConverterBallot=ConverterBallotGeneral()):
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None):
+        if default_converter is None:
+            default_converter = ConverterBallotGeneral()
         # Parameters
         self.tie_break = tie_break
         self.default_converter = default_converter
@@ -47,8 +49,8 @@ class Rule(DeleteCacheMixin):
         if ballots is not None:
             self(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
-    def __call__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None):
+    def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None):
         self.profile_ = Profile(ballots, weights=weights, voters=voters)
         if converter is None:
             converter = self.default_converter

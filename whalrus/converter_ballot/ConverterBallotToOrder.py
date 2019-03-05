@@ -30,7 +30,7 @@ class ConverterBallotToOrder(ConverterBallot):
     BallotOrder([{'b', 'c'}, 'a'], candidates={'a', 'b', 'c'})
     """
 
-    def __call__(self, x: object, candidates: set =None) -> BallotOrder:
+    def __call__(self, x: object, candidates: set = None) -> BallotOrder:
         x = ConverterBallotGeneral()(x, candidates=None)
         if isinstance(x, BallotOrder):
             return x.restrict(candidates=candidates)

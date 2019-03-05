@@ -72,7 +72,7 @@ class Profile(DeleteCacheMixin):
     (3): b > a
     """
 
-    def __init__(self, ballots: Union[list, 'Profile'], weights: list=None, voters: list=None):
+    def __init__(self, ballots: Union[list, 'Profile'], weights: list = None, voters: list = None):
         converter = ConverterBallotGeneral()
         self._ballots = [converter(b) for b in ballots]
         if weights is None:

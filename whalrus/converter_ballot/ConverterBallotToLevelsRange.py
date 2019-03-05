@@ -55,13 +55,13 @@ class ConverterBallotToLevelsRange(ConverterBallot):
     BallotLevels({'a': 10, 'b': 8, 'c': 6}, candidates={'a', ..., 'f'}, scale=ScaleRange(low=0, high=10))
     """
 
-    def __init__(self, scale=ScaleRange(0, 1), borda_unordered_give_points: bool=True):
+    def __init__(self, scale: ScaleRange = ScaleRange(0, 1), borda_unordered_give_points: bool = True):
         self.scale = scale
         self.low = scale.low
         self.high = scale.high
         self.borda_unordered_give_points = borda_unordered_give_points
 
-    def __call__(self, x: object, candidates: set =None) -> BallotLevels:
+    def __call__(self, x: object, candidates: set = None) -> BallotLevels:
         x = ConverterBallotToLevelsInterval(
             scale=ScaleInterval(low=self.low, high=self.high),
             borda_unordered_give_points=self.borda_unordered_give_points

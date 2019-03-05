@@ -4,12 +4,15 @@ from whalrus.profile.Profile import Profile
 from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.ballot.BallotOrder import BallotOrder
+from whalrus.converter_ballot.ConverterBallot import ConverterBallot
+from typing import Union
 
 
 class RuleBorda(RuleScore):
     """
     The Borda rule.
 
+    :param default_converter: the default is :class:`ConverterBallotToOrder`.
     :param absent_give_points: if True, then candidates that are absent in ballot are considered as if they were
         at the bottom of the ballots.
     :param absent_receive_points: if True, then candidates that are absent from the ballot can receive points (for
@@ -60,10 +63,13 @@ class RuleBorda(RuleScore):
     {'a': 2.0, 'b': 0.5, 'c': 0.5, 'd': 0.0, 'e': 0.0, 'f': 0.0, 'g': 0.0}
     """
 
-    def __init__(self, ballots=None, weights=None, voters=None, candidates=None, converter=None,
-                 tie_break=Priority.UNAMBIGUOUS, default_converter=ConverterBallotToOrder(),
-                 absent_give_points=True, absent_receive_points=True,
-                 unordered_give_points=True, unordered_receive_points=True):
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 absent_give_points: bool = True, absent_receive_points: bool = True,
+                 unordered_give_points: bool = True, unordered_receive_points: bool = True):
+        if default_converter is None:
+            default_converter = ConverterBallotToOrder()
         self.absent_give_points = absent_give_points
         self.absent_receive_points = absent_receive_points
         self.unordered_give_points = unordered_give_points

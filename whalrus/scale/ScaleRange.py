@@ -39,11 +39,11 @@ class ScaleRange(Scale):
         self._high = high
 
     @property
-    def low(self) -> object:
+    def low(self) -> int:
         return self._low
 
     @property
-    def high(self) -> object:
+    def high(self) -> int:
         return self._high
 
     @property

@@ -4,12 +4,17 @@ from whalrus.rule.RuleScore import RuleScore
 from whalrus.converter_ballot.ConverterBallotToGrades import ConverterBallotToGrades
 from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.converter_ballot.ConverterBallot import ConverterBallot
+from whalrus.profile.Profile import Profile
+from typing import Union
+import numbers
 
 
 class RuleRangeVoting(RuleScore):
     """
     Range voting.
 
+    :param default_converter: the default is :class:`ConverterBallotToGrades`.
     :param grade_ungraded: the default grade when a ballot does not grade a candidate (partial or total abstention).
         If None (default), then the average grade is computed only over non-abstainers (cf. examples below).
     :param grade_absent: the default grade when a voter did not even see the candidate (i.e. it is not in its
@@ -46,9 +51,14 @@ class RuleRangeVoting(RuleScore):
     {'a': 7.0, 'b': 5.0, 'c': 5.0, 'd': 0.0}
     """
 
-    def __init__(self, ballots=None, weights=None, voters=None, candidates=None, converter=None,
-                 tie_break=Priority.UNAMBIGUOUS, default_converter=ConverterBallotToGrades(),
-                 grade_ungraded=None, grade_absent=None, default_average=0.):
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 grade_ungraded: Union[numbers.Number, None] = None,
+                 grade_absent: Union[numbers.Number, None] = None,
+                 default_average: numbers.Number = 0.):
+        if default_converter is None:
+            default_converter = ConverterBallotToGrades()
         self.grade_ungraded = grade_ungraded
         self.grade_absent = grade_absent
         self.default_average = default_average

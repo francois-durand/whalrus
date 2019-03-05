@@ -20,10 +20,10 @@ class RuleSequentialElimination(Rule):
     'b'
     """
 
-    def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None,
-                 tie_break: Priority=Priority.UNAMBIGUOUS, default_converter: ConverterBallot=ConverterBallotGeneral(),
-                 base_rule: Rule=None):
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 base_rule: Rule = None):
         self.base_rule = base_rule
         super().__init__(
             ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,

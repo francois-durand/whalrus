@@ -10,8 +10,8 @@ from whalrus.matrix.MatrixWeightedMajority import MatrixWeightedMajority
 class MatrixMajority(Matrix):
     """
 
-    :param matrix_weighted_majority: a :class:`Matrix`. By default, it is the weighted majority matrix, but it can
-        be chosen otherwise.
+    :param default_converter: the default is :class:`ConverterBallotToOrder`.
+    :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority`.
     :param greater: value when in the weighted matrix, coefficient ``(c, d)`` is greater than coefficient ``(d, c)``.
     :param lower: value when in the weighted matrix, coefficient ``(c, d)`` is lower than coefficient ``(d, c)``.
     :param equal: value when in the weighted matrix, coefficient ``(c, d)`` is equal to coefficient ``(d, c)``.
@@ -36,11 +36,15 @@ class MatrixMajority(Matrix):
     c  0.0  0.0  0.0
     """
 
-    def __init__(self, ballots: Union[list, Profile]=None, weights: list=None, voters: list=None,
-                 candidates: set=None, converter: ConverterBallot=None,
-                 default_converter: ConverterBallot = ConverterBallotToOrder(),
-                 matrix_weighted_majority: Matrix = MatrixWeightedMajority(),
+    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
+                 candidates: set = None, converter: ConverterBallot = None,
+                 default_converter: ConverterBallot = None,
+                 matrix_weighted_majority: Matrix = None,
                  greater: float = 1., lower: float = 0., equal: float = .5):
+        if default_converter is None:
+            default_converter = ConverterBallotToOrder()
+        if matrix_weighted_majority is None:
+            matrix_weighted_majority = MatrixWeightedMajority()
         self.matrix_weighted_majority = matrix_weighted_majority
         self.greater = greater
         self.lower = lower

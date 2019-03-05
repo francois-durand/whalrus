@@ -43,11 +43,14 @@ class ConverterBallotToLevelsListNumeric(ConverterBallot):
     {'a': 4, 'b': 3, 'c': 0, 'd': -1}
     """
 
-    def __init__(self, scale, borda_unordered_give_points: bool=True):
+    def __init__(self, scale: ScaleFromList, borda_unordered_give_points: bool=True):
         self.scale = scale
         self.borda_unordered_give_points = borda_unordered_give_points
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
+        if not self.scale.is_numeric:
+            raise ValueError('The scale should be numeric.')
+        # noinspection PyTypeChecker
         x = ConverterBallotToLevelsInterval(
             scale=ScaleInterval(low=self.scale.low, high=self.scale.high),
             borda_unordered_give_points=self.borda_unordered_give_points

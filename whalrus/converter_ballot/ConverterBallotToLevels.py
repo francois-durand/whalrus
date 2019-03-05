@@ -44,7 +44,7 @@ class ConverterBallotToLevels(ConverterBallot):
     :class:`ConverterBallotToLevelsListNumeric`, and :class:`ConverterBallotToLevelsListNonNumeric`.
     """
 
-    def __init__(self, scale: Scale = None, borda_unordered_give_points: bool=True):
+    def __init__(self, scale: Scale = None, borda_unordered_give_points: bool = True):
         self.scale = scale
         self.borda_unordered_give_points = borda_unordered_give_points
         if scale is None:
