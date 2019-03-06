@@ -11,7 +11,7 @@ from copy import deepcopy
 from itertools import chain
 
 
-class RuleSequentialElimination(Rule):
+class RuleIteratedElimination(Rule):
     """
     A rule by sequential elimination (such as IRV, Coombs, Baldwin, Nanson...)
 
@@ -20,7 +20,7 @@ class RuleSequentialElimination(Rule):
     :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the
         base rule.
 
-    >>> irv = RuleSequentialElimination(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4],
+    >>> irv = RuleIteratedElimination(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4],
     ...                                 base_rule=RulePlurality())
     >>> irv.eliminations_[0].rule_.scores_
     {'a': 2, 'b': 3, 'c': 4}
@@ -34,7 +34,7 @@ class RuleSequentialElimination(Rule):
     By default, ``propagate_tie_break`` is True. So if you want to specify a tie-breaking rule, just do it in the
     parameters of this object, and it will also be used in the base rule:
 
-    >>> irv = RuleSequentialElimination(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
+    >>> irv = RuleIteratedElimination(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
     ...                                 base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
     >>> irv.eliminations_[0].rule_.scores_
     {'a': 1, 'b': 2, 'c': 1}
@@ -49,7 +49,7 @@ class RuleSequentialElimination(Rule):
     tie-breaking rule of the base rule. The following (somewhat contrived) example illustrates the respective roles of
     the two tie-breaking rules.
 
-    >>> rule = RuleSequentialElimination(
+    >>> rule = RuleIteratedElimination(
     ...     ['a', 'b', 'c', 'd', 'e'], weights=[3, 2, 2, 2, 1],
     ...     tie_break=Priority.DESCENDING, propagate_tie_break=False,
     ...     base_rule=RulePlurality(tie_break=Priority.ASCENDING), elimination=EliminationLast(k=2))

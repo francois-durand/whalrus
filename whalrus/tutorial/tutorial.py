@@ -1,6 +1,6 @@
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.rule.RuleBorda import RuleBorda
-from whalrus.rule.RuleSequentialElimination import RuleSequentialElimination
+from whalrus.rule.RuleIteratedElimination import RuleIteratedElimination
 from whalrus.priority.Priority import Priority
 from whalrus.profile.Profile import Profile
 from whalrus.ballot.BallotOrder import BallotOrder
@@ -116,7 +116,7 @@ def combine_rules():
     """
     It is possible to combine some rules to obtain new rules.
 
-    >>> irv = RuleSequentialElimination(base_rule=RulePlurality())
+    >>> irv = RuleIteratedElimination(base_rule=RulePlurality())
     >>> irv(['a > b > c', 'b > a > c', 'c > a > b'],
     ...     weights=[2, 3, 4]).winner_
     'b'

@@ -2,14 +2,14 @@ from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.priority.Priority import Priority
 from whalrus.rule.Rule import Rule
-from whalrus.rule.RuleSequentialElimination import RuleSequentialElimination
+from whalrus.rule.RuleIteratedElimination import RuleIteratedElimination
 from whalrus.rule.RuleBorda import RuleBorda
 from whalrus.elimination.Elimination import Elimination
 from whalrus.elimination.EliminationBelowAverage import EliminationBelowAverage
 from typing import Union
 
 
-class RuleNanson(RuleSequentialElimination):
+class RuleNanson(RuleIteratedElimination):
     """
     Nanson's rule.
 

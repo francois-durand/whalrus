@@ -128,10 +128,10 @@ RuleScore
 .. autoclass:: whalrus.RuleScore
     :members:
 
-RuleSequentialElimination
+RuleIteratedElimination
 -------------------------
 
-.. autoclass:: whalrus.RuleSequentialElimination
+.. autoclass:: whalrus.RuleIteratedElimination
     :members:
 
 RuleSequentialTieBreak

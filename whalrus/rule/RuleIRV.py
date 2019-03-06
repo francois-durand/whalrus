@@ -1,7 +1,7 @@
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.rule.Rule import Rule
-from whalrus.rule.RuleSequentialElimination import RuleSequentialElimination
+from whalrus.rule.RuleIteratedElimination import RuleIteratedElimination
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.elimination.Elimination import Elimination
 from whalrus.elimination.EliminationLast import EliminationLast
@@ -9,7 +9,7 @@ from whalrus.priority.Priority import Priority
 from typing import Union
 
 
-class RuleIRV(RuleSequentialElimination):
+class RuleIRV(RuleIteratedElimination):
     """
     Instant-Runoff Voting, also known as Alternative vote, Single Transferable Vote, etc.
 

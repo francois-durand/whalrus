@@ -1,10 +1,10 @@
-from whalrus.rule.RuleSequentialElimination import RuleSequentialElimination
+from whalrus.rule.RuleIteratedElimination import RuleIteratedElimination
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.priority.Priority import Priority
 
 
 def test():
-    irv = RuleSequentialElimination(base_rule=RulePlurality())
+    irv = RuleIteratedElimination(base_rule=RulePlurality())
     irv([
         'a > b > c',
         'b > a > c',
@@ -13,7 +13,7 @@ def test():
     assert irv.order_ == [{'b'}, {'c'}, {'a'}]
     assert irv.winner_ == 'b'
 
-    irv = RuleSequentialElimination(base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
+    irv = RuleIteratedElimination(base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
     irv([
         'a > b > c > d',
         'd > b > c > a',

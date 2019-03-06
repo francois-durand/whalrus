@@ -62,7 +62,7 @@ from .rule.RuleBorda import RuleBorda
 from .rule.RuleMaximin import RuleMaximin
 
 # Voting Rules: "meta-rules"
-from .rule.RuleSequentialElimination import RuleSequentialElimination
+from .rule.RuleIteratedElimination import RuleIteratedElimination
 from .rule.RuleSequentialTieBreak import RuleSequentialTieBreak
 
 # Voting Rules: complex rules (using meta-rules)
