@@ -29,13 +29,14 @@ class Rule(DeleteCacheMixin):
     default converter. In some subclasses, there can also be an option about the way to count abstentions, etc.
 
     Cf. :class:`RulePlurality` for some examples.
-
-    Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None, converter: ConverterBallot = None,
                  tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None):
+        """
+        Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
+        """
         if default_converter is None:
             default_converter = ConverterBallotGeneral()
         # Parameters
@@ -66,6 +67,15 @@ class Rule(DeleteCacheMixin):
     def _check_profile(self, candidates: set) -> None:
         if any([b.candidates != candidates for b in self.profile_converted_]):
             logging.warning('Some ballots do not have the same set of candidates as the whole election.')
+
+    @cached_property
+    def n_candidates_(self) -> int:
+        """
+        Number of candidates.
+
+        :return: the number of candidates.
+        """
+        return len(self.candidates_)
 
     @cached_property
     def cowinners_(self) -> NiceSet:

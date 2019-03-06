@@ -39,6 +39,15 @@ class RuleScore(Rule):
         return min(self.scores_.values())
 
     @cached_property
+    def average_score_(self) -> Number:
+        """
+        The average score.
+
+        :return: the average score.
+        """
+        return sum(self.scores_.values()) / self.n_candidates_
+
+    @cached_property
     def cowinners_(self):
         """
         Cowinners

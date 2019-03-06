@@ -46,12 +46,16 @@ from .matrix.Matrix import Matrix
 from .matrix.MatrixWeightedMajority import MatrixWeightedMajority
 from .matrix.MatrixMajority import MatrixMajority
 
-# Voting Rules: abstract classes
+# Elimination algorithms
+from .elimination.Elimination import Elimination
+from .elimination.EliminationLast import EliminationLast
+from .elimination.EliminationBelowAverage import EliminationBelowAverage
+
+# Voting Rules: basic abstract classes
 from .rule.Rule import Rule
 from .rule.RuleScore import RuleScore
 
-# Voting Rules
-from .rule.RuleBlack import RuleBlack
+# Voting Rules: basic rules
 from .rule.RuleCondorcet import RuleCondorcet
 from .rule.RulePlurality import RulePlurality
 from .rule.RuleBorda import RuleBorda
@@ -60,6 +64,10 @@ from .rule.RuleMaximin import RuleMaximin
 # Voting Rules: "meta-rules"
 from .rule.RuleSequentialElimination import RuleSequentialElimination
 from .rule.RuleSequentialTieBreak import RuleSequentialTieBreak
+
+# Voting Rules: complex rules (using meta-rules)
+from .rule.RuleBlack import RuleBlack
+from .rule.RuleNanson import RuleNanson
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1

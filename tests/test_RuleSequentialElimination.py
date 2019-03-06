@@ -13,7 +13,7 @@ def test():
     assert irv.order_ == [{'b'}, {'c'}, {'a'}]
     assert irv.winner_ == 'b'
 
-    irv = RuleSequentialElimination(base_rule=RulePlurality(tie_break=Priority.ASCENDING))
+    irv = RuleSequentialElimination(base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
     irv([
         'a > b > c > d',
         'd > b > c > a',
