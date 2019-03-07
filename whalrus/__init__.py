@@ -65,6 +65,7 @@ from .rule.RuleMaximin import RuleMaximin
 from .rule.RuleScorePositional import RuleScorePositional
 from .rule.RuleKApproval import RuleKApproval
 from .rule.RuleVeto import RuleVeto
+from .rule.RuleCopeland import RuleCopeland
 
 # Voting Rules: "meta-rules"
 from .rule.RuleIteratedElimination import RuleIteratedElimination
