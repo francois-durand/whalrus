@@ -13,7 +13,7 @@ from itertools import chain
 
 class RuleIteratedElimination(Rule):
     """
-    A rule by sequential elimination (such as IRV, Coombs, Baldwin, Nanson...)
+    A rule by iterated elimination (such as IRV, Coombs, Baldwin, Nanson...)
 
     :param base_rule: the rule used at each round to determine the trailing candidate.
     :param elimination: the elimination algorithm. Default: ``EliminationLast(k=1)``.
