@@ -38,6 +38,7 @@ from .converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToL
 from .converter_ballot.ConverterBallotToLevelsRange import ConverterBallotToLevelsRange
 from .converter_ballot.ConverterBallotToLevelsListNonNumeric import ConverterBallotToLevelsListNonNumeric
 from .converter_ballot.ConverterBallotToLevelsListNumeric import ConverterBallotToLevelsListNumeric
+from .converter_ballot.ConverterBallotToVeto import ConverterBallotToVeto
 
 # Profile
 from .profile.Profile import Profile
@@ -63,9 +64,11 @@ from .rule.RuleBorda import RuleBorda
 from .rule.RuleMaximin import RuleMaximin
 from .rule.RuleScorePositional import RuleScorePositional
 from .rule.RuleKApproval import RuleKApproval
+from .rule.RuleVeto import RuleVeto
 
 # Voting Rules: "meta-rules"
 from .rule.RuleIteratedElimination import RuleIteratedElimination
+from .rule.RuleSequentialElimination import RuleSequentialElimination
 from .rule.RuleSequentialTieBreak import RuleSequentialTieBreak
 
 # Voting Rules: complex rules (using meta-rules)
@@ -73,6 +76,8 @@ from .rule.RuleBlack import RuleBlack
 from .rule.RuleBaldwin import RuleBaldwin
 from .rule.RuleNanson import RuleNanson
 from .rule.RuleIRV import RuleIRV
+from .rule.RuleCoombs import RuleCoombs
+from .rule.RuleKimRoush import RuleKimRoush
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
