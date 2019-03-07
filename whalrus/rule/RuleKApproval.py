@@ -11,8 +11,7 @@ class RuleKApproval(RuleScorePositional):
 
     :param k: the number of approved candidates.
 
-    The ballots must be strict orders (or converted to strict orders by the chosen ``converter``). The ``k`` top
-    candidates in a ballot receive 1 point, and the other candidates receive 0 point.
+    The ``k`` top candidates in a ballot receive 1 point, and the other candidates receive 0 point.
 
     >>> RuleKApproval(['a > b > c', 'b > c > a'], k=2).scores_
     {'a': 1, 'b': 2, 'c': 1}
