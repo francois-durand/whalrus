@@ -19,6 +19,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.scale.Scale import Scale
+from typing import Iterable
 
 
 class ScaleInterval(Scale):
@@ -45,8 +46,24 @@ class ScaleInterval(Scale):
         return self._high
 
     @property
-    def is_bounded(self):
+    def is_bounded(self) -> bool:
         return True
 
     def __repr__(self):
         return 'ScaleInterval(low=%s, high=%s)' % (self.low, self.high)
+
+    # Min, max and sort
+    # -----------------
+
+    def min(self, iterable: Iterable) -> object:
+        return min(iterable)
+
+    def max(self, iterable: Iterable) -> object:
+        return max(iterable)
+
+    # noinspection PyMethodMayBeStatic
+    def sort(self, some_list: list) -> None:
+        some_list.sort()
+
+    def argsort(self, some_list: list) -> list:
+        return sorted(range(len(some_list)), key=lambda i: some_list[i])

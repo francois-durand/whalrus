@@ -1,7 +1,7 @@
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.utils.Utils import cached_property, NiceSet, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
@@ -9,7 +9,7 @@ from whalrus.matrix.MatrixMajority import MatrixMajority
 from typing import Union
 
 
-class RuleCopeland(RuleScore):
+class RuleCopeland(RuleScoreNum):
     """
     Copeland's rule.
 

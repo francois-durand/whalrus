@@ -1,5 +1,5 @@
 import logging
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToVeto import ConverterBallotToVeto
 from whalrus.utils.Utils import cached_property, NiceDict
@@ -8,7 +8,7 @@ from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 
 
-class RuleVeto(RuleScore):
+class RuleVeto(RuleScoreNum):
     """
     The veto rule.
 

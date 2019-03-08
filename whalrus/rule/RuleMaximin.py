@@ -1,4 +1,4 @@
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.utils.Utils import cached_property, NiceDict
@@ -9,7 +9,7 @@ from whalrus.matrix.MatrixWeightedMajority import MatrixWeightedMajority
 from typing import Union
 
 
-class RuleMaximin(RuleScore):
+class RuleMaximin(RuleScoreNum):
     """
     Maximin rule.
 

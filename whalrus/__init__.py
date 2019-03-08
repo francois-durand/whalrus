@@ -55,7 +55,7 @@ from .elimination.EliminationBelowAverage import EliminationBelowAverage
 
 # Voting Rules: basic abstract classes
 from .rule.Rule import Rule
-from .rule.RuleScore import RuleScore
+from .rule.RuleScoreNum import RuleScoreNum
 
 # Voting Rules: basic rules
 from .rule.RuleCondorcet import RuleCondorcet
@@ -66,6 +66,7 @@ from .rule.RuleScorePositional import RuleScorePositional
 from .rule.RuleKApproval import RuleKApproval
 from .rule.RuleVeto import RuleVeto
 from .rule.RuleCopeland import RuleCopeland
+from .rule.RuleMajorityJudgment import RuleMajorityJudgment
 
 # Voting Rules: "meta-rules"
 from .rule.RuleIteratedElimination import RuleIteratedElimination

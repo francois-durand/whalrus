@@ -1,5 +1,5 @@
 from whalrus.utils.Utils import cached_property
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.elimination.Elimination import Elimination
 from whalrus.rule.RulePlurality import RulePlurality
 
@@ -29,7 +29,7 @@ class EliminationBelowAverage(Elimination):
     {'a', 'b'}
     """
 
-    def __init__(self, rule: RuleScore = None, strict=True):
+    def __init__(self, rule: RuleScoreNum = None, strict=True):
         self.strict = strict
         super().__init__(rule)
 

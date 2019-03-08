@@ -1,4 +1,4 @@
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.profile.Profile import Profile
 from whalrus.priority.Priority import Priority
@@ -8,7 +8,7 @@ from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 
 
-class RuleBorda(RuleScore):
+class RuleBorda(RuleScoreNum):
     """
     The Borda rule.
 

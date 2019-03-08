@@ -21,6 +21,7 @@ This file is part of Whalrus.
 import numbers
 from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property
+from typing import Iterable
 
 
 class ScaleFromList(Scale):
@@ -58,12 +59,27 @@ class ScaleFromList(Scale):
         return self.levels[-1]
 
     @property
-    def is_bounded(self):
+    def is_bounded(self) -> bool:
         return True
 
     @cached_property
-    def is_numeric(self):
+    def is_numeric(self) -> bool:
         return all([isinstance(v, numbers.Number) for v in self.levels])
 
     def __repr__(self):
         return 'ScaleFromList(levels=%s)' % self.levels
+
+    # Min, max and sort
+    # -----------------
+
+    def min(self, iterable: Iterable) -> object:
+        return min(iterable, key=lambda level: self.as_dict[level])
+
+    def max(self, iterable: Iterable) -> object:
+        return max(iterable, key=lambda level: self.as_dict[level])
+
+    def sort(self, some_list: list) -> None:
+        some_list.sort(key=lambda level: self.as_dict[level])
+
+    def argsort(self, some_list: list) -> list:
+        return sorted(range(len(some_list)), key=lambda i: self.as_dict[some_list[i]])

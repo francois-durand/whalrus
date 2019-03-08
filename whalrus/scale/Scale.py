@@ -18,6 +18,8 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+from functools import cmp_to_key
+from typing import Iterable
 
 
 class Scale:
@@ -109,3 +111,54 @@ class Scale:
 
     def __repr__(self):
         return '%s()' % type(self).__name__
+
+    # Min, max and sort
+    # -----------------
+
+    def compare(self, one: object, another: object) -> int:
+        """
+        Compare two levels.
+
+        :param one: a level.
+        :param another: a level.
+        :return: 0 if they are equal, a positive number if ``one`` is greater than ``another``, a negative number
+            otherwise.
+        """
+        if self.eq(one, another):
+            return 0
+        return -1 if self.lt(one, another) else 1
+
+    def min(self, iterable: Iterable) -> object:
+        """
+        Minimum of some levels.
+
+        :param iterable: an iterable of levels (list, set, etc).
+        """
+        return min(iterable, key=cmp_to_key(self.compare))
+
+    def max(self, iterable: Iterable) -> object:
+        """
+        Maximum of some levels.
+
+        :param iterable: an iterable of levels (list, set, etc).
+        """
+        return max(iterable, key=cmp_to_key(self.compare))
+
+    def sort(self, some_list: list) -> None:
+        """
+        Sort a list of levels (in place).
+
+        :param some_list: a list of levels.
+        """
+        some_list.sort(key=cmp_to_key(self.compare))
+
+    def argsort(self, some_list: list) -> list:
+        """
+        `Argsort' a list of levels.
+
+        :param some_list: a list of levels.
+        :return: a list of indexes.
+        """
+        def compare_indexes(one: int, another: int) -> int:
+            return self.compare(some_list[one], some_list[another])
+        return sorted(range(len(some_list)), key=cmp_to_key(compare_indexes))

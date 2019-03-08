@@ -122,10 +122,10 @@ Rule
 .. autoclass:: whalrus.Rule
     :members:
 
-RuleScore
+RuleScoreNum
 ---------
 
-.. autoclass:: whalrus.RuleScore
+.. autoclass:: whalrus.RuleScoreNum
     :members:
 
 RuleIteratedElimination

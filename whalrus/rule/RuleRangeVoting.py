@@ -1,6 +1,6 @@
 from whalrus.scale.ScaleRange import ScaleRange
 from whalrus.ballot.BallotLevels import BallotLevels
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.converter_ballot.ConverterBallotToGrades import ConverterBallotToGrades
 from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict
@@ -10,7 +10,7 @@ from typing import Union
 import numbers
 
 
-class RuleRangeVoting(RuleScore):
+class RuleRangeVoting(RuleScoreNum):
     """
     Range voting.
 

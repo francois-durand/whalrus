@@ -1,4 +1,5 @@
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
+from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.converter_ballot.ConverterBallotToLevelsRange import ConverterBallotToLevelsRange
 from whalrus.ballot.BallotVeto import BallotVeto
 from whalrus.ballot.BallotPlurality import BallotPlurality
@@ -8,6 +9,7 @@ from whalrus.scale.ScaleInterval import ScaleInterval
 from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.scale.ScaleRange import ScaleRange
+import logging
 
 
 class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
@@ -48,6 +50,12 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
         self.borda_unordered_give_points = borda_unordered_give_points
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
+        x = ConverterBallotGeneral()(x, candidates=None)
+        if isinstance(x, BallotLevels) and any([level in self.scale.levels for level in x.values()]):
+            if all([level in self.scale.levels for level in x.values()]):
+                return BallotLevels(x.as_dict, scale=self.scale)
+            else:
+                logging.warning('Not all levels of ballot ``%s`` are in the scale.' % x)
         x = ConverterBallotToLevelsRange(
             scale=ScaleRange(low=0, high=len(self.scale.levels) - 1),
             borda_unordered_give_points=self.borda_unordered_give_points

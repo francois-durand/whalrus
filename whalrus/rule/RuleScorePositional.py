@@ -1,4 +1,4 @@
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.converter_ballot.ConverterBallotToStrictOrder import ConverterBallotToStrictOrder
 from whalrus.profile.Profile import Profile
 from whalrus.priority.Priority import Priority
@@ -7,7 +7,7 @@ from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 
 
-class RuleScorePositional(RuleScore):
+class RuleScorePositional(RuleScoreNum):
     """
     A positional scoring rule.
 

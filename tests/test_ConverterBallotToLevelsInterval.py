@@ -12,4 +12,3 @@ def test():
         {'a': 1., 'b': .5, 'c': 0.}, scale=ScaleInterval(low=0., high=1.))
     assert converter({'a': 'A', 'b': 'B', 'c': 'C'}) == BallotLevels(
         {'a': 0., 'b': .5, 'c': 1.}, scale=ScaleInterval(low=0., high=1.))
-

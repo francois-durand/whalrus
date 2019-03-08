@@ -1,5 +1,5 @@
 import logging
-from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
 from whalrus.utils.Utils import cached_property, NiceDict
@@ -8,7 +8,7 @@ from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 
 
-class RulePlurality(RuleScore):
+class RulePlurality(RuleScoreNum):
     """
     The plurality rule.
 

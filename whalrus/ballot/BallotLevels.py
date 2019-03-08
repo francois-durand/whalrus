@@ -23,9 +23,7 @@ from typing import KeysView, ValuesView, ItemsView
 from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.scale.Scale import Scale
 from whalrus.scale.ScaleRange import ScaleRange
-from whalrus.scale.ScaleInterval import ScaleInterval
 from whalrus.scale.ScaleFromList import ScaleFromList
-from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.utils.Utils import cached_property, dict_to_items, NiceSet, NiceDict
 
 
@@ -38,8 +36,8 @@ class BallotLevels(BallotOrder):
         the values must be hashable.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
         candidates that are explicitly mentioned in the ballot :attr:`b`.
-    :param scale: the authorized scale at the moment when the voter cast her ballot. If not specified, Whalrus tries
-        to infer it.
+    :param scale: the authorized scale at the moment when the voter cast her ballot. Default: ``Scale()`` (meaning in
+        this case `unknown').
 
     Most general syntax:
 
@@ -67,7 +65,9 @@ class BallotLevels(BallotOrder):
     # ====================================
 
     def __init__(self, b: dict, candidates: set=None, scale: Scale=None):
-        self._input_scale = scale
+        if scale is None:
+            scale = Scale()
+        self.scale = scale
         super().__init__(b, candidates)
 
     def _parse(self, b: dict) -> None:
@@ -100,25 +100,6 @@ class BallotLevels(BallotOrder):
     @cached_property
     def candidates_in_b(self) -> NiceSet:
         return NiceSet(self.as_dict.keys())
-
-    @cached_property
-    def scale(self) -> Scale:
-        """
-        The scale.
-
-        :return: a Scale object, representing the authorized scale at the moment when the voter cast her ballot. If
-            the scale was not explicitly given, try to infer the scale from the ballot.
-        """
-        if self._input_scale is None:
-            return Scale()
-            # if len(self) == 0:
-            #     return Scale(set())
-            # if all([isinstance(v, int) for v in self.as_dict.values()]):
-            #     return ScaleRange(low=min(self.as_dict.values()), high=max(self.as_dict.values()))
-            # if all([isinstance(v, numbers.Number) for v in self.as_dict.values()]):
-            #     return ScaleInterval(low=min(self.as_dict.values()), high=max(self.as_dict.values()))
-            # return ScaleFromSet(set(self.as_dict.values()))
-        return self._input_scale
 
     @cached_property
     def is_numeric(self):
