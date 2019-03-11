@@ -49,21 +49,16 @@ class RuleTwoRound(RuleSequentialElimination):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
-                 rule1: Rule = None, rule2: Rule = None, elimination: Elimination = None,
-                 propagate_tie_break=True):
+                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
+                 default_converter: ConverterBallot = None):
         if rule1 is None:
             rule1 = RulePlurality()
         if rule2 is None:
             rule2 = RulePlurality()
         if elimination is None:
             elimination = EliminationLast(k=-2)
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter,
-            rules=[rule1, rule2], eliminations=[elimination], propagate_tie_break=propagate_tie_break
-        )
+        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
+                         default_converter=default_converter)
 
     @cached_property
     def first_round_(self) -> Elimination:

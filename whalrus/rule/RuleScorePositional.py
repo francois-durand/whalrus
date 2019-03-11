@@ -38,23 +38,20 @@ class RuleScorePositional(RuleScoreNum):
     avoid these issues, specify the ballot converter explicitly:
 
     >>> RuleScorePositional(['a > b ~ c', 'b > c > a'], points_scheme=[1, 1],
-    ...     converter=ConverterBallotToStrictOrder(priority=Priority.ASCENDING)).scores_
+    ...     default_converter=ConverterBallotToStrictOrder(priority=Priority.ASCENDING)).scores_
     {'a': 1, 'b': 2, 'c': 1}
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
-                 points_scheme: list = None):
+                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
+                 default_converter: ConverterBallot = None):
         if default_converter is None:
             default_converter = ConverterBallotToStrictOrder()
         # if points_scheme is None:
         #     points_scheme = [1]
         self.points_scheme = points_scheme
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
-        )
+        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
+                         default_converter=default_converter)
 
     @cached_property
     def scores_(self) -> NiceDict:

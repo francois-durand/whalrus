@@ -27,15 +27,11 @@ class RuleNanson(RuleIteratedElimination):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
-                 base_rule: Rule = None, elimination: Elimination = None, propagate_tie_break=True):
+                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
+                 default_converter: ConverterBallot = None):
         if base_rule is None:
             base_rule = RuleBorda()
         if elimination is None:
             elimination = EliminationBelowAverage()
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter,
-            base_rule=base_rule, elimination=elimination, propagate_tie_break=propagate_tie_break
-        )
+        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
+                         default_converter=default_converter)

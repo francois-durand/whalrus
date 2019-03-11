@@ -11,7 +11,7 @@ class EliminationBelowAverage(Elimination):
     :param strict: if True (resp. False), then eliminate the candidates whose score is strictly lower than
         (resp. lower or equal to) the average.
 
-    >>> rule = RulePlurality(ballots=['a', 'b', 'c'], weights=[3, 2, 1])
+    >>> rule = RulePlurality(ballots=['a', 'b', 'c'],weights=[3, 2, 1])
     >>> rule.scores_
     {'a': 3, 'b': 2, 'c': 1}
     >>> EliminationBelowAverage(rule=rule).eliminated_

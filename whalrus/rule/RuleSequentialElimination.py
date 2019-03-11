@@ -61,10 +61,8 @@ class RuleSequentialElimination(Rule):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
-                 rules: Union[list, Rule] = None, eliminations: Union[list, Elimination] = None,
-                 propagate_tie_break=True):
+                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
+                 default_converter: ConverterBallot = None):
         # Default values
         if eliminations is None:
             eliminations = EliminationLast(k=1)
@@ -85,10 +83,8 @@ class RuleSequentialElimination(Rule):
         self.rules = rules
         self.eliminations = eliminations
         self.propagate_tie_break = propagate_tie_break
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
-        )
+        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
+                         default_converter=default_converter)
 
     def _check_profile(self, candidates: set) -> None:
         # We delegate this task to the base rules.
@@ -105,10 +101,7 @@ class RuleSequentialElimination(Rule):
 
         Note that in some cases, there may be fewer actual rounds than declared in the definition of the rule:
 
-        >>> rule = RuleSequentialElimination(
-        ...     ['a > b > c > d', 'a > c > d > b', 'a > d > b > c'],
-        ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
-        ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
+        >>> rule = RuleSequentialElimination(['a > b > c > d', 'a > c > d > b', 'a > d > b > c'])
         >>> len(rule.rounds_)
         2
         >>> rule.elimination_rounds_[0].rule_.scores_

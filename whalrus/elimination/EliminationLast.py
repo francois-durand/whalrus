@@ -14,19 +14,19 @@ class EliminationLast(Elimination):
 
     Typical usage with ``k = 1`` (for :class:`RuleIRV`):
 
-    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'], tie_break=Priority.ASCENDING)
+    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'],tie_break=Priority.ASCENDING)
     >>> EliminationLast(rule=rule, k=1).eliminated_
     {'e'}
 
     Typical usage with ``k = -2`` (for :class:`RuleTwoRound`):
 
-    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'], tie_break=Priority.ASCENDING)
+    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'],tie_break=Priority.ASCENDING)
     >>> EliminationLast(rule=rule, k=-2).qualified_
     {'a', 'b'}
 
     Order of elimination:
 
-    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'], tie_break=Priority.ASCENDING)
+    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'],tie_break=Priority.ASCENDING)
     >>> EliminationLast(rule=rule, k=-2).eliminated_order_
     [{'c'}, {'d', 'e'}]
 

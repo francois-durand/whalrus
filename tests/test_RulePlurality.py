@@ -34,11 +34,7 @@ def test():
 
 
 def test_order_and_trailers():
-    plurality = RulePlurality(
-        ballots=['a', 'b', 'c', 'd', 'e'],
-        weights=[2, 3, 1, 3, 1],
-        tie_break=Priority.ASCENDING
-    )
+    plurality = RulePlurality(ballots=['a', 'b', 'c', 'd', 'e'], weights=[2, 3, 1, 3, 1], tie_break=Priority.ASCENDING)
     assert plurality.order_ == [{'b', 'd'}, {'a'}, {'c', 'e'}]
     assert plurality.strict_order_ == ['b', 'd', 'a', 'c', 'e']
     assert plurality.cotrailers_ == {'c', 'e'}
@@ -68,15 +64,9 @@ def test_old_plurality_unweighted_winner():
 
 def test_old_plurality_weighted_winner():
     assert RulePlurality(["A", "A", "B", "A", "C"], weights=[1, 1, 10, 1, 2]).winner_ == "B"
-    assert RulePlurality(
-        ["A", "A", "B", "A", "C", "", "", ""],
-        weights=[1, 1, 10, 1, 2, 1, 42, 1]
-    ).winner_ == "B"
-    assert RulePlurality(
-        ["A", "A", "B", "A", "C"],
-        weights=[1, 1, 10, 1, 2],
-        voters=['e1', 'e2', 'e3', 'e4', 'e5']
-    ).winner_ == "B"
+    assert RulePlurality(["A", "A", "B", "A", "C", "", "", ""], weights=[1, 1, 10, 1, 2, 1, 42, 1]).winner_ == "B"
+    assert RulePlurality(["A", "A", "B", "A", "C"], weights=[1, 1, 10, 1, 2],
+                         voters=['e1', 'e2', 'e3', 'e4', 'e5']).winner_ == "B"
     # If we use linear orders as input, it should also work as expected
     assert RulePlurality([
         ["A", "B", "C"],
