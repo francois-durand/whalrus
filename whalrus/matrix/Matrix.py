@@ -94,12 +94,3 @@ class Matrix(DeleteCacheMixin):
             :attr:`candidates_as_list_`).
         """
         return np.array([[self.as_dict_[(c, d)] for d in self.candidates_as_list_] for c in self.candidates_as_list_])
-
-    @cached_property
-    def as_df_(self) -> pd.DataFrame:
-        """
-        The matrix, as a pandas dataframe.
-
-        :return: a pandas dataframe, whose rows and columns represent the candidates.
-        """
-        return pd.DataFrame(self.as_array_, index=self.candidates_as_list_, columns=self.candidates_as_list_)

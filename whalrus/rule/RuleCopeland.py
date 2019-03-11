@@ -20,11 +20,10 @@ class RuleCopeland(RuleScoreNum):
     the non-diagonal elements of its rows in the matrix.
 
     >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
-    >>> rule.matrix_majority_.as_df_
-         a    b    c
-    a  0.5  1.0  1.0
-    b  0.0  0.5  1.0
-    c  0.0  0.0  0.5
+    >>> rule.matrix_majority_.as_array_
+    array([[0.5, 1. , 1. ],
+           [0. , 0.5, 1. ],
+           [0. , 0. , 0.5]])
     >>> rule.scores_
     {'a': 2.0, 'b': 1.0, 'c': 0.0}
     """

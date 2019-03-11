@@ -21,19 +21,17 @@ class MatrixMajority(Matrix):
     :attr:`greater` if ``W[(d, c)] > W[(d, c)]``, :attr:`equal` if ``W[(d, c)] = W[(d, c)]`` and :attr:`lower` if `
     `W[(d, c)] < W[(d, c)]``.
 
-    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b']).as_df_
-         a    b    c
-    a  0.5  1.0  1.0
-    b  0.0  0.5  0.5
-    c  0.0  0.5  0.5
+    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b']).as_array_
+    array([[0.5, 1. , 1. ],
+           [0. , 0.5, 0.5],
+           [0. , 0.5, 0.5]])
 
     Using the options:
 
-    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0.).as_df_
-         a    b    c
-    a  0.0  1.0  1.0
-    b  0.0  0.0  0.0
-    c  0.0  0.0  0.0
+    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0.).as_array_
+    array([[0., 1., 1.],
+           [0., 0., 0.],
+           [0., 0., 0.]])
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
