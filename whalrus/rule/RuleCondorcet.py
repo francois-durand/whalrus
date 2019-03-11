@@ -29,11 +29,10 @@ class RuleCondorcet(Rule):
     `Condorcet winner' is necessarily unique when it exists, but that might not be the case with more exotic settings:
 
     >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1.))
-    >>> rule.matrix_majority_.as_df_
-         a    b    c
-    a  1.0  1.0  1.0
-    b  1.0  1.0  1.0
-    c  0.0  0.0  1.0
+    >>> rule.matrix_majority_.as_array_
+    array([[1., 1., 1.],
+           [1., 1., 1.],
+           [0., 0., 1.]])
     >>> rule.order_
     [{'a', 'b'}, {'c'}]
     """

@@ -39,13 +39,12 @@ class MatrixWeightedMajority(Matrix):
     Basic usage:
 
     >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> MatrixWeightedMajority(ballots=[ballot]).as_df_
-         a    b    c    d    e
-    a  0.0  1.0  1.0  1.0  1.0
-    b  0.0  0.0  0.5  1.0  1.0
-    c  0.0  0.5  0.0  1.0  1.0
-    d  0.0  0.0  0.0  0.0  0.5
-    e  0.0  0.0  0.0  0.5  0.0
+    >>> MatrixWeightedMajority(ballots=[ballot]).as_array_
+    array([[0. , 1. , 1. , 1. , 1. ],
+           [0. , 0. , 0.5, 1. , 1. ],
+           [0. , 0.5, 0. , 1. , 1. ],
+           [0. , 0. , 0. , 0. , 0.5],
+           [0. , 0. , 0. , 0.5, 0. ]])
 
     In the most general syntax, firstly, you define the matrix computation algorithm:
 
@@ -61,10 +60,6 @@ class MatrixWeightedMajority(Matrix):
     >>> matrix.as_array_
     array([[0., 1.],
            [0., 0.]])
-    >>> matrix.as_df_
-         a    b
-    a  0.0  1.0
-    b  0.0  0.0
 
     Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.
 
@@ -72,29 +67,25 @@ class MatrixWeightedMajority(Matrix):
 
     >>> # With ``indifference = .5`` (default), the ratio of voters who like ``a`` better than ``b`` is 1.5 / 2 = 0.75
     >>> # (the indifferent voter gives .5 point and is counted in the denominator):
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b']).as_df_
-          a     b
-    a  0.00  0.75
-    b  0.25  0.00
+    >>> MatrixWeightedMajority(['a > b', 'a ~ b']).as_array_
+    array([[0.  , 0.75],
+           [0.25, 0.  ]])
     >>> # With ``indifference = 0.``, the ratio of voters who like ``a`` better than ``b`` is 1. / 2 = 0.5
     >>> # (the indifferent voter gives no point, but is counted in the denominator):
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=0.).as_df_
-         a    b
-    a  0.0  0.5
-    b  0.0  0.0
+    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=0.).as_array_
+    array([[0. , 0.5],
+           [0. , 0. ]])
     >>> # With ``indifference = None``, the ratio of voters who like ``a`` better than ``b`` is 1. / 1 = 1
     >>> # (the indifferent voter is not counted in the average at all).
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None).as_df_
-         a    b
-    a  0.0  1.0
-    b  0.0  0.0
+    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None).as_array_
+    array([[0., 1.],
+           [0., 0.]])
 
     Antisymmetric version:
 
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None, antisymmetric=True).as_df_
-         a    b
-    a  0.0  1.0
-    b -1.0  0.0
+    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None, antisymmetric=True).as_array_
+    array([[ 0.,  1.],
+           [-1.,  0.]])
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,

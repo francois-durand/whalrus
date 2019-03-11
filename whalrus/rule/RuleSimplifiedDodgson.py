@@ -19,11 +19,10 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     The score of a candidate is the sum of the negative non-diagonal coefficient on its raw of the matrix.
 
     >>> rule = RuleSimplifiedDodgson(ballots=['a > b > c', 'b > a > c', 'c > a > b'], weights=[3, 3, 2])
-    >>> rule.matrix_weighted_majority_.as_df_
-          a     b    c
-    a  0.00  0.25  0.5
-    b -0.25  0.00  0.5
-    c -0.50 -0.50  0.0
+    >>> rule.matrix_weighted_majority_.as_array_
+    array([[ 0.  ,  0.25,  0.5 ],
+           [-0.25,  0.  ,  0.5 ],
+           [-0.5 , -0.5 ,  0.  ]])
     >>> rule.scores_
     {'a': 0, 'b': -0.25, 'c': -1.0}
     >>> rule.winner_
