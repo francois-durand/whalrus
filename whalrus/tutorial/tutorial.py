@@ -17,12 +17,15 @@ def quick_start():
 
     Elections with weights, voter names:
 
-    >>> RulePlurality(['a', 'a', 'b', 'c'],weights=[1, 1, 3, 2],voters=['Alice', 'Bob', 'Cat', 'Dave']).winner_
+    >>> RulePlurality(
+    ...     ['a', 'a', 'b', 'c'], weights=[1, 1, 3, 2],
+    ...     voters=['Alice', 'Bob', 'Cat', 'Dave']
+    ... ).winner_
     'b'
 
     Choosing the tie-breaking rule:
 
-    >>> RulePlurality(['a', 'a', 'b', 'b', 'c'],tie_break=Priority.ASCENDING).winner_
+    >>> RulePlurality(['a', 'a', 'b', 'b', 'c'], tie_break=Priority.ASCENDING).winner_
     'a'
     """
     pass
@@ -30,7 +33,7 @@ def quick_start():
 
 def computed_attributes():
     """
-    >>> plurality = RulePlurality(['a', 'a', 'b', 'b', 'c'],tie_break=Priority.ASCENDING)
+    >>> plurality = RulePlurality(['a', 'a', 'b', 'b', 'c'], tie_break=Priority.ASCENDING)
     >>> plurality.candidates_
     {'a', 'b', 'c'}
     >>> plurality.scores_
@@ -113,7 +116,7 @@ def combine_rules():
     """
     It is possible to combine some rules to obtain new rules.
 
-    >>> irv = RuleIteratedElimination()
+    >>> irv = RuleIteratedElimination(base_rule=RulePlurality())
     >>> irv(['a > b > c', 'b > a > c', 'c > a > b'],
     ...     weights=[2, 3, 4]).winner_
     'b'
@@ -127,6 +130,6 @@ def change_candidates():
     It is also possible to change the set of candidates, compared to when the voters cast their ballots.
 
     >>> profile = Profile(['a > b > c', 'a ~ b > c'])
-    >>> RulePlurality(profile,candidates={'b', 'c'}).scores_
+    >>> RulePlurality(profile, candidates={'b', 'c'}).scores_
     {'b': 2, 'c': 0}
     """

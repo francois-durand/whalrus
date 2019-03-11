@@ -32,7 +32,7 @@ class Rule(DeleteCacheMixin):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
+                 candidates: set = None, converter: ConverterBallot = None,
                  tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
@@ -41,19 +41,21 @@ class Rule(DeleteCacheMixin):
             default_converter = ConverterBallotGeneral()
         # Parameters
         self.tie_break = tie_break
-        self.converter = default_converter
+        self.default_converter = default_converter
         # Computed variables
         self.profile_ = None
         self.profile_converted_ = None
         self.candidates_ = None
         # Optional: load a profile at initialization
         if ballots is not None:
-            self(ballots=ballots, weights=weights, voters=voters, candidates=candidates)
+            self(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None):
+                 candidates: set = None, converter: ConverterBallot = None):
         self.profile_ = Profile(ballots, weights=weights, voters=voters)
-        self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_],
+        if converter is None:
+            converter = self.default_converter
+        self.profile_converted_ = Profile([converter(b, candidates) for b in self.profile_],
                                           weights=self.profile_.weights, voters=self.profile_.voters)
         if candidates is None:
             candidates = NiceSet(set().union(*[b.candidates for b in self.profile_converted_]))

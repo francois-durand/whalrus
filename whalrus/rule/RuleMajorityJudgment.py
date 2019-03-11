@@ -52,8 +52,12 @@ class RuleMajorityJudgment(RuleScore):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
-                 default_converter: ConverterBallot = None):
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 scale: Scale = None,
+                 level_ungraded: object = None,
+                 level_absent: object = None,
+                 default_median: object = None):
         if scale is None:
             scale = ScaleInterval(0., 1.)
         if default_converter is None:
@@ -62,8 +66,10 @@ class RuleMajorityJudgment(RuleScore):
         self.level_ungraded = level_ungraded
         self.level_absent = level_absent
         self.default_median = default_median
-        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
-                         default_converter=default_converter)
+        super().__init__(
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
+            tie_break=tie_break, default_converter=default_converter
+        )
 
     @cached_property
     def scores_(self) -> NiceDict:

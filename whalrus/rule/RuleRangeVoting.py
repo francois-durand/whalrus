@@ -34,8 +34,7 @@ class RuleRangeVoting(RuleScoreNum):
 
     >>> RuleRangeVoting(['a > b > c', 'c > a > b']).scores_
     {'a': 0.75, 'b': 0.25, 'c': 0.5}
-    >>> RuleRangeVoting(['a > b > c', 'c > a > b'], default_converter=ConverterBallotToGrades(
-    ...     scale=ScaleRange(0, 10))).scores_
+    >>> RuleRangeVoting(['a > b > c', 'c > a > b'], converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))).scores_
     {'a': 7.5, 'b': 2.5, 'c': 5.0}
 
     About the options:
@@ -53,15 +52,20 @@ class RuleRangeVoting(RuleScoreNum):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
-                 default_converter: ConverterBallot = None):
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 grade_ungraded: Union[numbers.Number, None] = None,
+                 grade_absent: Union[numbers.Number, None] = None,
+                 default_average: numbers.Number = 0.):
         if default_converter is None:
             default_converter = ConverterBallotToGrades()
         self.grade_ungraded = grade_ungraded
         self.grade_absent = grade_absent
         self.default_average = default_average
-        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
-                         default_converter=default_converter)
+        super().__init__(
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
+            tie_break=tie_break, default_converter=default_converter
+        )
 
     @cached_property
     def scores_(self) -> NiceDict:

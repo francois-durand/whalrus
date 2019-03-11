@@ -4,7 +4,7 @@ from whalrus.priority.Priority import Priority
 
 
 def test():
-    irv = RuleIteratedElimination()
+    irv = RuleIteratedElimination(base_rule=RulePlurality())
     irv([
         'a > b > c',
         'b > a > c',
@@ -13,7 +13,7 @@ def test():
     assert irv.order_ == [{'b'}, {'c'}, {'a'}]
     assert irv.winner_ == 'b'
 
-    irv = RuleIteratedElimination(tie_break=Priority.ASCENDING)
+    irv = RuleIteratedElimination(base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
     irv([
         'a > b > c > d',
         'd > b > c > a',

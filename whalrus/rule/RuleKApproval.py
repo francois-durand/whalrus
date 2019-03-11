@@ -18,7 +18,11 @@ class RuleKApproval(RuleScorePositional):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, tie_break: Priority = Priority.UNAMBIGUOUS,
-                 default_converter: ConverterBallot = None):
-        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, tie_break=tie_break,
-                         default_converter=default_converter)
+                 candidates: set = None, converter: ConverterBallot = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 k: int = 1):
+        super().__init__(
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
+            tie_break=tie_break, default_converter=default_converter,
+            points_scheme=[1] * k
+        )
