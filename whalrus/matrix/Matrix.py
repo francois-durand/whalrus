@@ -1,6 +1,5 @@
 import logging
 import numpy as np
-import pandas as pd
 from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet, set_to_list, NiceDict
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.profile.Profile import Profile
