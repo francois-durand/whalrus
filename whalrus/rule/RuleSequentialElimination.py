@@ -61,8 +61,8 @@ class RuleSequentialElimination(Rule):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
                  rules: Union[list, Rule] = None, eliminations: Union[list, Elimination] = None,
                  propagate_tie_break=True):
         # Default values
@@ -86,8 +86,8 @@ class RuleSequentialElimination(Rule):
         self.eliminations = eliminations
         self.propagate_tie_break = propagate_tie_break
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter
         )
 
     def _check_profile(self, candidates: set) -> None:

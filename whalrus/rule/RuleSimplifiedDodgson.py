@@ -13,7 +13,7 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     """
     Simplified Dodgson rule.
 
-    :param default_converter: the default is :class:`ConverterBallotToOrder`.
+    :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_weighted_majority: a :class:`Matrix`. Default: ``MatrixWeightedMajority(antisymmetric=True)``.
 
     The score of a candidate is the sum of the negative non-diagonal coefficient on its raw of the matrix.
@@ -30,17 +30,17 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
                  matrix_weighted_majority: Matrix = None):
-        if default_converter is None:
-            default_converter = ConverterBallotToOrder()
+        if converter is None:
+            converter = ConverterBallotToOrder()
         if matrix_weighted_majority is None:
             matrix_weighted_majority = MatrixWeightedMajority(antisymmetric=True)
         self.matrix_weighted_majority = matrix_weighted_majority
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter
         )
 
     @cached_property

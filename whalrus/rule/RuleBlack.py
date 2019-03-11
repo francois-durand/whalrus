@@ -38,8 +38,8 @@ class RuleBlack(RuleSequentialTieBreak):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
                  rule_condorcet: Rule = None, rule_borda: Rule = None):
         if rule_condorcet is None:
             rule_condorcet = RuleCondorcet()
@@ -48,8 +48,8 @@ class RuleBlack(RuleSequentialTieBreak):
             rule_borda = RuleBorda()
         self.rule_borda = rule_borda
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter,
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter,
             rules=[rule_condorcet, rule_borda]
         )
 

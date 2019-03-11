@@ -11,7 +11,7 @@ class RuleScorePositional(RuleScoreNum):
     """
     A positional scoring rule.
 
-    :param default_converter: the default is :class:`ConverterBallotToStrictOrder`.
+    :param converter: the default is :class:`ConverterBallotToStrictOrder`.
     :param points_scheme: the list of points to be attributed to the (first) candidates of a ballot.
 
     The top candidate in a ballot receives ``points_scheme[0]`` points, the second one receives ``points_scheme[1]`
@@ -43,17 +43,17 @@ class RuleScorePositional(RuleScoreNum):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
                  points_scheme: list = None):
-        if default_converter is None:
-            default_converter = ConverterBallotToStrictOrder()
+        if converter is None:
+            converter = ConverterBallotToStrictOrder()
         # if points_scheme is None:
         #     points_scheme = [1]
         self.points_scheme = points_scheme
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter
         )
 
     @cached_property

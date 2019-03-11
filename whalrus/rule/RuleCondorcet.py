@@ -13,7 +13,7 @@ class RuleCondorcet(Rule):
     """
     Condorcet Rule.
 
-    :param default_converter: the default is :class:`ConverterBallotToOrder`.
+    :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_majority: the majority matrix. Default: :class:`MatrixMajority`.
 
     If there is a Condorcet winner, then it it the winner and all other candidates are tied. If there is no Condorcet
@@ -38,17 +38,17 @@ class RuleCondorcet(Rule):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
                  matrix_majority: Matrix = None):
-        if default_converter is None:
-            default_converter = ConverterBallotToOrder()
+        if converter is None:
+            converter = ConverterBallotToOrder()
         if matrix_majority is None:
             matrix_majority = MatrixMajority()
         self.matrix_majority = matrix_majority
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter
         )
 
     @cached_property

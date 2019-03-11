@@ -15,45 +15,38 @@ class Matrix(DeleteCacheMixin):
     :param weights: if mentioned, will be passed to `__call__` immediately after initialization.
     :param voters: if mentioned, will be passed to `__call__` immediately after initialization.
     :param candidates: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param converter: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param default_converter: the default converter that is used to convert input ballots. This converter is
-        used when no converter is explicitly given to `__call__`. Default: :class:`ConverterBallotGeneral`.
+    :param converter: the converter that is used to convert input ballots. Default: :class:`ConverterBallotGeneral`.
 
-    A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters, candidates and a
-    converter. When it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
+    A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters and candidates. When
+    it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
     But after the call, you can access to the computed variables (ending with an underscore), such as
     :attr:`as_dict_` or :attr:`as_df_`.
-
-    At the initialization of a :class:`Matrix` object, some options can be given, such as a default converter. In
-    some subclasses, there can also be other options.
 
     Cf. :class:`MatrixWeightedMajority` for some examples.
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 default_converter: ConverterBallot = None):
+                 candidates: set = None,
+                 converter: ConverterBallot = None):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
         """
         # Parameters
-        if default_converter is None:
-            default_converter = ConverterBallotGeneral()
-        self.default_converter = default_converter
+        if converter is None:
+            converter = ConverterBallotGeneral()
+        self.converter = converter
         # Computed variables
         self.profile_ = None
         self.profile_converted_ = None
         self.candidates_ = None
         # Optional: load a profile at initialization
         if ballots is not None:
-            self(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
+            self(ballots=ballots, weights=weights, voters=voters, candidates=candidates)
 
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None):
+                 candidates: set = None):
         self.profile_ = Profile(ballots, weights=weights, voters=voters)
-        if converter is None:
-            converter = self.default_converter
-        self.profile_converted_ = Profile([converter(b, candidates) for b in self.profile_],
+        self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_],
                                           weights=self.profile_.weights, voters=self.profile_.voters)
         if candidates is None:
             candidates = NiceSet(set().union(*[b.candidates for b in self.profile_converted_]))

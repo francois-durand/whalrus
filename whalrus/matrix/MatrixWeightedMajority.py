@@ -11,7 +11,7 @@ class MatrixWeightedMajority(Matrix):
     """
     The weighted majority matrix.
 
-    :param default_converter: the default is :class:`ConverterBallotToOrder`.
+    :param converter: the default is :class:`ConverterBallotToOrder`.
     :param higher_vs_lower: number of points for candidate ``c`` when it is ordered higher than candidate ``d``.
     :param lower_vs_higher: number of points for candidate ``c`` when it is ordered lower than candidate ``d``.
     :param indifference: number of points for candidate ``c`` when it is ordered the same as candidate ``d``.
@@ -89,8 +89,8 @@ class MatrixWeightedMajority(Matrix):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 converter: ConverterBallot = None,
                  higher_vs_lower: Union[float, None] = 1., lower_vs_higher: Union[float, None] = 0.,
                  indifference: Union[float, None] = .5,
                  ordered_vs_unordered: Union[float, None] = 1., unordered_vs_ordered: Union[float, None] = 0.,
@@ -99,8 +99,8 @@ class MatrixWeightedMajority(Matrix):
                  unordered_vs_absent: Union[float, None] = None, absent_vs_unordered: Union[float, None] = None,
                  absent_vs_absent: Union[float, None] = None,
                  default_score: float = 0., antisymmetric: bool = False):
-        if default_converter is None:
-            default_converter = ConverterBallotToOrder()
+        if converter is None:
+            converter = ConverterBallotToOrder()
         self.higher_vs_lower = higher_vs_lower
         self.lower_vs_higher = lower_vs_higher
         self.indifference = indifference
@@ -114,8 +114,7 @@ class MatrixWeightedMajority(Matrix):
         self.absent_vs_absent = absent_vs_absent
         self.default_score = default_score
         self.antisymmetric = antisymmetric
-        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-                         default_converter=default_converter)
+        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
     @cached_property
     def _gross_and_weights_(self):

@@ -12,7 +12,7 @@ class RuleBorda(RuleScoreNum):
     """
     The Borda rule.
 
-    :param default_converter: the default is :class:`ConverterBallotToOrder`.
+    :param converter: the default is :class:`ConverterBallotToOrder`.
     :param absent_give_points: if True, then candidates that are absent in ballot are considered as if they were
         at the bottom of the ballots.
     :param absent_receive_points: if True, then candidates that are absent from the ballot can receive points (for
@@ -64,19 +64,19 @@ class RuleBorda(RuleScoreNum):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None,
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
                  absent_give_points: bool = True, absent_receive_points: bool = True,
                  unordered_give_points: bool = True, unordered_receive_points: bool = True):
-        if default_converter is None:
-            default_converter = ConverterBallotToOrder()
+        if converter is None:
+            converter = ConverterBallotToOrder()
         self.absent_give_points = absent_give_points
         self.absent_receive_points = absent_receive_points
         self.unordered_give_points = unordered_give_points
         self.unordered_receive_points = unordered_receive_points
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter
         )
 
     @cached_property

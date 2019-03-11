@@ -12,7 +12,7 @@ class RulePlurality(RuleScoreNum):
     """
     The plurality rule.
 
-    :param default_converter: the default is :class:`ConverterBallotToPlurality`.
+    :param converter: the default is :class:`ConverterBallotToPlurality`.
 
     In the most general syntax, firstly, you define the rule:
 
@@ -43,13 +43,13 @@ class RulePlurality(RuleScoreNum):
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None, converter: ConverterBallot = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, default_converter: ConverterBallot = None):
-        if default_converter is None:
-            default_converter = ConverterBallotToPlurality()
+                 candidates: set = None,
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None):
+        if converter is None:
+            converter = ConverterBallotToPlurality()
         super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter,
-            tie_break=tie_break, default_converter=default_converter
+            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
+            tie_break=tie_break, converter=converter
         )
 
     def _check_profile(self, candidates: set) -> None:
