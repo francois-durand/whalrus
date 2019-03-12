@@ -1,18 +1,22 @@
 import logging
-from whalrus.rule.RuleScoreNum import RuleScoreNum
+from whalrus.rule.RuleScoreNumAverage import RuleScoreNumAverage
+from whalrus.scorer.Scorer import Scorer
+from whalrus.scorer.ScorerPlurality import ScorerPlurality
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
 from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
+from numbers import Number
 
 
-class RulePlurality(RuleScoreNum):
+class RulePlurality(RuleScoreNumAverage):
     """
     The plurality rule.
 
     :param converter: the default is :class:`ConverterBallotToPlurality`.
+    :param scorer: the default is :class:`ScorerPlurality`.
 
     In the most general syntax, firstly, you define the rule:
 
@@ -22,11 +26,11 @@ class RulePlurality(RuleScoreNum):
 
     >>> plurality(ballots=['a', 'b', 'c'], weights=[2, 2, 1], voters=['Alice', 'Bob', 'Cat'],
     ...           candidates={'a', 'b', 'c', 'd'})  # doctest:+ELLIPSIS
-    <whalrus.rule.RulePlurality.RulePlurality object at ...>
+    <... object at ...>
 
     Finally, you can access the computed variables:
 
-    >>> plurality.scores_
+    >>> plurality.brute_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0}
     >>> plurality.winner_
     'a'
@@ -44,12 +48,16 @@ class RulePlurality(RuleScoreNum):
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None):
+                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
+                 scorer: Scorer = None, default_average: Number = 0.):
         if converter is None:
             converter = ConverterBallotToPlurality()
+        if scorer is None:
+            scorer = ScorerPlurality()
         super().__init__(
             ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
+            tie_break=tie_break, converter=converter,
+            scorer=scorer, default_average=default_average
         )
 
     def _check_profile(self, candidates: set) -> None:
@@ -57,10 +65,26 @@ class RulePlurality(RuleScoreNum):
             logging.warning('Some ballots do not have the same set of candidates as the whole election.')
 
     @cached_property
-    def scores_(self) -> NiceDict:
-        scores_ = NiceDict({c: 0 for c in self.candidates_})
+    def _brute_scores_and_weights_quicker_(self) -> dict:
+        if not isinstance(self.scorer, ScorerPlurality):
+            return self._brute_scores_and_weights_
+        # If it is a ScorerPlurality, we have a quicker method.
+        brute_scores = NiceDict({c: 0 for c in self.candidates_})
+        total_weight = 0
         for ballot, weight, _ in self.profile_converted_.items():
             if ballot.candidate is None:
+                if self.scorer.count_abstention:
+                    total_weight += weight
                 continue
-            scores_[ballot.candidate] += weight
-        return scores_
+            brute_scores[ballot.candidate] += weight
+            total_weight += weight
+        weights = NiceDict({c: total_weight for c in self.candidates_})
+        return {'brute_scores': brute_scores, 'weights': weights}
+
+    @cached_property
+    def brute_scores_(self) -> NiceDict:
+        return self._brute_scores_and_weights_quicker_['brute_scores']
+
+    @cached_property
+    def weights_(self) -> NiceDict:
+        return self._brute_scores_and_weights_quicker_['weights']

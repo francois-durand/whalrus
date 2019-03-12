@@ -24,27 +24,27 @@ class RuleTwoRound(RuleSequentialElimination):
     With its default settings, this class implements the classic two-round system, using plurality at both rounds:
 
     >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1])
-    >>> rule.first_round_.rule_.scores_
+    >>> rule.first_round_.rule_.brute_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
-    >>> rule.second_round_.scores_
+    >>> rule.second_round_.brute_scores_
     {'a': 3, 'b': 2}
 
     Using the options, more exotic two-round systems can be defined, such as changing the rule of a round:
 
     >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
     ...                     rule1=RuleBorda())
-    >>> rule.first_round_.rule_.scores_
+    >>> rule.first_round_.rule_.brute_scores_
     {'a': 17.0, 'b': 16.0, 'c': 12.0, 'd': 5.0, 'e': 0.0}
-    >>> rule.second_round_.scores_
+    >>> rule.second_round_.brute_scores_
     {'a': 3, 'b': 2}
 
     ... or changing the elimination criterion:
 
     >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
     ...                     elimination=EliminationLast(k=-3))
-    >>> rule.first_round_.rule_.scores_
+    >>> rule.first_round_.rule_.brute_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
-    >>> rule.second_round_.scores_
+    >>> rule.second_round_.brute_scores_
     {'a': 2, 'b': 2, 'c': 1}
     """
 

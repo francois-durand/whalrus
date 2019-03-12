@@ -15,22 +15,22 @@ def test():
         {'A': 10, 'B': 7, 'C': 0},
         'B > A ~ C > D'
     ]
-    assert plurality(profile).scores_ == {'A': 4, 'B': 2, 'C': 1, 'D': 0}
-    assert plurality(profile, candidates={'A', 'B', 'D'}).scores_ == {'A': 4, 'B': 3, 'D': 0}
+    assert plurality(profile).brute_scores_ == {'A': 4, 'B': 2, 'C': 1, 'D': 0}
+    assert plurality(profile, candidates={'A', 'B', 'D'}).brute_scores_ == {'A': 4, 'B': 3, 'D': 0}
 
     profile = [None, None, 'b', 42]
-    assert plurality(profile).scores_ == {'b': 1, 42: 1}
+    assert plurality(profile).brute_scores_ == {'b': 1, 42: 1}
 
     profile = ['a', 'a > b ~ c', 'b', ['c', 'b'], 42]
-    assert plurality(profile).scores_ == {'a': 2, 'b': 1, 'c': 1, 42: 1}
+    assert plurality(profile).brute_scores_ == {'a': 2, 'b': 1, 'c': 1, 42: 1}
 
     profile = [
         'a > b > c',
         'c > b > a',
     ]
-    assert plurality(profile, candidates={'b', 'c'}).scores_ == {'b': 1, 'c': 1}
-    assert plurality(profile, candidates={'a', 'b', 'c', 'd'}).scores_ == {'a': 1, 'b': 0, 'c': 1, 'd': 0}
-    assert plurality(profile, candidates={'b', 'c', 'd'}).scores_ == {'b': 1, 'c': 1, 'd': 0}
+    assert plurality(profile, candidates={'b', 'c'}).brute_scores_ == {'b': 1, 'c': 1}
+    assert plurality(profile, candidates={'a', 'b', 'c', 'd'}).brute_scores_ == {'a': 1, 'b': 0, 'c': 1, 'd': 0}
+    assert plurality(profile, candidates={'b', 'c', 'd'}).brute_scores_ == {'b': 1, 'c': 1, 'd': 0}
 
 
 def test_order_and_trailers():

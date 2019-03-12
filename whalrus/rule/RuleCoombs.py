@@ -16,11 +16,11 @@ class RuleCoombs(RuleIteratedElimination):
     At each round, the candidate with the worst Veto score is eliminated.
 
     >>> rule = RuleCoombs(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
-    >>> rule.eliminations_[0].rule_.scores_
+    >>> rule.eliminations_[0].rule_.brute_scores_
     {'a': 0, 'b': -4, 'c': -5}
-    >>> rule.eliminations_[1].rule_.scores_
+    >>> rule.eliminations_[1].rule_.brute_scores_
     {'a': -3, 'b': -6}
-    >>> rule.eliminations_[2].rule_.scores_
+    >>> rule.eliminations_[2].rule_.brute_scores_
     {'a': -9}
     >>> rule.winner_
     'a'

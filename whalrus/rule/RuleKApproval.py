@@ -13,7 +13,7 @@ class RuleKApproval(RuleScorePositional):
 
     The ``k`` top candidates in a ballot receive 1 point, and the other candidates receive 0 point.
 
-    >>> RuleKApproval(['a > b > c', 'b > c > a'], k=2).scores_
+    >>> RuleKApproval(['a > b > c', 'b > c > a'], k=2).brute_scores_
     {'a': 1, 'b': 2, 'c': 1}
     """
 

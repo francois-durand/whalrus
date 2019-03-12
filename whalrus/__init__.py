@@ -53,33 +53,35 @@ from .elimination.Elimination import Elimination
 from .elimination.EliminationLast import EliminationLast
 from .elimination.EliminationBelowAverage import EliminationBelowAverage
 
-# Voting Rules: basic abstract classes
+# Voting Rules 1: General
 from .rule.Rule import Rule
+from .rule.RuleScore import RuleScore
 from .rule.RuleScoreNum import RuleScoreNum
-
-# Voting Rules: basic rules
-from .rule.RuleCondorcet import RuleCondorcet
-from .rule.RulePlurality import RulePlurality
-from .rule.RuleBorda import RuleBorda
-from .rule.RuleMaximin import RuleMaximin
+from .rule.RuleScoreNumAverage import RuleScoreNumAverage
 from .rule.RuleScorePositional import RuleScorePositional
-from .rule.RuleKApproval import RuleKApproval
-from .rule.RuleVeto import RuleVeto
-from .rule.RuleCopeland import RuleCopeland
-from .rule.RuleMajorityJudgment import RuleMajorityJudgment
-
-# Voting Rules: "meta-rules"
 from .rule.RuleIteratedElimination import RuleIteratedElimination
 from .rule.RuleSequentialElimination import RuleSequentialElimination
 from .rule.RuleSequentialTieBreak import RuleSequentialTieBreak
 
-# Voting Rules: complex rules (using meta-rules)
-from .rule.RuleBlack import RuleBlack
+# Voting Rules 2: Particular
+from .rule.RuleApproval import RuleApproval
 from .rule.RuleBaldwin import RuleBaldwin
-from .rule.RuleNanson import RuleNanson
-from .rule.RuleIRV import RuleIRV
+from .rule.RuleBlack import RuleBlack
+from .rule.RuleBorda import RuleBorda
+from .rule.RuleCondorcet import RuleCondorcet
 from .rule.RuleCoombs import RuleCoombs
+from .rule.RuleCopeland import RuleCopeland
+from .rule.RuleIRV import RuleIRV
+from .rule.RuleKApproval import RuleKApproval
 from .rule.RuleKimRoush import RuleKimRoush
+from .rule.RuleMajorityJudgment import RuleMajorityJudgment
+from .rule.RuleMaximin import RuleMaximin
+from .rule.RuleNanson import RuleNanson
+from .rule.RulePlurality import RulePlurality
+from .rule.RuleRangeVoting import RuleRangeVoting
+from .rule.RuleSimplifiedDodgson import RuleSimplifiedDodgson
+from .rule.RuleTwoRound import RuleTwoRound
+from .rule.RuleVeto import RuleVeto
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1

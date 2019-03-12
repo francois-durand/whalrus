@@ -12,7 +12,7 @@ class EliminationBelowAverage(Elimination):
         (resp. lower or equal to) the average.
 
     >>> rule = RulePlurality(ballots=['a', 'b', 'c'], weights=[3, 2, 1])
-    >>> rule.scores_
+    >>> rule.brute_scores_
     {'a': 3, 'b': 2, 'c': 1}
     >>> EliminationBelowAverage(rule=rule).eliminated_
     {'c'}
@@ -23,7 +23,7 @@ class EliminationBelowAverage(Elimination):
     eliminated.
 
     >>> rule = RulePlurality(ballots=['a', 'b'])
-    >>> rule.scores_
+    >>> rule.brute_scores_
     {'a': 1, 'b': 1}
     >>> EliminationBelowAverage(rule=rule).eliminated_
     {'a', 'b'}

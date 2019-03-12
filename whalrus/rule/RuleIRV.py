@@ -16,11 +16,11 @@ class RuleIRV(RuleIteratedElimination):
     At each round, the candidate with the worst Plurality score is eliminated.
 
     >>> rule = RuleIRV(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
-    >>> rule.eliminations_[0].rule_.scores_
+    >>> rule.eliminations_[0].rule_.brute_scores_
     {'a': 2, 'b': 3, 'c': 4}
-    >>> rule.eliminations_[1].rule_.scores_
+    >>> rule.eliminations_[1].rule_.brute_scores_
     {'b': 5, 'c': 4}
-    >>> rule.eliminations_[2].rule_.scores_
+    >>> rule.eliminations_[2].rule_.brute_scores_
     {'b': 9}
     >>> rule.winner_
     'b'
@@ -28,11 +28,11 @@ class RuleIRV(RuleIteratedElimination):
     Using the tie-break:
 
     >>> rule = RuleIRV(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1], tie_break=Priority.ASCENDING)
-    >>> rule.eliminations_[0].rule_.scores_
+    >>> rule.eliminations_[0].rule_.brute_scores_
     {'a': 1, 'b': 2, 'c': 1}
-    >>> rule.eliminations_[1].rule_.scores_
+    >>> rule.eliminations_[1].rule_.brute_scores_
     {'a': 2, 'b': 2}
-    >>> rule.eliminations_[2].rule_.scores_
+    >>> rule.eliminations_[2].rule_.brute_scores_
     {'a': 4}
     >>> rule.winner_
     'a'

@@ -16,11 +16,11 @@ class RuleNanson(RuleIteratedElimination):
     At each round, all candidates whose Borda score is lower than the average Borda score are eliminated.
 
     >>> rule = RuleNanson(['a > b > c > d', 'a > b > d > c'])
-    >>> rule.eliminations_[0].rule_.scores_
+    >>> rule.eliminations_[0].rule_.brute_scores_
     {'a': 6.0, 'b': 4.0, 'c': 1.0, 'd': 1.0}
-    >>> rule.eliminations_[1].rule_.scores_
+    >>> rule.eliminations_[1].rule_.brute_scores_
     {'a': 2.0, 'b': 0.0}
-    >>> rule.eliminations_[2].rule_.scores_
+    >>> rule.eliminations_[2].rule_.brute_scores_
     {'a': 0.0}
     >>> rule.winner_
     'a'

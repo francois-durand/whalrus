@@ -50,7 +50,7 @@ class ConverterBallotToLevels(ConverterBallot):
         if scale is None:
             self._aux_converter = ConverterBallotToLevelsInterval(
                 scale=ScaleInterval(low=0., high=1.), borda_unordered_give_points=borda_unordered_give_points)
-        if isinstance(scale, ScaleInterval):
+        elif isinstance(scale, ScaleInterval):
             self._aux_converter = ConverterBallotToLevelsInterval(
                 scale=scale, borda_unordered_give_points=borda_unordered_give_points)
         elif isinstance(scale, ScaleRange):
@@ -64,7 +64,8 @@ class ConverterBallotToLevels(ConverterBallot):
                 self._aux_converter = ConverterBallotToLevelsListNonNumeric(
                     scale=scale, borda_unordered_give_points=borda_unordered_give_points)
         else:
-            raise NotImplementedError
+            self._aux_converter = ConverterBallotToLevelsInterval(
+                scale=ScaleInterval(low=0., high=1.), borda_unordered_give_points=borda_unordered_give_points)
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
         if self.scale is None and isinstance(x, BallotLevels):
