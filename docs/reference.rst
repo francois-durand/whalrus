@@ -2,8 +2,8 @@
 Reference
 =========
 
-Ballots
-=======
+Ballot
+======
 
 Ballot
 ------
@@ -170,8 +170,8 @@ Profile
 .. autoclass:: whalrus.Profile
     :members:
 
-Rule 1: In General
-==================
+Rule: In General
+================
 
 Rule
 ----
@@ -221,8 +221,8 @@ RuleSequentialTieBreak
 .. autoclass:: whalrus.RuleSequentialTieBreak
     :members:
 
-Rule 2: In Particular
-=====================
+Rule: In Particular
+===================
 
 RuleApproval
 ------------

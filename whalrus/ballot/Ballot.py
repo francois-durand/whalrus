@@ -26,7 +26,7 @@ class Ballot:
     A ballot.
 
     The philosophy of this class is to stick as much as possible to the message that the voter emitted, in the
-    context where she emitted it. For example, consider a range voting setting with candidates 'a', 'b', 'c'
+    context where she emitted it. For example, consider a range voting setting with candidates `a`, `b`, `c`
     and a scale of grades from 0 to 100. If the voter emits a ballot where 'a' has grade 60 and 'b' has grade 30, then
     the Ballot object simply records all this: what candidates were present, what was the scale of authorized grades,
     and what the voter indicated in her ballot. But, for example:
