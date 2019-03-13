@@ -1,6 +1,7 @@
 from whalrus.scorer.Scorer import Scorer
 from whalrus.scorer.ScorerBorda import ScorerBorda
 from whalrus.rule.RuleScore import RuleScore
+from whalrus.rule.RuleBucklinByRounds import RuleBucklinByRounds
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict
@@ -9,16 +10,16 @@ from whalrus.profile.Profile import Profile
 from typing import Union
 
 
-class RuleBucklin(RuleScore):
+class RuleBucklinInstant(RuleScore):
     """
-    Bucklin's rule
+    Bucklin's rule (instant version)
 
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param scorer: a :class:`Scorer`. Default: ``ScorerBorda(absent_give_points=True,
         absent_receive_points=None, unordered_give_points=True, unordered_receive_points=False)``.
     :param default_median: the default median of a candidate when it receives no score whatsoever.
 
-    >>> rule = RuleBucklin(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
+    >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
     >>> rule.scores_
     {'a': (1.0, 3), 'b': (1.0, 2), 'c': (0.0, 3)}
     >>> rule.winner_
@@ -33,6 +34,22 @@ class RuleBucklin(RuleScore):
         * The candidate with the lowest median rank is declared the winner,
         * If several candidates have the lowest median rank, this tie is broken by examining how many voters rank
           each of them with this rank or lower.
+
+    With the default settings, and when preferences are strict total orders, :class:`RuleBucklinByRounds` and
+    :class:`RuleBucklinInstant` have the same winner (not necessarily the same order over the candidates). Otherwise,
+    the winners may differ:
+
+    >>> profile = Profile(ballots=['a > b > c > d', 'b > a ~ d > c', 'c > a ~ d > b'], weights=[3, 3, 4])
+    >>> rule_bucklin_by_rounds = RuleBucklinByRounds(profile)
+    >>> rule_bucklin_by_rounds.detailed_scores_
+    [{'a': 0.3, 'b': 0.3, 'c': 0.4, 'd': 0.0}, {'a': 0.65, 'b': 0.6, 'c': 0.4, 'd': 0.35}]
+    >>> rule_bucklin_by_rounds.winner_
+    'a'
+    >>> rule_bucklin_instant = RuleBucklinInstant(profile)
+    >>> rule_bucklin_instant.scores_
+    {'a': (1.5, 10), 'b': (2.0, 6), 'c': (1.0, 7), 'd': (1.5, 7)}
+    >>> RuleBucklinInstant(profile).winner_
+    'b'
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
