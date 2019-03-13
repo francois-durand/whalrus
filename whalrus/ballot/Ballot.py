@@ -36,8 +36,8 @@ class Ballot:
     * It makes no assumption about what would be the voter's ballot with a scale from 0 to 10. Maybe it would be
       ``{'a': 6, 'b': 3}``, maybe not.
 
-    Ballot converters will be used each time we need an information that is beyond what the ballot clearly indicated.
-    Cf. :class:`ConverterBallot`.
+    Ballot converters (cf. :class:`ConverterBallot`) will be used each time we need an information that is beyond
+    what the ballot clearly indicated.
     """
 
     @property
@@ -45,27 +45,26 @@ class Ballot:
         """
         The candidates that were available at the moment when the voter cast her ballot.
 
-        :return: the set of candidates (or, more exactly, a :class:`NiceSet`). As a consequence, candidates must be
-            hashable objects.
+        :return: a :class:`NiceSet`. As a consequence, candidates must be hashable objects.
         """
         raise NotImplementedError
 
-    def first(self, candidates: set=None, **kwargs) -> object:
+    def first(self, candidates: set = None, **kwargs) -> object:
         """
         The first (= most liked) candidate. Implementation is optional.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            `self.candidates`). Default is `self.candidates`.
+            ``self.candidates``). Default: ``self.candidates``.
         :param kwargs: some options (depending on the subclass).
-        :return: the first (= most liked) candidate, chosen in the intersection of `self.candidates` and the argument
-            `candidates`. Can return None for an "abstention".
+        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
+            ``candidates``. Can return None for an `abstention'.
 
-        Typical example: the ballot was cast in a context where candidates 'a', 'b', 'c', 'd' were declared. Hence
-        `self.candidates == {'a', 'b', 'c', 'd'}`. Later, candidate 'a' is removed from the election. Then we can
-        use this method with the optional argument `candidates = {'b', 'c', 'd'}` to know who is the most liked
+        Typical example: the ballot was cast in a context where candidates `a`, `b`, `c`, `d` were declared. Hence
+        ``self.candidates == {'a', 'b', 'c', 'd'}``. Later, candidate `a` is removed from the election. Then we can
+        use this method with the optional argument ``candidates = {'b', 'c', 'd'}`` to know who is the most liked
         candidate of the voter in this new context.
 
-        In most subclasses, this method needs some options (`kwargs`) to solve ambiguities in this conversion. In
+        In most subclasses, this method needs some options (``kwargs``) to solve ambiguities in this conversion. In
         some other subclasses, this method may even stay unimplemented.
         """
         raise NotImplementedError
