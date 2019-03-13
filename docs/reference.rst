@@ -2,45 +2,6 @@
 Reference
 =========
 
-Scales
-======
-
-Scale
------
-
-.. autoclass:: whalrus.Scale
-    :members:
-
-ScaleFromList
--------------
-
-.. autoclass:: whalrus.ScaleFromList
-    :members:
-
-ScaleFromSet
-------------
-
-.. autoclass:: whalrus.ScaleFromSet
-    :members:
-
-ScaleRange
-----------
-
-.. autoclass:: whalrus.ScaleRange
-    :members:
-
-ScaleInterval
--------------
-
-.. autoclass:: whalrus.ScaleInterval
-    :members:
-
-Priority
-========
-
-.. autoclass:: whalrus.Priority
-    :members:
-
 Ballots
 =======
 
@@ -80,8 +41,8 @@ BallotVeto
 .. autoclass:: whalrus.BallotVeto
     :members:
 
-Ballot converters
-=================
+ConverterBallot
+===============
 
 ConverterBallot
 ---------------
@@ -96,9 +57,15 @@ ConverterBallotGeneral
     :members:
 
 ConverterBallotToOrder
---------------------------
+----------------------
 
 .. autoclass:: whalrus.ConverterBallotToOrder
+    :members:
+
+ConverterBallotToStrictOrder
+----------------------------
+
+.. autoclass:: whalrus.ConverterBallotToStrictOrder
     :members:
 
 ConverterBallotToPlurality
@@ -107,49 +74,67 @@ ConverterBallotToPlurality
 .. autoclass:: whalrus.ConverterBallotToPlurality
     :members:
 
-Profile
-=======
+ConverterBallotToVeto
+---------------------
 
-.. autoclass:: whalrus.Profile
+.. autoclass:: whalrus.ConverterBallotToVeto
     :members:
 
-Rule
-====
+ConverterBallotToLevelsInterval
+-------------------------------
 
-Rule
-----
-
-.. autoclass:: whalrus.Rule
+.. autoclass:: whalrus.ConverterBallotToLevelsInterval
     :members:
 
-RuleScoreNum
----------
+ConverterBallotToLevelsRange
+----------------------------
 
-.. autoclass:: whalrus.RuleScoreNum
+.. autoclass:: whalrus.ConverterBallotToLevelsRange
     :members:
 
-RuleIteratedElimination
--------------------------
+ConverterBallotToLevelsListNumeric
+----------------------------------
 
-.. autoclass:: whalrus.RuleIteratedElimination
+.. autoclass:: whalrus.ConverterBallotToLevelsListNumeric
     :members:
 
-RuleSequentialTieBreak
-----------------------
+ConverterBallotToLevelsListNonNumeric
+-------------------------------------
 
-.. autoclass:: whalrus.RuleSequentialTieBreak
+.. autoclass:: whalrus.ConverterBallotToLevelsListNonNumeric
     :members:
 
-RulePlurality
--------------
+ConverterBallotToGrades
+-----------------------
 
-.. autoclass:: whalrus.RulePlurality
+.. autoclass:: whalrus.ConverterBallotToGrades
     :members:
 
-RuleBorda
----------
+ConverterBallotToLevels
+-----------------------
 
-.. autoclass:: whalrus.RuleBorda
+.. autoclass:: whalrus.ConverterBallotToLevels
+    :members:
+
+Elimination
+===========
+
+Elimination
+-----------
+
+.. autoclass:: whalrus.Elimination
+    :members:
+
+EliminationLast
+---------------
+
+.. autoclass:: whalrus.EliminationLast
+    :members:
+
+EliminationBelowAverage
+-----------------------
+
+.. autoclass:: whalrus.EliminationBelowAverage
     :members:
 
 Matrix
@@ -173,6 +158,269 @@ MatrixMajority
 .. autoclass:: whalrus.MatrixMajority
     :members:
 
+Priority
+========
+
+.. autoclass:: whalrus.Priority
+    :members:
+
+Profile
+=======
+
+.. autoclass:: whalrus.Profile
+    :members:
+
+Rule 1: In General
+==================
+
+Rule
+----
+
+.. autoclass:: whalrus.Rule
+    :members:
+
+RuleScore
+---------
+
+.. autoclass:: whalrus.RuleScore
+    :members:
+
+RuleScoreNum
+------------
+
+.. autoclass:: whalrus.RuleScoreNum
+    :members:
+
+RuleScoreNumAverage
+-------------------
+
+.. autoclass:: whalrus.RuleScoreNumAverage
+    :members:
+
+RuleScorePositional
+-------------------
+
+.. autoclass:: whalrus.RuleScorePositional
+    :members:
+
+RuleIteratedElimination
+-------------------------
+
+.. autoclass:: whalrus.RuleIteratedElimination
+    :members:
+
+RuleSequentialElimination
+-------------------------
+
+.. autoclass:: whalrus.RuleSequentialElimination
+    :members:
+
+RuleSequentialTieBreak
+----------------------
+
+.. autoclass:: whalrus.RuleSequentialTieBreak
+    :members:
+
+Rule 2: In Particular
+=====================
+
+RuleApproval
+------------
+
+.. autoclass:: whalrus.RuleApproval
+    :members:
+
+RuleBaldwin
+-----------
+
+.. autoclass:: whalrus.RuleBaldwin
+    :members:
+
+RuleBlack
+---------
+
+.. autoclass:: whalrus.RuleBlack
+    :members:
+
+RuleBorda
+---------
+
+.. autoclass:: whalrus.RuleBorda
+    :members:
+
+RuleBucklinByRounds
+-------------------
+
+.. autoclass:: whalrus.RuleBucklinByRounds
+    :members:
+
+RuleBucklinInstant
+------------------
+
+.. autoclass:: whalrus.RuleBucklinInstant
+    :members:
+
+RuleCondorcet
+-------------
+
+.. autoclass:: whalrus.RuleCondorcet
+    :members:
+
+RuleCoombs
+----------
+
+.. autoclass:: whalrus.RuleCoombs
+    :members:
+
+RuleCopeland
+------------
+
+.. autoclass:: whalrus.RuleCopeland
+    :members:
+
+RuleIRV
+-------
+
+.. autoclass:: whalrus.RuleIRV
+    :members:
+
+RuleKApproval
+-------------
+
+.. autoclass:: whalrus.RuleKApproval
+    :members:
+
+RuleKimRoush
+------------
+
+.. autoclass:: whalrus.RuleKimRoush
+    :members:
+
+RuleMajorityJudgment
+--------------------
+
+.. autoclass:: whalrus.RuleMajorityJudgment
+    :members:
+
+RuleMaximin
+-----------
+
+.. autoclass:: whalrus.RuleMaximin
+    :members:
+
+RuleNanson
+----------
+
+.. autoclass:: whalrus.RuleNanson
+    :members:
+
+RulePlurality
+-------------
+
+.. autoclass:: whalrus.RulePlurality
+    :members:
+
+RuleRangeVoting
+---------------
+
+.. autoclass:: whalrus.RuleRangeVoting
+    :members:
+
+RuleSimplifiedDodgson
+---------------------
+
+.. autoclass:: whalrus.RuleSimplifiedDodgson
+    :members:
+
+RuleTwoRound
+------------
+
+.. autoclass:: whalrus.RuleTwoRound
+    :members:
+
+RuleVeto
+--------
+
+.. autoclass:: whalrus.RuleVeto
+    :members:
+
+Scale
+=====
+
+Scale
+-----
+
+.. autoclass:: whalrus.Scale
+    :members:
+
+ScaleFromList
+-------------
+
+.. autoclass:: whalrus.ScaleFromList
+    :members:
+
+ScaleFromSet
+------------
+
+.. autoclass:: whalrus.ScaleFromSet
+    :members:
+
+ScaleRange
+----------
+
+.. autoclass:: whalrus.ScaleRange
+    :members:
+
+ScaleInterval
+-------------
+
+.. autoclass:: whalrus.ScaleInterval
+    :members:
+
+Scorer
+======
+
+Scorer
+------
+
+.. autoclass:: whalrus.Scorer
+    :members:
+
+ScorerBorda
+-----------
+
+.. autoclass:: whalrus.ScorerBorda
+    :members:
+
+ScorerBucklin
+-------------
+
+.. autoclass:: whalrus.ScorerBucklin
+    :members:
+
+ScorerLevels
+------------
+
+.. autoclass:: whalrus.ScorerLevels
+    :members:
+
+ScorerPlurality
+---------------
+
+.. autoclass:: whalrus.ScorerPlurality
+    :members:
+
+ScorerPositional
+----------------
+
+.. autoclass:: whalrus.ScorerPositional
+    :members:
+
+ScorerVeto
+----------
+
+.. autoclass:: whalrus.ScorerVeto
+    :members:
 
 Utils
 =====
