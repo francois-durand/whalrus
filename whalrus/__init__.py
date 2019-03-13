@@ -34,11 +34,13 @@ from .converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from .converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from .converter_ballot.ConverterBallotToStrictOrder import ConverterBallotToStrictOrder
 from .converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
+from .converter_ballot.ConverterBallotToVeto import ConverterBallotToVeto
 from .converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToLevelsInterval
 from .converter_ballot.ConverterBallotToLevelsRange import ConverterBallotToLevelsRange
-from .converter_ballot.ConverterBallotToLevelsListNonNumeric import ConverterBallotToLevelsListNonNumeric
 from .converter_ballot.ConverterBallotToLevelsListNumeric import ConverterBallotToLevelsListNumeric
-from .converter_ballot.ConverterBallotToVeto import ConverterBallotToVeto
+from .converter_ballot.ConverterBallotToLevelsListNonNumeric import ConverterBallotToLevelsListNonNumeric
+from .converter_ballot.ConverterBallotToGrades import ConverterBallotToGrades
+from .converter_ballot.ConverterBallotToLevels import ConverterBallotToLevels
 
 # Profile
 from .profile.Profile import Profile
@@ -52,6 +54,15 @@ from .matrix.MatrixMajority import MatrixMajority
 from .elimination.Elimination import Elimination
 from .elimination.EliminationLast import EliminationLast
 from .elimination.EliminationBelowAverage import EliminationBelowAverage
+
+# Scorers
+from .scorer.Scorer import Scorer
+from .scorer.ScorerBorda import ScorerBorda
+from .scorer.ScorerBucklin import ScorerBucklin
+from .scorer.ScorerLevels import ScorerLevels
+from .scorer.ScorerPlurality import ScorerPlurality
+from .scorer.ScorerPositional import ScorerPositional
+from .scorer.ScorerVeto import ScorerVeto
 
 # Voting Rules 1: General
 from .rule.Rule import Rule
@@ -68,6 +79,8 @@ from .rule.RuleApproval import RuleApproval
 from .rule.RuleBaldwin import RuleBaldwin
 from .rule.RuleBlack import RuleBlack
 from .rule.RuleBorda import RuleBorda
+from .rule.RuleBucklinByRounds import RuleBucklinByRounds
+from .rule.RuleBucklinInstant import RuleBucklinInstant
 from .rule.RuleCondorcet import RuleCondorcet
 from .rule.RuleCoombs import RuleCoombs
 from .rule.RuleCopeland import RuleCopeland
