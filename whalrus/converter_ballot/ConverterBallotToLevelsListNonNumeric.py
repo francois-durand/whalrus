@@ -41,14 +41,14 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
         we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
         ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
-    This converter works essentially the same as class:`ConverterBallotToLevelsInterval`, but it then maps the
-    evaluation to non-numeric levels of the scale.
+    This converter works essentially the same as :class:`ConverterBallotToLevelsInterval`, but it then maps the
+    evaluation to levels of the scale.
 
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsListNonNumeric(
     ...     scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))
-    >>> b = BallotLevels({'a': 1., 'b': 0.2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> b = BallotLevels({'a': 1., 'b': .2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
     >>> converter(b).as_dict
     {'a': 'Excellent', 'b': 'Very Good'}
     >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))

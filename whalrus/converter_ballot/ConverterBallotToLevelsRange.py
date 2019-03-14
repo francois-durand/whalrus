@@ -41,13 +41,13 @@ class ConverterBallotToLevelsRange(ConverterBallot):
         decides whether the unordered candidates of the ballot give points to the ordered candidates. Cf.
         :class:`ScorerBorda`.
 
-    This converter works essentially the same as class:`ConverterBallotToLevelsInterval`, but it rounds the grades to
+    This converter works essentially the same as :class:`ConverterBallotToLevelsInterval`, but it rounds the grades to
     the nearest integers.
 
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsRange(scale=ScaleRange(low=0, high=10))
-    >>> b = BallotLevels({'a': 1., 'b': 0.4}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> b = BallotLevels({'a': 1., 'b': .4}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
     >>> converter(b).as_dict
     {'a': 10, 'b': 7}
     >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
@@ -56,8 +56,9 @@ class ConverterBallotToLevelsRange(ConverterBallot):
     >>> b = BallotLevels({'a': 4, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 4}))
     >>> converter(b).as_dict
     {'a': 10, 'b': 2}
-    >>> b = BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
-    ...                  scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))
+    >>> b = BallotLevels(
+    ...     {'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
+    ...     scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))
     >>> converter(b).as_dict
     {'a': 10, 'b': 6}
     >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'})).as_dict

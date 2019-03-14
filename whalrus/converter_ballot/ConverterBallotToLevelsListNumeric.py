@@ -40,13 +40,13 @@ class ConverterBallotToLevelsListNumeric(ConverterBallot):
         we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
         ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
-    This converter works essentially the same as class:`ConverterBallotToLevelsInterval`, but it then maps the
+    This converter works essentially the same as :class:`ConverterBallotToLevelsInterval`, but it then maps the
     evaluations to levels of the scale.
 
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsListNumeric(scale=ScaleFromList([-1, 0, 3, 4]))
-    >>> b = BallotLevels({'a': 1., 'b': 0.2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> b = BallotLevels({'a': 1., 'b': .2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
     >>> converter(b).as_dict
     {'a': 4, 'b': 3}
     >>> BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
