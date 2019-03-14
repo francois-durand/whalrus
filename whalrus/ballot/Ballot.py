@@ -57,7 +57,7 @@ class Ballot:
             ``self.candidates``). Default: ``self.candidates``.
         :param kwargs: some options (depending on the subclass).
         :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
-            ``candidates``. Can return None for an `abstention'.
+            ``candidates``. Can return None for an "abstention".
 
         Typical example: the ballot was cast in a context where candidates `a`, `b`, `c`, `d` were declared. Hence
         ``self.candidates == {'a', 'b', 'c', 'd'}``. Later, candidate `a` is removed from the election. Then we can
@@ -74,10 +74,10 @@ class Ballot:
         The last (= most disliked) candidate. Implementation is optional.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            `self.candidates`). Default is `self.candidates`.
+            ``self.candidates``). Default: ``self.candidates``.
         :param kwargs: some options (depending on the subclass).
-        :return: the last (= most disliked) candidate, chosen in the intersection of `self.candidates` and the argument
-            `candidates`. Can return None for an "abstention".
+        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the
+            argument ``candidates``. Can return None for an "abstention".
 
         Cf. :meth:`first` for more information.
         """
@@ -88,14 +88,14 @@ class Ballot:
         Restrict the ballot to less candidates. Implementation is optional.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            `self.candidates`). Default is `self.candidates`.
+            ``self.candidates``). Default: ``self.candidates``.
         :param kwargs: some options (depending of the subclass).
         :return: the same ballot, "restricted" to the candidates given.
 
-        Additional candidates (that are in the argument `candidates` but not in `self.candidates`) are generally not
-        taken into account in the restricted ballot. For example, in a election with candidates 'a', 'b', 'c', assume
-        that the voter emits an ordered ballot a > b > c. Later, candidate 'a' is removed and candidate 'd' is added.
-        Then the "restricted" ballot to {'b, 'c', 'd'} is b > c. For more details, see for example
+        Additional candidates (that are in the argument ``candidates`` but not in ``self.candidates``) are generally not
+        taken into account in the restricted ballot. For example, in a election with candidates `a`, `b`, `c`, assume
+        that the voter emits an ordered ballot ``a > b > c``. Later, candidate `a` is removed and candidate `d` is
+        added. Then the "restricted" ballot to ``{'b, 'c', 'd'}`` is ``b > c``. For more details, see for example
         :meth:`BallotOrder.restrict`.
         """
         raise NotImplementedError
