@@ -54,7 +54,7 @@ class ConverterBallotToGrades(ConverterBallot):
     >>> ConverterBallotToGrades(scale=ScaleRange(low=0, high=10))(ballot).as_dict
     {'a': 10, 'b': 6}
     >>> ConverterBallotToGrades(scale=ScaleFromSet({0, 2, 4, 10}))(ballot).as_dict
-    {'a': 10, 'b': 4}, candidates={'a', 'b'}
+    {'a': 10, 'b': 4}
 
     >>> ballot = BallotLevels({'a': 'Good', 'b': 'Medium'},
     ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))

@@ -28,10 +28,10 @@ class Elimination(DeleteCacheMixin):
 
     :param rule: if mentioned, will be passed to `__call__` immediately after initialization.
 
-    A :class:`Elimination` object is a callable whose input is a rule (which has already loaded a profile). When the
-    :class:`Elimination` object is called, it loads the rule. The output of the call is the :class:`Elimination` object
-    itself. But after the call, you can access to the computed variables (ending with an underscore), such as
-    :attr:`eliminated_` or :attr:`qualified_`.
+    A :class:`Elimination` object is a callable whose input is a :class:`Rule` (which has already loaded a profile).
+    When the :class:`Elimination` object is called, it loads the rule. The output of the call is the
+    :class:`Elimination` object itself. But after the call, you can access to the computed variables (ending with an
+    underscore), such as :attr:`eliminated_order_`, :attr:`eliminated_` or :attr:`qualified_`.
 
     Cf. :class:`EliminationLast` for some examples.
     """
@@ -56,9 +56,9 @@ class Elimination(DeleteCacheMixin):
         """
         The order on the eliminated candidates.
 
-        :return: a list of :class:`NiceSet` objects. Each set represents a class of tied candidates. The first set in
-            the list represents the `best' eliminated candidates, whereas the last set represent the `worst'
-            candidates. Cf. :class:`EliminationLast` for some examples.
+        :return: a list where each element is a :class:`NiceSet`. Each set represents a class of tied
+            candidates. The first set in the list represents the "best" eliminated candidates, whereas the last set
+            represent the "worst" candidates.
         """
         raise NotImplementedError
 
@@ -69,7 +69,8 @@ class Elimination(DeleteCacheMixin):
 
         :return: a :class:`NiceSet` of candidates.
 
-        This should always be non-empty.
+        This should always be non-empty. It may contain all the candidates (for example, it is always the case
+        when there was only one candidate in the election).
         """
         return NiceSet(c for tie_class in self.eliminated_order_ for c in tie_class)
 

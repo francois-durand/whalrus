@@ -31,20 +31,20 @@ class EliminationBelowAverage(Elimination):
     :param strict: if True (resp. False), then eliminate the candidates whose score is strictly lower than
         (resp. lower or equal to) the average.
 
-    >>> rule = RulePlurality(ballots=['a', 'b', 'c'], weights=[3, 2, 1])
-    >>> rule.brute_scores_
-    {'a': 3, 'b': 2, 'c': 1}
+    >>> rule = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
+    >>> rule.scores_
+    {'a': 0.35, 'b': 0.3, 'c': 0.25, 'd': 0.1}
     >>> EliminationBelowAverage(rule=rule).eliminated_
-    {'c'}
+    {'d'}
     >>> EliminationBelowAverage(rule=rule, strict=False).eliminated_
-    {'b', 'c'}
+    {'c', 'd'}
 
     If no candidates should be eliminated (which may happen only if ``strict`` is True), then all candidates are
     eliminated.
 
     >>> rule = RulePlurality(ballots=['a', 'b'])
-    >>> rule.brute_scores_
-    {'a': 1, 'b': 1}
+    >>> rule.scores_
+    {'a': 0.5, 'b': 0.5}
     >>> EliminationBelowAverage(rule=rule).eliminated_
     {'a', 'b'}
     """

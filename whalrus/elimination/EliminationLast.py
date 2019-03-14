@@ -27,37 +27,63 @@ from whalrus.priority.Priority import Priority
 
 class EliminationLast(Elimination):
     """
-    Elimination of the last candidates in an election
+    Elimination of the last candidates (with a fixed number of candidates to eliminate, or to qualify).
 
     :param k: an nonzero integer. The number of eliminated candidates. If this number is negative, then
         ``len(rule.candidates_) - abs(k)`` candidates are eliminated, i.e. ``abs(k)`` candidates are qualified.
 
-    Typical usage with ``k = 1`` (for :class:`RuleIRV`):
+    In the most general syntax, firstly, you define the elimination method:
 
-    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'], tie_break=Priority.ASCENDING)
+    >>> elimination = EliminationLast(k=1)
+
+    Secondly, you use it as a callable to load a particular election (rule, profile, candidates):
+
+    >>> rule = RulePlurality(ballots=['a', 'a', 'b', 'b', 'c'])
+    >>> elimination(rule)  # doctest:+ELLIPSIS
+    <... object at ...>
+
+    Finally, you can access the computed variables:
+
+    >>> elimination.eliminated_
+    {'c'}
+
+    Later, if you wish, you can load another election with the same elimination method, and so on.
+
+    Optionally, you can specify an election (rule, profile, candidates) as soon as the :class:`Elimination` object is
+    initialized. This allows for one-liners such as:
+
+    >>> EliminationLast(rule=RulePlurality(ballots=['a', 'a', 'b', 'b', 'c']), k=1).eliminated_
+    {'c'}
+
+    Typical usage with ``k = 1`` (e.g. for :class:`RuleIRV`):
+
+    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'],
+    ...                      tie_break=Priority.ASCENDING)
     >>> EliminationLast(rule=rule, k=1).eliminated_
     {'e'}
 
-    Typical usage with ``k = -2`` (for :class:`RuleTwoRound`):
+    Typical usage with ``k = -2`` (e.g. for :class:`RuleTwoRound`):
 
-    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'], tie_break=Priority.ASCENDING)
+    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'],
+    ...                      tie_break=Priority.ASCENDING)
     >>> EliminationLast(rule=rule, k=-2).qualified_
     {'a', 'b'}
 
     Order of elimination:
 
-    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'], tie_break=Priority.ASCENDING)
+    >>> rule = RulePlurality(ballots=['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'e'],
+    ...                      tie_break=Priority.ASCENDING)
     >>> EliminationLast(rule=rule, k=-2).eliminated_order_
     [{'c'}, {'d', 'e'}]
 
-    There must always be at least one qualified candidate. If it is not possible to eliminate (case ``k > 0``)  or keep
+    There must always be at least one eliminated candidate. If it is not possible to eliminate (case ``k > 0``)  or keep
     (case ``k < 0``) as many candidates as required, then everybody is eliminated:
 
     >>> rule = RulePlurality(ballots=['a'])
-    >>> EliminationLast(rule=rule, k=1).qualified_
-    {}
-    >>> EliminationLast(rule=rule, k=-2).qualified_
-    {}
+    >>> EliminationLast(rule=rule, k=1).eliminated_
+    {'a'}
+    >>> EliminationLast(rule=rule, k=-2).eliminated_
+    {'a'}
     """
 
     def __init__(self, rule: Rule = None, k: int = 1):
