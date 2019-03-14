@@ -47,35 +47,34 @@ class ConverterBallotToLevelsInterval(ConverterBallot):
 
     >>> converter = ConverterBallotToLevelsInterval()
     >>> b = BallotLevels({'a': 1., 'b': 0.5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
-    >>> converter(b)  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.75}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(b).as_dict
+    {'a': 1.0, 'b': 0.75}
     >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
-    >>> converter(b)  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.8}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(b).as_dict
+    {'a': 1.0, 'b': 0.8}
     >>> b = BallotLevels({'a': 3, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 3}))
-    >>> converter(b)  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.25}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(b).as_dict
+    {'a': 1.0, 'b': 0.25}
     >>> b = BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
     ...                  scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Excellent']))
-    >>> converter(b)  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.75}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}))  # doctest:+ELLIPSIS
-    BallotLevels({'a': 0.0, 'b': 1.0, 'c': 1.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter('a > b > c')  # doctest:+ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.5, 'c': 0.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(b).as_dict
+    {'a': 1.0, 'b': 0.75}
+    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'})).as_dict
+    {'a': 1.0, 'b': 0.0, 'c': 0.0}
+    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'})).as_dict
+    {'a': 1.0, 'b': 0.0, 'c': 0.0}
+    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'})).as_dict
+    {'a': 0.0, 'b': 1.0, 'c': 1.0}
+    >>> converter('a > b > c').as_dict
+    {'a': 1.0, 'b': 0.5, 'c': 0.0}
 
     Options for converting ordered ballots:
 
-    >>> converter = ConverterBallotToLevelsInterval(borda_unordered_give_points=False)
-    >>> converter(BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'}))  #doctest: +ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.5, 'c': 0.0}, candidates={'a', ..., 'e'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter = ConverterBallotToLevelsInterval(borda_unordered_give_points=True)
-    >>> converter(BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'}))  #doctest: +ELLIPSIS
-    BallotLevels({'a': 1.0, 'b': 0.75, 'c': 0.5}, candidates={'a', ..., 'e'}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> b = BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'})
+    >>> ConverterBallotToLevelsInterval(borda_unordered_give_points=False)(b).as_dict
+    {'a': 1.0, 'b': 0.5, 'c': 0.0}
+    >>> ConverterBallotToLevelsInterval(borda_unordered_give_points=True)(b).as_dict
+    {'a': 1.0, 'b': 0.75, 'c': 0.5}
     """
 
     def __init__(self, scale: Scale = ScaleInterval(0., 1.), borda_unordered_give_points: bool = True):
