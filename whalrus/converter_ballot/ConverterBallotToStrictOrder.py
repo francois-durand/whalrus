@@ -32,10 +32,11 @@ class ConverterBallotToStrictOrder(ConverterBallot):
     """
     Default converter to a strictly ordered ballot.
 
-    This is a default converter to a strictly ordered ballot. It tries to infer the type of input and converts
-    it to a strictly ordered ballot (possibly a ballot of a subclass, such as :class:`BallotLevels`).
+    :param priority: the :class:`Priority` used to break ties. Default: :attr:`Priority.UNAMBIGUOUS`.
 
-    Typical usages:
+    This is a default converter to a strictly ordered ballot (cf. :attr:`BallotOrder.is_strict`). It tries to infer
+    the type of input and converts it to a :class:`BallotOrder` (possibly a ballot of a subclass, such as
+    :class:`BallotLevels`), ensuring that the represented order is strict.
 
     >>> converter = ConverterBallotToStrictOrder(priority=Priority.ASCENDING)
     >>> converter('a > b ~ c')

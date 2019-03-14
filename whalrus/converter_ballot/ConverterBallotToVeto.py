@@ -30,15 +30,14 @@ from whalrus.priority.Priority import Priority
 
 class ConverterBallotToVeto(ConverterBallot):
     """
-    Default converter to veto ballot.
+    Default converter to a :class:`BallotVeto`.
 
-    :param order_priority: option passed to :meth:`BallotOrder.last`.
-    :param plurality_priority: option passed to :meth:`BallotPlurality.last`.
-    :param veto_priority: option passed to :meth:`BallotVeto.last`.
-    :param one_name_priority: option passed to :meth:`BallotOneName.last`.
-
-    This is a default converter to a veto ballot. It tries to infer the type of input and converts it to
-    a veto ballot.
+    :param priority: serves as a default values for the other parameters if they are not explicitly mentioned. Default:
+        :attr:`Priority.UNAMBIGUOUS`.
+    :param order_priority: option passed to :meth:`BallotOrder.last`. Default: ``priority``.
+    :param plurality_priority: option passed to :meth:`BallotPlurality.last`. Default: ``priority``.
+    :param veto_priority: option passed to :meth:`BallotVeto.last`. Default: ``priority``.
+    :param one_name_priority: option passed to :meth:`BallotOneName.last`. Default: ``priority``.
 
     Typical usages:
 
@@ -56,16 +55,27 @@ class ConverterBallotToVeto(ConverterBallot):
 
     Use options for the restrictions:
 
-    >>> converter = ConverterBallotToVeto(order_priority=Priority.ASCENDING)
+    >>> converter = ConverterBallotToVeto(priority=Priority.ASCENDING)
     >>> converter(BallotOrder('a > b ~ c'))
     BallotVeto('c', candidates={'a', 'b', 'c'})
     """
 
     def __init__(self,
+                 priority: Priority = Priority.UNAMBIGUOUS,
                  order_priority: Priority = Priority.UNAMBIGUOUS,
                  plurality_priority: Priority = Priority.UNAMBIGUOUS,
                  veto_priority: Priority = Priority.UNAMBIGUOUS,
                  one_name_priority: Priority = Priority.UNAMBIGUOUS):
+        # Default parameters
+        if order_priority is None:
+            order_priority = priority
+        if plurality_priority is None:
+            plurality_priority = priority
+        if veto_priority is None:
+            veto_priority = priority
+        if one_name_priority is None:
+            one_name_priority = priority
+        # Parameters
         self.order_priority = order_priority
         self.plurality_priority = plurality_priority
         self.veto_priority = veto_priority

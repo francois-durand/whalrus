@@ -25,9 +25,8 @@ class ConverterBallot:
     """
     A ballot converter.
 
-    A converter is a callable. Its input may have various formats. Its output must be a Ballot, often of a specific
-    subclass.
+    A converter is a callable. Its input may have various formats. Its output must be a :class:`Ballot`, often of a
+    specific subclass. For more information and examples, cf. :class:`ConverterBallotGeneral`.
     """
-
     def __call__(self, x: object, candidates: set=None) -> Ballot:
         raise NotImplementedError

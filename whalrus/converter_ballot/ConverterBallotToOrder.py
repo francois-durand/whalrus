@@ -28,12 +28,10 @@ from whalrus.ballot.BallotOrder import BallotOrder
 
 class ConverterBallotToOrder(ConverterBallot):
     """
-    Default converter to an ordered ballot.
+    Default converter to a :class:`BallotOrder`.
 
-    This is a default converter to an ordered ballot. It tries to infer the type of input and converts it to
+    This is a default converter to a :class:`BallotOrder`. It tries to infer the type of input and converts it to
     an ordered ballot (possibly a ballot of a subclass, such as :class:`BallotLevels`).
-
-    Typical usages:
 
     >>> converter = ConverterBallotToOrder()
     >>> converter('a > b ~ c')
