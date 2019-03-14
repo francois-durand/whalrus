@@ -37,12 +37,12 @@ class ConverterBallotToLevels(ConverterBallot):
 
     :param scale: a :class:`Scale`. If specified, then the ballot will be converted to this scale. If it is None,
         then any ballot of class :class:`BallotLevels` will be kept as it is, and any other ballot will converted to
-        the :class:`ScaleInterval` with bounds 0. and 1.
+        a :class:`BallotLevels` using a :class:`ScaleInterval` with bounds 0. and 1.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,
         we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
         ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
-    This is a default converter to a ballot using levels. It tries to infer the type of input and converts it to
+    This is a default converter to a :class:`BallotLevels`. It tries to infer the type of input and converts it to
     a :class:`BallotLevels`. It is a wrapper for the specialized converters :class:`ConverterBallotToLevelsInterval`,
     :class:`ConverterBallotToLevelsRange`, :class:`ConverterBallotToLevelsListNumeric`, and
     :class:`ConverterBallotToLevelsListNonNumeric`.
