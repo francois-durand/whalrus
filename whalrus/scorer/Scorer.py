@@ -27,9 +27,9 @@ class Scorer(DeleteCacheMixin):
     """
     A `scorer'.
 
-    :param ballot: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param voter: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param candidates: if mentioned, will be passed to `__call__` immediately after initialization.
+    :param ballot: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param voter: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param scale: the scale in which scores are computed.
 
     A :class:`Scorer` is a callable whose inputs are a ballot, a voter and a set of candidates (the set of candidates

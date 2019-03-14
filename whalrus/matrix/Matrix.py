@@ -31,16 +31,16 @@ class Matrix(DeleteCacheMixin):
     """
     A way to compute a matrix from a profile.
 
-    :param ballots: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param weights: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param voters: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param candidates: if mentioned, will be passed to `__call__` immediately after initialization.
+    :param ballots: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param weights: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param voters: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param converter: the converter that is used to convert input ballots. Default: :class:`ConverterBallotGeneral`.
 
     A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters and candidates. When
     it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
     But after the call, you can access to the computed variables (ending with an underscore), such as
-    :attr:`as_dict_` or :attr:`as_df_`.
+    :attr:`as_dict_` or :attr:`as_array_`.
 
     Cf. :class:`MatrixWeightedMajority` for some examples.
     """
@@ -82,7 +82,7 @@ class Matrix(DeleteCacheMixin):
     @cached_property
     def as_dict_(self) -> NiceDict:
         """
-        The matrix, as a dictionary (more exactly, a :class:`NiceDict`).
+        The matrix, as a :class:`NiceDict`.
 
         :return: a :class:`NiceDict`. Keys are pairs of candidates, and values are the coefficients of the matrix.
         """

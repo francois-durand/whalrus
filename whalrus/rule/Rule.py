@@ -31,12 +31,12 @@ class Rule(DeleteCacheMixin):
     """
     A voting rule.
 
-    :param ballots: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param weights: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param voters: if mentioned, will be passed to `__call__` immediately after initialization.
-    :param candidates: if mentioned, will be passed to `__call__` immediately after initialization.
+    :param ballots: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param weights: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param voters: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param tie_break: a tie-break rule.
-    :param converter: the converter that is used to convert input ballots.
+    :param converter: the converter that is used to convert input ballots. Default: :class:`ConverterBallotGeneral`.
 
     A :class:`Rule` object is a callable whose inputs are ballots and optionally weights, voters and candidates.
     When the rule is called, it loads the profile. The output of the call is the rule itself. But

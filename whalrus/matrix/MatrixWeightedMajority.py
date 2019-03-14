@@ -32,29 +32,46 @@ class MatrixWeightedMajority(Matrix):
     The weighted majority matrix.
 
     :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param higher_vs_lower: number of points for candidate ``c`` when it is ordered higher than candidate ``d``.
-    :param lower_vs_higher: number of points for candidate ``c`` when it is ordered lower than candidate ``d``.
-    :param indifference: number of points for candidate ``c`` when it is ordered the same as candidate ``d``.
-    :param ordered_vs_unordered: number of points for candidate ``c`` when it is ordered and ``d`` is unordered.
-    :param unordered_vs_ordered: number of points for candidate ``c`` when it is unordered and ``d`` is ordered.
-    :param unordered_vs_unordered: number of points for candidate ``c`` when it is unordered and ``d`` is unordered.
-    :param ordered_vs_absent: number of points for candidate ``c`` when it ordered and ``d`` is absent.
-    :param absent_vs_ordered: number of points for candidate ``c`` when it absent and ``d`` is ordered.
-    :param unordered_vs_absent: number of points for candidate ``c`` when it unordered and ``d`` is absent.
-    :param absent_vs_unordered: number of points for candidate ``c`` when it absent and ``d`` is unordered.
-    :param absent_vs_absent: number of points for candidate ``c`` when it absent and ``d`` is absent.
-    :param default_score: default score in the matrix in case of division by 0. In particular, this is used for
-        the diagonal coefficients.
+    :param higher_vs_lower: number of points for candidate `c` when it is ordered higher than candidate `d`.
+    :param lower_vs_higher: number of points for candidate `c` when it is ordered lower than candidate `d`.
+    :param indifference: number of points for candidate `c` when it is ordered and tied with candidate `d`.
+    :param ordered_vs_unordered: number of points for candidate `c` when it is ordered and `d` is unordered.
+    :param unordered_vs_ordered: number of points for candidate `c` when it is unordered and `d` is ordered.
+    :param unordered_vs_unordered: number of points for candidate `c` when it is unordered and `d` is unordered.
+    :param ordered_vs_absent: number of points for candidate `c` when it is ordered and `d` is absent.
+    :param absent_vs_ordered: number of points for candidate `c` when it is absent and `d` is ordered.
+    :param unordered_vs_absent: number of points for candidate `c` when it is unordered and `d` is absent.
+    :param absent_vs_unordered: number of points for candidate `c` when it is absent and `d` is unordered.
+    :param absent_vs_absent: number of points for candidate `c` when it is absent and `d` is absent.
+    :param diagonal_score: value of the diagonal coefficients.
+    :param default_score: default score in the matrix in case of division by 0 (except for the diagonal coefficients).
     :param antisymmetric: if True, then an antisymmetric version of the matrix is computed (by subtracting the
-        transposed matrix).
+        transposed matrix at the end of the computation).
 
-    An 'unordered' candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
-    attribute :attr:`candidates_not_in_b` of the ballot. An 'absent' candidate is a candidate that the voter has not
-    even seen; i.e. it is in ``self.candidates_``, but not the attribute :attr:`candidates` of the ballot.
+    In the most general syntax, firstly, you define the matrix computation algorithm:
 
-    For all the `scoring' parameters (from ``higher_vs_lower`` to ``absent_vs_absent``), the value None can be used.
-    In that case, the corresponding occurrences are not taken into account in the average (neither the numerator,
-    not the denominator). Cf. examples below.
+    >>> matrix = MatrixWeightedMajority(diagonal_score=.5)
+
+    Secondly, you use it as a callable to load a particular election (profile, candidates):
+
+    >>> matrix(ballots=['a > b', 'b > a'], weights=[3, 1], voters=['v', 'w'], candidates={'a', 'b'})  # doctest:+ELLIPSIS
+    <... object at ...>
+
+    Finally, you can access the computed variables:
+
+    >>> matrix.as_array_
+    array([[0.5 , 0.75],
+           [0.25, 0.5 ]])
+
+    Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.
+
+    Optionally, you can specify an election (profile and candidates) as soon as the :class:`Matrix` object is
+    initialized. This allows for "one-liners" such as:
+
+    >>> MatrixWeightedMajority(ballots=['a > b', 'b > a'], weights=[3, 1], voters=['x', 'y'],
+    ...                        candidates={'a', 'b'}, diagonal_score=.5).as_array_
+    array([[0.5 , 0.75],
+           [0.25, 0.5 ]])
 
     Basic usage:
 
@@ -66,37 +83,26 @@ class MatrixWeightedMajority(Matrix):
            [0. , 0. , 0. , 0. , 0.5],
            [0. , 0. , 0. , 0.5, 0. ]])
 
-    In the most general syntax, firstly, you define the matrix computation algorithm:
+    An 'unordered' candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
+    attribute :attr:`candidates_not_in_b` of the ballot. An 'absent' candidate is a candidate that the voter has not
+    even seen; i.e. it is in ``self.candidates_``, but not the attribute :attr:`candidates` of the ballot.
 
-    >>> matrix = MatrixWeightedMajority(indifference=None)
+    For all the `scoring' parameters (from ``higher_vs_lower`` to ``absent_vs_absent``), the value None can be used.
+    In that case, the corresponding occurrences are not taken into account in the average (neither the numerator,
+    not the denominator). Cf. examples below.
 
-    Secondly, you use it as a callable to load a particular election (profile, candidates):
-
-    >>> matrix(ballots=['a > b', 'a ~ b'], weights=[2, 1], voters=['Alice', 'Bob'], candidates={'a', 'b'})  # doctest:+ELLIPSIS
-    <MatrixWeightedMajority.MatrixWeightedMajority object at ...>
-
-    Finally, you can access the computed variables:
-
-    >>> matrix.as_array_
-    array([[0., 1.],
-           [0., 0.]])
-
-    Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.
-
-    Using the scoring parameters:
-
-    >>> # With ``indifference = .5`` (default), the ratio of voters who like ``a`` better than ``b`` is 1.5 / 2 = 0.75
-    >>> # (the indifferent voter gives .5 point and is counted in the denominator):
+    >>> # With ``indifference = .5`` (default), the ratio of voters who like ``a`` better than ``b``
+    >>> # is 1.5 / 2 = 0.75 (the indifferent voter gives .5 point and is counted in the denominator):
     >>> MatrixWeightedMajority(['a > b', 'a ~ b']).as_array_
     array([[0.  , 0.75],
            [0.25, 0.  ]])
-    >>> # With ``indifference = 0.``, the ratio of voters who like ``a`` better than ``b`` is 1. / 2 = 0.5
-    >>> # (the indifferent voter gives no point, but is counted in the denominator):
+    >>> # With ``indifference = 0.``, the ratio of voters who like ``a`` better than ``b`` is
+    >>> # 1. / 2 = 0.5 (the indifferent voter gives no point, but is counted in the denominator):
     >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=0.).as_array_
     array([[0. , 0.5],
            [0. , 0. ]])
-    >>> # With ``indifference = None``, the ratio of voters who like ``a`` better than ``b`` is 1. / 1 = 1
-    >>> # (the indifferent voter is not counted in the average at all).
+    >>> # With ``indifference = None``, the ratio of voters who like ``a`` better than ``b`` is
+    >>> # 1. / 1 = 1 (the indifferent voter is not counted in the average at all).
     >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None).as_array_
     array([[0., 1.],
            [0., 0.]])
@@ -118,7 +124,7 @@ class MatrixWeightedMajority(Matrix):
                  ordered_vs_absent: Union[float, None] = None, absent_vs_ordered: Union[float, None] = None,
                  unordered_vs_absent: Union[float, None] = None, absent_vs_unordered: Union[float, None] = None,
                  absent_vs_absent: Union[float, None] = None,
-                 default_score: float = 0., antisymmetric: bool = False):
+                 diagonal_score: float = 0., default_score: float = 0., antisymmetric: bool = False):
         if converter is None:
             converter = ConverterBallotToOrder()
         self.higher_vs_lower = higher_vs_lower
@@ -132,6 +138,7 @@ class MatrixWeightedMajority(Matrix):
         self.unordered_vs_absent = unordered_vs_absent
         self.absent_vs_unordered = absent_vs_unordered
         self.absent_vs_absent = absent_vs_absent
+        self.diagonal_score = diagonal_score
         self.default_score = default_score
         self.antisymmetric = antisymmetric
         super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
@@ -248,8 +255,9 @@ class MatrixWeightedMajority(Matrix):
 
     @cached_property
     def as_dict_(self):
-        net_matrix = {pair: self.gross_[pair] / w if w != 0 else self.default_score
-                      for pair, w in self.weights_.items()}
+        net_matrix = {(c, d): self.gross_[(c, d)] / w if w != 0 else (self.diagonal_score if c == d
+                                                                      else self.default_score)
+                      for (c, d), w in self.weights_.items()}
         if self.antisymmetric:
             return {(c, d): net_matrix[(c, d)] - net_matrix[(d, c)] for (c, d) in net_matrix.keys()}
         else:

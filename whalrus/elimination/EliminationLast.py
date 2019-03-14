@@ -76,8 +76,8 @@ class EliminationLast(Elimination):
     >>> EliminationLast(rule=rule, k=-2).eliminated_order_
     [{'c'}, {'d', 'e'}]
 
-    There must always be at least one eliminated candidate. If it is not possible to eliminate (case ``k > 0``)  or keep
-    (case ``k < 0``) as many candidates as required, then everybody is eliminated:
+    There must always be at least one eliminated candidate. If it is not possible to eliminate (case ``k`` > 0)  or keep
+    (case ``k`` < 0) as many candidates as required, then everybody is eliminated:
 
     >>> rule = RulePlurality(ballots=['a'])
     >>> EliminationLast(rule=rule, k=1).eliminated_

@@ -26,7 +26,7 @@ class Elimination(DeleteCacheMixin):
     """
     An elimination method.
 
-    :param rule: if mentioned, will be passed to `__call__` immediately after initialization.
+    :param rule: if mentioned, will be passed to ``__call__`` immediately after initialization.
 
     A :class:`Elimination` object is a callable whose input is a :class:`Rule` (which has already loaded a profile).
     When the :class:`Elimination` object is called, it loads the rule. The output of the call is the
