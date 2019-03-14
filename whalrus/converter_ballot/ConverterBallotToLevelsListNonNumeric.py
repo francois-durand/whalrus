@@ -34,7 +34,7 @@ import logging
 
 class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
     """
-    Default converter to a ``level / non-numeric'' ballot (suitable for Majority Judgment).
+    Default converter to a :class:`BallotLevels` using a :class:`ScaleFromList` of levels that are not numbers.
 
     :param scale: the scale.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores as a calculation

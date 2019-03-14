@@ -33,7 +33,7 @@ from whalrus.scale.ScaleRange import ScaleRange
 
 class ConverterBallotToLevelsRange(ConverterBallot):
     """
-    Default converter to a ``range'' ballot (suitable for Range Voting).
+    Default converter to a :class:`BallotLevels` using a :class:`ScaleRange` (range of integers).
 
     :param scale: a :class:`ScaleRange`.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores (normalized

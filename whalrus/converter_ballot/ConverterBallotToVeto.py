@@ -32,7 +32,7 @@ class ConverterBallotToVeto(ConverterBallot):
     """
     Default converter to a :class:`BallotVeto`.
 
-    :param priority: serves as a default values for the other parameters if they are not explicitly mentioned. Default:
+    :param priority: serves as a default value for the other parameters if they are not explicitly mentioned. Default:
         :attr:`Priority.UNAMBIGUOUS`.
     :param order_priority: option passed to :meth:`BallotOrder.last`. Default: ``priority``.
     :param plurality_priority: option passed to :meth:`BallotPlurality.last`. Default: ``priority``.

@@ -32,7 +32,7 @@ from whalrus.converter_ballot.ConverterBallotToLevelsListNumeric import Converte
 
 class ConverterBallotToGrades(ConverterBallot):
     """
-    Default converter to a ballot using grades.
+    Default converter to a :class:`BallotLevels` using numeric grades.
 
     :param scale: a :class:`Scale`. If specified, then the ballot will be converted to this (numeric) scale. If it is
         None, then any ballot that is of class :class:`BallotLevels` and numeric will be kept as it is, and any other

@@ -36,36 +36,37 @@ from whalrus.scorer.ScorerBorda import ScorerBorda
 
 class ConverterBallotToLevelsInterval(ConverterBallot):
     """
-    Default converter to an ``interval'' ballot (suitable for Range Voting).
+    Default converter to a :class:`BallotLevels` using a :class:`ScaleInterval` (interval of floats).
 
     :param scale: a :class:`ScaleInterval`.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores (normalized
-        to the interval ``[low, high]``). This parameter decides whether unordered candidates of the ballot
-        give points to ordered candidates. Cf. meth:`BallotOrder.borda`.
-
-    This is a default converter to an interval ballot. It tries to infer the type of input and converts it to
-    a :class:`BallotLevels`, where the scale is of class :class:`ScaleInterval`.
+        to the interval [``scale.low``, ``scale.high``]. This parameter decides whether unordered candidates of the
+        ballot give points to ordered candidates. Cf. :class:`ScorerBorda`.
 
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsInterval()
-    >>> converter(BallotLevels({'a': 1., 'b': 0.5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.)))
-    BallotLevels({'a': 1.0, 'b': 0.75}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5)))
-    BallotLevels({'a': 1.0, 'b': 0.8}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotLevels({'a': 3, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 3})))
-    BallotLevels({'a': 1.0, 'b': 0.25}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
-    ...                        scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Excellent'])))
-    BallotLevels({'a': 1.0, 'b': 0.75}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))
-    BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))
-    BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}))
-    BallotLevels({'a': 0.0, 'b': 1.0, 'c': 1.0}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
-    >>> converter('a > b > c')
-    BallotLevels({'a': 1.0, 'b': 0.5, 'c': 0.0}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> b = BallotLevels({'a': 1., 'b': 0.5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> converter(b)  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.75}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
+    >>> converter(b)  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.8}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> b = BallotLevels({'a': 3, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 3}))
+    >>> converter(b)  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.25}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> b = BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
+    ...                  scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Excellent']))
+    >>> converter(b)  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.75}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.0, 'c': 0.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}))  # doctest:+ELLIPSIS
+    BallotLevels({'a': 0.0, 'b': 1.0, 'c': 1.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
+    >>> converter('a > b > c')  # doctest:+ELLIPSIS
+    BallotLevels({'a': 1.0, 'b': 0.5, 'c': 0.0}, candidates={...}, scale=ScaleInterval(low=0.0, high=1.0))
 
     Options for converting ordered ballots:
 

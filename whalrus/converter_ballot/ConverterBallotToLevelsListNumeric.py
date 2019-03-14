@@ -33,7 +33,7 @@ from whalrus.utils.Utils import take_closest
 
 class ConverterBallotToLevelsListNumeric(ConverterBallot):
     """
-    Default converter to a ``level / numeric'' ballot (suitable for Range Voting).
+    Default converter to a :class:`BallotLevels` using a :class:`ScaleFromList` of numbers.
 
     :param scale: the scale.
     :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores as a calculation
