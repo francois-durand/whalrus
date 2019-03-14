@@ -116,7 +116,7 @@ class BallotOneName(Ballot):
         Restrict the ballot to less candidates.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            `self.candidates`). Default is `self.candidates`.
+            ``self.candidates``). Default: ``self.candidates``.
         :param kwargs:
             * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
         :return: the same ballot, "restricted" to the candidates given.
@@ -159,7 +159,7 @@ class BallotOneName(Ballot):
 
         :param candidates: a set of candidates.
         :param kwargs:
-            * `priority`: a :class:`Priority`. Default is :attr:`Priority.UNAMBIGUOUS`.
+            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
         :return: the first (= most liked) candidate.
 
         In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
@@ -184,7 +184,7 @@ class BallotOneName(Ballot):
 
         :param candidates: a set of candidates.
         :param kwargs:
-            * `priority`: a :class:`Priority`. Default is :attr:`Priority.UNAMBIGUOUS`.
+            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
         :return: the last (= most disliked) candidate.
 
         In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
