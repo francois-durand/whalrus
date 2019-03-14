@@ -51,7 +51,7 @@ class BallotOrder(Ballot):
     >>> BallotOrder({'a': 10, 'b': 10, 'c': 7})
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
 
-    The ballot has a set-like behavior in the sense that it implements ``__len__`` and ``__contains__``.
+    The ballot has a set-like behavior in the sense that it implements ``__len__`` and ``__contains__``:
 
     >>> ballot = BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
     >>> len(ballot)
@@ -59,7 +59,7 @@ class BallotOrder(Ballot):
     >>> 'd' in ballot
     False
 
-    If the order is strict, then the ballot is also iterable.
+    If the order is strict, then the ballot is also iterable:
 
     >>> ballot = BallotOrder('a > b > c')
     >>> for candidate in ballot:

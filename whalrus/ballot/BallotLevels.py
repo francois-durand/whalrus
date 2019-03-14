@@ -30,14 +30,14 @@ from whalrus.utils.Utils import cached_property, dict_to_items, NiceSet, NiceDic
 class BallotLevels(BallotOrder):
     # noinspection PyRedeclaration
     """
-    Ballot with an evaluation of candidates.
+    Ballot with an evaluation of the candidates.
 
     :param b: a dictionary whose keys are candidates and whose values represent some form of evaluation. The keys and
         the values must be hashable.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
         candidates that are explicitly mentioned in the ballot :attr:`b`.
-    :param scale: the authorized scale at the moment when the voter cast her ballot. Default: ``Scale()`` (meaning in
-        this case `unknown').
+    :param scale: the authorized scale of evaluations at the moment when the voter cast her ballot.
+        Default: ``Scale()`` (meaning in this case "unknown").
 
     Most general syntax:
 
@@ -50,11 +50,9 @@ class BallotLevels(BallotOrder):
     >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
     >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'},
     ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
-    >>> ballot.as_weak_order
-    [{'a'}, {'b', 'c'}]
 
-    In addition to the set-like and list-like behaviors defined in mother class :class:`BallotOrder`, it also has
-    a dict-like behavior in the sense that it implements `__getitem__`.
+    In addition to the set-like and list-like behaviors defined in parent class :class:`BallotOrder`, it also has
+    a dictionary-like behavior in the sense that it implements ``__getitem__``:
 
     >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
     >>> ballot['a']
@@ -83,9 +81,9 @@ class BallotLevels(BallotOrder):
     @cached_property
     def as_dict(self) -> NiceDict:
         """
-        Evaluation format.
+        Dictionary format.
 
-        :return: a dict (or more exactly a :class:`NiceDict`), whose keys are candidates and values are evaluations.
+        :return: a :class:`NiceDict`, whose keys are candidates and values are levels of evaluation.
 
         >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}).as_dict
         {'a': 10, 'b': 7, 'c': 3}
@@ -147,7 +145,7 @@ class BallotLevels(BallotOrder):
         """
         Keys of the ballot.
 
-        :return: This is a shortcut for `self.as_dict.keys()`.
+        :return: This is a shortcut for ``self.as_dict.keys()``.
 
         >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
         >>> sorted(ballot.keys())
@@ -159,7 +157,7 @@ class BallotLevels(BallotOrder):
         """
         Values of the ballot.
 
-        :return: This is a shortcut for `self.as_dict.values()`.
+        :return: This is a shortcut for ``self.as_dict.values()``.
 
         >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
         >>> sorted(ballot.values())
@@ -171,7 +169,7 @@ class BallotLevels(BallotOrder):
         """
         Items of the ballot.
 
-        :return: This is a shortcut for `self.as_dict.items()`.
+        :return: this is a shortcut for ``self.as_dict.items()``.
 
         >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
         >>> sorted(ballot.items())
