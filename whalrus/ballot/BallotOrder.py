@@ -28,7 +28,7 @@ class BallotOrder(Ballot):
     """
     Ballot with an ordering.
 
-    :param b: the ballot. Cf. examples below for the format.
+    :param b: the ballot. Cf. examples below for the accepted formats.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
         candidates that are explicitly mentioned in the ballot :attr:`b`.
 
@@ -40,14 +40,18 @@ class BallotOrder(Ballot):
     >>> print(ballot)
     a ~ b > c (unordered: d, e)
 
+    In the example above, candidates `a` and `b` are equally liked, and they are liked better than `c`. Candidates
+    `d` and `e` were available when the voter cast her ballot, but she chose not to include them in her preference
+    order.
+
     Other examples of inputs:
 
-    >>> BallotOrder({'a': 10, 'b': 10, 'c': 7})
-    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
     >>> BallotOrder('a ~ b > c')
     BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+    >>> BallotOrder({'a': 10, 'b': 10, 'c': 7})
+    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
 
-    The ballot has a set-like behavior in the sense that it implements `__len__` and `__contains__`.
+    The ballot has a set-like behavior in the sense that it implements ``__len__`` and ``__contains__``.
 
     >>> ballot = BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
     >>> len(ballot)
@@ -55,7 +59,7 @@ class BallotOrder(Ballot):
     >>> 'd' in ballot
     False
 
-    If the order is strict, then the ballot is iterable.
+    If the order is strict, then the ballot is also iterable.
 
     >>> ballot = BallotOrder('a > b > c')
     >>> for candidate in ballot:
@@ -100,7 +104,8 @@ class BallotOrder(Ballot):
         """
         Weak order format.
 
-        :return: a list of sets. For example, [{'a', 'b'}, {'c'}], meaning that 'a' ~ 'b' > 'c'.
+        :return: a list of sets. For example, ``[{'a', 'b'}, {'c'}]`` means that `a` and `b` are equally liked, and
+            they are liked better than `c`.
 
         >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).as_weak_order
         [{'a', 'b'}, {'c'}]
@@ -181,42 +186,6 @@ class BallotOrder(Ballot):
 
     def __hash__(self) -> int:
         return hash((self.candidates, self._internal_representation))
-
-    def borda(self, unordered_give_points: bool=True, unordered_receive_points: bool=True) -> NiceDict:
-        """
-        Borda points given by the ballot.
-
-        A candidate gets 1 point for each candidate below her, and .5 point for each candidate tied with her.
-
-        :param unordered_give_points: if it is True, it means that unordered candidates are considered to be below
-            all the others, and therefore give points to other candidates.
-        :param unordered_receive_points: if is is True, it means that unordered candidates are considered as tied. Hence
-            if `unordered_give_points` is True, they receive .5 point per other unordered candidate.
-        :return: a dictionary that, to each candidate, assigns her Borda points.
-
-        >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
-        >>> ballot.borda()
-        {'a': 4.0, 'b': 2.5, 'c': 2.5, 'd': 0.5, 'e': 0.5}
-        >>> ballot.borda(unordered_receive_points=False)
-        {'a': 4.0, 'b': 2.5, 'c': 2.5, 'd': 0, 'e': 0}
-        >>> ballot.borda(unordered_give_points=False, unordered_receive_points=False)
-        {'a': 2.0, 'b': 0.5, 'c': 0.5, 'd': 0, 'e': 0}
-        """
-        borda_ = NiceDict({})
-        # Unordered candidates
-        n = len(self.candidates_not_in_b)
-        points_temp = (n - 1) / 2 if unordered_give_points and unordered_receive_points else 0
-        for c in self.candidates_not_in_b:
-            borda_[c] = points_temp
-        points_from_lower_candidates = n if unordered_give_points else 0
-        # Ordered candidates
-        for indifference_class in self.as_weak_order[::-1]:
-            n = len(indifference_class)
-            points_temp = points_from_lower_candidates + (n - 1) / 2
-            for c in indifference_class:
-                borda_[c] = points_temp
-            points_from_lower_candidates += n
-        return borda_
 
     # Representation
     # ==============
@@ -384,9 +353,9 @@ class BallotOrder(Ballot):
         """
         Strict order format.
 
-        :return: a list of candidates. For example, ['a', 'b', 'c'] means that 'a' > 'b' > 'c'.
-
-        If the ballot is not a strict order, it raises a ValueError.
+        :return: a list of candidates. For example, ``['a', 'b', 'c']`` means that `a` is preferred to `b`, who is
+            preferred to `c`.
+        :raise ValueError: if the ballot is not a strict order.
 
         >>> BallotOrder('a > b > c').as_strict_order
         ['a', 'b', 'c']

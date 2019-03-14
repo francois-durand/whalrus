@@ -31,6 +31,7 @@ from whalrus.scale.ScaleInterval import ScaleInterval
 from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.scale.ScaleFromSet import ScaleFromSet
 from whalrus.scale.ScaleRange import ScaleRange
+from whalrus.scorer.ScorerBorda import ScorerBorda
 
 
 class ConverterBallotToLevelsInterval(ConverterBallot):
@@ -120,7 +121,8 @@ class ConverterBallotToLevelsInterval(ConverterBallot):
                          for c, v in x.items()},
                         candidates=x.candidates, scale=self.scale).restrict(candidates=candidates)
         if isinstance(x, BallotOrder):
-            borda = x.borda(unordered_give_points=self.borda_unordered_give_points)
+            borda = ScorerBorda(ballot=x, candidates=x.candidates,
+                                unordered_give_points=self.borda_unordered_give_points).scores_
             score_max = len(x.candidates) - 1 if self.borda_unordered_give_points else len(x.candidates_in_b) - 1
             return BallotLevels(
                 {c: self.low + (self.high - self.low) * borda[c] / score_max for c in x.candidates_in_b},
