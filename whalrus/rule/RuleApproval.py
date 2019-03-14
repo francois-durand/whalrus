@@ -37,13 +37,13 @@ class RuleApproval(RuleRangeVoting):
 
     Typical usage:
 
-    >>> RuleApproval([{'a': 1, 'b': 0, 'c': 0}, {'a': 1, 'b': 1, 'c': 0}]).scores_
-    {'a': 1.0, 'b': 0.5, 'c': 0.0}
+    >>> RuleApproval([{'a': 1, 'b': 0, 'c': 0}, {'a': 1, 'b': 1, 'c': 0}]).gross_scores_
+    {'a': 2, 'b': 1, 'c': 0}
 
     With ballot conversion:
 
-    >>> RuleApproval(['a > b > c > d', 'c > a > b > d']).scores_
-    {'a': 1.0, 'b': 0.5, 'c': 0.5, 'd': 0.0}
+    >>> RuleApproval(['a > b > c > d', 'c > a > b > d']).gross_scores_
+    {'a': 2, 'b': 1, 'c': 1, 'd': 0}
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,

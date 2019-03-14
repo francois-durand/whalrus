@@ -43,35 +43,36 @@ class RuleRangeVoting(RuleScoreNumAverage):
     >>> RuleRangeVoting([{'a': 1., 'b': .8, 'c': .2}, {'a': 0., 'b': .6, 'c': 1.}]).scores_
     {'a': 0.5, 'b': 0.7, 'c': 0.6}
     >>> RuleRangeVoting([{'a': 10, 'b': 8, 'c': 2}, {'a': 0, 'b': 6, 'c': 10}]).scores_
-    {'a': 5.0, 'b': 7.0, 'c': 6.0}
+    {'a': 5, 'b': 7, 'c': 6}
 
     With ballot conversion:
 
-    >>> RuleRangeVoting(['a > b > c', 'c > a > b']).scores_
-    {'a': 0.75, 'b': 0.25, 'c': 0.5}
-    >>> RuleRangeVoting(['a > b > c', 'c > a > b'], converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))).scores_
-    {'a': 7.5, 'b': 2.5, 'c': 5.0}
+    >>> RuleRangeVoting(['a > b > c', 'c > a > b']).gross_scores_
+    {'a': 1.5, 'b': 0.5, 'c': 1.0}
+    >>> RuleRangeVoting(['a > b > c', 'c > a > b'],
+    ...                 converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))).gross_scores_
+    {'a': 15, 'b': 5, 'c': 10}
 
     About the options:
 
     >>> b1 = BallotLevels({'a': 8, 'b': 10}, candidates={'a', 'b'})  # 'c' is absent
     >>> b2 = BallotLevels({'a': 6, 'c': 10}, candidates={'a', 'b', 'c'})  # 'b' is present but ungraded
     >>> RuleRangeVoting([b1, b2], candidates={'a', 'b', 'c', 'd'}).scores_
-    {'a': 7.0, 'b': 10.0, 'c': 10.0, 'd': 0.0}
-    >>> RuleRangeVoting([b1, b2], candidates={'a', 'b', 'c', 'd'}, default_average=5.).scores_
-    {'a': 7.0, 'b': 10.0, 'c': 10.0, 'd': 5.0}
+    {'a': 7, 'b': 10, 'c': 10, 'd': 0}
+    >>> RuleRangeVoting([b1, b2], candidates={'a', 'b', 'c', 'd'}, default_average=5).scores_
+    {'a': 7, 'b': 10, 'c': 10, 'd': 5}
     >>> RuleRangeVoting([b1, b2], candidates={'a', 'b', 'c', 'd'},
-    ...     scorer=ScorerLevels(level_ungraded=0.)).scores_
-    {'a': 7.0, 'b': 5.0, 'c': 10.0, 'd': 0.0}
+    ...     scorer=ScorerLevels(level_ungraded=0)).scores_
+    {'a': 7, 'b': 5, 'c': 10, 'd': 0}
     >>> RuleRangeVoting([b1, b2], candidates={'a', 'b', 'c', 'd'},
-    ...     scorer=ScorerLevels(level_ungraded=0., level_absent=0.)).scores_
-    {'a': 7.0, 'b': 5.0, 'c': 5.0, 'd': 0.0}
+    ...     scorer=ScorerLevels(level_ungraded=0, level_absent=0)).scores_
+    {'a': 7, 'b': 5, 'c': 5, 'd': 0}
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
                  tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0.):
+                 scorer: Scorer = None, default_average: Number = 0):
         if converter is None:
             converter = ConverterBallotToGrades()
         if scorer is None:

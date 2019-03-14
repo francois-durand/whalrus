@@ -59,11 +59,11 @@ def computed_attributes():
     >>> plurality.gross_scores_
     {'a': 2, 'b': 2, 'c': 1}
     >>> plurality.scores_
-    {'a': 0.4, 'b': 0.4, 'c': 0.2}
+    {'a': Fraction(2, 5), 'b': Fraction(2, 5), 'c': Fraction(1, 5)}
     >>> plurality.best_score_
-    0.4
+    Fraction(2, 5)
     >>> plurality.worst_score_
-    0.2
+    Fraction(1, 5)
     >>> plurality.order_
     [{'a', 'b'}, {'c'}]
     >>> plurality.strict_order_

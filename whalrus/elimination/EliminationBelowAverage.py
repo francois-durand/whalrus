@@ -32,10 +32,8 @@ class EliminationBelowAverage(Elimination):
         (resp. lower or equal to) the average.
 
     >>> rule = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
-    >>> rule.scores_
-    {'a': 0.35, 'b': 0.3, 'c': 0.25, 'd': 0.1}
-    >>> rule.average_score_
-    0.24999999999999997
+    >>> rule.gross_scores_
+    {'a': 35, 'b': 30, 'c': 25, 'd': 10}
     >>> EliminationBelowAverage(rule=rule).eliminated_
     {'d'}
     >>> EliminationBelowAverage(rule=rule, strict=False).eliminated_
@@ -45,8 +43,8 @@ class EliminationBelowAverage(Elimination):
     eliminated.
 
     >>> rule = RulePlurality(ballots=['a', 'b'])
-    >>> rule.scores_
-    {'a': 0.5, 'b': 0.5}
+    >>> rule.gross_scores_
+    {'a': 1, 'b': 1}
     >>> EliminationBelowAverage(rule=rule).eliminated_
     {'a', 'b'}
     """

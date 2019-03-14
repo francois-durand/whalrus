@@ -45,6 +45,11 @@ def test_order_and_trailers():
     assert plurality.trailer_ == 'e'
 
 
+def test_exact_precision():
+    plurality = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
+    assert sum(plurality.scores_.values()) == 1.
+
+
 def test_old_plurality_unweighted_winner():
     assert RulePlurality(["A", "A", "B", "A", "C"]).winner_ == "A"
     assert RulePlurality(["A", "A", "B", "C", "", "", ""]).winner_ == "A"
