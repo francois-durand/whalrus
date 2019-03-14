@@ -39,7 +39,7 @@ class RuleBorda(RuleScoreNumAverage):
     Cf. :class:`RulePlurality` and :class:`Rule` for the general syntax.
 
     >>> rule = RuleBorda(['a ~ b > c', 'b > c > a'])
-    >>> rule.brute_scores_
+    >>> rule.gross_scores_
     {'a': 1.5, 'b': 3.5, 'c': 1.0}
     >>> rule.scores_
     {'a': 0.75, 'b': 1.75, 'c': 0.5}

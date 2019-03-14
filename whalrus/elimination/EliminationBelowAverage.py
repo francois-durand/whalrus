@@ -34,6 +34,8 @@ class EliminationBelowAverage(Elimination):
     >>> rule = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
     >>> rule.scores_
     {'a': 0.35, 'b': 0.3, 'c': 0.25, 'd': 0.1}
+    >>> rule.average_score_
+    0.24999999999999997
     >>> EliminationBelowAverage(rule=rule).eliminated_
     {'d'}
     >>> EliminationBelowAverage(rule=rule, strict=False).eliminated_

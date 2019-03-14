@@ -47,11 +47,11 @@ class RuleSequentialElimination(Rule):
     ...     ['a > b > c > d > e', 'b > c > d > e > a'], weights=[2, 1],
     ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
     ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
-    >>> rule.elimination_rounds_[0].rule_.brute_scores_
+    >>> rule.elimination_rounds_[0].rule_.gross_scores_
     {'a': 8.0, 'b': 10.0, 'c': 7.0, 'd': 4.0, 'e': 1.0}
-    >>> rule.elimination_rounds_[1].rule_.brute_scores_
+    >>> rule.elimination_rounds_[1].rule_.gross_scores_
     {'a': 2, 'b': 1, 'c': 0}
-    >>> rule.final_round_.brute_scores_
+    >>> rule.final_round_.gross_scores_
     {'a': 2, 'b': 1}
 
     If ``rules`` is not a list, the number of rounds is inferred from ``eliminations``. An application of this is to
@@ -60,9 +60,9 @@ class RuleSequentialElimination(Rule):
     >>> rule = RuleSequentialElimination(
     ...     ['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
     ...     rules=RulePlurality(), eliminations=[EliminationLast(k=-2)])
-    >>> rule.elimination_rounds_[0].rule_.brute_scores_
+    >>> rule.elimination_rounds_[0].rule_.gross_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
-    >>> rule.final_round_.brute_scores_
+    >>> rule.final_round_.gross_scores_
     {'a': 3, 'b': 2}
 
     Note: there exists a shortcut for this rule in particular, the class :class:`RuleTwoRound`.
@@ -72,11 +72,11 @@ class RuleSequentialElimination(Rule):
     >>> rule = RuleSequentialElimination(
     ...     ['a > b > c > d > e', 'b > a > c > d > e'], weights=[2, 1],
     ...     rules=[RuleBorda(), RuleBorda(), RulePlurality()], eliminations=EliminationLast(k=1))
-    >>> rule.elimination_rounds_[0].rule_.brute_scores_
+    >>> rule.elimination_rounds_[0].rule_.gross_scores_
     {'a': 11.0, 'b': 10.0, 'c': 6.0, 'd': 3.0, 'e': 0.0}
-    >>> rule.elimination_rounds_[1].rule_.brute_scores_
+    >>> rule.elimination_rounds_[1].rule_.gross_scores_
     {'a': 8.0, 'b': 7.0, 'c': 3.0, 'd': 0.0}
-    >>> rule.final_round_.brute_scores_
+    >>> rule.final_round_.gross_scores_
     {'a': 2, 'b': 1, 'c': 0}
     """
 
@@ -131,9 +131,9 @@ class RuleSequentialElimination(Rule):
         ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
         >>> len(rule.rounds_)
         2
-        >>> rule.elimination_rounds_[0].rule_.brute_scores_
+        >>> rule.elimination_rounds_[0].rule_.gross_scores_
         {'a': 9.0, 'b': 3.0, 'c': 3.0, 'd': 3.0}
-        >>> rule.final_round_.brute_scores_
+        >>> rule.final_round_.gross_scores_
         {'a': 3}
         """
         rounds = []

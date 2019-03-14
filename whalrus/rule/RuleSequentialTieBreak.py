@@ -45,9 +45,9 @@ class RuleSequentialTieBreak(Rule):
     ...      'd > e > b > a > c', 'e > d > b > a > c'],
     ...     weights=[2, 2, 2, 1, 1]
     ... )
-    >>> plurality(profile).brute_scores_ == {'a': 2, 'b': 2, 'c': 2, 'd': 1, 'e': 1}
+    >>> plurality(profile).gross_scores_ == {'a': 2, 'b': 2, 'c': 2, 'd': 1, 'e': 1}
     True
-    >>> borda(profile).brute_scores_ == {'a': 14, 'b': 14, 'c': 8, 'd': 25, 'e': 19}
+    >>> borda(profile).gross_scores_ == {'a': 14, 'b': 14, 'c': 8, 'd': 25, 'e': 19}
     True
     >>> rule(profile).order_ == [{'a', 'b'}, {'c'}, {'d'}, {'e'}]
     True

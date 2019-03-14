@@ -32,7 +32,7 @@ def quick_start():
 
     >>> RulePlurality(['a', 'a', 'b', 'c']).winner_
     'a'
-    >>> RuleBorda(['a ~ b > c', 'b > c > a']).brute_scores_
+    >>> RuleBorda(['a ~ b > c', 'b > c > a']).gross_scores_
     {'a': 1.5, 'b': 3.5, 'c': 1.0}
 
     Elections with weights, voter names:
@@ -56,7 +56,7 @@ def computed_attributes():
     >>> plurality = RulePlurality(['a', 'a', 'b', 'b', 'c'], tie_break=Priority.ASCENDING)
     >>> plurality.candidates_
     {'a', 'b', 'c'}
-    >>> plurality.brute_scores_
+    >>> plurality.gross_scores_
     {'a': 2, 'b': 2, 'c': 1}
     >>> plurality.scores_
     {'a': 0.4, 'b': 0.4, 'c': 0.2}
@@ -94,7 +94,7 @@ def general_syntax():
 
     Finally, you can access the computed variables:
 
-    >>> plurality.brute_scores_
+    >>> plurality.gross_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0}
 
     Later, if you wish, you can load another profile with the same voting rule, and so on.
@@ -152,6 +152,6 @@ def change_candidates():
     It is also possible to change the set of candidates, compared to when the voters cast their ballots.
 
     >>> profile = Profile(['a > b > c', 'a ~ b > c'])
-    >>> RulePlurality(profile, candidates={'b', 'c'}).brute_scores_
+    >>> RulePlurality(profile, candidates={'b', 'c'}).gross_scores_
     {'b': 2, 'c': 0}
     """

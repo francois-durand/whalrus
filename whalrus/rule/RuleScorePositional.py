@@ -35,14 +35,14 @@ class RuleScorePositional(RuleScoreNumAverage):
     :param points_scheme: the list of points to be attributed to the (first) candidates of a ballot.
         Cf. :class:`ScorerPositional`.
 
-    >>> RuleScorePositional(['a > b > c', 'b > c > a'], points_scheme=[3, 2, 1]).brute_scores_
+    >>> RuleScorePositional(['a > b > c', 'b > c > a'], points_scheme=[3, 2, 1]).gross_scores_
     {'a': 4, 'b': 5, 'c': 3}
 
     Since this voting rule needs strict orders, problems may occur as soon as there is indifference in the ballots. To
     avoid these issues, specify the ballot converter explicitly:
 
     >>> RuleScorePositional(['a > b ~ c', 'b > c > a'], points_scheme=[1, 1],
-    ...     converter=ConverterBallotToStrictOrder(priority=Priority.ASCENDING)).brute_scores_
+    ...     converter=ConverterBallotToStrictOrder(priority=Priority.ASCENDING)).gross_scores_
     {'a': 1, 'b': 2, 'c': 1}
     """
 

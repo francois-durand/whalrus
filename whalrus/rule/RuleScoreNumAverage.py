@@ -53,24 +53,24 @@ class RuleScoreNumAverage(RuleScoreNum):
         )
 
     @cached_property
-    def _brute_scores_and_weights_(self) -> dict:
-        brute_scores = NiceDict({c: 0 for c in self.candidates_})
+    def _gross_scores_and_weights_(self) -> dict:
+        gross_scores = NiceDict({c: 0 for c in self.candidates_})
         weights = NiceDict({c: 0 for c in self.candidates_})
         for ballot, weight, voter in self.profile_converted_.items():
             for c, value in self.scorer(ballot=ballot, voter=voter, candidates=self.candidates_).scores_.items():
-                brute_scores[c] += weight * value
+                gross_scores[c] += weight * value
                 weights[c] += weight
-        return {'brute_scores': brute_scores, 'weights': weights}
+        return {'gross_scores': gross_scores, 'weights': weights}
 
     @cached_property
-    def brute_scores_(self) -> NiceDict:
+    def gross_scores_(self) -> NiceDict:
         """
-        The brute scores for each candidate.
+        The gross scores for each candidate.
 
         :return: a dictionary. Key: candidate. Value: the sum of scores, multiplied by the weights of the
             corresponding voters. This is the numerator in the candidate's average score.
         """
-        return self._brute_scores_and_weights_['brute_scores']
+        return self._gross_scores_and_weights_['gross_scores']
 
     @cached_property
     def weights_(self) -> NiceDict:
@@ -80,9 +80,9 @@ class RuleScoreNumAverage(RuleScoreNum):
         :return: a dictionary. Key: candidate. Value: the total weight for this candidate, i.e. the total weight of all
             voters who assign a score to this candidate. This is the denominator in the candidate's average score.
         """
-        return self._brute_scores_and_weights_['weights']
+        return self._gross_scores_and_weights_['weights']
 
     @cached_property
     def scores_(self) -> NiceDict:
         return NiceDict({c: score / self.weights_[c] if self.weights_[c] > 0 else self.default_average
-                         for c, score in self.brute_scores_.items()})
+                         for c, score in self.gross_scores_.items()})

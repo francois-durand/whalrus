@@ -74,14 +74,14 @@ class RuleBucklinByRounds(RuleScoreNum):
         detailed_scores = []
         for k in range(1, n_candidates + 1):
             self.scorer.k = k
-            brute_scores = NiceDict({c: 0. for c in self.candidates_})
+            gross_scores = NiceDict({c: 0. for c in self.candidates_})
             weights = NiceDict({c: 0 for c in self.candidates_})
             for ballot, weight, voter in self.profile_converted_.items():
                 for c, value in self.scorer(ballot=ballot, voter=voter, candidates=self.candidates_).scores_.items():
-                    brute_scores[c] += weight * value
+                    gross_scores[c] += weight * value
                     weights[c] += weight
             scores = NiceDict({c: score / weights[c] if weights[c] > 0 else 0.
-                               for c, score in brute_scores.items()})
+                               for c, score in gross_scores.items()})
             detailed_scores.append(scores)
             if max(scores.values()) > 0.5:
                 break

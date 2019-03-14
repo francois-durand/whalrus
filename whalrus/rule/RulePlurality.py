@@ -50,7 +50,7 @@ class RulePlurality(RuleScoreNumAverage):
 
     Finally, you can access the computed variables:
 
-    >>> plurality.brute_scores_
+    >>> plurality.gross_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0}
     >>> plurality.winner_
     'a'
@@ -85,26 +85,26 @@ class RulePlurality(RuleScoreNumAverage):
             logging.warning('Some ballots do not have the same set of candidates as the whole election.')
 
     @cached_property
-    def _brute_scores_and_weights_quicker_(self) -> dict:
+    def _gross_scores_and_weights_quicker_(self) -> dict:
         if not isinstance(self.scorer, ScorerPlurality):
-            return self._brute_scores_and_weights_
+            return self._gross_scores_and_weights_
         # If it is a ScorerPlurality, we have a quicker method.
-        brute_scores = NiceDict({c: 0 for c in self.candidates_})
+        gross_scores = NiceDict({c: 0 for c in self.candidates_})
         total_weight = 0
         for ballot, weight, _ in self.profile_converted_.items():
             if ballot.candidate is None:
                 if self.scorer.count_abstention:
                     total_weight += weight
                 continue
-            brute_scores[ballot.candidate] += weight
+            gross_scores[ballot.candidate] += weight
             total_weight += weight
         weights = NiceDict({c: total_weight for c in self.candidates_})
-        return {'brute_scores': brute_scores, 'weights': weights}
+        return {'gross_scores': gross_scores, 'weights': weights}
 
     @cached_property
-    def brute_scores_(self) -> NiceDict:
-        return self._brute_scores_and_weights_quicker_['brute_scores']
+    def gross_scores_(self) -> NiceDict:
+        return self._gross_scores_and_weights_quicker_['gross_scores']
 
     @cached_property
     def weights_(self) -> NiceDict:
-        return self._brute_scores_and_weights_quicker_['weights']
+        return self._gross_scores_and_weights_quicker_['weights']

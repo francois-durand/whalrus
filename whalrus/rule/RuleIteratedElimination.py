@@ -42,11 +42,11 @@ class RuleIteratedElimination(Rule):
 
     >>> irv = RuleIteratedElimination(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4],
     ...                                 base_rule=RulePlurality())
-    >>> irv.eliminations_[0].rule_.brute_scores_
+    >>> irv.eliminations_[0].rule_.gross_scores_
     {'a': 2, 'b': 3, 'c': 4}
-    >>> irv.eliminations_[1].rule_.brute_scores_
+    >>> irv.eliminations_[1].rule_.gross_scores_
     {'b': 5, 'c': 4}
-    >>> irv.eliminations_[2].rule_.brute_scores_
+    >>> irv.eliminations_[2].rule_.gross_scores_
     {'b': 9}
     >>> irv.winner_
     'b'
@@ -56,11 +56,11 @@ class RuleIteratedElimination(Rule):
 
     >>> irv = RuleIteratedElimination(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
     ...                                 base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
-    >>> irv.eliminations_[0].rule_.brute_scores_
+    >>> irv.eliminations_[0].rule_.gross_scores_
     {'a': 1, 'b': 2, 'c': 1}
-    >>> irv.eliminations_[1].rule_.brute_scores_
+    >>> irv.eliminations_[1].rule_.gross_scores_
     {'a': 2, 'b': 2}
-    >>> irv.eliminations_[2].rule_.brute_scores_
+    >>> irv.eliminations_[2].rule_.gross_scores_
     {'a': 4}
     >>> irv.winner_
     'a'
@@ -73,7 +73,7 @@ class RuleIteratedElimination(Rule):
     ...     ['a', 'b', 'c', 'd', 'e'], weights=[3, 2, 2, 2, 1],
     ...     tie_break=Priority.DESCENDING, propagate_tie_break=False,
     ...     base_rule=RulePlurality(tie_break=Priority.ASCENDING), elimination=EliminationLast(k=2))
-    >>> rule.eliminations_[0].rule_.brute_scores_
+    >>> rule.eliminations_[0].rule_.gross_scores_
     {'a': 3, 'b': 2, 'c': 2, 'd': 2, 'e': 1}
 
     With the worst score, ``e`` is eliminated anyway, but we need to eliminate a second candidate because ``k = 2``. In

@@ -36,11 +36,11 @@ class RuleKimRoush(RuleIteratedElimination):
     At each round, all candidates whose Veto score is lower than the average Veto score are eliminated.
 
     >>> rule = RuleKimRoush(['a > b > c > d', 'a > b > d > c'])
-    >>> rule.eliminations_[0].rule_.brute_scores_
+    >>> rule.eliminations_[0].rule_.gross_scores_
     {'a': 0, 'b': 0, 'c': -1, 'd': -1}
-    >>> rule.eliminations_[1].rule_.brute_scores_
+    >>> rule.eliminations_[1].rule_.gross_scores_
     {'a': 0, 'b': -2}
-    >>> rule.eliminations_[2].rule_.brute_scores_
+    >>> rule.eliminations_[2].rule_.gross_scores_
     {'a': -2}
     >>> rule.winner_
     'a'

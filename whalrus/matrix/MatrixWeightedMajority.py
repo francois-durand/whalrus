@@ -217,7 +217,8 @@ class MatrixWeightedMajority(Matrix):
     @cached_property
     def gross_(self):
         """
-        The `gross' matrix.
+
+        The "gross" matrix.
 
         :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (without
             dividing by the total weight).
