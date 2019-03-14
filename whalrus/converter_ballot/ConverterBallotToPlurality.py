@@ -56,7 +56,7 @@ class ConverterBallotToPlurality(ConverterBallot):
     Use options for the restrictions:
 
     >>> converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)
-    >>> converter(BallotOrder('a ~ b > c'))
+    >>> converter('a ~ b > c')
     BallotPlurality('a', candidates={'a', 'b', 'c'})
     """
 

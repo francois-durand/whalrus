@@ -56,16 +56,16 @@ class ConverterBallotToVeto(ConverterBallot):
     Use options for the restrictions:
 
     >>> converter = ConverterBallotToVeto(priority=Priority.ASCENDING)
-    >>> converter(BallotOrder('a > b ~ c'))
+    >>> converter('a > b ~ c')
     BallotVeto('c', candidates={'a', 'b', 'c'})
     """
 
     def __init__(self,
                  priority: Priority = Priority.UNAMBIGUOUS,
-                 order_priority: Priority = Priority.UNAMBIGUOUS,
-                 plurality_priority: Priority = Priority.UNAMBIGUOUS,
-                 veto_priority: Priority = Priority.UNAMBIGUOUS,
-                 one_name_priority: Priority = Priority.UNAMBIGUOUS):
+                 order_priority: Priority = None,
+                 plurality_priority: Priority = None,
+                 veto_priority: Priority = None,
+                 one_name_priority: Priority = None):
         # Default parameters
         if order_priority is None:
             order_priority = priority
