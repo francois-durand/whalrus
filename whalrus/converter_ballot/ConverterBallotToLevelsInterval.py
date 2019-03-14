@@ -39,14 +39,14 @@ class ConverterBallotToLevelsInterval(ConverterBallot):
     Default converter to a :class:`BallotLevels` using a :class:`ScaleInterval` (interval of floats).
 
     :param scale: a :class:`ScaleInterval`.
-    :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores (normalized
-        to the interval [``scale.low``, ``scale.high``]. This parameter decides whether unordered candidates of the
-        ballot give points to ordered candidates. Cf. :class:`ScorerBorda`.
+    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we
+        use Borda scores (normalized to the interval [``scale.low``, ``scale.high``]. This parameter decides whether
+        the unordered candidates of the ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsInterval()
-    >>> b = BallotLevels({'a': 1., 'b': 0.5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> b = BallotLevels({'a': 1., 'b': .5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
     >>> converter(b).as_dict
     {'a': 1.0, 'b': 0.75}
     >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))

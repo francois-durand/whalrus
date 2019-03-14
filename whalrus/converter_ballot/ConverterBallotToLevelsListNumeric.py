@@ -36,22 +36,24 @@ class ConverterBallotToLevelsListNumeric(ConverterBallot):
     Default converter to a :class:`BallotLevels` using a :class:`ScaleFromList` of numbers.
 
     :param scale: the scale.
-    :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores as a calculation
-        step. This parameter decides whether unordered candidates of the ballot give points to ordered candidates.
-        Cf. meth:`BallotOrder.borda`.
+    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,
+        we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
+        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
-    This is a default converter to a ballot using a list of numeric levels. It tries to infer the type of input and
-    converts it to a :class:`BallotLevels`, where the scale is of class :class:`ScaleFromList`. Its functions
-    essentially the same as class:`ConverterBallotToLevelsInterval`, but it then maps to the levels.
+    This converter works essentially the same as class:`ConverterBallotToLevelsInterval`, but it then maps the
+    evaluations to levels of the scale.
 
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsListNumeric(scale=ScaleFromList([-1, 0, 3, 4]))
-    >>> converter(BallotLevels({'a': 1., 'b': 0.2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))).as_dict
+    >>> b = BallotLevels({'a': 1., 'b': 0.2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> converter(b).as_dict
     {'a': 4, 'b': 3}
-    >>> converter(BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))).as_dict
+    >>> BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
+    >>> converter(b).as_dict
     {'a': 4, 'b': 3}
-    >>> converter(BallotLevels({'a': 4, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 4}))).as_dict
+    >>> b = BallotLevels({'a': 4, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 4}))
+    >>> converter().as_dict
     {'a': 4, 'b': 0}
     >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'})).as_dict
     {'a': 4, 'b': -1, 'c': -1}

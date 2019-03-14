@@ -38,9 +38,9 @@ class ConverterBallotToLevels(ConverterBallot):
     :param scale: a :class:`Scale`. If specified, then the ballot will be converted to this scale. If it is None,
         then any ballot of class :class:`BallotLevels` will be kept as it is, and any other ballot will converted to
         the :class:`ScaleInterval` with bounds 0. and 1.
-    :param borda_unordered_give_points: when converting a :class:`BallotOrder`, we use Borda scores as a calculation
-        step. This parameter decides whether unordered candidates of the ballot give points to ordered candidates.
-        Cf. meth:`BallotOrder.borda`.
+    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,
+        we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
+        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
     This is a default converter to a ballot using levels. It tries to infer the type of input and converts it to
     a :class:`BallotLevels`. It is a wrapper for the specialized converters :class:`ConverterBallotToLevelsInterval`,
@@ -50,15 +50,15 @@ class ConverterBallotToLevels(ConverterBallot):
     Typical usages:
 
     >>> ballot = BallotLevels({'a': 100, 'b': 57}, scale=ScaleRange(0, 100))
-    >>> ConverterBallotToLevels(scale=ScaleInterval(low=0., high=10.))(ballot)
-    BallotLevels({'a': 10.0, 'b': 5.7}, candidates={'a', 'b'}, scale=ScaleInterval(low=0.0, high=10.0))
-    >>> ConverterBallotToLevels(scale=ScaleRange(low=0, high=10))(ballot)
-    BallotLevels({'a': 10, 'b': 6}, candidates={'a', 'b'}, scale=ScaleRange(low=0, high=10))
+    >>> ConverterBallotToLevels(scale=ScaleInterval(low=0., high=10.))(ballot).as_dict
+    {'a': 10.0, 'b': 5.7}
+    >>> ConverterBallotToLevels(scale=ScaleRange(low=0, high=10))(ballot).as_dict
+    {'a': 10, 'b': 6}
     >>> ConverterBallotToLevels(scale=ScaleFromList([
-    ...     'Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))(ballot)  # doctest: +ELLIPSIS
-    BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b'}, scale=ScaleFromList(...))
-    >>> ConverterBallotToLevels(scale=ScaleFromSet({0, 2, 4, 10}))(ballot)
-    BallotLevels({'a': 10, 'b': 4}, candidates={'a', 'b'}, scale=ScaleFromSet(levels={0, 2, 4, 10}))
+    ...     'Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))(ballot).as_dict
+    {'a': 'Excellent', 'b': 'Very Good'}
+    >>> ConverterBallotToLevels(scale=ScaleFromSet({0, 2, 4, 10}))(ballot).as_dict
+    {'a': 10, 'b': 4}
 
     For more examples, cf. :class:`ConverterBallotToLevelsInterval`, :class:`ConverterBallotToLevelsRange`,
     :class:`ConverterBallotToLevelsListNumeric`, and :class:`ConverterBallotToLevelsListNonNumeric`.
