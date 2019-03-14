@@ -28,7 +28,7 @@ class BallotOneName(Ballot):
     """
     A ballot in a mono-nominal context (typically plurality or veto).
 
-    :param b: the candidate (or None for an abstention).
+    :param b: the candidate, or None for an abstention.
     :param candidates: the candidates that were available at the moment when the voter cast her ballot.
 
     >>> ballot = BallotOneName('a', candidates={'a', 'b', 'c'})
@@ -63,13 +63,15 @@ class BallotOneName(Ballot):
     @cached_property
     def candidates_in_b(self) -> NiceSet:
         """
-        Candidate explicitly mentioned in the ballot.
+        The candidate that is explicitly mentioned in the ballot.
 
-        :return: a set (or, more exactly, a :class:`NiceSet`) containing the only candidate contained in the ballot
-            (or an empty set if there was none).
+        :return: a :class:`NiceSet` containing the only candidate contained in the ballot (or an empty set in case
+            of abstention).
 
         >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_in_b
         {'a'}
+        >>> BallotOneName(None, candidates={'a', 'b', 'c'}).candidates_in_b
+        {}
         """
         if self.candidate is None:
             return NiceSet()
@@ -79,9 +81,9 @@ class BallotOneName(Ballot):
     @cached_property
     def candidates_not_in_b(self) -> NiceSet:
         """
-        Candidates that were available at the moment of the vote, but not explicitly mentioned in the ballot.
+        The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.
 
-        :return: a set of candidates (or, more exactly, a :class:`NiceSet`).
+        :return: a :class:`NiceSet` of candidates.
 
         >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_not_in_b
         {'b', 'c'}
@@ -116,8 +118,8 @@ class BallotOneName(Ballot):
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
             `self.candidates`). Default is `self.candidates`.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
-        :return: the same ballot, 'restricted' to the candidates given.
+            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
+        :return: the same ballot, "restricted" to the candidates given.
 
         >>> BallotOneName('a', candidates={'a', 'b'}).restrict(candidates={'b'})
         BallotOneName('b', candidates={'b'})
