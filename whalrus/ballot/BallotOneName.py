@@ -142,7 +142,7 @@ class BallotOneName(Ballot):
         Auxiliary function of `restrict`.
 
         :param restricted_candidates: a subset of `self.candidates`.
-        :param priority: a Priority object.
+        :param priority: a :class:`Priority`.
         :return: the restricted ballot.
 
         Here, it is assumed that `self.candidate` is not in `restricted_candidates`, hence there is really a decision
@@ -159,10 +159,10 @@ class BallotOneName(Ballot):
 
         :param candidates: a set of candidates.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
+            * `priority`: a :class:`Priority`. Default is :attr:`Priority.UNAMBIGUOUS`.
         :return: the first (= most liked) candidate.
 
-        In this mother class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
+        In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
         is the most liked.
 
         >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first()
@@ -184,10 +184,10 @@ class BallotOneName(Ballot):
 
         :param candidates: a set of candidates.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
+            * `priority`: a :class:`Priority`. Default is :attr:`Priority.UNAMBIGUOUS`.
         :return: the last (= most disliked) candidate.
 
-        In this mother class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
+        In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
         is the most liked.
 
         >>> BallotOneName('a', candidates={'a', 'b'}).last()
