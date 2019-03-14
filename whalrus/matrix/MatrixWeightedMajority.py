@@ -73,45 +73,42 @@ class MatrixWeightedMajority(Matrix):
     array([[0.5 , 0.75],
            [0.25, 0.5 ]])
 
-    Basic usage:
-
-    >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> MatrixWeightedMajority(ballots=[ballot]).as_array_
-    array([[0. , 1. , 1. , 1. , 1. ],
-           [0. , 0. , 0.5, 1. , 1. ],
-           [0. , 0.5, 0. , 1. , 1. ],
-           [0. , 0. , 0. , 0. , 0.5],
-           [0. , 0. , 0. , 0.5, 0. ]])
-
-    An 'unordered' candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
-    attribute :attr:`candidates_not_in_b` of the ballot. An 'absent' candidate is a candidate that the voter has not
-    even seen; i.e. it is in ``self.candidates_``, but not the attribute :attr:`candidates` of the ballot.
-
-    For all the `scoring' parameters (from ``higher_vs_lower`` to ``absent_vs_absent``), the value None can be used.
-    In that case, the corresponding occurrences are not taken into account in the average (neither the numerator,
-    not the denominator). Cf. examples below.
-
-    >>> # With ``indifference = .5`` (default), the ratio of voters who like ``a`` better than ``b``
-    >>> # is 1.5 / 2 = 0.75 (the indifferent voter gives .5 point and is counted in the denominator):
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b']).as_array_
-    array([[0.  , 0.75],
-           [0.25, 0.  ]])
-    >>> # With ``indifference = 0.``, the ratio of voters who like ``a`` better than ``b`` is
-    >>> # 1. / 2 = 0.5 (the indifferent voter gives no point, but is counted in the denominator):
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=0.).as_array_
-    array([[0. , 0.5],
-           [0. , 0. ]])
-    >>> # With ``indifference = None``, the ratio of voters who like ``a`` better than ``b`` is
-    >>> # 1. / 1 = 1 (the indifferent voter is not counted in the average at all).
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None).as_array_
-    array([[0., 1.],
-           [0., 0.]])
-
     Antisymmetric version:
 
-    >>> MatrixWeightedMajority(['a > b', 'a ~ b'], indifference=None, antisymmetric=True).as_array_
-    array([[ 0.,  1.],
-           [-1.,  0.]])
+    >>> MatrixWeightedMajority(ballots=['a > b', 'b > a'], weights=[3, 1], voters=['x', 'y'],
+    ...                        candidates={'a', 'b'}, antisymmetric=True).as_array_
+    array([[ 0. ,  0.5],
+           [-0.5,  0. ]])
+
+    An "unordered" candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
+    attribute :attr:`BallotOrder.candidates_not_in_b` of the ballot. An "absent" candidate is a candidate that the
+    voter has not even seen; i.e. it is in ``self.candidates_``, but not the attribute :attr:`Ballot.candidates` of the
+    ballot. For all the "scoring" parameters (from ``higher_vs_lower`` to ``absent_vs_absent``), the value None can
+    be used. In that case, the corresponding occurrences are not taken into account in the average (neither the
+    numerator, not the denominator). Consider this example:
+
+    >>> ballots = ['a > b', 'a ~ b']
+
+    With ``indifference=.5`` (default), the ratio of voters who prefer `a` to `b` is (1 + .5) / 2 = .75 (the
+    indifferent voter gives .5 point and is counted in the denominator):
+
+    >>> MatrixWeightedMajority(ballots).as_array_
+    array([[0.  , 0.75],
+           [0.25, 0.  ]])
+
+    With ``indifference=0.``, the ratio of voters who prefer `a` to `b` is 1. / 2 = .5 (the indifferent voter
+    gives no point, but is counted in the denominator):
+
+    >>> MatrixWeightedMajority(ballots, indifference=0.).as_array_
+    array([[0. , 0.5],
+           [0. , 0. ]])
+
+    With ``indifference=None``, the ratio of voters who prefer `a` to `b` is 1. / 1 = 1 (the indifferent voter is not
+    counted in the average at all):
+
+    >>> MatrixWeightedMajority(ballots, indifference=None).as_array_
+    array([[0., 1.],
+           [0., 0.]])
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
