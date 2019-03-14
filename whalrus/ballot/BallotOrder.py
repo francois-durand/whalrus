@@ -20,7 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Iterable
 from whalrus.ballot.Ballot import Ballot
-from whalrus.utils.Utils import parse_weak_order, cached_property, set_to_list, NiceDict, NiceSet
+from whalrus.utils.Utils import parse_weak_order, cached_property, set_to_list, NiceSet
 from whalrus.priority.Priority import Priority
 
 
@@ -115,7 +115,7 @@ class BallotOrder(Ballot):
     @cached_property
     def candidates_in_b(self) -> NiceSet:
         """
-        Candidates explicitly mentioned in the ballot.
+        The candidates that are explicitly mentioned in the ballot.
 
         :return: a set of candidates.
 
@@ -129,7 +129,7 @@ class BallotOrder(Ballot):
         """
         The candidates.
 
-        :return: a set of candidates. If the set was not explicitly given, infer the candidates from the ballot.
+        :return: a set of candidates. If the set was not explicitly given, the candidates are inferred from the ballot.
 
         >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates
         {'a', 'b', 'c', 'd', 'e'}
@@ -146,7 +146,7 @@ class BallotOrder(Ballot):
     @cached_property
     def candidates_not_in_b(self) -> NiceSet:
         """
-        Candidates that were available at the moment of the vote, but not explicitly mentioned in the ballot.
+        The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.
 
         :return: a set of candidates.
 
@@ -229,9 +229,6 @@ class BallotOrder(Ballot):
 
         More general usage:
 
-        >>> ballot = BallotOrder('a ~ b > c')
-        >>> ballot
-        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
         >>> ballot.restrict(candidates={'b', 'c', 'd'})
         BallotOrder(['b', 'c'], candidates={'b', 'c'})
 
@@ -254,13 +251,13 @@ class BallotOrder(Ballot):
         The first (= most liked) candidate.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            `self.candidates`). Default is `self.candidates`.
+            ``self.candidates``). Default: ``self.candidates``.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
-            * `include_unordered`: if True (default), then unordered candidates are considered present but below the
-              others.
-        :return: the first (= most liked) candidate, chosen in the intersection of `self.candidates` and the argument
-            `candidates`. Can return None for an "abstention".
+            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
+            * `include_unordered`: a boolean. If True (default), then unordered candidates are considered present but
+              below the others.
+        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
+            ``candidates``. Can return None for an "abstention".
 
         >>> print(BallotOrder('a ~ b').first(priority=Priority.ASCENDING))
         a
@@ -270,7 +267,6 @@ class BallotOrder(Ballot):
         ...                                                              include_unordered=False))
         None
         """
-        # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
         include_unordered = kwargs.pop('include_unordered', True)
         if kwargs:
@@ -291,13 +287,13 @@ class BallotOrder(Ballot):
         The last (= most disliked) candidate.
 
         :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            `self.candidates`). Default is `self.candidates`.
+            ``self.candidates``). Default is ``self.candidates``.
         :param kwargs:
-            * `priority`: a :class:`Priority` object. Default is :attr:`Priority.UNAMBIGUOUS`.
-            * `include_unordered`: if True (default), then unordered candidates are considered present but below the
-              others.
-        :return: the last (= most disliked) candidate, chosen in the intersection of `self.candidates` and the argument
-            `candidates`. Can return None for an "abstention".
+            * `priority`: a :class:`Priority` object. Default: :attr:`Priority.UNAMBIGUOUS`.
+            * `include_unordered`: a boolean. If True (default), then unordered candidates are considered present but
+              below the others.
+        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the
+            argument ``candidates``. Can return None for an "abstention".
 
         >>> print(BallotOrder('a ~ b').last(priority=Priority.ASCENDING))
         b
@@ -327,9 +323,9 @@ class BallotOrder(Ballot):
     @cached_property
     def is_strict(self) -> bool:
         """
-        Test if ballot is strict.
+        Whether the ballot is a strict order or not.
 
-        :return: True if the order is strict, i.e. each indifference class contains one element. There can be some
+        :return: True if the order is strict, i.e. if each indifference class contains one element. There can be some
             unordered candidates.
 
         >>> BallotOrder('a > b > c').is_strict
