@@ -20,6 +20,8 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from pyparsing import Group, Word, ZeroOrMore, alphas, nums, ParseException
 from bisect import bisect_left
+from fractions import Fraction
+from decimal import Decimal
 
 
 def _cache(f):
@@ -225,3 +227,50 @@ def take_closest(my_list, my_number):
         return after
     else:
         return before
+
+
+def my_division(x, y, divide_by_zero=None):
+    """
+    Division of two numbers, trying to be exact if reasonable.
+
+    :param x: a number.
+    :param y: a number.
+    :param divide_by_zero: the value to be returned in case of division by zero. If None (default), then it raises
+        a ZeroDivisionError.
+    :return: the division of `x` by `y`.
+
+    >>> my_division(5, 2)
+    Fraction(5, 2)
+
+    If `x` or `y` is a float, then the result is a float:
+    >>> my_division(Fraction(5, 2), 0.1)
+    25.0
+    >>> my_division(0.1, Fraction(5, 2))
+    0.04
+
+    If `x` and `y` are integers, decimals or fractions, then the result is a fraction:
+
+    >>> my_division(2, Fraction(5, 2))
+    Fraction(4, 5)
+    >>> my_division(Decimal('0.1'), Fraction(5, 2))
+    Fraction(1, 25)
+
+    You can specify a particular return value in case of division by zero:
+
+    >>> my_division(1, 0, divide_by_zero=42)
+    42
+    """
+    if y == 0:
+        if divide_by_zero is None:
+            raise ZeroDivisionError
+        return divide_by_zero
+    if isinstance(x, float) or isinstance(y, float):
+        return x / y
+    try:
+        result = Fraction(x) / Fraction(y)
+        if result.denominator == 1:
+            return result.numerator
+        else:
+            return result
+    except TypeError:
+        return x / y

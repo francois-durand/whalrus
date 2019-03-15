@@ -22,7 +22,7 @@ from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.scorer.Scorer import Scorer
 from whalrus.profile.Profile import Profile
 from whalrus.priority.Priority import Priority
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 from numbers import Number
@@ -85,15 +85,5 @@ class RuleScoreNumAverage(RuleScoreNum):
 
     @cached_property
     def scores_(self) -> NiceDict:
-        def ratio(x, y):
-            if y == 0:
-                return self.default_average
-            if (isinstance(x, int) or isinstance(x, Fraction)) and (isinstance(y, int) or isinstance(y, Fraction)):
-                result = Fraction(x, y)
-                if result.denominator == 1:
-                    return result.numerator
-                else:
-                    return result
-            return x / y
-        return NiceDict({c: ratio(score, self.weights_[c])
+        return NiceDict({c: my_division(score, self.weights_[c], divide_by_zero=self.default_average)
                          for c, score in self.gross_scores_.items()})
