@@ -24,7 +24,7 @@ from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.scale.Scale import Scale
 from whalrus.scale.ScaleRange import ScaleRange
 from whalrus.scale.ScaleFromList import ScaleFromList
-from whalrus.utils.Utils import cached_property, dict_to_items, NiceSet, NiceDict
+from whalrus.utils.Utils import cached_property, dict_to_items, NiceSet, NiceDict, convert_number
 
 
 class BallotLevels(BallotOrder):
@@ -74,9 +74,8 @@ class BallotLevels(BallotOrder):
         that a has evaluation 10; b, 7; and c, 3.
 
         :param b: a dictionary.
-        :return: the dictionary itself (converted to :class:`NiceDict`).
         """
-        self._internal_representation = NiceDict(b)
+        self._internal_representation = NiceDict({c: convert_number(v) for c, v in b.items()})
 
     @cached_property
     def as_dict(self) -> NiceDict:

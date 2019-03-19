@@ -46,7 +46,7 @@ class ConverterBallotToLevelsListNumeric(ConverterBallot):
     Typical usages:
 
     >>> converter = ConverterBallotToLevelsListNumeric(scale=ScaleFromList([-1, 0, 3, 4]))
-    >>> b = BallotLevels({'a': 1., 'b': .2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> b = BallotLevels({'a': 1, 'b': .2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1, 1))
     >>> converter(b).as_dict
     {'a': 4, 'b': 3}
     >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))

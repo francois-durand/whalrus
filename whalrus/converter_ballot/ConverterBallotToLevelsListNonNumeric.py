@@ -48,7 +48,7 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
 
     >>> converter = ConverterBallotToLevelsListNonNumeric(
     ...     scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Great', 'Excellent']))
-    >>> b = BallotLevels({'a': 1., 'b': .2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1., 1.))
+    >>> b = BallotLevels({'a': 1, 'b': .2}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1, 1))
     >>> converter(b).as_dict
     {'a': 'Excellent', 'b': 'Very Good'}
     >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))

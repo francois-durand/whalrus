@@ -40,9 +40,9 @@ class RuleBlack(RuleSequentialTieBreak):
 
     >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a'], weights=[6, 4])
     >>> rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_
-    array([[0. , 0.6, 0.6],
-           [0.4, 0. , 1. ],
-           [0.4, 0. , 0. ]])
+    array([[0, Fraction(3, 5), Fraction(3, 5)],
+           [Fraction(2, 5), 0, 1],
+           [Fraction(2, 5), 0, 0]], dtype=object)
     >>> rule.order_
     [{'a'}, {'b'}, {'c'}]
 
@@ -50,9 +50,9 @@ class RuleBlack(RuleSequentialTieBreak):
 
     >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a', 'c > a > b'], weights=[2, 1, 1])
     >>> rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_
-    array([[0.  , 0.75, 0.5 ],
-           [0.25, 0.  , 0.75],
-           [0.5 , 0.25, 0.  ]])
+    array([[0, Fraction(3, 4), Fraction(1, 2)],
+           [Fraction(1, 4), 0, Fraction(3, 4)],
+           [Fraction(1, 2), Fraction(1, 4), 0]], dtype=object)
     >>> rule.order_
     [{'a'}, {'b'}, {'c'}]
     """

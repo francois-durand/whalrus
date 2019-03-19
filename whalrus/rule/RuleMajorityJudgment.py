@@ -24,7 +24,7 @@ from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.rule.RuleScore import RuleScore
 from whalrus.converter_ballot.ConverterBallotToLevels import ConverterBallotToLevels
 from whalrus.priority.Priority import Priority
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.profile.Profile import Profile
 from typing import Union
@@ -39,9 +39,9 @@ class RuleMajorityJudgment(RuleScore):
         case, the scorer will be ``ScorerLevels(scale)``.
     :param default_median: the median level that a candidate has when it receives absolutely no evaluation whatsoever.
 
-    >>> rule = RuleMajorityJudgment([{'a': 1., 'b': 1.}, {'a': .5, 'b': .6}, {'a': .5, 'b': .4}, {'a': .3, 'b': .2}])
+    >>> rule = RuleMajorityJudgment([{'a': 1, 'b': 1}, {'a': .5, 'b': .6}, {'a': .5, 'b': .4}, {'a': .3, 'b': .2}])
     >>> rule.scores_
-    {'a': (0.5, -0.25, 0.25), 'b': (0.4, 0.5, -0.25)}
+    {'a': (Fraction(1, 2), Fraction(-1, 4), Fraction(1, 4)), 'b': (Fraction(2, 5), Fraction(1, 2), Fraction(-1, 4))}
     >>> rule.winner_
     'a'
 
@@ -58,7 +58,7 @@ class RuleMajorityJudgment(RuleScore):
     ...     {'a': 'Good', 'b': 'Acceptable'}, {'a': 'Poor', 'b': 'To Reject'}
     ... ], scale=ScaleFromList(['To Reject', 'Poor', 'Acceptable', 'Good', 'Very Good', 'Excellent']))
     >>> rule.scores_
-    {'a': ('Good', -0.25, 0.25), 'b': ('Acceptable', 0.5, -0.25)}
+    {'a': ('Good', Fraction(-1, 4), Fraction(1, 4)), 'b': ('Acceptable', Fraction(1, 2), Fraction(-1, 4))}
     >>> rule.winner_
     'a'
 
@@ -69,7 +69,7 @@ class RuleMajorityJudgment(RuleScore):
     >>> from whalrus.scorer.ScorerBorda import ScorerBorda
     >>> from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
     >>> rule = RuleMajorityJudgment(scorer=ScorerBorda(), converter=ConverterBallotToOrder())
-    >>> rule(['a > b ~ c', 'c > a > b > d'], candidates={'a', 'b', 'c', 'd', 'e'}).scores_
+    >>> rule(['a > b ~ c', 'c > a > b > d'], candidates={'a', 'b', 'c', 'd', 'e'}).scores_as_floats_
     {'a': (3.0, 0.5, 0.0), 'b': (2.0, 0.5, 0.0), 'c': (2.5, 0.5, 0.0), 'd': (0.5, 0.5, 0.0), 'e': (0.0, 0.5, 0.0)}
     >>> rule.winner_
     'a'
@@ -113,7 +113,7 @@ class RuleMajorityJudgment(RuleScore):
             levels_[c] = [levels_[c][i] for i in indexes]
             weights_[c] = [weights_[c][i] for i in indexes]
             total_weight = sum(weights_[c])
-            half_total_weight = total_weight / 2
+            half_total_weight = my_division(total_weight, 2)
             cumulative_weight = 0
             median = None
             for i, weight in enumerate(weights_[c]):
@@ -124,9 +124,9 @@ class RuleMajorityJudgment(RuleScore):
             p = sum([weights_[c][i] for i, level in enumerate(levels_[c]) if self.scorer.scale.gt(level, median)])
             q = sum([weights_[c][i] for i, level in enumerate(levels_[c]) if self.scorer.scale.lt(level, median)])
             if p > q:
-                scores_[c] = (median, p / total_weight, -q / total_weight)
+                scores_[c] = (median, my_division(p, total_weight), -my_division(q, total_weight))
             else:
-                scores_[c] = (median, -q / total_weight, p / total_weight)
+                scores_[c] = (median, -my_division(q, total_weight), my_division(p, total_weight))
         return scores_
 
     def compare_scores(self, one: tuple, another: tuple) -> int:
@@ -137,3 +137,7 @@ class RuleMajorityJudgment(RuleScore):
         if self.scorer.scale.gt(one[0], another[0]):
             return 1
         return -1 if (one[1], one[2]) < (another[1], another[2]) else 1
+
+    @cached_property
+    def scores_as_floats_(self) -> NiceDict:
+        return NiceDict({c: (float(s), float(x), float(y)) for c, (s, x, y) in self.scores_.items()})

@@ -106,3 +106,12 @@ class Matrix(DeleteCacheMixin):
             :attr:`candidates_as_list_`).
         """
         return np.array([[self.as_dict_[(c, d)] for d in self.candidates_as_list_] for c in self.candidates_as_list_])
+
+    @cached_property
+    def as_array_of_floats_(self) -> np.array:
+        """
+        The matrix, as a numpy array.
+
+        :return: :attr:`as_array_`, converted to floats.
+        """
+        return self.as_array_.astype(float)

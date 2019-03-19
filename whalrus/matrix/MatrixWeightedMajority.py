@@ -18,13 +18,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, convert_number, my_division
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.profile.Profile import Profile
-from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 from whalrus.matrix.Matrix import Matrix
+from numbers import Number
+from fractions import Fraction
 
 
 class MatrixWeightedMajority(Matrix):
@@ -60,8 +61,8 @@ class MatrixWeightedMajority(Matrix):
     Finally, you can access the computed variables:
 
     >>> matrix.as_array_
-    array([[0.5 , 0.75],
-           [0.25, 0.5 ]])
+    array([[Fraction(1, 2), Fraction(3, 4)],
+           [Fraction(1, 4), Fraction(1, 2)]], dtype=object)
 
     Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.
 
@@ -70,15 +71,15 @@ class MatrixWeightedMajority(Matrix):
 
     >>> MatrixWeightedMajority(ballots=['a > b', 'b > a'], weights=[3, 1], voters=['x', 'y'],
     ...                        candidates={'a', 'b'}, diagonal_score=.5).as_array_
-    array([[0.5 , 0.75],
-           [0.25, 0.5 ]])
+    array([[Fraction(1, 2), Fraction(3, 4)],
+           [Fraction(1, 4), Fraction(1, 2)]], dtype=object)
 
     Antisymmetric version:
 
     >>> MatrixWeightedMajority(ballots=['a > b', 'b > a'], weights=[3, 1], voters=['x', 'y'],
     ...                        candidates={'a', 'b'}, antisymmetric=True).as_array_
-    array([[ 0. ,  0.5],
-           [-0.5,  0. ]])
+    array([[0, Fraction(1, 2)],
+           [Fraction(-1, 2), 0]], dtype=object)
 
     An "unordered" candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
     attribute :attr:`BallotOrder.candidates_not_in_b` of the ballot. An "absent" candidate is a candidate that the
@@ -89,61 +90,61 @@ class MatrixWeightedMajority(Matrix):
 
     >>> ballots = ['a > b', 'a ~ b']
 
-    With ``indifference=.5`` (default), the ratio of voters who prefer `a` to `b` is (1 + .5) / 2 = .75 (the
-    indifferent voter gives .5 point and is counted in the denominator):
+    With ``indifference=Fraction(1, 2)`` (default), the ratio of voters who prefer `a` to `b` is
+    (1 + 1 / 2) / 2 = 3 / 4 (the indifferent voter gives 1 / 2 point and is counted in the denominator):
 
     >>> MatrixWeightedMajority(ballots).as_array_
-    array([[0.  , 0.75],
-           [0.25, 0.  ]])
+    array([[0, Fraction(3, 4)],
+           [Fraction(1, 4), 0]], dtype=object)
 
-    With ``indifference=0.``, the ratio of voters who prefer `a` to `b` is 1. / 2 = .5 (the indifferent voter
+    With ``indifference=0``, the ratio of voters who prefer `a` to `b` is 1 / 2 (the indifferent voter
     gives no point, but is counted in the denominator):
 
-    >>> MatrixWeightedMajority(ballots, indifference=0.).as_array_
-    array([[0. , 0.5],
-           [0. , 0. ]])
+    >>> MatrixWeightedMajority(ballots, indifference=0).as_array_
+    array([[0, Fraction(1, 2)],
+           [0, 0]], dtype=object)
 
-    With ``indifference=None``, the ratio of voters who prefer `a` to `b` is 1. / 1 = 1 (the indifferent voter is not
+    With ``indifference=None``, the ratio of voters who prefer `a` to `b` is 1 / 1 = 1 (the indifferent voter is not
     counted in the average at all):
 
     >>> MatrixWeightedMajority(ballots, indifference=None).as_array_
-    array([[0., 1.],
-           [0., 0.]])
+    array([[0, 1],
+           [0, 0]])
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
                  converter: ConverterBallot = None,
-                 higher_vs_lower: Union[float, None] = 1., lower_vs_higher: Union[float, None] = 0.,
-                 indifference: Union[float, None] = .5,
-                 ordered_vs_unordered: Union[float, None] = 1., unordered_vs_ordered: Union[float, None] = 0.,
-                 unordered_vs_unordered: Union[float, None] = .5,
-                 ordered_vs_absent: Union[float, None] = None, absent_vs_ordered: Union[float, None] = None,
-                 unordered_vs_absent: Union[float, None] = None, absent_vs_unordered: Union[float, None] = None,
-                 absent_vs_absent: Union[float, None] = None,
-                 diagonal_score: float = 0., default_score: float = 0., antisymmetric: bool = False):
+                 higher_vs_lower: Union[Number, None] = 1, lower_vs_higher: Union[Number, None] = 0,
+                 indifference: Union[Number, None] = Fraction(1, 2),
+                 ordered_vs_unordered: Union[Number, None] = 1, unordered_vs_ordered: Union[Number, None] = 0,
+                 unordered_vs_unordered: Union[Number, None] = Fraction(1, 2),
+                 ordered_vs_absent: Union[Number, None] = None, absent_vs_ordered: Union[Number, None] = None,
+                 unordered_vs_absent: Union[Number, None] = None, absent_vs_unordered: Union[Number, None] = None,
+                 absent_vs_absent: Union[Number, None] = None,
+                 diagonal_score: Number = 0, default_score: Number = 0, antisymmetric: bool = False):
         if converter is None:
             converter = ConverterBallotToOrder()
-        self.higher_vs_lower = higher_vs_lower
-        self.lower_vs_higher = lower_vs_higher
-        self.indifference = indifference
-        self.ordered_vs_unordered = ordered_vs_unordered
-        self.unordered_vs_ordered = unordered_vs_ordered
-        self.unordered_vs_unordered = unordered_vs_unordered
-        self.ordered_vs_absent = ordered_vs_absent
-        self.absent_vs_ordered = absent_vs_ordered
-        self.unordered_vs_absent = unordered_vs_absent
-        self.absent_vs_unordered = absent_vs_unordered
-        self.absent_vs_absent = absent_vs_absent
-        self.diagonal_score = diagonal_score
-        self.default_score = default_score
+        self.higher_vs_lower = convert_number(higher_vs_lower)
+        self.lower_vs_higher = convert_number(lower_vs_higher)
+        self.indifference = convert_number(indifference)
+        self.ordered_vs_unordered = convert_number(ordered_vs_unordered)
+        self.unordered_vs_ordered = convert_number(unordered_vs_ordered)
+        self.unordered_vs_unordered = convert_number(unordered_vs_unordered)
+        self.ordered_vs_absent = convert_number(ordered_vs_absent)
+        self.absent_vs_ordered = convert_number(absent_vs_ordered)
+        self.unordered_vs_absent = convert_number(unordered_vs_absent)
+        self.absent_vs_unordered = convert_number(absent_vs_unordered)
+        self.absent_vs_absent = convert_number(absent_vs_absent)
+        self.diagonal_score = convert_number(diagonal_score)
+        self.default_score = convert_number(default_score)
         self.antisymmetric = antisymmetric
         super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
     @cached_property
     def _gross_and_weights_(self):
-        gross = NiceDict({(c, d): 0. for c in self.candidates_ for d in self.candidates_})
-        weights = NiceDict({(c, d): 0. for c in self.candidates_ for d in self.candidates_})
+        gross = NiceDict({(c, d): 0 for c in self.candidates_ for d in self.candidates_})
+        weights = NiceDict({(c, d): 0 for c in self.candidates_ for d in self.candidates_})
         for ballot, weight, _ in self.profile_converted_.items():
             absent = self.candidates_ - ballot.candidates
             for i_class, indifference_class in enumerate(ballot.as_weak_order):
@@ -225,7 +226,7 @@ class MatrixWeightedMajority(Matrix):
 
         >>> from whalrus import MatrixWeightedMajority
         >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1]).gross_
-        {('a', 'a'): 0.0, ('a', 'b'): 2.5, ('b', 'a'): 0.5, ('b', 'b'): 0.0}
+        {('a', 'a'): 0, ('a', 'b'): Fraction(5, 2), ('b', 'a'): Fraction(1, 2), ('b', 'b'): 0}
         """
         return self._gross_and_weights_['gross']
 
@@ -241,21 +242,22 @@ class MatrixWeightedMajority(Matrix):
 
         >>> from whalrus import MatrixWeightedMajority
         >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1]).weights_
-        {('a', 'a'): 0.0, ('a', 'b'): 3.0, ('b', 'a'): 3.0, ('b', 'b'): 0.0}
+        {('a', 'a'): 0, ('a', 'b'): 3, ('b', 'a'): 3, ('b', 'b'): 0}
 
         However, if some scoring parameters are None, some weights can be lower than the total weight of all voters:
 
         >>> from whalrus import MatrixWeightedMajority
         >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1], indifference=None).weights_
-        {('a', 'a'): 0.0, ('a', 'b'): 2.0, ('b', 'a'): 2.0, ('b', 'b'): 0.0}
+        {('a', 'a'): 0, ('a', 'b'): 2, ('b', 'a'): 2, ('b', 'b'): 0}
         """
         return self._gross_and_weights_['weights']
 
     @cached_property
     def as_dict_(self):
-        net_matrix = {(c, d): self.gross_[(c, d)] / w if w != 0 else (self.diagonal_score if c == d
-                                                                      else self.default_score)
-                      for (c, d), w in self.weights_.items()}
+        net_matrix = {
+            (c, d): self.diagonal_score if c == d else my_division(
+                self.gross_[(c, d)], w, divide_by_zero=self.default_score)
+            for (c, d), w in self.weights_.items()}
         if self.antisymmetric:
             return {(c, d): net_matrix[(c, d)] - net_matrix[(d, c)] for (c, d) in net_matrix.keys()}
         else:

@@ -48,11 +48,11 @@ class RuleCondorcet(Rule):
     ``matrix_majority`` are equal to 1. With the default setting of ``matrix_majority = MatrixMajority()``, the
     `Condorcet winner' is necessarily unique when it exists, but that might not be the case with more exotic settings:
 
-    >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1.))
+    >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1))
     >>> rule.matrix_majority_.as_array_
-    array([[1., 1., 1.],
-           [1., 1., 1.],
-           [0., 0., 1.]])
+    array([[1, 1, 1],
+           [1, 1, 1],
+           [0, 0, 1]])
     >>> rule.order_
     [{'a', 'b'}, {'c'}]
     """
@@ -84,6 +84,6 @@ class RuleCondorcet(Rule):
     def order_(self) -> list:
         matrix = self.matrix_majority_
         condorcet_winners = {c for c in matrix.candidates_
-                             if min({v for (i, j), v in matrix.as_dict_.items() if i == c and j != c}) == 1.}
+                             if min({v for (i, j), v in matrix.as_dict_.items() if i == c and j != c}) == 1}
         other_candidates = self.candidates_ - condorcet_winners
         return [NiceSet(tie_class) for tie_class in [condorcet_winners, other_candidates] if tie_class]

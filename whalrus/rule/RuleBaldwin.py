@@ -37,11 +37,11 @@ class RuleBaldwin(RuleIteratedElimination):
 
     >>> rule = RuleBaldwin(['a > b > c', 'a > b ~ c'])
     >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 4.0, 'b': 1.5, 'c': 0.5}
+    {'a': 4, 'b': Fraction(3, 2), 'c': Fraction(1, 2)}
     >>> rule.eliminations_[1].rule_.gross_scores_
-    {'a': 2.0, 'b': 0.0}
+    {'a': 2, 'b': 0}
     >>> rule.eliminations_[2].rule_.gross_scores_
-    {'a': 0.0}
+    {'a': 0}
     >>> rule.winner_
     'a'
     """

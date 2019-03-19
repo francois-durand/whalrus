@@ -26,7 +26,6 @@ from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 from numbers import Number
-from fractions import Fraction
 
 
 class RuleScoreNumAverage(RuleScoreNum):
@@ -45,7 +44,7 @@ class RuleScoreNumAverage(RuleScoreNum):
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
                  tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0.):
+                 scorer: Scorer = None, default_average: Number = 0):
         self.scorer = scorer
         self.default_average = default_average
         super().__init__(
@@ -87,3 +86,24 @@ class RuleScoreNumAverage(RuleScoreNum):
     def scores_(self) -> NiceDict:
         return NiceDict({c: my_division(score, self.weights_[c], divide_by_zero=self.default_average)
                          for c, score in self.gross_scores_.items()})
+
+    # Conversion to floats
+    # --------------------
+
+    @cached_property
+    def gross_scores_as_floats_(self) -> NiceDict:
+        """
+        Gross scores as floats.
+
+        :return: :attr:`gross_scores_` converted to floats.
+        """
+        return NiceDict({c: float(v) for c, v in self.gross_scores_.items()})
+
+    @cached_property
+    def weights_as_floats_(self) -> NiceDict:
+        """
+        Weights as floats.
+
+        :return: :attr:`weights_` converted to floats.
+        """
+        return NiceDict({c: float(v) for c, v in self.weights_.items()})

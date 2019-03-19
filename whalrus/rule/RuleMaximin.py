@@ -39,11 +39,11 @@ class RuleMaximin(RuleScoreNum):
     The score of a candidate is the minimal non-diagonal coefficient on its raw of the matrix.
 
     >>> rule = RuleMaximin(ballots=['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 3])
-    >>> rule.matrix_weighted_majority_.as_array_
+    >>> rule.matrix_weighted_majority_.as_array_of_floats_
     array([[0. , 0.7, 0.4],
            [0.3, 0. , 0.7],
            [0.6, 0.3, 0. ]])
-    >>> rule.scores_
+    >>> rule.scores_as_floats_
     {'a': 0.4, 'b': 0.3, 'c': 0.3}
     >>> rule.winner_
     'a'

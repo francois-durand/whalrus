@@ -21,7 +21,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, convert_number
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
@@ -40,11 +40,11 @@ class RuleSimplifiedDodgson(RuleScoreNum):
 
     >>> rule = RuleSimplifiedDodgson(ballots=['a > b > c', 'b > a > c', 'c > a > b'], weights=[3, 3, 2])
     >>> rule.matrix_weighted_majority_.as_array_
-    array([[ 0.  ,  0.25,  0.5 ],
-           [-0.25,  0.  ,  0.5 ],
-           [-0.5 , -0.5 ,  0.  ]])
+    array([[0, Fraction(1, 4), Fraction(1, 2)],
+           [Fraction(-1, 4), 0, Fraction(1, 2)],
+           [Fraction(-1, 2), Fraction(-1, 2), 0]], dtype=object)
     >>> rule.scores_
-    {'a': 0, 'b': -0.25, 'c': -1.0}
+    {'a': 0, 'b': Fraction(-1, 4), 'c': -1}
     >>> rule.winner_
     'a'
     """
@@ -75,5 +75,6 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     @cached_property
     def scores_(self) -> NiceDict:
         matrix = self.matrix_weighted_majority_
-        return NiceDict({c: sum([v for (i, j), v in matrix.as_dict_.items() if i == c and j != c and v < 0])
-                         for c in matrix.candidates_})
+        return NiceDict({
+            c: convert_number(sum([v for (i, j), v in matrix.as_dict_.items() if i == c and j != c and v < 0]))
+            for c in matrix.candidates_})

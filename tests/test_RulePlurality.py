@@ -47,7 +47,7 @@ def test_order_and_trailers():
 
 def test_exact_precision():
     plurality = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
-    assert sum(plurality.scores_.values()) == 1.
+    assert sum(plurality.scores_.values()) == 1
 
 
 def test_old_plurality_unweighted_winner():

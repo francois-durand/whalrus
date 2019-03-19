@@ -20,7 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.scale.Scale import Scale
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, convert_number
 from whalrus.scorer.Scorer import Scorer
 from numbers import Number
 from typing import Union
@@ -62,8 +62,8 @@ class ScorerPositional(Scorer):
     >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2]).scores_
     {'a': 3, 'b': 2, 'c': 0, 'd': 0}
     >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2],
-    ...     points_fill=.3, points_unordered=.2, points_absent=.1).scores_
-    {'a': 3, 'b': 2, 'c': 0.3, 'd': 0.2, 'e': 0.1}
+    ...     points_fill=-1, points_unordered=-2, points_absent=-3).scores_
+    {'a': 3, 'b': 2, 'c': -1, 'd': -2, 'e': -3}
     >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2],
     ...     points_fill=None, points_unordered=None, points_absent=None).scores_
     {'a': 3, 'b': 2}
@@ -73,10 +73,10 @@ class ScorerPositional(Scorer):
                  scale: Scale = None,
                  points_scheme: list = None, points_fill: Union[Number, None] = 0,
                  points_unordered: Union[Number, None] = 0, points_absent: Union[Number, None] = None):
-        self.points_scheme = points_scheme
-        self.points_fill = points_fill
-        self.points_unordered = points_unordered
-        self.points_absent = points_absent
+        self.points_scheme = [convert_number(x) for x in points_scheme]
+        self.points_fill = convert_number(points_fill)
+        self.points_unordered = convert_number(points_unordered)
+        self.points_absent = convert_number(points_absent)
         super().__init__(ballot=ballot, voter=voter, candidates=candidates, scale=scale)
 
     @cached_property

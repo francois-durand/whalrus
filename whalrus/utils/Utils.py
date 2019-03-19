@@ -22,6 +22,7 @@ from pyparsing import Group, Word, ZeroOrMore, alphas, nums, ParseException
 from bisect import bisect_left
 from fractions import Fraction
 from decimal import Decimal
+from numbers import Number
 
 
 def _cache(f):
@@ -229,7 +230,31 @@ def take_closest(my_list, my_number):
         return before
 
 
-def my_division(x, y, divide_by_zero=None):
+def convert_number(x: Number):
+    """
+    Try to convert a number to a fraction (or an integer).
+
+    :param x: a number.
+    :return: ``x``, trying to convert it into a fraction (or an integer).
+
+    >>> convert_number(2.5)
+    Fraction(5, 2)
+    >>> convert_number(2.0)
+    2
+    """
+    if isinstance(x, float):
+        x = str(x)
+    try:
+        value = Fraction(x)
+        if value.denominator == 1:
+            return value.numerator
+        else:
+            return value
+    except (TypeError, ValueError):
+        return x
+
+
+def my_division(x: Number, y: Number, divide_by_zero: Number = None):
     """
     Division of two numbers, trying to be exact if reasonable.
 
@@ -267,10 +292,6 @@ def my_division(x, y, divide_by_zero=None):
     if isinstance(x, float) or isinstance(y, float):
         return x / y
     try:
-        result = Fraction(x) / Fraction(y)
-        if result.denominator == 1:
-            return result.numerator
-        else:
-            return result
+        return convert_number(Fraction(x) / Fraction(y))
     except TypeError:
-        return x / y
+        raise NotImplementedError

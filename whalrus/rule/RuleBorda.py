@@ -40,9 +40,9 @@ class RuleBorda(RuleScoreNumAverage):
 
     >>> rule = RuleBorda(['a ~ b > c', 'b > c > a'])
     >>> rule.gross_scores_
-    {'a': 1.5, 'b': 3.5, 'c': 1.0}
+    {'a': Fraction(3, 2), 'b': Fraction(7, 2), 'c': 1}
     >>> rule.scores_
-    {'a': 0.75, 'b': 1.75, 'c': 0.5}
+    {'a': Fraction(3, 4), 'b': Fraction(7, 4), 'c': Fraction(1, 2)}
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,

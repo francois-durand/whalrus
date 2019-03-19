@@ -48,7 +48,7 @@ class RuleSequentialElimination(Rule):
     ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
     ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
     >>> rule.elimination_rounds_[0].rule_.gross_scores_
-    {'a': 8.0, 'b': 10.0, 'c': 7.0, 'd': 4.0, 'e': 1.0}
+    {'a': 8, 'b': 10, 'c': 7, 'd': 4, 'e': 1}
     >>> rule.elimination_rounds_[1].rule_.gross_scores_
     {'a': 2, 'b': 1, 'c': 0}
     >>> rule.final_round_.gross_scores_
@@ -73,9 +73,9 @@ class RuleSequentialElimination(Rule):
     ...     ['a > b > c > d > e', 'b > a > c > d > e'], weights=[2, 1],
     ...     rules=[RuleBorda(), RuleBorda(), RulePlurality()], eliminations=EliminationLast(k=1))
     >>> rule.elimination_rounds_[0].rule_.gross_scores_
-    {'a': 11.0, 'b': 10.0, 'c': 6.0, 'd': 3.0, 'e': 0.0}
+    {'a': 11, 'b': 10, 'c': 6, 'd': 3, 'e': 0}
     >>> rule.elimination_rounds_[1].rule_.gross_scores_
-    {'a': 8.0, 'b': 7.0, 'c': 3.0, 'd': 0.0}
+    {'a': 8, 'b': 7, 'c': 3, 'd': 0}
     >>> rule.final_round_.gross_scores_
     {'a': 2, 'b': 1, 'c': 0}
     """
@@ -132,7 +132,7 @@ class RuleSequentialElimination(Rule):
         >>> len(rule.rounds_)
         2
         >>> rule.elimination_rounds_[0].rule_.gross_scores_
-        {'a': 9.0, 'b': 3.0, 'c': 3.0, 'd': 3.0}
+        {'a': 9, 'b': 3, 'c': 3, 'd': 3}
         >>> rule.final_round_.gross_scores_
         {'a': 3}
         """

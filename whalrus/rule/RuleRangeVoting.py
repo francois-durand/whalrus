@@ -40,15 +40,15 @@ class RuleRangeVoting(RuleScoreNumAverage):
 
     Typical usage:
 
-    >>> RuleRangeVoting([{'a': 1., 'b': .8, 'c': .2}, {'a': 0., 'b': .6, 'c': 1.}]).scores_
-    {'a': 0.5, 'b': 0.7, 'c': 0.6}
+    >>> RuleRangeVoting([{'a': 1, 'b': .8, 'c': .2}, {'a': 0, 'b': .6, 'c': 1}]).scores_
+    {'a': Fraction(1, 2), 'b': Fraction(7, 10), 'c': Fraction(3, 5)}
     >>> RuleRangeVoting([{'a': 10, 'b': 8, 'c': 2}, {'a': 0, 'b': 6, 'c': 10}]).scores_
     {'a': 5, 'b': 7, 'c': 6}
 
     With ballot conversion:
 
     >>> RuleRangeVoting(['a > b > c', 'c > a > b']).gross_scores_
-    {'a': 1.5, 'b': 0.5, 'c': 1.0}
+    {'a': Fraction(3, 2), 'b': Fraction(1, 2), 'c': 1}
     >>> RuleRangeVoting(['a > b > c', 'c > a > b'],
     ...                 converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))).gross_scores_
     {'a': 15, 'b': 5, 'c': 10}

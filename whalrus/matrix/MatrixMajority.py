@@ -18,13 +18,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, convert_number
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 from whalrus.matrix.Matrix import Matrix
 from whalrus.matrix.MatrixWeightedMajority import MatrixWeightedMajority
+from numbers import Number
+from fractions import Fraction
 
 
 class MatrixMajority(Matrix):
@@ -42,31 +44,31 @@ class MatrixMajority(Matrix):
     `W[(d, c)] < W[(d, c)]``.
 
     >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b']).as_array_
-    array([[0.5, 1. , 1. ],
-           [0. , 0.5, 0.5],
-           [0. , 0.5, 0.5]])
+    array([[Fraction(1, 2), 1, 1],
+           [0, Fraction(1, 2), Fraction(1, 2)],
+           [0, Fraction(1, 2), Fraction(1, 2)]], dtype=object)
 
     Using the options:
 
-    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0.).as_array_
-    array([[0., 1., 1.],
-           [0., 0., 0.],
-           [0., 0., 0.]])
+    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0).as_array_
+    array([[0, 1, 1],
+           [0, 0, 0],
+           [0, 0, 0]])
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
                  converter: ConverterBallot = None,
                  matrix_weighted_majority: Matrix = None,
-                 greater: float = 1., lower: float = 0., equal: float = .5):
+                 greater: Number = 1, lower: Number = 0, equal: Number = Fraction(1, 2)):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix_weighted_majority is None:
             matrix_weighted_majority = MatrixWeightedMajority()
         self.matrix_weighted_majority = matrix_weighted_majority
-        self.greater = greater
-        self.lower = lower
-        self.equal = equal
+        self.greater = convert_number(greater)
+        self.lower = convert_number(lower)
+        self.equal = convert_number(equal)
         super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
     @cached_property

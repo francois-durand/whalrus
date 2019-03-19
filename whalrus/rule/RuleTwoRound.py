@@ -54,7 +54,7 @@ class RuleTwoRound(RuleSequentialElimination):
     >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
     ...                     rule1=RuleBorda())
     >>> rule.first_round_.rule_.gross_scores_
-    {'a': 17.0, 'b': 16.0, 'c': 12.0, 'd': 5.0, 'e': 0.0}
+    {'a': 17, 'b': 16, 'c': 12, 'd': 5, 'e': 0}
     >>> rule.second_round_.gross_scores_
     {'a': 3, 'b': 2}
 

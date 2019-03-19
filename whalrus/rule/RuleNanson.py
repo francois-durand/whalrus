@@ -37,11 +37,11 @@ class RuleNanson(RuleIteratedElimination):
 
     >>> rule = RuleNanson(['a > b > c > d', 'a > b > d > c'])
     >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 6.0, 'b': 4.0, 'c': 1.0, 'd': 1.0}
+    {'a': 6, 'b': 4, 'c': 1, 'd': 1}
     >>> rule.eliminations_[1].rule_.gross_scores_
-    {'a': 2.0, 'b': 0.0}
+    {'a': 2, 'b': 0}
     >>> rule.eliminations_[2].rule_.gross_scores_
-    {'a': 0.0}
+    {'a': 0}
     >>> rule.winner_
     'a'
     """

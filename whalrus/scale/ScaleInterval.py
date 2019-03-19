@@ -19,23 +19,27 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.scale.Scale import Scale
+from whalrus.utils.Utils import convert_number
 from typing import Iterable
+from numbers import Number
 
 
 class ScaleInterval(Scale):
     """
-    A scale given by an interval of floats.
+    A scale given by an interval of real numbers.
 
-    :param low: lowest float.
-    :param high: highest float.
+    :param low: lowest grade.
+    :param high: highest grade.
 
-    >>> ScaleInterval(low=0., high=10.)
-    ScaleInterval(low=0.0, high=10.0)
+    >>> ScaleInterval(low=0, high=10)
+    ScaleInterval(low=0, high=10)
+    >>> ScaleInterval(low=0, high=2.5)
+    ScaleInterval(low=0, high=Fraction(5, 2))
     """
 
-    def __init__(self, low: float = 0., high: float = 1.):
-        self._low = low
-        self._high = high
+    def __init__(self, low: Number = 0, high: Number = 1):
+        self._low = convert_number(low)
+        self._high = convert_number(high)
 
     @property
     def low(self) -> object:
@@ -50,7 +54,7 @@ class ScaleInterval(Scale):
         return True
 
     def __repr__(self):
-        return 'ScaleInterval(low=%s, high=%s)' % (self.low, self.high)
+        return 'ScaleInterval(low=%r, high=%r)' % (self.low, self.high)
 
     # Min, max and sort
     # -----------------

@@ -33,7 +33,7 @@ def quick_start():
     >>> RulePlurality(['a', 'a', 'b', 'c']).winner_
     'a'
     >>> RuleBorda(['a ~ b > c', 'b > c > a']).gross_scores_
-    {'a': 1.5, 'b': 3.5, 'c': 1.0}
+    {'a': Fraction(3, 2), 'b': Fraction(7, 2), 'c': 1}
 
     Elections with weights, voter names:
 

@@ -22,10 +22,11 @@ from whalrus.scorer.ScorerBucklin import ScorerBucklin
 from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.priority.Priority import Priority
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.profile.Profile import Profile
 from typing import Union
+from fractions import Fraction
 
 
 class RuleBucklinByRounds(RuleScoreNum):
@@ -36,12 +37,14 @@ class RuleBucklinByRounds(RuleScoreNum):
     :param scorer: the default is :class:`ScorerBucklin`.
 
     >>> rule = RuleBucklinByRounds(ballots=['a > b > c > d', 'b > a > c > d', 'c > a > b > d', 'd > a > b > c'])
-    >>> rule.detailed_scores_
-    [{'a': 0.25, 'b': 0.25, 'c': 0.25, 'd': 0.25}, {'a': 1.0, 'b': 0.5, 'c': 0.25, 'd': 0.25}]
+    >>> rule.detailed_scores_[0]
+    {'a': Fraction(1, 4), 'b': Fraction(1, 4), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
+    >>> rule.detailed_scores_[1]
+    {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
     >>> rule.final_round_
     2
     >>> rule.scores_
-    {'a': 1.0, 'b': 0.5, 'c': 0.25, 'd': 0.25}
+    {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
     >>> rule.winner_
     'a'
 
@@ -74,16 +77,16 @@ class RuleBucklinByRounds(RuleScoreNum):
         detailed_scores = []
         for k in range(1, n_candidates + 1):
             self.scorer.k = k
-            gross_scores = NiceDict({c: 0. for c in self.candidates_})
+            gross_scores = NiceDict({c: 0 for c in self.candidates_})
             weights = NiceDict({c: 0 for c in self.candidates_})
             for ballot, weight, voter in self.profile_converted_.items():
                 for c, value in self.scorer(ballot=ballot, voter=voter, candidates=self.candidates_).scores_.items():
                     gross_scores[c] += weight * value
                     weights[c] += weight
-            scores = NiceDict({c: score / weights[c] if weights[c] > 0 else 0.
+            scores = NiceDict({c: my_division(score, weights[c], divide_by_zero=0)
                                for c, score in gross_scores.items()})
             detailed_scores.append(scores)
-            if max(scores.values()) > 0.5:
+            if max(scores.values()) > Fraction(1, 2):
                 break
         return detailed_scores
 
@@ -94,3 +97,10 @@ class RuleBucklinByRounds(RuleScoreNum):
     @cached_property
     def final_round_(self) -> int:
         return len(self.detailed_scores_)
+
+    # Conversion to floats
+    # --------------------
+
+    @cached_property
+    def detailed_scores_as_floats_(self) -> list:
+        return [NiceDict({c: float(v) for c, v in counting_round.items()}) for counting_round in self.detailed_scores_]

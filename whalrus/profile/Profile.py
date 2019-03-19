@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
-from whalrus.utils.Utils import cached_property, DeleteCacheMixin
+from whalrus.utils.Utils import cached_property, DeleteCacheMixin, convert_number
 from whalrus.ballot.Ballot import Ballot
 from whalrus.ballot.BallotOrder import BallotOrder
 from typing import Union, Iterator
@@ -97,11 +97,12 @@ class Profile(DeleteCacheMixin):
         self._ballots = [converter(b) for b in ballots]
         if weights is None:
             if isinstance(ballots, Profile):
-                self._weights = ballots.weights
+                weights = ballots.weights
             else:
-                self._weights = [1] * len(ballots)
+                weights = [1] * len(ballots)
         else:
-            self._weights = weights
+            weights = [convert_number(w) for w in weights]
+        self._weights = weights
         if voters is None:
             if isinstance(ballots, Profile):
                 self._voters = ballots.voters

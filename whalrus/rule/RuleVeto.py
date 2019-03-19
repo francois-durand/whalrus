@@ -45,7 +45,7 @@ class RuleVeto(RuleScoreNumAverage):
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
                  tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0.):
+                 scorer: Scorer = None, default_average: Number = 0):
         if converter is None:
             converter = ConverterBallotToVeto()
         if scorer is None:

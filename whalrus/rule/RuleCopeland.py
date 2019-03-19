@@ -41,11 +41,11 @@ class RuleCopeland(RuleScoreNum):
 
     >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
     >>> rule.matrix_majority_.as_array_
-    array([[0.5, 1. , 1. ],
-           [0. , 0.5, 1. ],
-           [0. , 0. , 0.5]])
+    array([[Fraction(1, 2), 1, 1],
+           [0, Fraction(1, 2), 1],
+           [0, 0, Fraction(1, 2)]], dtype=object)
     >>> rule.scores_
-    {'a': 2.0, 'b': 1.0, 'c': 0.0}
+    {'a': 2, 'b': 1, 'c': 0}
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,

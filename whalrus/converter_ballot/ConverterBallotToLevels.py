@@ -37,7 +37,7 @@ class ConverterBallotToLevels(ConverterBallot):
 
     :param scale: a :class:`Scale`. If specified, then the ballot will be converted to this scale. If it is None,
         then any ballot of class :class:`BallotLevels` will be kept as it is, and any other ballot will converted to
-        a :class:`BallotLevels` using a :class:`ScaleInterval` with bounds 0. and 1.
+        a :class:`BallotLevels` using a :class:`ScaleInterval` with bounds 0 and 1
     :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,
         we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
         ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
@@ -50,8 +50,8 @@ class ConverterBallotToLevels(ConverterBallot):
     Typical usages:
 
     >>> ballot = BallotLevels({'a': 100, 'b': 57}, scale=ScaleRange(0, 100))
-    >>> ConverterBallotToLevels(scale=ScaleInterval(low=0., high=10.))(ballot).as_dict
-    {'a': 10.0, 'b': 5.7}
+    >>> ConverterBallotToLevels(scale=ScaleInterval(low=0, high=10))(ballot).as_dict
+    {'a': 10, 'b': Fraction(57, 10)}
     >>> ConverterBallotToLevels(scale=ScaleRange(low=0, high=10))(ballot).as_dict
     {'a': 10, 'b': 6}
     >>> ConverterBallotToLevels(scale=ScaleFromList([
@@ -69,7 +69,7 @@ class ConverterBallotToLevels(ConverterBallot):
         self.borda_unordered_give_points = borda_unordered_give_points
         if scale is None:
             self._aux_converter = ConverterBallotToLevelsInterval(
-                scale=ScaleInterval(low=0., high=1.), borda_unordered_give_points=borda_unordered_give_points)
+                scale=ScaleInterval(low=0, high=1), borda_unordered_give_points=borda_unordered_give_points)
         elif isinstance(scale, ScaleInterval):
             self._aux_converter = ConverterBallotToLevelsInterval(
                 scale=scale, borda_unordered_give_points=borda_unordered_give_points)
@@ -85,7 +85,7 @@ class ConverterBallotToLevels(ConverterBallot):
                     scale=scale, borda_unordered_give_points=borda_unordered_give_points)
         else:
             self._aux_converter = ConverterBallotToLevelsInterval(
-                scale=ScaleInterval(low=0., high=1.), borda_unordered_give_points=borda_unordered_give_points)
+                scale=ScaleInterval(low=0, high=1), borda_unordered_give_points=borda_unordered_give_points)
 
     def __call__(self, x: object, candidates: set =None) -> BallotLevels:
         if self.scale is None and isinstance(x, BallotLevels):

@@ -83,3 +83,19 @@ class Scorer(DeleteCacheMixin):
             is not even counted in the denominator when computing the average).
         """
         raise NotImplementedError
+
+    @cached_property
+    def scores_as_floats_(self) -> NiceDict:
+        """
+        The scores, given as floats.
+
+        :return: a :class:`NiceDict` that, to each candidate, associates a float.
+        :raise ValueError: if the scores cannot be converted to floats.
+
+        It is advised to use this attribute for display purposes only. For computation, you should use :attr:`scores_`,
+        which usually manipulates fractions and therefore allows for exact computation.
+        """
+        try:
+            return NiceDict({c: float(v) for c, v in self.scores_.items()})
+        except ValueError:
+            raise ValueError('These scores cannot be converted to floats: %r.' % self.scores_)

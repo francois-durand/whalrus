@@ -24,7 +24,7 @@ from whalrus.rule.RuleScore import RuleScore
 from whalrus.rule.RuleBucklinByRounds import RuleBucklinByRounds
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.priority.Priority import Priority
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, my_division, convert_number
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.profile.Profile import Profile
 from typing import Union
@@ -41,7 +41,7 @@ class RuleBucklinInstant(RuleScore):
 
     >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
     >>> rule.scores_
-    {'a': (1.0, 3), 'b': (1.0, 2), 'c': (0.0, 3)}
+    {'a': (1, 3), 'b': (1, 2), 'c': (0, 3)}
     >>> rule.winner_
     'a'
 
@@ -61,13 +61,15 @@ class RuleBucklinInstant(RuleScore):
 
     >>> profile = Profile(ballots=['a > b > c > d', 'b > a ~ d > c', 'c > a ~ d > b'], weights=[3, 3, 4])
     >>> rule_bucklin_by_rounds = RuleBucklinByRounds(profile)
-    >>> rule_bucklin_by_rounds.detailed_scores_
-    [{'a': 0.3, 'b': 0.3, 'c': 0.4, 'd': 0.0}, {'a': 0.65, 'b': 0.6, 'c': 0.4, 'd': 0.35}]
+    >>> rule_bucklin_by_rounds.detailed_scores_[0]
+    {'a': Fraction(3, 10), 'b': Fraction(3, 10), 'c': Fraction(2, 5), 'd': 0}
+    >>> rule_bucklin_by_rounds.detailed_scores_[1]
+    {'a': Fraction(13, 20), 'b': Fraction(3, 5), 'c': Fraction(2, 5), 'd': Fraction(7, 20)}
     >>> rule_bucklin_by_rounds.winner_
     'a'
     >>> rule_bucklin_instant = RuleBucklinInstant(profile)
     >>> rule_bucklin_instant.scores_
-    {'a': (1.5, 10), 'b': (2.0, 6), 'c': (1.0, 7), 'd': (1.5, 7)}
+    {'a': (Fraction(3, 2), 10), 'b': (2, 6), 'c': (1, 7), 'd': (Fraction(3, 2), 7)}
     >>> RuleBucklinInstant(profile).winner_
     'b'
     """
@@ -75,7 +77,7 @@ class RuleBucklinInstant(RuleScore):
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None,
                  tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_median: object = 0.):
+                 scorer: Scorer = None, default_median: object = 0):
         # Default value
         if converter is None:
             converter = ConverterBallotToOrder()
@@ -107,7 +109,7 @@ class RuleBucklinInstant(RuleScore):
             levels_[c] = [levels_[c][i] for i in indexes]
             weights_[c] = [weights_[c][i] for i in indexes]
             total_weight = sum(weights_[c])
-            half_total_weight = total_weight / 2
+            half_total_weight = my_division(total_weight, 2)
             cumulative_weight = 0
             median = None
             for i, weight in enumerate(weights_[c]):
@@ -115,7 +117,8 @@ class RuleBucklinInstant(RuleScore):
                 if cumulative_weight >= half_total_weight:
                     median = levels_[c][i]
                     break
-            support = sum([weights_[c][i] for i, level in enumerate(levels_[c]) if self.scorer.scale.ge(level, median)])
+            support = convert_number(sum([
+                weights_[c][i] for i, level in enumerate(levels_[c]) if self.scorer.scale.ge(level, median)]))
             scores_[c] = (median, support)
         return scores_
 

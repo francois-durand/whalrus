@@ -20,7 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotOrder import BallotOrder
 from whalrus.scale.Scale import Scale
-from whalrus.utils.Utils import cached_property, NiceDict
+from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.scorer.Scorer import Scorer
 from typing import Union
 
@@ -37,7 +37,7 @@ class ScorerBucklin(Scorer):
     Typical usage:
 
     >>> ScorerBucklin(BallotOrder('a > b > c > d > e'), candidates={'a', 'b', 'c', 'd', 'e'}, k=2).scores_
-    {'a': 1.0, 'b': 1.0, 'c': 0.0, 'd': 0.0, 'e': 0.0}
+    {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
 
     In the example below, candidates ``a``, ``b`` and ``c`` are `ordered', ``d`` and ``e`` are `unordered',
     and ``f`` and ``g`` are `absent' in the ballot, meaning that they were not even available when the voter cast
@@ -46,11 +46,11 @@ class ScorerBucklin(Scorer):
 
     >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
     >>> candidates_election = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=2).scores_
+    >>> ScorerBucklin(ballot, candidates=candidates_election, k=2).scores_as_floats_
     {'a': 1.0, 'b': 0.5, 'c': 0.5, 'd': 0.0, 'e': 0.0, 'f': 0.0, 'g': 0.0}
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=4).scores_
+    >>> ScorerBucklin(ballot, candidates=candidates_election, k=4).scores_as_floats_
     {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 0.5, 'e': 0.5, 'f': 0.0, 'g': 0.0}
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=6).scores_
+    >>> ScorerBucklin(ballot, candidates=candidates_election, k=6).scores_as_floats_
     {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 1.0, 'e': 1.0, 'f': 0.5, 'g': 0.5}
 
     Using the options, unordered and/or absent candidates can always receive 0 point, or even not be mentioned in the
@@ -58,7 +58,7 @@ class ScorerBucklin(Scorer):
 
     >>> ScorerBucklin(ballot, candidates=candidates_election, k=6,
     ...     unordered_receive_points=False, absent_receive_points=None).scores_
-    {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 0.0, 'e': 0.0}
+    {'a': 1, 'b': 1, 'c': 1, 'd': 0, 'e': 0}
     """
 
     def __init__(self, ballot: BallotOrder = None, voter: object = None, candidates: set = None,
@@ -87,31 +87,31 @@ class ScorerBucklin(Scorer):
         for indifference_class in self.ballot_.as_weak_order[:]:
             n_indifference = len(indifference_class)
             if n_indifference <= points_remaining:
-                scores.update({c: 1. for c in indifference_class})
+                scores.update({c: 1 for c in indifference_class})
                 points_remaining -= n_indifference
             else:
-                scores.update({c: points_remaining / n_indifference for c in indifference_class})
-                points_remaining = 0.
+                scores.update({c: my_division(points_remaining, n_indifference) for c in indifference_class})
+                points_remaining = 0
         # Unordered candidates
         if self.unordered_receive_points is False:
-            scores.update({c: 0. for c in self.ballot_.candidates_not_in_b})
+            scores.update({c: 0 for c in self.ballot_.candidates_not_in_b})
         elif self.unordered_receive_points is True:
             unordered = self.ballot_.candidates_not_in_b
             n_unordered = len(unordered)
             if n_unordered <= points_remaining:
-                scores.update({c: 1. for c in unordered})
+                scores.update({c: 1 for c in unordered})
                 points_remaining -= n_unordered
             else:
-                scores.update({c: points_remaining / n_unordered for c in unordered})
-                points_remaining = 0.
+                scores.update({c: my_division(points_remaining, n_unordered) for c in unordered})
+                points_remaining = 0
         # Absent candidates
         if self.absent_receive_points is False:
-            scores.update({c: 0. for c in self.candidates_ - self.ballot_.candidates})
+            scores.update({c: 0 for c in self.candidates_ - self.ballot_.candidates})
         elif self.absent_receive_points is True:
             absent = self.candidates_ - self.ballot_.candidates
             n_absent = len(absent)
             if n_absent <= points_remaining:
-                scores.update({c: 1. for c in absent})
+                scores.update({c: 1 for c in absent})
             else:
-                scores.update({c: points_remaining / n_absent for c in absent})
+                scores.update({c: my_division(points_remaining, n_absent) for c in absent})
         return scores
