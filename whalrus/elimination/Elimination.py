@@ -28,12 +28,14 @@ class Elimination(DeleteCacheMixin):
 
     :param rule: if mentioned, will be passed to ``__call__`` immediately after initialization.
 
-    A :class:`Elimination` object is a callable whose input is a :class:`Rule` (which has already loaded a profile).
+    An :class:`Elimination` object is a callable whose input is a :class:`Rule` (which has already loaded a profile).
     When the :class:`Elimination` object is called, it loads the rule. The output of the call is the
     :class:`Elimination` object itself. But after the call, you can access to the computed variables (ending with an
     underscore), such as :attr:`eliminated_order_`, :attr:`eliminated_` or :attr:`qualified_`.
 
     Cf. :class:`EliminationLast` for some examples.
+
+    :ivar rule\_: this attribute stores the rule given in argument of the ``__call__``.
     """
 
     def __init__(self, rule: Rule = None):

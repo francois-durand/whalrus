@@ -43,6 +43,13 @@ class Matrix(DeleteCacheMixin):
     :attr:`as_dict_` or :attr:`as_array_`.
 
     Cf. :class:`MatrixWeightedMajority` for some examples.
+
+    :ivar profile_original\_: the profile as it is entered by the user. This uses the constructor of :class:`Profile`.
+        Hence indirectly, it uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
+        ``'a > b > c'`` are converted to :class:``Ballot`` objects.
+    :ivar profile_converted\_: the profile, with ballots that are adequate for the voting rule. For example,
+        in :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects.
+    :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
@@ -56,7 +63,7 @@ class Matrix(DeleteCacheMixin):
             converter = ConverterBallotGeneral()
         self.converter = converter
         # Computed variables
-        self.profile_ = None
+        self.profile_original_ = None
         self.profile_converted_ = None
         self.candidates_ = None
         # Optional: load a profile at initialization
@@ -65,9 +72,9 @@ class Matrix(DeleteCacheMixin):
 
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None):
-        self.profile_ = Profile(ballots, weights=weights, voters=voters)
-        self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_],
-                                          weights=self.profile_.weights, voters=self.profile_.voters)
+        self.profile_original_ = Profile(ballots, weights=weights, voters=voters)
+        self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_original_],
+                                          weights=self.profile_original_.weights, voters=self.profile_original_.voters)
         if candidates is None:
             candidates = NiceSet(set().union(*[b.candidates for b in self.profile_converted_]))
         self.candidates_ = candidates

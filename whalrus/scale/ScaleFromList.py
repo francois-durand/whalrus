@@ -45,7 +45,10 @@ class ScaleFromList(Scale):
 
     def __init__(self, levels: list):
         self.levels = list(levels)
-        self.as_dict = {evaluation: rank for rank, evaluation in enumerate(levels)}
+
+    @cached_property
+    def as_dict(self):
+        return {evaluation: rank for rank, evaluation in enumerate(self.levels)}
 
     def lt(self, one: object, another: object) -> bool:
         return self.as_dict[one] < self.as_dict[another]

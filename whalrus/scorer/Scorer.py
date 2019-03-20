@@ -41,6 +41,10 @@ class Scorer(DeleteCacheMixin):
     subclasses, there can be some additional options.
 
     Cf. :class:`ScorerLevels` for some examples.
+
+    :ivar ballot\_: this attribute stores the ballot given in argument of the ``__call__``.
+    :ivar voter\_: this attribute stores the voter given in argument of the ``__call__``.
+    :ivar candidates\_: this attribute stores the candidates given in argument of the ``__call__``.
     """
 
     def __init__(self, ballot: Ballot = None, voter: object = None, candidates: set = None,
