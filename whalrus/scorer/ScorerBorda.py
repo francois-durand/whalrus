@@ -32,7 +32,7 @@ class ScorerBorda(Scorer):
     :param absent_give_points: whether absent candidates give points to the other candidates.
     :param absent_receive_points: whether absent candidates receives points. Remark: 0 means that the absent
         candidate receives 0 (which will be counted in its average Borda score, median Borda score, etc); in contrast,
-        None means that the absent candidate receives no score (hence this voter will be exclued from the computation
+        None means that the absent candidate receives no score (hence this voter will be excluded from the computation
         of its average Borda score, median Borda score, etc).
     :param unordered_give_points: whether unordered candidates give points to the ordered candidates, i.e. they are
         considered as being in a lower position in the ranking.
@@ -44,8 +44,8 @@ class ScorerBorda(Scorer):
     >>> ScorerBorda(ballot=BallotOrder('a > b > c'), voter='Alice', candidates={'a', 'b', 'c'}).scores_
     {'a': 2, 'b': 1, 'c': 0}
 
-    In the example below, candidates ``a``, ``b`` and ``c`` are `ordered', ``d`` and ``e`` are `unordered', and ``f``
-    and ``g`` are `absent' in the ballot, meaning that these candidates were not even available when the voter cast
+    In the example below, candidates `a`, `b` and `c` are "ordered", `d` and `e` are "unordered", and `f`
+    and `g` are "absent" in the ballot, meaning that these candidates were not even available when the voter cast
     her ballot. The options allows for different ways to take these special cases into account.
 
     >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})

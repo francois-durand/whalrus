@@ -39,8 +39,8 @@ class ScorerBucklin(Scorer):
     >>> ScorerBucklin(BallotOrder('a > b > c > d > e'), candidates={'a', 'b', 'c', 'd', 'e'}, k=2).scores_
     {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
 
-    In the example below, candidates ``a``, ``b`` and ``c`` are `ordered', ``d`` and ``e`` are `unordered',
-    and ``f`` and ``g`` are `absent' in the ballot, meaning that they were not even available when the voter cast
+    In the example below, candidates `a`, `b` and `c` are "ordered", `d` and `e` are "unordered",
+    and `f` and `g` are "absent" in the ballot, meaning that they were not even available when the voter cast
     her ballot. By default, we count as if the order was the unordered candidates were below the ordered candidates,
     and the absent candidates even lower.
 

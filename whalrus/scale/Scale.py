@@ -154,7 +154,7 @@ class Scale:
 
     def argsort(self, some_list: list) -> list:
         """
-        `Argsort' a list of levels.
+        "Argsort" a list of levels.
 
         :param some_list: a list of levels.
         :return: a list of indexes.

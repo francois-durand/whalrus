@@ -10,7 +10,6 @@ Welcome to Whalrus's documentation!
    usage
    tutorial
    reference
-   modules
    contributing
    authors
    history

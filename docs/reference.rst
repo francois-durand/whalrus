@@ -141,7 +141,7 @@ Matrix
 ======
 
 Matrix
-----
+------
 
 .. autoclass:: whalrus.Matrix
     :members:

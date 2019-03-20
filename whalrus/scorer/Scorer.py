@@ -25,7 +25,7 @@ from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceDict
 
 class Scorer(DeleteCacheMixin):
     """
-    A `scorer'.
+    A "scorer".
 
     :param ballot: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param voter: if mentioned, will be passed to ``__call__`` immediately after initialization.
