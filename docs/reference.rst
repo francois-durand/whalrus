@@ -161,7 +161,40 @@ MatrixMajority
 Priority
 ========
 
+Priority
+--------
+
 .. autoclass:: whalrus.Priority
+    :members:
+
+PriorityUnambiguous
+-------------------
+
+.. autoclass:: whalrus.PriorityUnambiguous
+    :members:
+
+PriorityAbstain
+---------------
+
+.. autoclass:: whalrus.PriorityAbstain
+    :members:
+
+PriorityAscending
+-----------------
+
+.. autoclass:: whalrus.PriorityAscending
+    :members:
+
+PriorityDescending
+------------------
+
+.. autoclass:: whalrus.PriorityDescending
+    :members:
+
+PriorityRandom
+--------------
+
+.. autoclass:: whalrus.PriorityRandom
     :members:
 
 Profile

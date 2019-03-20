@@ -19,6 +19,11 @@ from .scale.ScaleInterval import ScaleInterval
 
 # Priority
 from .priority.Priority import Priority
+from .priority.Priority import PriorityUnambiguous
+from .priority.Priority import PriorityAbstain
+from .priority.Priority import PriorityAscending
+from .priority.Priority import PriorityDescending
+from .priority.Priority import PriorityRandom
 
 # Ballots
 from .ballot.Ballot import Ballot

@@ -29,10 +29,19 @@ class Priority:
 
     :param name: the name of this priority setting.
 
-    >>> Priority.ASCENDING.choice({'c', 'a', 'b'})
+    Typical usage:
+
+    >>> priority = Priority.ASCENDING
+    >>> priority.choice({'c', 'a', 'b'})
     'a'
-    >>> Priority.ASCENDING.sort({'c', 'a', 'b'})
+    >>> priority.sort({'c', 'a', 'b'})
     ['a', 'b', 'c']
+
+    :cvar UNAMBIGUOUS: shortcut for :class:`PriorityUnambiguous`.
+    :cvar ABSTAIN: shortcut for :class:`PriorityAbstain`.
+    :cvar ASCENDING: shortcut for :class:`PriorityAscending`.
+    :cvar DESCENDING: shortcut for :class:`PriorityDescending`.
+    :cvar RANDOM: shortcut for :class:`PriorityRandom`.
     """
 
     def __init__(self, name: str):
@@ -48,9 +57,9 @@ class Priority:
         :param x: the list, set, etc where the element is to be chosen.
         :param reverse: if False (default), then we choose the "first" or "best" element in this priority order. For
             example, if this is the ascending priority, we choose the lowest element. If True, then we
-            choose the "last" or "worst" element. This is used, for example, in the veto rule.
-        :return: the chosen element (or None). When x is empty, return None. When x has one element, return this
-            element.
+            choose the "last" or "worst" element. This is used, for example, in :class:`RuleVeto`.
+        :return: the chosen element (or None). When ``x`` is empty, return None. When ``x`` has one element, return
+            this element.
         """
         if len(x) == 0:
             return None
@@ -62,7 +71,7 @@ class Priority:
         """
         Auxiliary function for :meth:`choice`.
 
-        Here, :attr:`x` is assumed to have at least 2 elements.
+        Here, ``x`` is assumed to have at least 2 elements.
         """
         raise NotImplementedError
 
@@ -74,7 +83,7 @@ class Priority:
         :param reverse: if True, we use the reverse priority order.
         :return: a sorted list (or None).
 
-        The original list :attr:`x` is not modified.
+        The original list ``x`` is not modified.
         """
         if len(x) <= 1:
             return list(x)
@@ -84,7 +93,7 @@ class Priority:
         """
         Auxiliary function for :meth:`sort`.
 
-        Here, :attr:`x` is assumed to have at least 2 elements.
+        Here, ``x`` is assumed to have at least 2 elements.
         """
         raise NotImplementedError
 
@@ -92,19 +101,27 @@ class Priority:
     # ----------------------------------
     # The following constants are defined outside the class to avoid a problem of self-reference.
 
-    #: When there are two elements or more, raise a ValueError.
     UNAMBIGUOUS = None
-    #: When there are two elements or more, return None.
     ABSTAIN = None
-    #: Ascending order (lowest is favoured).
     ASCENDING = None
-    #: Descending order (highest is favoured).
     DESCENDING = None
-    #: Random order.
     RANDOM = None
 
 
 class PriorityUnambiguous(Priority):
+    """When there are two elements or more, raise a ValueError.
+
+    >>> try:
+    ...     Priority.UNAMBIGUOUS.choice({'a', 'b'})
+    ... except ValueError:
+    ...     print('Cannot choose')
+    Cannot choose
+    >>> try:
+    ...     Priority.UNAMBIGUOUS.sort({'a', 'b'})
+    ... except ValueError:
+    ...     print('Cannot sort')
+    Cannot sort
+    """
 
     def __init__(self):
         super().__init__(name='Unambiguous')
@@ -123,6 +140,14 @@ Priority.UNAMBIGUOUS = PriorityUnambiguous()
 
 
 class PriorityAbstain(Priority):
+    """
+    When there are two elements or more, return None.
+
+    >>> print(Priority.ABSTAIN.choice({'a', 'b'}))
+    None
+    >>> print(Priority.ABSTAIN.sort({'a', 'b'}))
+    None
+    """
 
     def __init__(self):
         super().__init__(name='Abstain')
@@ -141,6 +166,14 @@ Priority.ABSTAIN = PriorityAbstain()
 
 
 class PriorityAscending(Priority):
+    """
+    Ascending order (lowest is favoured).
+
+    >>> Priority.ASCENDING.choice({'a', 'b'})
+    'a'
+    >>> Priority.ASCENDING.sort({'a', 'b'})
+    ['a', 'b']
+    """
 
     def __init__(self):
         super().__init__(name='Ascending')
@@ -161,6 +194,14 @@ Priority.ASCENDING = PriorityAscending()
 
 
 class PriorityDescending(Priority):
+    """
+    Descending order (highest is favoured).
+
+    >>> Priority.DESCENDING.choice({'a', 'b'})
+    'b'
+    >>> Priority.DESCENDING.sort({'a', 'b'})
+    ['b', 'a']
+    """
 
     def __init__(self):
         super().__init__(name='Descending')
@@ -181,6 +222,15 @@ Priority.DESCENDING = PriorityDescending()
 
 
 class PriorityRandom(Priority):
+    """Random order.
+
+    >>> my_choice = Priority.RANDOM.choice({'a', 'b'})
+    >>> my_choice in {'a', 'b'}
+    True
+    >>> my_order = Priority.RANDOM.sort({'a', 'b'})
+    >>> my_order == ['a', 'b'] or my_order == ['b', 'a']
+    True
+    """
 
     def __init__(self):
         super().__init__(name='Random')
