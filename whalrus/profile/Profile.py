@@ -31,7 +31,7 @@ class Profile(DeleteCacheMixin):
     A profile of ballots.
 
     :param ballots: an iterable. Typically, it is a list, but it can also be a :class:`Profile`. Its elements must
-        be :class:`Ballot` objects or, more generally, inputs that are understandable by a
+        be :class:`Ballot` objects or, more generally, inputs that can be interpreted by
         :class:`ConverterBallotGeneral`.
     :param weights: a list of numbers representing the weights of the ballots. Default: if :attr:`ballots` is a Profile,
         then use the weights of this profile; otherwise, all weights are 1.
@@ -49,7 +49,7 @@ class Profile(DeleteCacheMixin):
     Alice (2): a > b ~ c
     Bob (1): a ~ b > c
 
-    Some other examples of syntax:
+    In the following example, each ballot illustrates a different syntax:
 
     >>> profile = Profile([
     ...     ['a', 'b', 'c'],
@@ -61,8 +61,8 @@ class Profile(DeleteCacheMixin):
     b > c > a
     c > a > b
 
-    Profiles have a list-like behavior in the sense that they implement `__len__`, `__getitem__`, `__setitem__` and
-    `__delitem__`.
+    Profiles have a list-like behavior in the sense that they implement ``__len__``, ``__getitem__``, ``__setitem__``
+    and ``__delitem__``:
 
     >>> profile = Profile(['a > b', 'b > a', 'a ~ b'])
     >>> len(profile)
@@ -79,13 +79,16 @@ class Profile(DeleteCacheMixin):
     b > a
     a ~ b
 
-    Profiles can be concatenated or multiplied by a scalar (which multiplies the weights).
+    Profiles can be concatenated:
 
     >>> profile = Profile(['a > b', 'b > a']) + ['a ~ b']
     >>> print(profile)
     a > b
     b > a
     a ~ b
+
+    Profiles can be multiplied by a scalar, which multiplies the weights:
+
     >>> profile = Profile(['a > b', 'b > a']) * 3
     >>> print(profile)
     (3): a > b
@@ -203,7 +206,7 @@ class Profile(DeleteCacheMixin):
         """
         Append a ballot to the profile.
 
-        :param ballot: the ballot or, more generally, an input that is understandable by a
+        :param ballot: a ballot or, more generally, an input that can be interpreted by
             :class:`ConverterBallotGeneral`.
         :param weight: the weight of the ballot.
         :param voter: the voter.
@@ -215,7 +218,7 @@ class Profile(DeleteCacheMixin):
         b > a
         """
         self._ballots.append(ConverterBallotGeneral()(ballot))
-        self._weights.append(weight)
+        self._weights.append(convert_number(weight))
         self._voters.append(voter)
         self.delete_cache()
 
@@ -223,7 +226,7 @@ class Profile(DeleteCacheMixin):
         """
         Remove a ballot from the profile.
 
-        :param ballot: the ballot or, more generally, an input that is understandable by a
+        :param ballot: the ballot or, more generally, an input that can be interpreted by
             :class:`ConverterBallotGeneral`.
         :param voter: the voter.
 
@@ -315,7 +318,7 @@ class Profile(DeleteCacheMixin):
         """
         Items of the profile.
 
-        Returns: an iterator (zip) of triples (ballot, weight, voter).
+        Returns: a zip of triples (ballot, weight, voter).
 
         >>> profile = Profile(['a > b', 'b > a'])
         >>> for ballot, weight, voter in profile.items():
@@ -344,10 +347,10 @@ class Profile(DeleteCacheMixin):
         """
         if isinstance(other, list):
             other = Profile(other)
-        return Profile(ballots=self.ballots + other.ballots, weights=self.weights+other.weights,
+        return Profile(ballots=self.ballots + other.ballots, weights=self.weights + other.weights,
                        voters=self.voters + other.voters)
 
-    def __mul__(self, other: int) -> 'Profile':
+    def __mul__(self, other: Number) -> 'Profile':
         """
         Multiply the weights.
 
@@ -359,4 +362,6 @@ class Profile(DeleteCacheMixin):
         (3): a > b
         (3): b > a
         """
-        return Profile(ballots=self.ballots, weights=[w * other for w in self.weights], voters=self.voters)
+        other = convert_number(other)
+        return Profile(ballots=self.ballots, weights=[convert_number(w * other) for w in self.weights],
+                       voters=self.voters)
