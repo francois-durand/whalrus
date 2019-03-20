@@ -50,9 +50,9 @@ class RuleCondorcet(Rule):
 
     >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1))
     >>> rule.matrix_majority_.as_array_
-    array([[1, 1, 1],
-           [1, 1, 1],
-           [0, 0, 1]])
+    array([[Fraction(1, 2), 1, 1],
+           [1, Fraction(1, 2), 1],
+           [0, 0, Fraction(1, 2)]], dtype=object)
     >>> rule.order_
     [{'a', 'b'}, {'c'}]
     """

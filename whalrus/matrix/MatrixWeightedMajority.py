@@ -221,8 +221,8 @@ class MatrixWeightedMajority(Matrix):
 
         The "gross" matrix.
 
-        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (without
-            dividing by the total weight).
+        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (used as
+            numerator in the average).
 
         >>> from whalrus import MatrixWeightedMajority
         >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1]).gross_
@@ -235,7 +235,7 @@ class MatrixWeightedMajority(Matrix):
         """
         The matrix of weights.
 
-        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the total weight (used as a
+        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the total weight (used as
             denominator in the average).
 
         In most usual cases, all non-diagonal coefficients are equal, and are equal to the total weight of all voters:
@@ -247,7 +247,8 @@ class MatrixWeightedMajority(Matrix):
         However, if some scoring parameters are None, some weights can be lower than the total weight of all voters:
 
         >>> from whalrus import MatrixWeightedMajority
-        >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1], indifference=None).weights_
+        >>> MatrixWeightedMajority(ballots=['a > b', 'a ~ b'], weights=[2, 1],
+        ...                        indifference=None).weights_
         {('a', 'a'): 0, ('a', 'b'): 2, ('b', 'a'): 2, ('b', 'b'): 0}
         """
         return self._gross_and_weights_['weights']

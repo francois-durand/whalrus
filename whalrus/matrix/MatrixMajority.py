@@ -33,15 +33,16 @@ class MatrixMajority(Matrix):
     """
 
     :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority`.
-    :param greater: value when in the weighted matrix, coefficient ``(c, d)`` is greater than coefficient ``(d, c)``.
-    :param lower: value when in the weighted matrix, coefficient ``(c, d)`` is lower than coefficient ``(d, c)``.
-    :param equal: value when in the weighted matrix, coefficient ``(c, d)`` is equal to coefficient ``(d, c)``.
+    :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.
+        Default: :class:`MatrixWeightedMajority`.
+    :param greater: value used when `W(c, d) > W(d, c)`.
+    :param lower: value used when `W(c, d) < W(d, c)`.
+    :param equal: value used when `W(c, d) = W(d, c)` (except for diagonal coefficients).
+    :param diagonal: value used for the diagonal coefficients.
 
-    First, we compute a matrix ``W`` with the algorithm given in the parameter ``matrix_weighted_majority``.
-    Then for each pair of candidates ``(c, d)``, the coefficient ``(c, d)`` of the majority matrix is set to
-    :attr:`greater` if ``W[(d, c)] > W[(d, c)]``, :attr:`equal` if ``W[(d, c)] = W[(d, c)]`` and :attr:`lower` if `
-    `W[(d, c)] < W[(d, c)]``.
+    First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.
+    Then for each pair of candidates `(c, d)`, the coefficient of the majority matrix is set to :attr:`greater`,
+    :attr:`lower`, :attr:`equal` or :attr:`diagonal`, depending on the values of `W(c, d)` and `W(d, c)`.
 
     >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b']).as_array_
     array([[Fraction(1, 2), 1, 1],
@@ -50,7 +51,7 @@ class MatrixMajority(Matrix):
 
     Using the options:
 
-    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0).as_array_
+    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0, diagonal=0).as_array_
     array([[0, 1, 1],
            [0, 0, 0],
            [0, 0, 0]])
@@ -60,7 +61,8 @@ class MatrixMajority(Matrix):
                  candidates: set = None,
                  converter: ConverterBallot = None,
                  matrix_weighted_majority: Matrix = None,
-                 greater: Number = 1, lower: Number = 0, equal: Number = Fraction(1, 2)):
+                 greater: Number = 1, lower: Number = 0, equal: Number = Fraction(1, 2),
+                 diagonal: Number = Fraction(1, 2)):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix_weighted_majority is None:
@@ -69,6 +71,7 @@ class MatrixMajority(Matrix):
         self.greater = convert_number(greater)
         self.lower = convert_number(lower)
         self.equal = convert_number(equal)
+        self.diagonal = convert_number(diagonal)
         super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
 
     @cached_property
@@ -87,5 +90,7 @@ class MatrixMajority(Matrix):
                 return self.equal
             return self.greater if x > y else self.lower
         weighted_as_dict = self.matrix_weighted_majority_.as_dict_
-        return NiceDict({(c, d): convert(weighted_as_dict[(c, d)], weighted_as_dict[(d, c)])
-                         for (c, d) in weighted_as_dict.keys()})
+        return NiceDict({
+            (c, d): self.diagonal if c == d else convert(weighted_as_dict[(c, d)], weighted_as_dict[(d, c)])
+            for (c, d) in weighted_as_dict.keys()
+        })
