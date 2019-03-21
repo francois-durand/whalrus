@@ -29,11 +29,11 @@ class ScaleFromSet(ScaleFromList):
 
     :param levels: a set of comparable objects. It is recommended that they are also hashable.
 
+    Typical usage:
+
     >>> scale = ScaleFromSet({-1, 0, 2})
-    >>> scale
-    ScaleFromSet(levels={-1, 0, 2})
-    >>> scale.lt(0, 2)
-    True
+
+    A more complex example:
 
     >>> class Appreciation:
     ...     VALUES = {'Excellent': 2, 'Good': 1, 'Medium': 0}
@@ -47,8 +47,6 @@ class ScaleFromSet(ScaleFromList):
     ...         return Appreciation.VALUES[self.x] < Appreciation.VALUES[other.x]
     >>> scale = ScaleFromSet({Appreciation('Excellent'), Appreciation('Good'),
     ...                      Appreciation('Medium')})
-    >>> scale
-    ScaleFromSet(levels={Appreciation('Medium'), Appreciation('Good'), Appreciation('Excellent')})
     >>> scale.lt(Appreciation('Medium'), Appreciation('Good'))
     True
     >>> scale.low
@@ -62,6 +60,11 @@ class ScaleFromSet(ScaleFromList):
 
     # noinspection PyMethodMayBeStatic
     def lt(self, one: object, another: object) -> bool:
+        """
+        >>> scale = ScaleFromSet({-1, 0, 2})
+        >>> scale.lt(0, 2)
+        True
+        """
         return one < another
 
     def __repr__(self):

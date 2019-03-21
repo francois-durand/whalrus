@@ -28,19 +28,7 @@ class ScaleFromList(Scale):
     """
     Scale derived from a list.
 
-    :param levels: list of levels, from the worst to the best.
-
-    >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
-    >>> scale
-    ScaleFromList(levels=['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
-    >>> scale.lt('Medium', 'Excellent')
-    True
-    >>> scale.gt('Medium', 'Excellent')
-    False
-    >>> scale.low
-    'Bad'
-    >>> scale.high
-    'Excellent'
+    :param levels: the list of levels, from the worst to the best.
     """
 
     def __init__(self, levels: list):
@@ -51,14 +39,29 @@ class ScaleFromList(Scale):
         return {evaluation: rank for rank, evaluation in enumerate(self.levels)}
 
     def lt(self, one: object, another: object) -> bool:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> scale.lt('Medium', 'Excellent')
+        True
+        """
         return self.as_dict[one] < self.as_dict[another]
 
     @property
     def low(self) -> object:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> scale.low
+        'Bad'
+        """
         return self.levels[0]
 
     @property
     def high(self) -> object:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> scale.high
+        'Excellent'
+        """
         return self.levels[-1]
 
     @property
@@ -76,13 +79,35 @@ class ScaleFromList(Scale):
     # -----------------
 
     def min(self, iterable: Iterable) -> object:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> scale.min(['Good', 'Bad', 'Excellent'])
+        'Bad'
+        """
         return min(iterable, key=lambda level: self.as_dict[level])
 
     def max(self, iterable: Iterable) -> object:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> scale.max(['Good', 'Bad', 'Excellent'])
+        'Excellent'
+        """
         return max(iterable, key=lambda level: self.as_dict[level])
 
-    def sort(self, some_list: list) -> None:
-        some_list.sort(key=lambda level: self.as_dict[level])
+    def sort(self, some_list: list, reverse: bool = False) -> None:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> some_list = ['Good', 'Bad', 'Excellent']
+        >>> scale.sort(some_list)
+        >>> some_list
+        ['Bad', 'Good', 'Excellent']
+        """
+        some_list.sort(key=lambda level: self.as_dict[level], reverse=reverse)
 
-    def argsort(self, some_list: list) -> list:
-        return sorted(range(len(some_list)), key=lambda i: self.as_dict[some_list[i]])
+    def argsort(self, some_list: list, reverse: bool = False) -> list:
+        """
+        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+        >>> scale.argsort(['Good', 'Bad', 'Excellent'])
+        [1, 0, 2]
+        """
+        return sorted(range(len(some_list)), key=lambda i: self.as_dict[some_list[i]], reverse=reverse)

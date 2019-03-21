@@ -29,10 +29,9 @@ class ScaleRange(Scale):
     :param low: lowest integer.
     :param high: highest integer.
 
-    Remark: for a scale of non-consecutive integers, such as {-1, 0, 2}, use the class :class:`ScaleFromSet`.
+    Remark: for a scale of non-consecutive integers, such as {-1, 0, 2}, use the :class:`ScaleFromSet`.
 
-    >>> ScaleRange(low=0, high=5)
-    ScaleRange(low=0, high=5)
+    >>> scale = ScaleRange(low=0, high=5)
     """
 
     def __init__(self, low: int, high: int):
@@ -41,10 +40,18 @@ class ScaleRange(Scale):
 
     @property
     def low(self) -> int:
+        """
+        >>> ScaleRange(low=0, high=5).low
+        0
+        """
         return self._low
 
     @property
     def high(self) -> int:
+        """
+        >>> ScaleRange(low=0, high=5).high
+        5
+        """
         return self._high
 
     @property
@@ -58,14 +65,32 @@ class ScaleRange(Scale):
     # -----------------
 
     def min(self, iterable: Iterable) -> object:
+        """
+        >>> ScaleRange(low=0, high=5).min([3, 1, 4])
+        1
+        """
         return min(iterable)
 
     def max(self, iterable: Iterable) -> object:
+        """
+        >>> ScaleRange(low=0, high=5).max([3, 1, 4])
+        4
+        """
         return max(iterable)
 
     # noinspection PyMethodMayBeStatic
-    def sort(self, some_list: list) -> None:
-        some_list.sort()
+    def sort(self, some_list: list, reverse: bool = False) -> None:
+        """
+        >>> some_list = [3, 1, 4]
+        >>> ScaleRange(low=0, high=5).sort(some_list)
+        >>> some_list
+        [1, 3, 4]
+        """
+        some_list.sort(reverse=reverse)
 
-    def argsort(self, some_list: list) -> list:
-        return sorted(range(len(some_list)), key=lambda i: some_list[i])
+    def argsort(self, some_list: list, reverse: bool = False) -> list:
+        """
+        >>> ScaleRange(low=0, high=5).argsort([3, 1, 4])
+        [1, 0, 2]
+        """
+        return sorted(range(len(some_list)), key=lambda i: some_list[i], reverse=reverse)
