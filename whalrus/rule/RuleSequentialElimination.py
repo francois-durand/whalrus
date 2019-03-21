@@ -36,10 +36,11 @@ from itertools import chain
 class RuleSequentialElimination(Rule):
     # noinspection PyUnresolvedReferences
     """
-    A rule by sequential elimination (such as the Two-Round System).
+    A rule by sequential elimination (such as :class:`RuleTwoRound`).
 
-    :param rules: the list of rules, one for each round.
-    :param eliminations: the list of elimination rounds, one for each round except the last one.
+    :param rules: a list of rules, one for each round. Unlike for :class:`RuleIteratedElimination`, different rounds
+        may use different voting rules.
+    :param eliminations: a list of elimination algorithms, one for each round except the last one.
     :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the
         base rules. Cf. :class:`RuleIteratedElimination` for more explanation on this parameter.
 
@@ -65,9 +66,9 @@ class RuleSequentialElimination(Rule):
     >>> rule.final_round_.gross_scores_
     {'a': 3, 'b': 2}
 
-    Note: there exists a shortcut for this rule in particular, the class :class:`RuleTwoRound`.
+    Note: there exists a shortcut for the above rule in particular, the class :class:`RuleTwoRound`.
 
-    Conversely, if ``elimination`` is not a list, the number of rounds is deduced from ``rules``:
+    Similarly, if ``elimination`` is not a list, the number of rounds is deduced from ``rules``:
 
     >>> rule = RuleSequentialElimination(
     ...     ['a > b > c > d > e', 'b > a > c > d > e'], weights=[2, 1],

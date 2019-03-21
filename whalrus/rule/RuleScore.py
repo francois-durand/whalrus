@@ -25,10 +25,10 @@ from functools import cmp_to_key
 
 class RuleScore(Rule):
     """
-    A voting rule with score (which may not be a number).
+    A voting rule with scores (which are not necessarily numbers).
 
-    Each candidate is assigned a score (not necessarily a number), and the candidates with the best score (in some
-    sense) are declared the cowinners.
+    Each candidate is assigned a score (not necessarily a number), and the the cowinners are the candidates with the
+    best score, in the sense defined by :meth:`compare_scores`.
     """
 
     @cached_property
@@ -36,7 +36,7 @@ class RuleScore(Rule):
         """
         The scores.
 
-        :return: a :class:`NiceDict` that, to each candidate, assigns a score (non necessarily numeric).
+        :return: a :class:`NiceDict` that, to each candidate, assigns a score (non necessarily a number).
         """
         raise NotImplementedError
 
@@ -92,8 +92,8 @@ class RuleScore(Rule):
         """
         Result of the election as a (weak) order over the candidates.
 
-        :return: a list of sets. The first set contains the candidates that have the best score, the second set
-            contains those with the second best score, etc.
+        :return: a list of :class:`NiceSet`. The first set contains the candidates that have the best score,
+            the second set contains those with the second best score, etc.
         """
         return [NiceSet(k for k in self.scores_.keys() if self.scores_[k] == v)
                 for v in sorted(set(self.scores_.values()), key=cmp_to_key(self.compare_scores), reverse=True)]

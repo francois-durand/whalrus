@@ -30,7 +30,7 @@ from numbers import Number
 
 class RuleScoreNumAverage(RuleScoreNum):
     """
-    A voting rule where a candidates's score is an average of the scores provided by the ballots
+    A voting rule where each candidate's score is an average of the scores provided by the ballots.
 
     :param scorer: the :class:`Scorer`. For each ballot, it is in charge of computing its contribution to each
         candidate's score.
@@ -38,7 +38,7 @@ class RuleScoreNumAverage(RuleScoreNum):
         happen, for example, if all voters abstain about this candidate. This avoids a division by zero when
         computing this candidate's average score.
 
-    Cf. :class:`RuleRangeVoting`, etc for some examples.
+    Cf. :class:`RuleRangeVoting` for some examples.
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
@@ -65,20 +65,21 @@ class RuleScoreNumAverage(RuleScoreNum):
     @cached_property
     def gross_scores_(self) -> NiceDict:
         """
-        The gross scores for each candidate.
+        The gross scores of the candidates.
 
-        :return: a dictionary. Key: candidate. Value: the sum of scores, multiplied by the weights of the
-            corresponding voters. This is the numerator in the candidate's average score.
+        :return: a :class:`NiceDict`. For each candidate, it gives the sum of its scores, multiplied by the weights
+            of the corresponding voters. This is the numerator in the candidate's average score.
         """
         return self._gross_scores_and_weights_['gross_scores']
 
     @cached_property
     def weights_(self) -> NiceDict:
         """
-        The weights for each candidate.
+        The weights used for the candidates.
 
-        :return: a dictionary. Key: candidate. Value: the total weight for this candidate, i.e. the total weight of all
-            voters who assign a score to this candidate. This is the denominator in the candidate's average score.
+        :return: a :class:`NiceDict`. For each candidate, it gives the total weight for this candidate, i.e. the total
+            weight of all voters who assign a score to this candidate. This is the denominator in the candidate's
+            average score.
         """
         return self._gross_scores_and_weights_['weights']
 

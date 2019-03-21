@@ -33,12 +33,13 @@ from itertools import chain
 
 class RuleIteratedElimination(Rule):
     """
-    A rule by iterated elimination (such as IRV, Coombs, Baldwin, Nanson...)
+    A rule by iterated elimination (such as :class:`RuleIRV`, :class:`RuleCoombs`, :class:`RuleNanson`, etc.)
 
-    :param base_rule: the rule used at each round to determine the trailing candidate.
+    :param base_rule: the rule used at each round to determine the eliminated candidate(s). Unlike for
+        :class:`RuleSequentialElimination`, all the rounds use the same voting rule.
     :param elimination: the elimination algorithm. Default: ``EliminationLast(k=1)``.
     :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the
-        base rule.
+        base rule (cf. below).
 
     >>> irv = RuleIteratedElimination(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4],
     ...                                 base_rule=RulePlurality())
@@ -51,8 +52,10 @@ class RuleIteratedElimination(Rule):
     >>> irv.winner_
     'b'
 
+    Remark: there exists a shortcut for the above rule in particular, the class :class:`RuleIRV`.
+
     By default, ``propagate_tie_break`` is True. So if you want to specify a tie-breaking rule, just do it in the
-    parameters of this object, and it will also be used in the base rule:
+    parameters of this object, and it will also be used in the base rule. This is probably what you want to do:
 
     >>> irv = RuleIteratedElimination(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
     ...                                 base_rule=RulePlurality(), tie_break=Priority.ASCENDING)
@@ -83,8 +86,8 @@ class RuleIteratedElimination(Rule):
     >>> rule.eliminations_[0].eliminated_
     {'d', 'e'}
 
-    Finally, the tie-breaking rule of the base rule (here Plurality) is always sufficient to compute the weak order over
-    the candidates. Note that this order is finer than the elimination order, because being eliminated at the same
+    Note that the tie-breaking rule of the base rule (here Plurality) is always sufficient to compute the weak order
+    over the candidates. This order may be finer than the elimination order, because being eliminated at the same
     time does not mean being tied, as ``d`` and ``e`` illustrate here:
 
     >>> rule.order_

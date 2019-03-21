@@ -34,23 +34,20 @@ class RuleSequentialTieBreak(Rule):
 
     :param rules: a list of rules.
 
-    Winner is determined by the first rule. If there is a tie, it is broken by the second rule. Etc. There may
-    still be a tie at the end (which can be broken by the tie-breaking rule of this object).
+    The winner is determined by the first rule. If there is a tie, it is broken by the second rule. Etc. There may
+    still be a tie at the end: in that case, it is broken by the tie-breaking rule of this object.
 
-    >>> plurality = RulePlurality()
-    >>> borda = RuleBorda()
-    >>> rule = RuleSequentialTieBreak(rules=[plurality, borda], tie_break=Priority.ASCENDING)
-    >>> profile = Profile(
+    >>> rule = RuleSequentialTieBreak(
     ...     ['a > d > e > b > c', 'b > d > e > a > c', 'c > d > e > a > b',
     ...      'd > e > b > a > c', 'e > d > b > a > c'],
-    ...     weights=[2, 2, 2, 1, 1]
-    ... )
-    >>> plurality(profile).gross_scores_ == {'a': 2, 'b': 2, 'c': 2, 'd': 1, 'e': 1}
-    True
-    >>> borda(profile).gross_scores_ == {'a': 14, 'b': 14, 'c': 8, 'd': 25, 'e': 19}
-    True
-    >>> rule(profile).order_ == [{'a', 'b'}, {'c'}, {'d'}, {'e'}]
-    True
+    ...     weights=[2, 2, 2, 1, 1],
+    ...     rules=[RulePlurality(), RuleBorda()], tie_break=Priority.ASCENDING)
+    >>> rule.rules_[0].gross_scores_
+    {'a': 2, 'b': 2, 'c': 2, 'd': 1, 'e': 1}
+    >>> rule.rules_[1].gross_scores_
+    {'a': 14, 'b': 14, 'c': 8, 'd': 25, 'e': 19}
+    >>> rule.order_
+    [{'a', 'b'}, {'c'}, {'d'}, {'e'}]
     >>> rule.winner_
     'a'
     """
@@ -66,8 +63,17 @@ class RuleSequentialTieBreak(Rule):
         )
 
     @cached_property
+    def rules_(self) -> list:
+        """
+        The rules (once applied to the profile).
+
+        :return: a list of :class:`Rule` objects (once applied to the profile).
+        """
+        return [rule(self.profile_converted_) for rule in self.rules]
+
+    @cached_property
     def order_(self) -> list:
-        orders = [rule(self.profile_converted_).order_ for rule in self.rules]
+        orders = [rule.order_ for rule in self.rules_]
         # rank_tuples[a] will be (rank in order 0, rank in order 1, ...)
         rank_tuples = {c: [] for c in self.candidates_}
         for order in orders:

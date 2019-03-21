@@ -36,7 +36,8 @@ class Rule(DeleteCacheMixin):
     :param voters: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param tie_break: a tie-break rule.
-    :param converter: the converter that is used to convert input ballots. Default: :class:`ConverterBallotGeneral`.
+    :param converter: the converter that is used to convert input ballots in order to compute
+        :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
 
     A :class:`Rule` object is a callable whose inputs are ballots and optionally weights, voters and candidates.
     When the rule is called, it loads the profile. The output of the call is the rule itself. But
@@ -48,12 +49,12 @@ class Rule(DeleteCacheMixin):
 
     Cf. :class:`RulePlurality` for some examples.
 
-    :ivar profile_original\_: the profile as it is entered by the user. This uses the constructor of :class:`Profile`.
-        Hence indirectly, it uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
+    :ivar profile_original\_: the profile as it is entered by the user. Since it uses the constructor of
+        :class:`Profile`, it indirectly uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
         ``'a > b > c'`` are converted to :class:`Ballot` objects.
-    :ivar profile_converted\_: the profile, with ballots that are adequate for the voting rule. For example,
+    :ivar profile_converted\_: the profile, with ballots that are adapted to the voting rule. For example,
         in :class:`RulePlurality`, it will be :class:`BallotPlurality` objects, even if the original ballots are
-        :class:`BallotOrder` objects.
+        :class:`BallotOrder` objects. This uses the parameter ``converter`` of the rule.
     :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
     """
 
@@ -106,7 +107,9 @@ class Rule(DeleteCacheMixin):
         """
         Cowinners of the election.
 
-        :return: the set of cowinners.
+        :return: the set of cowinners, i.e. the candidates that fare best in the election.. This is the first
+            equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that are
+            tied for the best score.
         """
         return self.order_[0]
 
@@ -115,7 +118,8 @@ class Rule(DeleteCacheMixin):
         """
         Winner of the election.
 
-        :return: the winner of the election (which may use a tie-breaking rule).
+        :return: the winner of the election. This is the first candidate in :attr:`strict_order_` and also the
+            choice of the tie-breaking rule in :attr:`cowinners_`.
         """
         return self.tie_break.choice(self.cowinners_)
 
@@ -124,10 +128,9 @@ class Rule(DeleteCacheMixin):
         """
         "Cotrailers" of the election.
 
-        The candidates that fare worst in the election. For example, in a rule based on a notion of score, it would
-        be the candidates that are tied for worst score.
-
-        :return: the set of "cotrailers".
+        :return: the set of "cotrailers", i.e. the candidates that fare worst in the election. This is the last
+            equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that
+            are tied for the worst score.
         """
         return self.order_[-1]
 
@@ -136,7 +139,8 @@ class Rule(DeleteCacheMixin):
         """
         "Trailer" of the election.
 
-        :return: the "trailer" of the election (which may use a tie-breaking rule).
+        :return: the "trailer" of the election. This is the last candidate in :attr:`strict_order_` and also the
+            unfavorable choice of the tie-breaking rule in :attr:`cotrailers_`.
         """
         return self.tie_break.choice(self.cotrailers_, reverse=True)
 
@@ -145,8 +149,7 @@ class Rule(DeleteCacheMixin):
         """
         Result of the election as a (weak) order over the candidates.
 
-        :return: a list of sets (or, more exactly, :class:`NiceSet` objects). The first set contains the candidates
-            that are tied for victory, etc.
+        :return: a list of :class:`NiceSet`. The first set contains the candidates that are tied for victory, etc.
         """
         raise NotImplementedError
 
@@ -155,6 +158,6 @@ class Rule(DeleteCacheMixin):
         """
         Result of the election as a strict order over the candidates.
 
-        :return: a list whose first element is the winner, etc (which may use a tie-breaking rule).
+        :return: a list whose first element is the winner, etc. This may use the tie-breaking rule.
         """
         return [candidate for tie_class in self.order_ for candidate in self.tie_break.sort(tie_class)]

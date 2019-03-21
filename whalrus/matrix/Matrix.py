@@ -35,7 +35,8 @@ class Matrix(DeleteCacheMixin):
     :param weights: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param voters: if mentioned, will be passed to ``__call__`` immediately after initialization.
     :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param converter: the converter that is used to convert input ballots. Default: :class:`ConverterBallotGeneral`.
+    :param converter: the converter that is used to convert input ballots in order to compute
+        :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
 
     A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters and candidates. When
     it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
@@ -48,7 +49,8 @@ class Matrix(DeleteCacheMixin):
         Hence indirectly, it uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
         ``'a > b > c'`` are converted to :class:``Ballot`` objects.
     :ivar profile_converted\_: the profile, with ballots that are adequate for the voting rule. For example,
-        in :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects.
+        in :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects. This uses the parameter
+        ``converter`` of the object.
     :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
     """
 

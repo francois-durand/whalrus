@@ -25,9 +25,9 @@ from numbers import Number
 
 class RuleScoreNum(RuleScore):
     """
-    A voting rule with a numeric score.
+    A voting rule with numeric scores.
 
-    This is simply a voting rule where each candidate is assigned a numeric score, and the candidates with the best
+    This is a voting rule where each candidate is assigned a numeric score, and the candidates with the best
     score are declared the cowinners.
     """
 
@@ -84,7 +84,7 @@ class RuleScoreNum(RuleScore):
         """
         The best score as a float.
 
-        :return: :attr:`best_score_` converted to a float.
+        :return: :attr:`RuleScore.best_score_` converted to a float.
         """
         # noinspection PyTypeChecker
         return float(self.best_score_)
@@ -94,7 +94,7 @@ class RuleScoreNum(RuleScore):
         """
         The worst score as a float.
 
-        :return: :attr:`worst_score_` converted to a float.
+        :return: :attr:`RuleScore.worst_score_` converted to a float.
         """
         # noinspection PyTypeChecker
         return float(self.worst_score_)
