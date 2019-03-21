@@ -8,7 +8,7 @@ __version__ = '0.1.0'
 
 # Utils
 from .utils.Utils import cached_property, DeleteCacheMixin, parse_weak_order, set_to_list, set_to_str, dict_to_items, \
-    dict_to_str, NiceSet, NiceDict
+    dict_to_str, NiceSet, NiceDict, my_division, convert_number, take_closest
 
 # Scales
 from .scale.Scale import Scale
@@ -105,7 +105,3 @@ from .rule.RuleVeto import RuleVeto
 from .SubPackage1.MyClass1 import MyClass1
 from .SubPackage2.MyClass2 import MyClass2
 from .SubPackage2.MyClass3 import MyClass3
-
-# Tutorials
-from .tutorial.tutorial import quick_start, computed_attributes, general_syntax, under_the_hood, combine_rules, \
-    change_candidates

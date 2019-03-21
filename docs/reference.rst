@@ -458,10 +458,24 @@ ScorerVeto
 Utils
 =====
 
-.. autoclass:: whalrus.utils.Utils.cached_property
+.. autoclass:: whalrus.cached_property
     :members:
 
-.. autoclass:: whalrus.utils.Utils.DeleteCacheMixin
+.. autofunction:: whalrus.convert_number
+
+.. autoclass:: whalrus.DeleteCacheMixin
+    :members:
+
+.. autofunction:: whalrus.dict_to_items
+
+.. autofunction:: whalrus.dict_to_str
+
+.. autofunction:: whalrus.my_division
+
+.. autoclass:: whalrus.NiceSet
+    :members:
+
+.. autoclass:: whalrus.NiceDict
     :members:
 
 .. autofunction:: whalrus.parse_weak_order
@@ -470,24 +484,4 @@ Utils
 
 .. autofunction:: whalrus.set_to_str
 
-.. autoclass:: whalrus.NiceSet
-    :members:
-
-.. autofunction:: whalrus.dict_to_items
-
-.. autofunction:: whalrus.dict_to_str
-
-.. autoclass:: whalrus.NiceDict
-    :members:
-
-How to write documentation
-==========================
-
-.. autoclass:: whalrus.MyClass1
-    :members:
-
-.. autoclass:: whalrus.MyClass2
-    :members:
-
-.. autoclass:: whalrus.MyClass3
-    :members:
+.. autofunction:: whalrus.take_closest

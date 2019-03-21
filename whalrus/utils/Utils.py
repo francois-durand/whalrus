@@ -159,6 +159,10 @@ def set_to_str(s: set) -> str:
 class NiceSet(set):
     """
     A set that prints in order (when the elements are comparable).
+
+    >>> my_set = NiceSet({'b', 'a', 'c'})
+    >>> my_set
+    {'a', 'b', 'c'}
     """
 
     def __repr__(self):
@@ -204,6 +208,10 @@ def dict_to_str(d: dict) -> str:
 class NiceDict(dict):
     """
     A dict that prints in the order of the keys (when they are comparable).
+
+    >>> my_dict = NiceDict({'b': 51, 'a': 42, 'c': 12})
+    >>> my_dict
+    {'a': 42, 'b': 51, 'c': 12}
     """
 
     def __repr__(self) -> str:
@@ -212,8 +220,15 @@ class NiceDict(dict):
 
 def take_closest(my_list, my_number):
     """
-    Assumes my_list is sorted. Returns closest value to my_number.
-    If two numbers are equally close, return the smallest number.
+    In a list, take the closest element to a given number.
+
+    :param my_list: a list sorted in ascending order.
+    :param my_number: a number.
+    :return: the element of ``my_list`` that is closest to ``my_number``. If two numbers are equally close, return the
+        smallest number.
+
+    >>> take_closest([0, 5, 10], 3)
+    5
 
     From https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value .
     """
@@ -256,7 +271,7 @@ def convert_number(x: Number):
 
 def my_division(x: Number, y: Number, divide_by_zero: Number = None):
     """
-    Division of two numbers, trying to be exact if reasonable.
+    Division of two numbers, trying to be exact if it is reasonable.
 
     :param x: a number.
     :param y: a number.
@@ -268,6 +283,7 @@ def my_division(x: Number, y: Number, divide_by_zero: Number = None):
     Fraction(5, 2)
 
     If `x` or `y` is a float, then the result is a float:
+
     >>> my_division(Fraction(5, 2), 0.1)
     25.0
     >>> my_division(0.1, Fraction(5, 2))
