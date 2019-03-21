@@ -34,11 +34,14 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     Simplified Dodgson rule.
 
     :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Default: ``MatrixWeightedMajority(antisymmetric=True)``.
+    :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority` with
+        ``antisymmetric=True``.
 
-    The score of a candidate is the sum of the negative non-diagonal coefficient on its raw of the matrix.
+    The score of a candidate is the sum of the negative non-diagonal coefficient on its raw of
+    :attr:`matrix_weighted_majority_`.
 
-    >>> rule = RuleSimplifiedDodgson(ballots=['a > b > c', 'b > a > c', 'c > a > b'], weights=[3, 3, 2])
+    >>> rule = RuleSimplifiedDodgson(ballots=['a > b > c', 'b > a > c', 'c > a > b'],
+    ...                              weights=[3, 3, 2])
     >>> rule.matrix_weighted_majority_.as_array_
     array([[0, Fraction(1, 4), Fraction(1, 2)],
            [Fraction(-1, 4), 0, Fraction(1, 2)],

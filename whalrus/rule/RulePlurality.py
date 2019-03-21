@@ -44,7 +44,7 @@ class RulePlurality(RuleScoreNumAverage):
 
     Secondly, you use it as a callable to load a particular election (profile, candidates):
 
-    >>> plurality(ballots=['a', 'b', 'c'], weights=[2, 2, 1], voters=['Alice', 'Bob', 'Cat'],
+    >>> plurality(ballots=['a', 'b', 'c'], weights=[2, 2, 1], voters=['Alice', 'Bob', 'Cate'],
     ...           candidates={'a', 'b', 'c', 'd'})  # doctest:+ELLIPSIS
     <... object at ...>
 

@@ -44,9 +44,10 @@ class RuleCondorcet(Rule):
     >>> RuleCondorcet(ballots=['a > b > c', 'b > c > a', 'c > a > b']).order_
     [{'a', 'b', 'c'}]
 
-    In all generality, a candidate is considered a `Condorcet winner` if all the non-diagonal coefficients on its raw of
-    ``matrix_majority`` are equal to 1. With the default setting of ``matrix_majority = MatrixMajority()``, the
-    Condorcet winner is necessarily unique when it exists, but that might not be the case with more exotic settings:
+    More precisely, and in all generality, a candidate is considered a `Condorcet winner` if all the non-diagonal
+    coefficients on its raw of :attr:`matrix_majority_` are equal to 1. With the default setting of ``matrix_majority =
+    MatrixMajority()``, the Condorcet winner is necessarily unique when it exists, but that might not be the case
+    with some more exotic settings:
 
     >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1))
     >>> rule.matrix_majority_.as_array_

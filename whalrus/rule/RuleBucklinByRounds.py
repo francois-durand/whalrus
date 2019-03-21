@@ -36,12 +36,13 @@ class RuleBucklinByRounds(RuleScoreNum):
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param scorer: the default is :class:`ScorerBucklin`.
 
-    >>> rule = RuleBucklinByRounds(ballots=['a > b > c > d', 'b > a > c > d', 'c > a > b > d', 'd > a > b > c'])
+    >>> rule = RuleBucklinByRounds(['a > b > c > d', 'b > a > c > d',
+    ...                             'c > a > b > d', 'd > a > b > c'])
     >>> rule.detailed_scores_[0]
     {'a': Fraction(1, 4), 'b': Fraction(1, 4), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
     >>> rule.detailed_scores_[1]
     {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
-    >>> rule.final_round_
+    >>> rule.n_rounds_
     2
     >>> rule.scores_
     {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
@@ -50,9 +51,9 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     During the first round, a candidate's score is the proportion of voters who rank it first. During the second
     round, its score is the proportion of voters who rank it first or second. Etc. More precisely, at each round, the
-    scorer is used with ``k`` equal to the round number; cf. :class:`ScorerBucklin`.
+    ``scorer`` is used with ``k`` equal to the round number; cf. :class:`ScorerBucklin`.
 
-    Cf. also :class:`RuleBucklinInstant`.
+    For another variant of Bucklin's rule, cf. :class:`RuleBucklinInstant`.
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
@@ -73,6 +74,11 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     @cached_property
     def detailed_scores_(self) -> list:
+        """
+        Detailed scores.
+
+        :return: a list of :class:`NiceDict`. The first dictionary gives the scores of the first round, etc.
+        """
         n_candidates = len(self.candidates_)
         detailed_scores = []
         for k in range(1, n_candidates + 1):
@@ -92,10 +98,21 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     @cached_property
     def scores_(self) -> NiceDict:
+        """
+        The scores.
+
+        :return: a :class:`NiceDict`. For each candidate, it gives its score during the final round, i.e. the first
+            round where at least one candidate has a score above 1 / 2.
+        """
         return self.detailed_scores_[-1]
 
     @cached_property
-    def final_round_(self) -> int:
+    def n_rounds_(self) -> int:
+        """
+        Number of rounds
+
+        :return: the number of rounds.
+        """
         return len(self.detailed_scores_)
 
     # Conversion to floats
@@ -103,4 +120,9 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     @cached_property
     def detailed_scores_as_floats_(self) -> list:
+        """
+        Detailed scores, as floats.
+
+        :return: :attr:`detailed_scores_`, converted to floats.
+        """
         return [NiceDict({c: float(v) for c, v in counting_round.items()}) for counting_round in self.detailed_scores_]

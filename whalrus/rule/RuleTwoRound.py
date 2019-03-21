@@ -36,32 +36,33 @@ class RuleTwoRound(RuleSequentialElimination):
     """
     The two-round system.
 
-    :param rule1: the first rule. Default: :class:`Plurality`.
-    :param rule2: the second rule. Default: :class:`Plurality`.
-    :param elimination: the elimination algorithm used during the first round. Default: ``EliminationLast(k=-2)``,
-        which only keeps the 2 best candidates.
+    :param rule1: the first rule. Default: :class:`RulePlurality`.
+    :param rule2: the second rule. Default: :class:`RulePlurality`.
+    :param elimination: the elimination algorithm used during the first round. Default: :class:`EliminationLast`
+        with ``k=-2``, which only keeps the 2 best candidates.
 
     With its default settings, this class implements the classic two-round system, using plurality at both rounds:
 
-    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1])
+    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
+    ...                     weights=[2, 2, 1])
     >>> rule.first_round_.rule_.gross_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
     >>> rule.second_round_.gross_scores_
     {'a': 3, 'b': 2}
 
-    Using the options, more exotic two-round systems can be defined, such as changing the rule of a round:
+    Using the options, some more exotic two-round systems can be defined, such as changing the rule of a round:
 
-    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
-    ...                     rule1=RuleBorda())
+    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
+    ...                     weights=[2, 2, 1], rule1=RuleBorda())
     >>> rule.first_round_.rule_.gross_scores_
     {'a': 17, 'b': 16, 'c': 12, 'd': 5, 'e': 0}
     >>> rule.second_round_.gross_scores_
     {'a': 3, 'b': 2}
 
-    ... or changing the elimination criterion:
+    ... or changing the elimination algorithm:
 
-    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
-    ...                     elimination=EliminationLast(k=-3))
+    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
+    ...                     weights=[2, 2, 1], elimination=EliminationLast(k=-3))
     >>> rule.first_round_.rule_.gross_scores_
     {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
     >>> rule.second_round_.gross_scores_

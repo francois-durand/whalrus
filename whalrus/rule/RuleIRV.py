@@ -31,7 +31,10 @@ from typing import Union
 
 class RuleIRV(RuleIteratedElimination):
     """
-    Instant-Runoff Voting, also known as Alternative vote, Single Transferable Vote, etc.
+    Instant-Runoff Voting, also known as Alternative Vote, Single Transferable Vote, etc.
+
+    :param base_rule: the default is :class:`RulePlurality`.
+    :param elimination: the default is :class:`EliminationLast` with ``k=1``.
 
     At each round, the candidate with the worst Plurality score is eliminated.
 
@@ -45,9 +48,10 @@ class RuleIRV(RuleIteratedElimination):
     >>> rule.winner_
     'b'
 
-    Using the tie-break:
+    An example using the tie-break:
 
-    >>> rule = RuleIRV(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1], tie_break=Priority.ASCENDING)
+    >>> rule = RuleIRV(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
+    ...                tie_break=Priority.ASCENDING)
     >>> rule.eliminations_[0].rule_.gross_scores_
     {'a': 1, 'b': 2, 'c': 1}
     >>> rule.eliminations_[1].rule_.gross_scores_

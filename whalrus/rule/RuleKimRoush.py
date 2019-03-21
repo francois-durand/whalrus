@@ -33,6 +33,9 @@ class RuleKimRoush(RuleIteratedElimination):
     """
     Kim-Roush rule.
 
+    :param base_rule: the default is :class:`RuleVeto`.
+    :param elimination: the default is :class:`EliminationBelowAverage`.
+
     At each round, all candidates whose Veto score is lower than the average Veto score are eliminated.
 
     >>> rule = RuleKimRoush(['a > b > c > d', 'a > b > d > c'])

@@ -31,7 +31,7 @@ from typing import Union
 
 class RuleMaximin(RuleScoreNum):
     """
-    Maximin rule.
+    Maximin rule. Also known as Simpson-Kramer rule.
 
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority`.

@@ -33,17 +33,11 @@ class RuleApproval(RuleRangeVoting):
     """
     Approval voting.
 
-    :param converter: the default is ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``.
-
-    Typical usage:
+    :param converter: the default is ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``. This is the only difference
+        with the parent class :class:`RuleRangeVoting`.
 
     >>> RuleApproval([{'a': 1, 'b': 0, 'c': 0}, {'a': 1, 'b': 1, 'c': 0}]).gross_scores_
     {'a': 2, 'b': 1, 'c': 0}
-
-    With ballot conversion:
-
-    >>> RuleApproval(['a > b > c > d', 'c > a > b > d']).gross_scores_
-    {'a': 2, 'b': 1, 'c': 1, 'd': 0}
     """
 
     def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,

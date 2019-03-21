@@ -1,5 +1,10 @@
-Welcome to Whalrus's documentation!
-======================================
+Welcome to Whalrus' documentation!
+==================================
+
+.. figure:: whalrus.png
+   :scale: 75 %
+   :alt: whalrus' logo
+   :align: center
 
 .. toctree::
    :maxdepth: 2

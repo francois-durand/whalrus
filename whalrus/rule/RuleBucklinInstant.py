@@ -32,11 +32,11 @@ from typing import Union
 
 class RuleBucklinInstant(RuleScore):
     """
-    Bucklin's rule (instant version)
+    Bucklin's rule (instant version).
 
     :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param scorer: a :class:`Scorer`. Default: ``ScorerBorda(absent_give_points=True,
-        absent_receive_points=None, unordered_give_points=True, unordered_receive_points=False)``.
+    :param scorer: a :class:`Scorer`. Default: :class:`ScorerBorda` with ``absent_give_points=True``,
+        ``absent_receive_points=None``, ``unordered_give_points=True``, ``unordered_receive_points=False``.
     :param default_median: the default median of a candidate when it receives no score whatsoever.
 
     >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
@@ -45,21 +45,22 @@ class RuleBucklinInstant(RuleScore):
     >>> rule.winner_
     'a'
 
-    For each candidate, its median Borda score is computed. Let ``support`` be the number of voters who assign a
-    Borda score that is greater or equal to the median. Then the candidate's score is ``(median, support)``.
-    Finally, scores are compared lexicographically.
+    For each candidate, its median Borda score `m` is computed. Let `x` be the number of voters who give this
+    candidate a Borda score that is greater or equal to `m`. Then the candidate's score is `(m, x)`. Scores are
+    compared lexicographically.
 
     When preferences are strict orders, it is equivalent to say that:
 
-        * The candidate with the lowest median rank is declared the winner,
+        * The candidate with the lowest median rank is declared the winner.
         * If several candidates have the lowest median rank, this tie is broken by examining how many voters rank
-          each of them with this rank or lower.
+          each of them with this rank or better.
 
-    With the default settings, and when preferences are strict total orders, :class:`RuleBucklinByRounds` and
-    :class:`RuleBucklinInstant` have the same winner (not necessarily the same order over the candidates). Otherwise,
-    the winners may differ:
+    For another variant of Bucklin's rule, cf. :class:`RuleBucklinByRounds`. With the default settings,
+    and when preferences are strict total orders, :class:`RuleBucklinByRounds` and :class:`RuleBucklinInstant` have
+    the same winner (although not necessarily the same order over the candidates). Otherwise, the winners may differ:
 
-    >>> profile = Profile(ballots=['a > b > c > d', 'b > a ~ d > c', 'c > a ~ d > b'], weights=[3, 3, 4])
+    >>> profile = Profile(ballots=['a > b > c > d', 'b > a ~ d > c', 'c > a ~ d > b'],
+    ...                   weights=[3, 3, 4])
     >>> rule_bucklin_by_rounds = RuleBucklinByRounds(profile)
     >>> rule_bucklin_by_rounds.detailed_scores_[0]
     {'a': Fraction(3, 10), 'b': Fraction(3, 10), 'c': Fraction(2, 5), 'd': 0}
@@ -130,3 +131,16 @@ class RuleBucklinInstant(RuleScore):
         if self.scorer.scale.gt(one[0], another[0]):
             return 1
         return -1 if one[1] < another[1] else 1
+
+    @cached_property
+    def scores_as_floats_(self) -> NiceDict:
+        """
+
+        :return: :attr:`scores_`, converted to floats.
+        """
+        def my_float(x):
+            try:
+                return float(x)
+            except ValueError:
+                return x
+        return NiceDict({c: (my_float(s), float(x)) for c, (s, x) in self.scores_.items()})

@@ -36,8 +36,6 @@ class RuleBorda(RuleScoreNumAverage):
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param scorer: the default is :class:`ScorerBorda`.
 
-    Cf. :class:`RulePlurality` and :class:`Rule` for the general syntax.
-
     >>> rule = RuleBorda(['a ~ b > c', 'b > c > a'])
     >>> rule.gross_scores_
     {'a': Fraction(3, 2), 'b': Fraction(7, 2), 'c': 1}

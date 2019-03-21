@@ -33,7 +33,10 @@ class RuleBaldwin(RuleIteratedElimination):
     """
     Baldwin's rule.
 
-    At each round, the candidate with the worst Borda score is eliminated.
+    :param base_rule: the default is :class:`RuleBorda`.
+    :param elimination: the default is :class:`EliminationLast` with ``k=1``.
+
+    At each round, the candidate with the lowest Borda score is eliminated.
 
     >>> rule = RuleBaldwin(['a > b > c', 'a > b ~ c'])
     >>> rule.eliminations_[0].rule_.gross_scores_

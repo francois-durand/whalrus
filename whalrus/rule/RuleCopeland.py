@@ -36,8 +36,8 @@ class RuleCopeland(RuleScoreNum):
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_majority: the majority matrix. Default: :class:`MatrixMajority`.
 
-    The score of a candidate is the number of victories in the majority matrix. More exactly, it is the sum of
-    the non-diagonal elements of its rows in the matrix.
+    The score of a candidate is the number of victories in the majority matrix. More precisely, and in all generality,
+    it is the sum of the non-diagonal elements of its row in :attr:`matrix_majority_`.
 
     >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
     >>> rule.matrix_majority_.as_array_

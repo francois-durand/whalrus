@@ -33,6 +33,9 @@ class RuleNanson(RuleIteratedElimination):
     """
     Nanson's rule.
 
+    :param base_rule: the default is :class:`RuleBorda`.
+    :param elimination: the default is :class:`EliminationBelowAverage`.
+
     At each round, all candidates whose Borda score is lower than the average Borda score are eliminated.
 
     >>> rule = RuleNanson(['a > b > c > d', 'a > b > d > c'])

@@ -33,6 +33,9 @@ class RuleCoombs(RuleIteratedElimination):
     """
     Coombs' rule.
 
+    :param base_rule: the default is :class:`RuleVeto`.
+    :param elimination: the default is :class:`EliminationLast` with ``k=1``.
+
     At each round, the candidate with the worst Veto score is eliminated.
 
     >>> rule = RuleCoombs(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
