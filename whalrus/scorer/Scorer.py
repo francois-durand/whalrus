@@ -82,8 +82,8 @@ class Scorer(DeleteCacheMixin):
         The scores.
 
         :return: a :class:`NiceDict` that, to each candidate, associates either a level in the scale or None.
-            For the meaning of None, cf. :class:`RuleRangeVoting` for example. Intuitively: a score of 0 means that 0
-            is counted (as 0) in the average, whereas None is not counted at all (i.e. the weight of the voter
+            For the meaning of None, cf. :class:`RuleRangeVoting` for example. Intuitively: a score of 0 means that
+            the value 0 is counted in the average, whereas None is not counted at all (i.e. the weight of the voter
             is not even counted in the denominator when computing the average).
         """
         raise NotImplementedError
@@ -93,11 +93,12 @@ class Scorer(DeleteCacheMixin):
         """
         The scores, given as floats.
 
-        :return: a :class:`NiceDict` that, to each candidate, associates a float.
+        :return: :attr:`scores_`, converted to floats.
         :raise ValueError: if the scores cannot be converted to floats.
 
-        It is advised to use this attribute for display purposes only. For computation, you should use :attr:`scores_`,
-        which usually manipulates fractions and therefore allows for exact computation.
+        Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,
+        you should always use :attr:`scores_`, which usually manipulates fractions and therefore allows for exact
+        computation.
         """
         try:
             return NiceDict({c: float(v) for c, v in self.scores_.items()})

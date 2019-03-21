@@ -26,7 +26,7 @@ from whalrus.scorer.Scorer import Scorer
 
 class ScorerLevels(Scorer):
     """
-    A standard scorer for :BallotLevel: objects.
+    A standard scorer for :class:``BallotLevel``.
 
     :param level_ungraded: the level of the scale used for ungraded candidates, or None.
     :param level_absent: the level of the scale used for absent candidates, or None.
@@ -37,8 +37,9 @@ class ScorerLevels(Scorer):
 
     Secondly, you use it as a callable to load some particular arguments:
 
-    >>> scorer(ballot=BallotLevels({'a': 10, 'b': 7, 'c': 3}), voter='Alice', candidates={'a', 'b', 'c', 'd'})  # doctest:+ELLIPSIS
-    <ScorerLevels.ScorerLevels object at ...>
+    >>> scorer(ballot=BallotLevels({'a': 10, 'b': 7, 'c': 3}), voter='Alice',
+    ...        candidates={'a', 'b', 'c', 'd'})  # doctest:+ELLIPSIS
+    <... object at ...>
 
     Finally, you can access the computed variables:
 
@@ -48,23 +49,25 @@ class ScorerLevels(Scorer):
     Later, if you wish, you can load other arguments (ballot, etc) with the same scorer, and so on.
 
     Optionally, you can specify arguments as soon as the :class:`Scorer` object is initialized. This allows for
-    one-liners such as:
+    "one-liners" such as:
 
-    >>> ScorerLevels(ballot=BallotLevels({'a': 10, 'b': 7, 'c': 3}), voter='Alice', candidates={'a', 'b', 'c', 'd'},
-    ...              level_absent=0).scores_
+    >>> ScorerLevels(ballot=BallotLevels({'a': 10, 'b': 7, 'c': 3}), voter='Alice',
+    ...              candidates={'a', 'b', 'c', 'd'}, level_absent=0).scores_
     {'a': 10, 'b': 7, 'c': 3, 'd': 0}
 
-    In the example below, candidates ``a``, ``b`` and ``c`` are `ordered', ``d`` is `unordered', and ``e`` is `absent'
-    in the ballot, meaning that ``e`` were not even available when the voter cast her ballot. The options of the
-    scorer provide different ways to take these special cases into account.
+    In the example below, candidates `a`, `b` and `c` are "ordered", `d` is "unordered", and `e` is "absent"
+    in the ballot, meaning that `e` were not even available when the voter cast her ballot. The options of the
+    scorer provide different ways to take these special cases into account:
 
     >>> ballot=BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd'})
     >>> candidates_election = {'a', 'b', 'c', 'd', 'e'}
     >>> ScorerLevels(ballot, candidates=candidates_election).scores_
     {'a': 10, 'b': 7, 'c': 3}
-    >>> ScorerLevels(ballot, candidates=candidates_election, level_ungraded=-5).scores_
+    >>> ScorerLevels(ballot, candidates=candidates_election,
+    ...              level_ungraded=-5).scores_
     {'a': 10, 'b': 7, 'c': 3, 'd': -5}
-    >>> ScorerLevels(ballot, candidates=candidates_election, level_ungraded=-5, level_absent=-10).scores_
+    >>> ScorerLevels(ballot, candidates=candidates_election,
+    ...              level_ungraded=-5, level_absent=-10).scores_
     {'a': 10, 'b': 7, 'c': 3, 'd': -5, 'e': -10}
     """
 

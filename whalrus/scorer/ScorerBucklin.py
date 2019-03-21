@@ -30,19 +30,20 @@ class ScorerBucklin(Scorer):
     Scorer for Bucklin's rule.
 
     :param k: the number of points to distribute. Intuitively: the ``k`` candidates at the highest ranks will receive
-        1 point each. In case of tie, some points may be divided between the tied candidates.
-    :param unordered_receive_points: whether unordered candidates should receive points.
-    :param absent_receive_points: whether absent candidates should receive points.
+        1 point each. In case of tie, some points may be divided between the tied candidates (see below).
+    :param unordered_receive_points: bool or None. Whether unordered candidates should receive points (see below).
+    :param absent_receive_points: bool or None. Whether absent candidates should receive points (see below).
 
     Typical usage:
 
-    >>> ScorerBucklin(BallotOrder('a > b > c > d > e'), candidates={'a', 'b', 'c', 'd', 'e'}, k=2).scores_
+    >>> ScorerBucklin(BallotOrder('a > b > c > d > e'),
+    ...               candidates={'a', 'b', 'c', 'd', 'e'}, k=2).scores_
     {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
 
     In the example below, candidates `a`, `b` and `c` are "ordered", `d` and `e` are "unordered",
     and `f` and `g` are "absent" in the ballot, meaning that they were not even available when the voter cast
-    her ballot. By default, we count as if the order was the unordered candidates were below the ordered candidates,
-    and the absent candidates even lower.
+    her ballot. By default, we count as if the unordered candidates were below the ordered candidates,
+    and the absent candidates even lower:
 
     >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
     >>> candidates_election = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}

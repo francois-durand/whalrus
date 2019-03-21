@@ -36,7 +36,7 @@ class ScorerPositional(Scorer):
     :param points_absent: points for the absent candidates.
 
     The top candidate in the ballot receives ``points_scheme[0]`` points, the second one receives ``points_scheme[1]``
-    points, etc.
+    points, etc:
 
     >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[10, 5, 3]).scores_
     {'a': 10, 'b': 5, 'c': 3}
@@ -55,7 +55,7 @@ class ScorerPositional(Scorer):
 
     In the example below, candidates `a`, `b` and `c` are "ordered", `d` is "unordered", and `e` is "absent"
     in the ballot, meaning that `e` was not even available when the voter cast her ballot. The options of the
-    scorer provide different ways to take these special cases into account.
+    scorer provide different ways to take these special cases into account:
 
     >>> ballot=BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd'})
     >>> candidates_election = {'a', 'b', 'c', 'd', 'e'}

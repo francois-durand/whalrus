@@ -18,7 +18,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.ballot.BallotOrder import BallotOrder
+from whalrus.ballot.BallotVeto import BallotVeto
 from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.scorer.Scorer import Scorer
@@ -27,9 +27,25 @@ from whalrus.scorer.Scorer import Scorer
 class ScorerVeto(Scorer):
     """
     A Veto scorer for :class:`BallotVeto`.
+
+    :param count_abstention: if False (default), then an abstention grants no score at all. If True, then an
+        abstention gives 0 point to each candidate (cf. below).
+
+    Typical usage:
+
+    >>> ScorerVeto(BallotVeto('a'), candidates={'a', 'b', 'c'}).scores_
+    {'a': -1, 'b': 0, 'c': 0}
+
+    Using the option ``count_abstention``:
+
+    >>> ScorerVeto(BallotVeto(None), candidates={'a', 'b', 'c'}).scores_
+    {}
+    >>> ScorerVeto(BallotVeto(None), candidates={'a', 'b', 'c'},
+    ...                 count_abstention=True).scores_
+    {'a': 0, 'b': 0, 'c': 0}
     """
 
-    def __init__(self, ballot: BallotOrder = None, voter: object = None, candidates: set = None,
+    def __init__(self, ballot: BallotVeto = None, voter: object = None, candidates: set = None,
                  scale: Scale = None,
                  count_abstention: bool = False):
         self.count_abstention = count_abstention
