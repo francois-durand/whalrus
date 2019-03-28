@@ -2,6 +2,11 @@
 History
 =======
 
+0.2.1 (2019-03-28)
+------------------
+
+* Optimize argument passing between child classes, their parent classes and their ``__call__`` function.
+
 0.2.0 (2019-03-21)
 ------------------
 

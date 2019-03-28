@@ -4,7 +4,7 @@
 
 __author__ = """Sylvain Bouveret, Yann Chevaleyre and François Durand"""
 __email__ = 'fradurand@gmail.com'
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 # Utils
 from .utils.Utils import cached_property, DeleteCacheMixin, parse_weak_order, set_to_list, set_to_str, dict_to_items, \
