@@ -31,12 +31,10 @@ class Matrix(DeleteCacheMixin):
     """
     A way to compute a matrix from a profile.
 
-    :param ballots: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param weights: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param voters: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
     :param converter: the converter that is used to convert input ballots in order to compute
         :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
+    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
 
     A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters and candidates. When
     it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
@@ -54,9 +52,7 @@ class Matrix(DeleteCacheMixin):
     :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 converter: ConverterBallot = None):
+    def __init__(self, *args, converter: ConverterBallot = None, **kwargs):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
         """
@@ -69,8 +65,8 @@ class Matrix(DeleteCacheMixin):
         self.profile_converted_ = None
         self.candidates_ = None
         # Optional: load a profile at initialization
-        if ballots is not None:
-            self(ballots=ballots, weights=weights, voters=voters, candidates=candidates)
+        if args or kwargs:
+            self(*args, **kwargs)
 
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None):
