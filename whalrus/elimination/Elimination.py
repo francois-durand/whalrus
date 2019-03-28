@@ -26,7 +26,8 @@ class Elimination(DeleteCacheMixin):
     """
     An elimination method.
 
-    :param rule: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
+    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
 
     An :class:`Elimination` object is a callable whose input is a :class:`Rule` (which has already loaded a profile).
     When the :class:`Elimination` object is called, it loads the rule. The output of the call is the
@@ -38,15 +39,15 @@ class Elimination(DeleteCacheMixin):
     :ivar rule\_: this attribute stores the rule given in argument of the ``__call__``.
     """
 
-    def __init__(self, rule: Rule = None):
+    def __init__(self, *args, **kwargs):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
         """
         # Computed variables
         self.rule_ = None
         # Optional: load a rule at initialization
-        if rule is not None:
-            self(rule=rule)
+        if args or kwargs:
+            self(*args, **kwargs)
 
     def __call__(self, rule: Rule):
         self.rule_ = rule

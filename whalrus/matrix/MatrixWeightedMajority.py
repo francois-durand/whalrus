@@ -20,7 +20,6 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.utils.Utils import cached_property, NiceDict, convert_number, my_division
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from typing import Union
 from whalrus.matrix.Matrix import Matrix
@@ -112,8 +111,7 @@ class MatrixWeightedMajority(Matrix):
            [0, 0]])
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
+    def __init__(self, *args,
                  converter: ConverterBallot = None,
                  higher_vs_lower: Union[Number, None] = 1, lower_vs_higher: Union[Number, None] = 0,
                  indifference: Union[Number, None] = Fraction(1, 2),
@@ -122,7 +120,7 @@ class MatrixWeightedMajority(Matrix):
                  ordered_vs_absent: Union[Number, None] = None, absent_vs_ordered: Union[Number, None] = None,
                  unordered_vs_absent: Union[Number, None] = None, absent_vs_unordered: Union[Number, None] = None,
                  absent_vs_absent: Union[Number, None] = None,
-                 diagonal_score: Number = 0, default_score: Number = 0, antisymmetric: bool = False):
+                 diagonal_score: Number = 0, default_score: Number = 0, antisymmetric: bool = False, **kwargs):
         if converter is None:
             converter = ConverterBallotToOrder()
         self.higher_vs_lower = convert_number(higher_vs_lower)
@@ -139,7 +137,7 @@ class MatrixWeightedMajority(Matrix):
         self.diagonal_score = convert_number(diagonal_score)
         self.default_score = convert_number(default_score)
         self.antisymmetric = antisymmetric
-        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def _gross_and_weights_(self):

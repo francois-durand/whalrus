@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotOrder import BallotOrder
-from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.scorer.Scorer import Scorer
 from typing import Union
@@ -29,6 +28,7 @@ class ScorerBorda(Scorer):
     """
     A Borda scorer for :class:`BallotOrder`.
 
+    :param `*args`: cf. parent class.
     :param absent_give_points: whether absent candidates give points to the other candidates.
     :param absent_receive_points: whether absent candidates receives points. Remark: 0 means that any absent
         candidate receives the score 0 (which will be counted in its average Borda score, median Borda score,
@@ -38,6 +38,7 @@ class ScorerBorda(Scorer):
         considered as being in a lower position in the ranking.
     :param unordered_receive_points: whether unordered candidates receive points. Like for ``absent_receive_points``,
         None means that an unordered candidate receives no score at all.
+    :param `**kwargs`: cf. parent class.
 
     Typical usage:
 
@@ -75,15 +76,14 @@ class ScorerBorda(Scorer):
     {'a': 6.0, 'b': 4.5, 'c': 4.5}
     """
 
-    def __init__(self, ballot: BallotOrder = None, voter: object = None, candidates: set = None,
-                 scale: Scale = None,
+    def __init__(self, *args,
                  absent_give_points: bool = True, absent_receive_points: Union[bool, None] = True,
-                 unordered_give_points: bool = True, unordered_receive_points: Union[bool, None] = True):
+                 unordered_give_points: bool = True, unordered_receive_points: Union[bool, None] = True, **kwargs):
         self.absent_give_points = absent_give_points
         self.absent_receive_points = absent_receive_points
         self.unordered_give_points = unordered_give_points
         self.unordered_receive_points = unordered_receive_points
-        super().__init__(ballot=ballot, voter=voter, candidates=candidates, scale=scale)
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def scores_(self) -> NiceDict:

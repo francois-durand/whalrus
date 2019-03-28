@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotOrder import BallotOrder
-from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.scorer.Scorer import Scorer
 from typing import Union
@@ -29,10 +28,12 @@ class ScorerBucklin(Scorer):
     """
     Scorer for Bucklin's rule.
 
+    :param `*args`: cf. parent class.
     :param k: the number of points to distribute. Intuitively: the ``k`` candidates at the highest ranks will receive
         1 point each. In case of tie, some points may be divided between the tied candidates (see below).
     :param unordered_receive_points: bool or None. Whether unordered candidates should receive points (see below).
     :param absent_receive_points: bool or None. Whether absent candidates should receive points (see below).
+    :param `**kwargs`: cf. parent class.
 
     Typical usage:
 
@@ -62,14 +63,12 @@ class ScorerBucklin(Scorer):
     {'a': 1, 'b': 1, 'c': 1, 'd': 0, 'e': 0}
     """
 
-    def __init__(self, ballot: BallotOrder = None, voter: object = None, candidates: set = None,
-                 scale: Scale = None,
-                 k: int = 1,
-                 unordered_receive_points: Union[bool, None] = True, absent_receive_points: Union[bool, None] = True):
+    def __init__(self, *args, k: int = 1, unordered_receive_points: Union[bool, None] = True,
+                 absent_receive_points: Union[bool, None] = True, **kwargs):
         self.k = k
         self.absent_receive_points = absent_receive_points
         self.unordered_receive_points = unordered_receive_points
-        super().__init__(ballot=ballot, voter=voter, candidates=candidates, scale=scale)
+        super().__init__(*args, **kwargs)
 
     @property
     def k(self):

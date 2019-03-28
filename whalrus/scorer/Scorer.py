@@ -27,10 +27,9 @@ class Scorer(DeleteCacheMixin):
     """
     A "scorer".
 
-    :param ballot: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param voter: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
     :param scale: the scale in which scores are computed.
+    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
 
     A :class:`Scorer` is a callable whose inputs are a ballot, a voter and a set of candidates (the set of candidates
     of the election).  When the scorer is called, it loads its arguments. The output of the call is the scorer
@@ -47,8 +46,7 @@ class Scorer(DeleteCacheMixin):
     :ivar candidates\_: this attribute stores the candidates given in argument of the ``__call__``.
     """
 
-    def __init__(self, ballot: Ballot = None, voter: object = None, candidates: set = None,
-                 scale: Scale = None):
+    def __init__(self, *args, scale: Scale = None, **kwargs):
         if scale is None:
             scale = Scale()
         # Parameters
@@ -58,8 +56,8 @@ class Scorer(DeleteCacheMixin):
         self.voter_ = None
         self.candidates_ = None
         # Optional: load a ballot at initialization
-        if ballot is not None:
-            self(ballot=ballot, voter=voter, candidates=candidates)
+        if args or kwargs:
+            self(*args, **kwargs)
 
     def __call__(self, ballot: Ballot, voter: object = None, candidates: set = None):
         """

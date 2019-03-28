@@ -20,9 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.utils.Utils import cached_property, NiceDict, convert_number
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from typing import Union
 from whalrus.matrix.Matrix import Matrix
 from whalrus.matrix.MatrixWeightedMajority import MatrixWeightedMajority
 from numbers import Number
@@ -57,12 +55,9 @@ class MatrixMajority(Matrix):
            [0, 0, 0]])
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 converter: ConverterBallot = None,
-                 matrix_weighted_majority: Matrix = None,
+    def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None,
                  greater: Number = 1, lower: Number = 0, equal: Number = Fraction(1, 2),
-                 diagonal: Number = Fraction(1, 2)):
+                 diagonal: Number = Fraction(1, 2), **kwargs):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix_weighted_majority is None:
@@ -72,7 +67,7 @@ class MatrixMajority(Matrix):
         self.lower = convert_number(lower)
         self.equal = convert_number(equal)
         self.diagonal = convert_number(diagonal)
-        super().__init__(ballots=ballots, weights=weights, voters=voters, candidates=candidates, converter=converter)
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def matrix_weighted_majority_(self):

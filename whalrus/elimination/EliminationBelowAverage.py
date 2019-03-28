@@ -28,8 +28,10 @@ class EliminationBelowAverage(Elimination):
     """
     Elimination of the candidates whose score is lower than the average score
 
+    :param `*args`: cf. parent class.
     :param strict: if True (resp. False), then eliminate the candidates whose score is strictly lower than
         (resp. lower or equal to) the average.
+    :param `**kwargs`: cf. parent class.
 
     >>> rule = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
     >>> rule.gross_scores_
@@ -49,9 +51,12 @@ class EliminationBelowAverage(Elimination):
     {'a', 'b'}
     """
 
-    def __init__(self, rule: RuleScoreNum = None, strict=True):
+    def __init__(self, *args, strict=True, **kwargs):
         self.strict = strict
-        super().__init__(rule)
+        super().__init__(*args, **kwargs)
+
+    def __call__(self, rule: RuleScoreNum):
+        return super().__call__(rule=rule)
 
     @cached_property
     def eliminated_order_(self):
