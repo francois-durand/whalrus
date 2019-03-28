@@ -23,18 +23,16 @@ from whalrus.rule.Rule import Rule
 from whalrus.rule.RuleCondorcet import RuleCondorcet
 from whalrus.rule.RuleBorda import RuleBorda
 from whalrus.rule.RuleSequentialTieBreak import RuleSequentialTieBreak
-from whalrus.profile.Profile import Profile
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.priority.Priority import Priority
-from typing import Union
 
 
 class RuleBlack(RuleSequentialTieBreak):
     """
     Black's rule.
 
+    :param `*args`: cf. parent class.
     :param rule_condorcet: a Rule. Used as the main victory criterion. Default: :class:`RuleCondorcet`.
     :param rule_borda: a Rule. Used as the secondary victory criterion. Default: :class:`RuleBorda`.
+    :param `**kwargs`: cf. parent class.
 
     As a main victory criterion, the Condorcet winner is elected (even if it does not have the highest Borda score):
 
@@ -57,21 +55,14 @@ class RuleBlack(RuleSequentialTieBreak):
     [{'a'}, {'b'}, {'c'}]
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 rule_condorcet: Rule = None, rule_borda: Rule = None):
+    def __init__(self, *args, rule_condorcet: Rule = None, rule_borda: Rule = None, **kwargs):
         if rule_condorcet is None:
             rule_condorcet = RuleCondorcet()
         self.rule_condorcet = rule_condorcet
         if rule_borda is None:
             rule_borda = RuleBorda()
         self.rule_borda = rule_borda
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            rules=[rule_condorcet, rule_borda]
-        )
+        super().__init__(*args, rules=[rule_condorcet, rule_borda], **kwargs)
 
     @cached_property
     def rule_condorcet_(self):

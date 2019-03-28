@@ -23,12 +23,8 @@ from whalrus.rule.Rule import Rule
 from whalrus.rule.RuleBorda import RuleBorda
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.rule.RuleSequentialElimination import RuleSequentialElimination
-from whalrus.profile.Profile import Profile
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.priority.Priority import Priority
 from whalrus.elimination.Elimination import Elimination
 from whalrus.elimination.EliminationLast import EliminationLast
-from typing import Union
 
 
 class RuleTwoRound(RuleSequentialElimination):
@@ -36,10 +32,12 @@ class RuleTwoRound(RuleSequentialElimination):
     """
     The two-round system.
 
+    :param `*args`: cf. parent class.
     :param rule1: the first rule. Default: :class:`RulePlurality`.
     :param rule2: the second rule. Default: :class:`RulePlurality`.
     :param elimination: the elimination algorithm used during the first round. Default: :class:`EliminationLast`
         with ``k=-2``, which only keeps the 2 best candidates.
+    :param `**kwargs`: cf. parent class.
 
     With its default settings, this class implements the classic two-round system, using plurality at both rounds:
 
@@ -69,22 +67,14 @@ class RuleTwoRound(RuleSequentialElimination):
     {'a': 2, 'b': 2, 'c': 1}
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 rule1: Rule = None, rule2: Rule = None, elimination: Elimination = None,
-                 propagate_tie_break=True):
+    def __init__(self, *args, rule1: Rule = None, rule2: Rule = None, elimination: Elimination = None, **kwargs):
         if rule1 is None:
             rule1 = RulePlurality()
         if rule2 is None:
             rule2 = RulePlurality()
         if elimination is None:
             elimination = EliminationLast(k=-2)
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            rules=[rule1, rule2], eliminations=[elimination], propagate_tie_break=propagate_tie_break
-        )
+        super().__init__(*args, rules=[rule1, rule2], eliminations=[elimination], **kwargs)
 
     @cached_property
     def first_round_(self) -> Elimination:

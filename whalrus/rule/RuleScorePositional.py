@@ -21,19 +21,19 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rule.RuleScoreNumAverage import RuleScoreNumAverage
 from whalrus.scorer.ScorerPositional import ScorerPositional
 from whalrus.converter_ballot.ConverterBallotToStrictOrder import ConverterBallotToStrictOrder
-from whalrus.profile.Profile import Profile
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from typing import Union
 
 
 class RuleScorePositional(RuleScoreNumAverage):
     """
     A positional scoring rule.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToStrictOrder`.
     :param points_scheme: the list of points to be attributed to the candidates of a ballot.
         Cf. :class:`ScorerPositional`.
+    :param `**kwargs`: cf. parent class.
 
     >>> RuleScorePositional(['a > b > c', 'b > c > a'], points_scheme=[3, 2, 1]).gross_scores_
     {'a': 4, 'b': 5, 'c': 3}
@@ -46,14 +46,8 @@ class RuleScorePositional(RuleScoreNumAverage):
     {'a': 1, 'b': 2, 'c': 1}
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 points_scheme: list = None):
+    def __init__(self, *args, converter: ConverterBallot = None, points_scheme: list = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToStrictOrder()
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            scorer=ScorerPositional(points_scheme=points_scheme), default_average=0
-        )
+        super().__init__(*args, converter=converter, scorer=ScorerPositional(points_scheme=points_scheme),
+                         default_average=0, **kwargs)

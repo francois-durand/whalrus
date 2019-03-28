@@ -18,23 +18,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.profile.Profile import Profile
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.rule.Rule import Rule
 from whalrus.rule.RuleIteratedElimination import RuleIteratedElimination
 from whalrus.rule.RuleVeto import RuleVeto
 from whalrus.elimination.Elimination import Elimination
 from whalrus.elimination.EliminationLast import EliminationLast
-from whalrus.priority.Priority import Priority
-from typing import Union
 
 
 class RuleCoombs(RuleIteratedElimination):
     """
     Coombs' rule.
 
+    :param `*args`: cf. parent class.
     :param base_rule: the default is :class:`RuleVeto`.
     :param elimination: the default is :class:`EliminationLast` with ``k=1``.
+    :param `**kwargs`: cf. parent class.
 
     At each round, the candidate with the worst Veto score is eliminated.
 
@@ -49,16 +47,9 @@ class RuleCoombs(RuleIteratedElimination):
     'a'
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 base_rule: Rule = None, elimination: Elimination = None, propagate_tie_break=True):
+    def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None, **kwargs):
         if base_rule is None:
             base_rule = RuleVeto()
         if elimination is None:
             elimination = EliminationLast(k=1)
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            base_rule=base_rule, elimination=elimination, propagate_tie_break=propagate_tie_break
-        )
+        super().__init__(*args, base_rule=base_rule, elimination=elimination, **kwargs)

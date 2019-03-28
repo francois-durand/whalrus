@@ -19,22 +19,21 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rule.Rule import Rule
-from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.utils.Utils import cached_property, NiceSet
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
 from whalrus.matrix.MatrixMajority import MatrixMajority
-from typing import Union
 
 
 class RuleCondorcet(Rule):
     """
     Condorcet Rule.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_majority: the majority matrix. Default: :class:`MatrixMajority`.
+    :param `**kwargs`: cf. parent class.
 
     If there is a Condorcet winner, then it it the winner and all other candidates are tied. If there is no Condorcet
     winner, then all candidates are tied.
@@ -58,19 +57,13 @@ class RuleCondorcet(Rule):
     [{'a', 'b'}, {'c'}]
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 matrix_majority: Matrix = None):
+    def __init__(self, *args, converter: ConverterBallot = None, matrix_majority: Matrix = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix_majority is None:
             matrix_majority = MatrixMajority()
         self.matrix_majority = matrix_majority
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def matrix_majority_(self):

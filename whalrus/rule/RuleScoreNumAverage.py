@@ -20,11 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.scorer.Scorer import Scorer
-from whalrus.profile.Profile import Profile
-from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict, my_division
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from typing import Union
 from numbers import Number
 
 
@@ -32,25 +28,21 @@ class RuleScoreNumAverage(RuleScoreNum):
     """
     A voting rule where each candidate's score is an average of the scores provided by the ballots.
 
+    :param `*args`: cf. parent class.
     :param scorer: the :class:`Scorer`. For each ballot, it is in charge of computing its contribution to each
         candidate's score.
     :param default_average: the default average score of a candidate when it receives no score whatsoever. It may
         happen, for example, if all voters abstain about this candidate. This avoids a division by zero when
         computing this candidate's average score.
+    :param `**kwargs`: cf. parent class.
 
     Cf. :class:`RuleRangeVoting` for some examples.
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0):
+    def __init__(self, *args, scorer: Scorer = None, default_average: Number = 0, **kwargs):
         self.scorer = scorer
         self.default_average = default_average
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def _gross_scores_and_weights_(self) -> dict:

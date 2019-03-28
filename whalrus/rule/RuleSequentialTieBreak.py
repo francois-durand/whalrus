@@ -22,17 +22,16 @@ from whalrus.utils.Utils import cached_property, NiceSet
 from whalrus.rule.Rule import Rule
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.rule.RuleBorda import RuleBorda
-from whalrus.profile.Profile import Profile
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.priority.Priority import Priority
-from typing import Union
 
 
 class RuleSequentialTieBreak(Rule):
     """
     A rule by sequential tie-break.
 
+    :param `*args`: cf. parent class.
     :param rules: a list of rules.
+    :param `**kwargs`: cf. parent class.
 
     The winner is determined by the first rule. If there is a tie, it is broken by the second rule. Etc. There may
     still be a tie at the end: in that case, it is broken by the tie-breaking rule of this object.
@@ -52,15 +51,9 @@ class RuleSequentialTieBreak(Rule):
     'a'
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 rules: list = None):
+    def __init__(self, *args, rules: list = None, **kwargs):
         self.rules = rules
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def rules_(self) -> list:
