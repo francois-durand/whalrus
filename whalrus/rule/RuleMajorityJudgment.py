@@ -20,24 +20,24 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.scorer.Scorer import Scorer
 from whalrus.scorer.ScorerLevels import ScorerLevels
+from whalrus.scale.Scale import Scale
 from whalrus.scale.ScaleFromList import ScaleFromList
 from whalrus.rule.RuleScore import RuleScore
 from whalrus.converter_ballot.ConverterBallotToLevels import ConverterBallotToLevels
-from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.profile.Profile import Profile
-from typing import Union
 
 
 class RuleMajorityJudgment(RuleScore):
     """
     Majority Judgment.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToLevels`, with ``scale=scorer.scale``.
     :param scorer: the default is :class:`ScorerLevels`. Alternatively, you may provide an argument ``scale``. In that
         case, the scorer will be ``ScorerLevels(scale)``.
     :param default_median: the median level that a candidate has when it receives absolutely no evaluation whatsoever.
+    :param `**kwargs`: cf. parent class.
 
     >>> rule = RuleMajorityJudgment([{'a': 1, 'b': 1}, {'a': .5, 'b': .6},
     ...                              {'a': .5, 'b': .4}, {'a': .3, 'b': .2}])
@@ -76,14 +76,8 @@ class RuleMajorityJudgment(RuleScore):
     'a'
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_median: object = None, **kwargs):
-        # Special argument
-        scale = kwargs.pop('scale', None)
-        if kwargs:
-            raise ValueError('Unexpected argument: %s' % list(kwargs.keys())[0])
+    def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None,
+                 scale: Scale = None, default_median: object = None, **kwargs):
         # Default value
         if scorer is None:
             scorer = ScorerLevels(scale=scale)
@@ -92,10 +86,7 @@ class RuleMajorityJudgment(RuleScore):
         # Parameters
         self.scorer = scorer
         self.default_median = default_median
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def scores_(self) -> NiceDict:

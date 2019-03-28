@@ -21,12 +21,9 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.utils.Utils import cached_property
 from whalrus.rule.Rule import Rule
 from whalrus.rule.RulePlurality import RulePlurality
-from whalrus.profile.Profile import Profile
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.priority.Priority import Priority
 from whalrus.elimination.Elimination import Elimination
 from whalrus.elimination.EliminationLast import EliminationLast
-from typing import Union
 from copy import deepcopy
 from itertools import chain
 
@@ -35,11 +32,13 @@ class RuleIteratedElimination(Rule):
     """
     A rule by iterated elimination (such as :class:`RuleIRV`, :class:`RuleCoombs`, :class:`RuleNanson`, etc.)
 
+    :param `*args`: cf. parent class.
     :param base_rule: the rule used at each round to determine the eliminated candidate(s). Unlike for
         :class:`RuleSequentialElimination`, all the rounds use the same voting rule.
     :param elimination: the elimination algorithm. Default: ``EliminationLast(k=1)``.
     :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the
         base rule (cf. below).
+    :param `**kwargs`: cf. parent class.
 
     >>> irv = RuleIteratedElimination(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4],
     ...                                 base_rule=RulePlurality())
@@ -101,19 +100,14 @@ class RuleIteratedElimination(Rule):
     ['a', 'c', 'b', 'd', 'e']
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 base_rule: Rule = None, elimination: Elimination = None, propagate_tie_break=True):
+    def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None, propagate_tie_break=True,
+                 **kwargs):
         if elimination is None:
             elimination = EliminationLast(k=1)
         self.base_rule = base_rule
         self.elimination = elimination
         self.propagate_tie_break = propagate_tie_break
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, **kwargs)
 
     def _check_profile(self, candidates: set) -> None:
         # We delegate this task to the base rule.

@@ -22,39 +22,30 @@ import logging
 from whalrus.rule.RuleScoreNumAverage import RuleScoreNumAverage
 from whalrus.scorer.Scorer import Scorer
 from whalrus.scorer.ScorerVeto import ScorerVeto
-from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToVeto import ConverterBallotToVeto
 from whalrus.utils.Utils import cached_property, NiceDict
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from typing import Union
-from numbers import Number
 
 
 class RuleVeto(RuleScoreNumAverage):
     """
     The veto rule.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToVeto`.
     :param scorer: the default is :class:`ScorerVeto`.
+    :param `**kwargs`: cf. parent class.
 
     >>> RuleVeto(['a', 'b', 'b', 'c', 'c']).winner_
     'a'
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0):
+    def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToVeto()
         if scorer is None:
             scorer = ScorerVeto()
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            scorer=scorer, default_average=default_average
-        )
+        super().__init__(*args, converter=converter, scorer=scorer, **kwargs)
 
     def _check_profile(self, candidates: set) -> None:
         if any([len(b.candidates) > 1 and b.candidates != candidates for b in self.profile_converted_]):

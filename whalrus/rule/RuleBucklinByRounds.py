@@ -21,11 +21,8 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.scorer.ScorerBucklin import ScorerBucklin
 from whalrus.rule.RuleScoreNum import RuleScoreNum
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict, my_division
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.profile.Profile import Profile
-from typing import Union
 from fractions import Fraction
 
 
@@ -33,8 +30,10 @@ class RuleBucklinByRounds(RuleScoreNum):
     """
     Bucklin's rule (round by round version).
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param scorer: the default is :class:`ScorerBucklin`.
+    :param `**kwargs`: cf. parent class.
 
     >>> rule = RuleBucklinByRounds(['a > b > c > d', 'b > a > c > d',
     ...                             'c > a > b > d', 'd > a > b > c'])
@@ -56,10 +55,7 @@ class RuleBucklinByRounds(RuleScoreNum):
     For another variant of Bucklin's rule, cf. :class:`RuleBucklinInstant`.
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: ScorerBucklin = None):
+    def __init__(self, *args, converter: ConverterBallot = None, scorer: ScorerBucklin = None, **kwargs):
         # Default value
         if converter is None:
             converter = ConverterBallotToOrder()
@@ -67,10 +63,7 @@ class RuleBucklinByRounds(RuleScoreNum):
             scorer = ScorerBucklin()
         # Parameters
         self.scorer = scorer
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def detailed_scores_(self) -> list:

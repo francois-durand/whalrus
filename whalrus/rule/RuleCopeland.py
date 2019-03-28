@@ -19,22 +19,21 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rule.RuleScoreNum import RuleScoreNum
-from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.utils.Utils import cached_property, NiceDict
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
 from whalrus.matrix.MatrixMajority import MatrixMajority
-from typing import Union
 
 
 class RuleCopeland(RuleScoreNum):
     """
     Copeland's rule.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_majority: the majority matrix. Default: :class:`MatrixMajority`.
+    :param `**kwargs`: cf. parent class.
 
     The score of a candidate is the number of victories in the majority matrix. More precisely, and in all generality,
     it is the sum of the non-diagonal elements of its row in :attr:`matrix_majority_`.
@@ -48,19 +47,13 @@ class RuleCopeland(RuleScoreNum):
     {'a': 2, 'b': 1, 'c': 0}
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 matrix_majority: Matrix = None):
+    def __init__(self, *args, converter: ConverterBallot = None, matrix_majority: Matrix = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix_majority is None:
             matrix_majority = MatrixMajority()
         self.matrix_majority = matrix_majority
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def matrix_majority_(self):
