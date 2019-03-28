@@ -22,9 +22,6 @@ from whalrus.utils.Utils import cached_property
 from whalrus.rule.Rule import Rule
 from whalrus.rule.RuleBorda import RuleBorda
 from whalrus.rule.RulePlurality import RulePlurality
-from whalrus.profile.Profile import Profile
-from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.priority.Priority import Priority
 from whalrus.elimination.Elimination import Elimination
 from whalrus.elimination.EliminationLast import EliminationLast
 from whalrus.elimination.EliminationBelowAverage import EliminationBelowAverage
@@ -38,11 +35,13 @@ class RuleSequentialElimination(Rule):
     """
     A rule by sequential elimination (such as :class:`RuleTwoRound`).
 
+    :param `*args`: cf. parent class.
     :param rules: a list of rules, one for each round. Unlike for :class:`RuleIteratedElimination`, different rounds
         may use different voting rules.
     :param eliminations: a list of elimination algorithms, one for each round except the last one.
     :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the
         base rules. Cf. :class:`RuleIteratedElimination` for more explanation on this parameter.
+    :param `**kwargs`: cf. parent class.
 
     >>> rule = RuleSequentialElimination(
     ...     ['a > b > c > d > e', 'b > c > d > e > a'], weights=[2, 1],
@@ -81,11 +80,8 @@ class RuleSequentialElimination(Rule):
     {'a': 2, 'b': 1, 'c': 0}
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 rules: Union[list, Rule] = None, eliminations: Union[list, Elimination] = None,
-                 propagate_tie_break=True):
+    def __init__(self, *args, rules: Union[list, Rule] = None, eliminations: Union[list, Elimination] = None,
+                 propagate_tie_break=True, **kwargs):
         # Default values
         if eliminations is None:
             eliminations = EliminationLast(k=1)
@@ -106,10 +102,7 @@ class RuleSequentialElimination(Rule):
         self.rules = rules
         self.eliminations = eliminations
         self.propagate_tie_break = propagate_tie_break
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, **kwargs)
 
     def _check_profile(self, candidates: set) -> None:
         # We delegate this task to the base rules.

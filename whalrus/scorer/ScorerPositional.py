@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotOrder import BallotOrder
-from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property, NiceDict, convert_number
 from whalrus.scorer.Scorer import Scorer
 from numbers import Number
@@ -30,10 +29,12 @@ class ScorerPositional(Scorer):
     """
     A positional scorer for strict order ballots.
 
+    :param `*args`: cf. parent class.
     :param points_scheme: the list of points to be attributed to the (first) candidates of a ballot.
     :param points_fill: points for ordered candidates that have a rank beyond the ``points_scheme``.
     :param points_unordered: points for the unordered candidates.
     :param points_absent: points for the absent candidates.
+    :param `**kwargs`: cf. parent class.
 
     The top candidate in the ballot receives ``points_scheme[0]`` points, the second one receives ``points_scheme[1]``
     points, etc:
@@ -69,15 +70,14 @@ class ScorerPositional(Scorer):
     {'a': 3, 'b': 2}
     """
 
-    def __init__(self, ballot: BallotOrder = None, voter: object = None, candidates: set = None,
-                 scale: Scale = None,
+    def __init__(self, *args,
                  points_scheme: list = None, points_fill: Union[Number, None] = 0,
-                 points_unordered: Union[Number, None] = 0, points_absent: Union[Number, None] = None):
+                 points_unordered: Union[Number, None] = 0, points_absent: Union[Number, None] = None, **kwargs):
         self.points_scheme = [convert_number(x) for x in points_scheme]
         self.points_fill = convert_number(points_fill)
         self.points_unordered = convert_number(points_unordered)
         self.points_absent = convert_number(points_absent)
-        super().__init__(ballot=ballot, voter=voter, candidates=candidates, scale=scale)
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def scores_(self) -> NiceDict:

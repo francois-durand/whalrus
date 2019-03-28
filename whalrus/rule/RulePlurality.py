@@ -25,18 +25,17 @@ from whalrus.scorer.ScorerPlurality import ScorerPlurality
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToPlurality import ConverterBallotToPlurality
 from whalrus.utils.Utils import cached_property, NiceDict
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from typing import Union
-from numbers import Number
 
 
 class RulePlurality(RuleScoreNumAverage):
     """
     The plurality rule.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToPlurality`.
     :param scorer: the default is :class:`ScorerPlurality`.
+    :param `**kwargs`: cf. parent class.
 
     In the most general syntax, firstly, you define the rule:
 
@@ -66,19 +65,12 @@ class RulePlurality(RuleScoreNumAverage):
     Cf. :class:`Rule` for more information about the arguments.
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0):
+    def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToPlurality()
         if scorer is None:
             scorer = ScorerPlurality()
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            scorer=scorer, default_average=default_average
-        )
+        super().__init__(*args, converter=converter, scorer=scorer, **kwargs)
 
     def _check_profile(self, candidates: set) -> None:
         if any([len(b.candidates) > 1 and b.candidates != candidates for b in self.profile_converted_]):

@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotPlurality import BallotPlurality
-from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.scorer.Scorer import Scorer
 
@@ -28,8 +27,10 @@ class ScorerPlurality(Scorer):
     """
     A Plurality scorer for :class:`BallotPlurality`.
 
+    :param `*args`: cf. parent class.
     :param count_abstention: if False (default), then an abstention grants no score at all. If True, then an
         abstention gives 0 point to each candidate (cf. below).
+    :param `**kwargs`: cf. parent class.
 
     Typical usage:
 
@@ -45,11 +46,9 @@ class ScorerPlurality(Scorer):
     {'a': 0, 'b': 0, 'c': 0}
     """
 
-    def __init__(self, ballot: BallotPlurality = None, voter: object = None, candidates: set = None,
-                 scale: Scale = None,
-                 count_abstention: bool = False):
+    def __init__(self, *args, count_abstention: bool = False, **kwargs):
         self.count_abstention = count_abstention
-        super().__init__(ballot=ballot, voter=voter, candidates=candidates, scale=scale)
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def scores_(self) -> NiceDict:

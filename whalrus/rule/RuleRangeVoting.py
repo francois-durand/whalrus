@@ -24,19 +24,17 @@ from whalrus.scorer.ScorerLevels import ScorerLevels
 from whalrus.ballot.BallotLevels import BallotLevels
 from whalrus.rule.RuleScoreNumAverage import RuleScoreNumAverage
 from whalrus.converter_ballot.ConverterBallotToGrades import ConverterBallotToGrades
-from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
-from whalrus.profile.Profile import Profile
-from typing import Union
-from numbers import Number
 
 
 class RuleRangeVoting(RuleScoreNumAverage):
     """
     Range voting.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToGrades`.
     :param scorer: the default is :class:`ScorerLevels`.
+    :param `**kwargs`: cf. parent class.
 
     Typical usage:
 
@@ -78,16 +76,9 @@ class RuleRangeVoting(RuleScoreNumAverage):
     For more information, cf. :class:`ScorerLevels`.
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_average: Number = 0):
+    def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToGrades()
         if scorer is None:
             scorer = ScorerLevels()
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter,
-            scorer=scorer, default_average=default_average
-        )
+        super().__init__(*args, converter=converter, scorer=scorer, **kwargs)

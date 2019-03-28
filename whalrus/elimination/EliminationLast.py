@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.utils.Utils import cached_property, NiceSet
-from whalrus.rule.Rule import Rule
 from whalrus.elimination.Elimination import Elimination
 from whalrus.rule.RulePlurality import RulePlurality
 from whalrus.priority.Priority import Priority
@@ -29,8 +28,10 @@ class EliminationLast(Elimination):
     """
     Elimination of the last candidates (with a fixed number of candidates to eliminate, or to qualify).
 
+    :param `*args`: cf. parent class.
     :param k: an nonzero integer. The number of eliminated candidates. If this number is negative, then
         ``len(rule.candidates_) - abs(k)`` candidates are eliminated, i.e. ``abs(k)`` candidates are qualified.
+    :param `**kwargs`: cf. parent class.
 
     In the most general syntax, firstly, you define the elimination method:
 
@@ -86,9 +87,9 @@ class EliminationLast(Elimination):
     {'a'}
     """
 
-    def __init__(self, rule: Rule = None, k: int = 1):
+    def __init__(self, *args, k: int = 1, **kwargs):
         self.k = k
-        super().__init__(rule)
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def eliminated_order_(self):

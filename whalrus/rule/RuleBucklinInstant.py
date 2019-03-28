@@ -23,21 +23,21 @@ from whalrus.scorer.ScorerBorda import ScorerBorda
 from whalrus.rule.RuleScore import RuleScore
 from whalrus.rule.RuleBucklinByRounds import RuleBucklinByRounds
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.priority.Priority import Priority
 from whalrus.utils.Utils import cached_property, NiceDict, my_division, convert_number
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.profile.Profile import Profile
-from typing import Union
 
 
 class RuleBucklinInstant(RuleScore):
     """
     Bucklin's rule (instant version).
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param scorer: a :class:`Scorer`. Default: :class:`ScorerBorda` with ``absent_give_points=True``,
         ``absent_receive_points=None``, ``unordered_give_points=True``, ``unordered_receive_points=False``.
     :param default_median: the default median of a candidate when it receives no score whatsoever.
+    :param `**kwargs`: cf. parent class.
 
     >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
     >>> rule.scores_
@@ -75,10 +75,8 @@ class RuleBucklinInstant(RuleScore):
     'b'
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 scorer: Scorer = None, default_median: object = 0):
+    def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, default_median: object = 0,
+                 **kwargs):
         # Default value
         if converter is None:
             converter = ConverterBallotToOrder()
@@ -88,10 +86,7 @@ class RuleBucklinInstant(RuleScore):
         # Parameters
         self.scorer = scorer
         self.default_median = default_median
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def scores_(self) -> NiceDict:

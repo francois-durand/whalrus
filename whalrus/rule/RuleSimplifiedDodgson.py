@@ -19,23 +19,22 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rule.RuleScoreNum import RuleScoreNum
-from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
 from whalrus.utils.Utils import cached_property, NiceDict, convert_number
-from whalrus.profile.Profile import Profile
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
 from whalrus.matrix.MatrixWeightedMajority import MatrixWeightedMajority
-from typing import Union
 
 
 class RuleSimplifiedDodgson(RuleScoreNum):
     """
     Simplified Dodgson rule.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority` with
         ``antisymmetric=True``.
+    :param `**kwargs`: cf. parent class.
 
     The score of a candidate is the sum of the negative non-diagonal coefficient on its raw of
     :attr:`matrix_weighted_majority_`.
@@ -52,19 +51,13 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     'a'
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None,
-                 matrix_weighted_majority: Matrix = None):
+    def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None, **kwargs):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix_weighted_majority is None:
             matrix_weighted_majority = MatrixWeightedMajority(antisymmetric=True)
         self.matrix_weighted_majority = matrix_weighted_majority
-        super().__init__(
-            ballots=ballots, weights=weights, voters=voters, candidates=candidates,
-            tie_break=tie_break, converter=converter
-        )
+        super().__init__(*args, converter=converter, **kwargs)
 
     @cached_property
     def matrix_weighted_majority_(self):

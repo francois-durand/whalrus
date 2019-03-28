@@ -31,21 +31,19 @@ class Rule(DeleteCacheMixin):
     """
     A voting rule.
 
-    :param ballots: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param weights: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param voters: if mentioned, will be passed to ``__call__`` immediately after initialization.
-    :param candidates: if mentioned, will be passed to ``__call__`` immediately after initialization.
+    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
     :param tie_break: a tie-break rule.
     :param converter: the converter that is used to convert input ballots in order to compute
         :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
+    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
 
     A :class:`Rule` object is a callable whose inputs are ballots and optionally weights, voters and candidates.
     When the rule is called, it loads the profile. The output of the call is the rule itself. But
     after the call, you can access to the computed variables (ending with an underscore), such as
     :attr:`cowinners_`.
 
-    At the initialization of a :class:`Rule` object, some options can be given, such as a tie-break rule. In some
-    subclasses, there can also be an option about the way to count abstentions, etc.
+    At the initialization of a :class:`Rule` object, some options can be given, such as a tie-break rule or a
+    converter. In some subclasses, there can also be an option about the way to count abstentions, etc.
 
     Cf. :class:`RulePlurality` for some examples.
 
@@ -58,9 +56,7 @@ class Rule(DeleteCacheMixin):
     :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
     """
 
-    def __init__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None,
-                 tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None):
+    def __init__(self, *args, tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None, **kwargs):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
         """
@@ -74,8 +70,8 @@ class Rule(DeleteCacheMixin):
         self.profile_converted_ = None
         self.candidates_ = None
         # Optional: load a profile at initialization
-        if ballots is not None:
-            self(ballots=ballots, weights=weights, voters=voters, candidates=candidates)
+        if args or kwargs:
+            self(*args, **kwargs)
 
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None):

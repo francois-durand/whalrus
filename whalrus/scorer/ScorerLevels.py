@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballot.BallotLevels import BallotLevels
-from whalrus.scale.Scale import Scale
 from whalrus.utils.Utils import cached_property, NiceDict
 from whalrus.scorer.Scorer import Scorer
 
@@ -28,8 +27,10 @@ class ScorerLevels(Scorer):
     """
     A standard scorer for :class:``BallotLevel``.
 
+    :param `*args`: cf. parent class.
     :param level_ungraded: the level of the scale used for ungraded candidates, or None.
     :param level_absent: the level of the scale used for absent candidates, or None.
+    :param `**kwargs`: cf. parent class.
 
     In the most general syntax, firstly, you define the scorer:
 
@@ -71,12 +72,10 @@ class ScorerLevels(Scorer):
     {'a': 10, 'b': 7, 'c': 3, 'd': -5, 'e': -10}
     """
 
-    def __init__(self, ballot: BallotLevels = None, voter: object = None, candidates: set = None,
-                 scale: Scale = None,
-                 level_ungraded: object = None, level_absent: object = None):
+    def __init__(self, *args, level_ungraded: object = None, level_absent: object = None, **kwargs):
         self.level_ungraded = level_ungraded
         self.level_absent = level_absent
-        super().__init__(ballot=ballot, voter=voter, candidates=candidates, scale=scale)
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def scores_(self) -> NiceDict:
