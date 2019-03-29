@@ -58,6 +58,7 @@ from .matrix.Matrix import Matrix
 from .matrix.MatrixWeightedMajority import MatrixWeightedMajority
 from .matrix.MatrixMajority import MatrixMajority
 from .matrix.MatrixRankedPairs import MatrixRankedPairs
+from .matrix.MatrixSchulze import MatrixSchulze
 
 # Elimination algorithms
 from .elimination.Elimination import Elimination
@@ -103,6 +104,7 @@ from .rule.RuleNanson import RuleNanson
 from .rule.RulePlurality import RulePlurality
 from .rule.RuleRangeVoting import RuleRangeVoting
 from .rule.RuleRankedPairs import RuleRankedPairs
+from .rule.RuleSchulze import RuleSchulze
 from .rule.RuleSimplifiedDodgson import RuleSimplifiedDodgson
 from .rule.RuleTwoRound import RuleTwoRound
 from .rule.RuleVeto import RuleVeto

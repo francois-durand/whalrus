@@ -78,7 +78,7 @@ class MatrixRankedPairs(Matrix):
     @cached_property
     def matrix_weighted_majority_(self):
         """
-        The weighted majority matrix (upon which the computation of the majority matrix is based).
+        The weighted majority matrix (upon which the computation of the Ranked Pairs matrix is based).
 
         :return: the weighted majority matrix (once computed with the given profile).
         """
