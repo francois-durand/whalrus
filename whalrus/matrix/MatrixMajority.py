@@ -29,7 +29,9 @@ from fractions import Fraction
 
 class MatrixMajority(Matrix):
     """
+    The majority matrix.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.
         Default: :class:`MatrixWeightedMajority`.
@@ -37,6 +39,7 @@ class MatrixMajority(Matrix):
     :param lower: value used when `W(c, d) < W(d, c)`.
     :param equal: value used when `W(c, d) = W(d, c)` (except for diagonal coefficients).
     :param diagonal: value used for the diagonal coefficients.
+    :param `**kwargs`: cf. parent class.
 
     First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.
     Then for each pair of candidates `(c, d)`, the coefficient of the majority matrix is set to :attr:`greater`,
@@ -77,6 +80,14 @@ class MatrixMajority(Matrix):
         :return: the weighted majority matrix (once computed with the given profile).
         """
         return self.matrix_weighted_majority(self.profile_converted_)
+
+    @cached_property
+    def candidates_as_list_(self) -> list:
+        return self.matrix_weighted_majority_.candidates_as_list_
+
+    @cached_property
+    def candidates_indexes_(self) -> NiceDict:
+        return self.matrix_weighted_majority_.candidates_indexes_
 
     @cached_property
     def as_dict_(self):

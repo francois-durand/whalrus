@@ -54,6 +54,7 @@ from .profile.Profile import Profile
 from .matrix.Matrix import Matrix
 from .matrix.MatrixWeightedMajority import MatrixWeightedMajority
 from .matrix.MatrixMajority import MatrixMajority
+from .matrix.MatrixRankedPairs import MatrixRankedPairs
 
 # Elimination algorithms
 from .elimination.Elimination import Elimination
@@ -74,6 +75,7 @@ from .rule.Rule import Rule
 from .rule.RuleScore import RuleScore
 from .rule.RuleScoreNum import RuleScoreNum
 from .rule.RuleScoreNumAverage import RuleScoreNumAverage
+from .rule.RuleScoreNumRowSum import RuleScoreNumRowSum
 from .rule.RuleScorePositional import RuleScorePositional
 from .rule.RuleIteratedElimination import RuleIteratedElimination
 from .rule.RuleSequentialElimination import RuleSequentialElimination
@@ -97,6 +99,7 @@ from .rule.RuleMaximin import RuleMaximin
 from .rule.RuleNanson import RuleNanson
 from .rule.RulePlurality import RulePlurality
 from .rule.RuleRangeVoting import RuleRangeVoting
+from .rule.RuleRankedPairs import RuleRankedPairs
 from .rule.RuleSimplifiedDodgson import RuleSimplifiedDodgson
 from .rule.RuleTwoRound import RuleTwoRound
 from .rule.RuleVeto import RuleVeto

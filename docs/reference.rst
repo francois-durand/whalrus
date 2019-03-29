@@ -158,6 +158,12 @@ MatrixMajority
 .. autoclass:: whalrus.MatrixMajority
     :members:
 
+MatrixRankedPairs
+-----------------
+
+.. autoclass:: whalrus.MatrixRankedPairs
+    :members:
+
 Priority
 ========
 
@@ -228,6 +234,12 @@ RuleScoreNumAverage
 -------------------
 
 .. autoclass:: whalrus.RuleScoreNumAverage
+    :members:
+
+RuleScoreNumRowSum
+------------------
+
+.. autoclass:: whalrus.RuleScoreNumRowSum
     :members:
 
 RuleScorePositional
@@ -357,6 +369,12 @@ RuleRangeVoting
 ---------------
 
 .. autoclass:: whalrus.RuleRangeVoting
+    :members:
+
+RuleRankedPairs
+---------------
+
+.. autoclass:: whalrus.RuleRankedPairs
     :members:
 
 RuleSimplifiedDodgson

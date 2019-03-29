@@ -20,28 +20,28 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rule.RuleScoreNumRowSum import RuleScoreNumRowSum
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.utils.Utils import cached_property
+from whalrus.utils.Utils import cached_property, NiceSet
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
-from whalrus.matrix.MatrixMajority import MatrixMajority
+from whalrus.matrix.MatrixRankedPairs import MatrixRankedPairs
 
 
-class RuleCopeland(RuleScoreNumRowSum):
+class RuleRankedPairs(RuleScoreNumRowSum):
     """
-    Copeland's rule.
+    Ranked Pairs rule.
 
     :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix: the default is :class:`MatrixMajority`.
+    :param matrix: the default is :class:`MatrixRankedPairs`.
     :param `**kwargs`: cf. parent class.
 
-    The score of a candidate is the number of victories in the majority matrix.
+    The score of a candidate is the number of victories in the ranked pairs matrix.
 
-    >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
+    >>> rule = RuleRankedPairs(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
     >>> rule.matrix_.as_array_
-    array([[Fraction(1, 2), 1, 1],
-           [0, Fraction(1, 2), 1],
-           [0, 0, Fraction(1, 2)]], dtype=object)
+    array([[0, 1, 1],
+           [0, 0, 1],
+           [0, 0, 0]], dtype=object)
     >>> rule.scores_
     {'a': 2, 'b': 1, 'c': 0}
     """
@@ -50,13 +50,13 @@ class RuleCopeland(RuleScoreNumRowSum):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix is None:
-            matrix = MatrixMajority()
+            matrix = MatrixRankedPairs()
         super().__init__(*args, converter=converter, matrix=matrix, **kwargs)
 
     @cached_property
-    def matrix_majority_(self):
+    def matrix_ranked_pairs_(self):
         """
-        The majority matrix.
+        The ranked pairs matrix.
 
         :return: alias for :attr:`matrix_`.
         """
