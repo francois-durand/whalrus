@@ -20,6 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import random
 from typing import Union
+from functools import cmp_to_key
 # Ideally, all Union[set, list] in this file should be typing.Collection, but it is only defined in Python >= 3.6.
 
 
@@ -50,6 +51,16 @@ class Priority:
     def __str__(self) -> str:
         return self.name
 
+    def compare(self, c, d) -> int:
+        """
+        Compare two candidates.
+
+        :param c: a candidate.
+        :param d: another candidate.
+        :return: 0 if `c = d`, -1 if the tie is broken in favor of `c` over `d`, 1 otherwise.
+        """
+        raise NotImplementedError
+
     def choice(self, x: Union[set, list], reverse: bool = False) -> object:
         """
         Choose an element from a list, set, etc.
@@ -73,7 +84,10 @@ class Priority:
 
         Here, ``x`` is assumed to have at least 2 elements.
         """
-        raise NotImplementedError
+        if reverse:
+            return max(x, key=cmp_to_key(self.compare))
+        else:
+            return min(x, key=cmp_to_key(self.compare))
 
     def sort(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:
         """
@@ -95,7 +109,32 @@ class Priority:
 
         Here, ``x`` is assumed to have at least 2 elements.
         """
-        raise NotImplementedError
+        return sorted(x, key=cmp_to_key(self.compare), reverse=reverse)
+
+    def sort_pairs_rp(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:
+        """
+        Sort a list, set, etc. of pairs of candidates (for Ranked Pairs).
+
+        :param x: the list, set, etc.
+        :param reverse: if True, we use the reverse priority order.
+        :return: a sorted list (or None).
+
+        By default, it is in the normal priority order for the first element of the pair, and in the reverse priority
+        order for the second element of the pair.
+
+        The original list ``x`` is not modified.
+        """
+        if len(x) <= 1:
+            return list(x)
+        return self._sort_pairs_rp(x=x, reverse=reverse)
+
+    def _sort_pairs_rp(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        def compare_pairs(pair_1, pair_2):
+            comp_left = self.compare(pair_1[0],  pair_2[0])
+            if comp_left != 0:
+                return comp_left
+            return - self.compare(pair_1[1], pair_2[1])
+        return sorted(x, key=cmp_to_key(compare_pairs), reverse=reverse)
 
     # Priority orders defined by default
     # ----------------------------------
@@ -129,10 +168,16 @@ class PriorityUnambiguous(Priority):
     def __repr__(self):
         return 'Priority.UNAMBIGUOUS'
 
+    def compare(self, c, d) -> int:
+        raise ValueError("Cannot compare %r and %r with priority set to Unambiguous." % (c, d))
+
     def _choice(self, x: Union[set, list], reverse: bool) -> object:
         raise ValueError("Cannot choose from %r with priority set to Unambiguous." % x)
 
     def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        raise ValueError("Cannot sort %r with priority set to Unambiguous." % x)
+
+    def _sort_pairs_rp(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
         raise ValueError("Cannot sort %r with priority set to Unambiguous." % x)
 
 
@@ -155,10 +200,16 @@ class PriorityAbstain(Priority):
     def __repr__(self):
         return 'Priority.ABSTAIN'
 
+    def compare(self, c, d) -> int:
+        raise None
+
     def _choice(self, x: Union[set, list], reverse: bool) -> object:
         return None
 
     def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        return None
+
+    def _sort_pairs_rp(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
         return None
 
 
@@ -173,6 +224,8 @@ class PriorityAscending(Priority):
     'a'
     >>> Priority.ASCENDING.sort({'a', 'b'})
     ['a', 'b']
+    >>> Priority.ASCENDING.sort_pairs_rp({('a', 'b'), ('b', 'a'), ('a', 'c')})
+    [('a', 'c'), ('a', 'b'), ('b', 'a')]
     """
 
     def __init__(self):
@@ -180,6 +233,11 @@ class PriorityAscending(Priority):
 
     def __repr__(self):
         return 'Priority.ASCENDING'
+
+    def compare(self, c, d) -> int:
+        if c == d:
+            return 0
+        return -1 if c < d else 1
 
     def _choice(self, x: Union[set, list], reverse: bool) -> object:
         if reverse:
@@ -201,6 +259,8 @@ class PriorityDescending(Priority):
     'b'
     >>> Priority.DESCENDING.sort({'a', 'b'})
     ['b', 'a']
+    >>> Priority.DESCENDING.sort_pairs_rp({('a', 'b'), ('b', 'a'), ('a', 'c')})
+    [('b', 'a'), ('a', 'b'), ('a', 'c')]
     """
 
     def __init__(self):
@@ -208,6 +268,11 @@ class PriorityDescending(Priority):
 
     def __repr__(self):
         return 'Priority.DESCENDING'
+
+    def compare(self, c, d) -> int:
+        if c == d:
+            return 0
+        return 1 if c < d else -1
 
     def _choice(self, x: Union[set, list], reverse: bool) -> object:
         if reverse:
@@ -238,10 +303,18 @@ class PriorityRandom(Priority):
     def __repr__(self):
         return 'Priority.RANDOM'
 
+    def compare(self, c, d) -> int:
+        if c == d:
+            return 0
+        return random.choice([-1, 1])
+
     def _choice(self, x: Union[set, list], reverse: bool) -> object:
         return random.choice(list(x))
 
     def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        return random.sample(x, len(x))
+
+    def _sort_pairs_rp(self, x: Union[set, list], reverse: bool):
         return random.sample(x, len(x))
 
 

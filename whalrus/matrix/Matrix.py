@@ -94,13 +94,22 @@ class Matrix(DeleteCacheMixin):
         raise NotImplementedError
 
     @cached_property
-    def candidates_as_list_(self):
+    def candidates_as_list_(self) -> list:
         """
         The list of candidates.
 
         :return: a list. Candidates are sorted if possible.
         """
         return set_to_list(self.candidates_)
+
+    @cached_property
+    def candidates_indexes_(self) -> NiceDict:
+        """
+        The candidates as a dictionary.
+
+        :return: a dictionary. To each candidate, it associates its index in :attr:`candidates_as_list_`.
+        """
+        return NiceDict({c: i for i, c in enumerate(self.candidates_as_list_)})
 
     @cached_property
     def as_array_(self) -> np.array:
