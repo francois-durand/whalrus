@@ -31,6 +31,7 @@ class MatrixWeightedMajority(Matrix):
     """
     The weighted majority matrix.
 
+    :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
     :param higher_vs_lower: number of points for candidate `c` when it is ordered higher than candidate `d`.
     :param lower_vs_higher: number of points for candidate `c` when it is ordered lower than candidate `d`.
@@ -47,6 +48,7 @@ class MatrixWeightedMajority(Matrix):
     :param default_score: default score in the matrix in case of division by 0 (except for the diagonal coefficients).
     :param antisymmetric: if True, then an antisymmetric version of the matrix is computed (by subtracting the
         transposed matrix at the end of the computation).
+    :param `**kwargs`: cf. parent class.
 
     In the most general syntax, firstly, you define the matrix computation algorithm:
 
