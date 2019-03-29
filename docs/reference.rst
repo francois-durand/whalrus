@@ -164,6 +164,12 @@ MatrixRankedPairs
 .. autoclass:: whalrus.MatrixRankedPairs
     :members:
 
+MatrixSchulze
+-------------
+
+.. autoclass:: whalrus.MatrixSchulze
+    :members:
+
 Priority
 ========
 
@@ -375,6 +381,12 @@ RuleRankedPairs
 ---------------
 
 .. autoclass:: whalrus.RuleRankedPairs
+    :members:
+
+RuleSchulze
+-----------
+
+.. autoclass:: whalrus.RuleSchulze
     :members:
 
 RuleSimplifiedDodgson
