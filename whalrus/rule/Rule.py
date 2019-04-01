@@ -117,7 +117,12 @@ class Rule(DeleteCacheMixin):
         :return: the winner of the election. This is the first candidate in :attr:`strict_order_` and also the
             choice of the tie-breaking rule in :attr:`cowinners_`.
         """
-        return self.tie_break.choice(self.cowinners_)
+        if len(self.cowinners_) == 1:
+            # Avoid computing the full order if it is not necessary.
+            return list(self.cowinners_)[0]
+        else:
+            # Ensure that the same tie-break is used as for the order (especially if random tie-break).
+            return self.strict_order_[0]
 
     @cached_property
     def cotrailers_(self) -> NiceSet:
@@ -138,7 +143,12 @@ class Rule(DeleteCacheMixin):
         :return: the "trailer" of the election. This is the last candidate in :attr:`strict_order_` and also the
             unfavorable choice of the tie-breaking rule in :attr:`cotrailers_`.
         """
-        return self.tie_break.choice(self.cotrailers_, reverse=True)
+        if len(self.cotrailers_) == 1:
+            # Avoid computing the full order if it is not necessary.
+            return list(self.cotrailers_)[0]
+        else:
+            # Ensure that the same tie-break is used as for the order (especially if random tie-break).
+            return self.strict_order_[-1]
 
     @cached_property
     def order_(self) -> list:
