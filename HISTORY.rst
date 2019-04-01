@@ -2,6 +2,13 @@
 History
 =======
 
+0.4.1 (2019-04-01)
+------------------
+
+* Fix a bug related to random tie-break.
+* In the arguments of :class:`RuleRankedPairs`, the tie-break can be given directly, instead of having to go through
+  the argument ``matrix``.
+
 0.4.0 (2019-03-29)
 ------------------
 
