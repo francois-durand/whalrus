@@ -20,7 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rule.RuleScoreNumRowSum import RuleScoreNumRowSum
 from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.utils.Utils import cached_property, NiceSet
+from whalrus.utils.Utils import cached_property
 from whalrus.converter_ballot.ConverterBallot import ConverterBallot
 from whalrus.matrix.Matrix import Matrix
 from whalrus.matrix.MatrixRankedPairs import MatrixRankedPairs
@@ -32,7 +32,7 @@ class RuleRankedPairs(RuleScoreNumRowSum):
 
     :param `*args`: cf. parent class.
     :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix: the default is :class:`MatrixRankedPairs`.
+    :param matrix: the default is ``MatrixRankedPairs(tie_break=tie_break)``.
     :param `**kwargs`: cf. parent class.
 
     The score of a candidate is the number of victories in the ranked pairs matrix.
@@ -50,7 +50,11 @@ class RuleRankedPairs(RuleScoreNumRowSum):
         if converter is None:
             converter = ConverterBallotToOrder()
         if matrix is None:
-            matrix = MatrixRankedPairs()
+            tie_break = kwargs.get('tie_break')
+            if tie_break is None:
+                matrix = MatrixRankedPairs()
+            else:
+                matrix = MatrixRankedPairs(tie_break=tie_break)
         super().__init__(*args, converter=converter, matrix=matrix, **kwargs)
 
     @cached_property
