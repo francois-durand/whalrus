@@ -50,6 +50,12 @@ def test_exact_precision():
     assert sum(plurality.scores_.values()) == 1
 
 
+def test_random_tie_break():
+    for i in range(5):
+        rule = RulePlurality(['a', 'b'], tie_break=Priority.RANDOM)
+        assert rule.winner_ == rule.strict_order_[0]
+
+
 def test_old_plurality_unweighted_winner():
     assert RulePlurality(["A", "A", "B", "A", "C"]).winner_ == "A"
     assert RulePlurality(["A", "A", "B", "C", "", "", ""]).winner_ == "A"
