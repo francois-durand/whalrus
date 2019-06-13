@@ -24,6 +24,9 @@ from .priority.Priority import PriorityAbstain
 from .priority.Priority import PriorityAscending
 from .priority.Priority import PriorityDescending
 from .priority.Priority import PriorityRandom
+from .priority.SetPriority import LiftedSetPriority
+from .priority.SetPriority import LiftedSetPriorityLeximax
+from .priority.SetPriority import LiftedSetPriorityLeximin
 
 # Ballots
 from .ballot.Ballot import Ballot
@@ -100,6 +103,10 @@ from .rule.RuleRangeVoting import RuleRangeVoting
 from .rule.RuleSimplifiedDodgson import RuleSimplifiedDodgson
 from .rule.RuleTwoRound import RuleTwoRound
 from .rule.RuleVeto import RuleVeto
+
+# Voting Rules 1: Multiwinner
+from .rule.multiwinner.RuleMultiWinner import RuleMultiWinner
+from .rule.multiwinner.RuleMultiWinnerKBest import RuleMultiWinnerKBest
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
