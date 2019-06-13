@@ -119,3 +119,11 @@ class RuleMultiWinnerKBest(RuleMultiWinner):
                 )
                 return committees
             base_set.update(equivalence_class)
+
+    @cached_property
+    def winner_(self) -> object:
+        return self.tie_break.choice(self.cowinners_)
+
+    @cached_property
+    def trailer_(self) -> object:
+        return self.tie_break.choice(self.cotrailers_, reverse=True)
