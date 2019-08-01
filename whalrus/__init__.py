@@ -109,9 +109,10 @@ from .rule.RuleSimplifiedDodgson import RuleSimplifiedDodgson
 from .rule.RuleTwoRound import RuleTwoRound
 from .rule.RuleVeto import RuleVeto
 
-# Voting Rules 1: Multiwinner
+# Voting Rules 3: Multiwinner
 from .rule.multiwinner.RuleMultiWinner import RuleMultiWinner
 from .rule.multiwinner.RuleMultiWinnerKBest import RuleMultiWinnerKBest
+from .rule.multiwinner.RuleMultiWinnerCC import RuleMultiWinnerCC
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
