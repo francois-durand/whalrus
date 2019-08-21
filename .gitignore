@@ -103,5 +103,5 @@ ENV/
 # PyCharm project settings
 .idea
 
-# Sandbox
-sandbox.ipynb
+# Jupyter files
+*.ipynb
