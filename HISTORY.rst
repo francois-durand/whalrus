@@ -2,6 +2,11 @@
 History
 =======
 
+0.4.2 (2019-08-22)
+------------------
+
+* Minor patch to speed up the computation of the winner in some cases.
+
 0.4.1 (2019-04-01)
 ------------------
 
