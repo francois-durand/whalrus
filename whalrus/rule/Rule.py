@@ -107,6 +107,7 @@ class Rule(DeleteCacheMixin):
             equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that are
             tied for the best score.
         """
+        # N.B.: it is recommended to override this method when it is possible to make computation cheaper.
         return self.order_[0]
 
     @cached_property
@@ -117,12 +118,7 @@ class Rule(DeleteCacheMixin):
         :return: the winner of the election. This is the first candidate in :attr:`strict_order_` and also the
             choice of the tie-breaking rule in :attr:`cowinners_`.
         """
-        if len(self.cowinners_) == 1:
-            # Avoid computing the full order if it is not necessary.
-            return list(self.cowinners_)[0]
-        else:
-            # Ensure that the same tie-break is used as for the order (especially if random tie-break).
-            return self.strict_order_[0]
+        return self.tie_break.choice(self.cowinners_)
 
     @cached_property
     def cotrailers_(self) -> NiceSet:
@@ -133,6 +129,7 @@ class Rule(DeleteCacheMixin):
             equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that
             are tied for the worst score.
         """
+        # N.B.: it is recommended to override this method when it is possible to make computation cheaper.
         return self.order_[-1]
 
     @cached_property
@@ -143,12 +140,16 @@ class Rule(DeleteCacheMixin):
         :return: the "trailer" of the election. This is the last candidate in :attr:`strict_order_` and also the
             unfavorable choice of the tie-breaking rule in :attr:`cotrailers_`.
         """
-        if len(self.cotrailers_) == 1:
-            # Avoid computing the full order if it is not necessary.
-            return list(self.cotrailers_)[0]
-        else:
-            # Ensure that the same tie-break is used as for the order (especially if random tie-break).
-            return self.strict_order_[-1]
+        if len(self.cotrailers_) == self.n_candidates_:
+            # Caution, the winner is in ``self.cotrailers_``...
+            if self.n_candidates_ == 1:
+                # If there is only one candidate, you have no choice.
+                return self.candidates_[0]
+            else:
+                # In other cases, you must be careful not to output the winner (especially for random tie-breaking).
+                return self.tie_break.choice(
+                    [candidate for candidate in self.cotrailers_ if candidate != self.winner_], reverse=True)
+        return self.tie_break.choice(self.cotrailers_, reverse=True)
 
     @cached_property
     def order_(self) -> list:
@@ -166,4 +167,12 @@ class Rule(DeleteCacheMixin):
 
         :return: a list whose first element is the winner, etc. This may use the tie-breaking rule.
         """
-        return [candidate for tie_class in self.order_ for candidate in self.tie_break.sort(tie_class)]
+        strict_order = [candidate for tie_class in self.order_ for candidate in self.tie_break.sort(tie_class)]
+        # Check if this is consistent with ``self.winner_`` and ``self.trailer_`` (especially for random tie-breaking).
+        if strict_order[0] != self.winner_:
+            strict_order.remove(self.winner_)
+            strict_order.insert(0, self.winner_)
+        if strict_order[-1] != self.trailer_:
+            strict_order.remove(self.trailer_)
+            strict_order.append(self.trailer_)
+        return strict_order
