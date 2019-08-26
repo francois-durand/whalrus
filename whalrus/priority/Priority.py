@@ -56,8 +56,8 @@ class Priority:
         Compare two candidates.
 
         :param c: a candidate.
-        :param d: another candidate.
-        :return: 0 if `c = d`, -1 if the tie is broken in favor of `c` over `d`, 1 otherwise.
+        :param d: a candidate.
+        :return: 0 if `c == d`, -1 if the tie is broken in favor of `c` over `d`, 1 otherwise.
         """
         raise NotImplementedError
 
