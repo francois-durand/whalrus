@@ -45,7 +45,7 @@ class BallotVeto(BallotOneName):
         >>> BallotVeto('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'}, priority=Priority.ASCENDING)
         BallotVeto('c', candidates={'b', 'c'})
         """
-        return self.__class__(priority.choice(restricted_candidates, reverse=True), candidates=restricted_candidates)
+        return self.__class__(priority.choose(restricted_candidates, reverse=True), candidates=restricted_candidates)
 
     # First and last candidates
     # =========================
@@ -65,7 +65,7 @@ class BallotVeto(BallotOneName):
         if restricted.candidate is None:
             return None
         top_indifference_class = restricted.candidates_not_in_b
-        return priority.choice(top_indifference_class)
+        return priority.choose(top_indifference_class)
 
     def last(self, candidates: set=None, **kwargs) -> object:
         """

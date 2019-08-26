@@ -148,7 +148,7 @@ class BallotOneName(Ballot):
         Here, it is assumed that `self.candidate` is not in `restricted_candidates`, hence there is really a decision
         to make.
         """
-        return self.__class__(priority.choice(restricted_candidates), candidates=restricted_candidates)
+        return self.__class__(priority.choose(restricted_candidates), candidates=restricted_candidates)
 
     # First and last candidates
     # =========================
@@ -203,4 +203,4 @@ class BallotOneName(Ballot):
         if restricted.candidate is None:
             return None
         bottom_indifference_class = restricted.candidates_not_in_b
-        return priority.choice(bottom_indifference_class, reverse=True)
+        return priority.choose(bottom_indifference_class, reverse=True)

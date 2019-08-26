@@ -280,7 +280,7 @@ class BallotOrder(Ballot):
                 top_indifference_class = {}
         else:
             top_indifference_class = restricted.as_weak_order[0]
-        return priority.choice(top_indifference_class)
+        return priority.choose(top_indifference_class)
 
     def last(self, candidates: set=None, **kwargs) -> object:
         """
@@ -315,7 +315,7 @@ class BallotOrder(Ballot):
             bottom_indifference_class = {}
         else:
             bottom_indifference_class = restricted.as_weak_order[-1]
-        return priority.choice(bottom_indifference_class, reverse=True)
+        return priority.choose(bottom_indifference_class, reverse=True)
 
     # Strict order features (if relevant)
     # ===================================

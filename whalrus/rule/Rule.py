@@ -116,9 +116,9 @@ class Rule(DeleteCacheMixin):
         Winner of the election.
 
         :return: the winner of the election. This is the first candidate in :attr:`strict_order_` and also the
-            choice of the tie-breaking rule in :attr:`cowinners_`.
+            choose of the tie-breaking rule in :attr:`cowinners_`.
         """
-        return self.tie_break.choice(self.cowinners_)
+        return self.tie_break.choose(self.cowinners_)
 
     @cached_property
     def cotrailers_(self) -> NiceSet:
@@ -138,18 +138,18 @@ class Rule(DeleteCacheMixin):
         "Trailer" of the election.
 
         :return: the "trailer" of the election. This is the last candidate in :attr:`strict_order_` and also the
-            unfavorable choice of the tie-breaking rule in :attr:`cotrailers_`.
+            unfavorable choose of the tie-breaking rule in :attr:`cotrailers_`.
         """
         if len(self.cotrailers_) == self.n_candidates_:
             # Caution, the winner is in ``self.cotrailers_``...
             if self.n_candidates_ == 1:
-                # If there is only one candidate, you have no choice.
+                # If there is only one candidate, you have no choose.
                 return self.candidates_[0]
             else:
                 # In other cases, you must be careful not to output the winner (especially for random tie-breaking).
-                return self.tie_break.choice(
+                return self.tie_break.choose(
                     [candidate for candidate in self.cotrailers_ if candidate != self.winner_], reverse=True)
-        return self.tie_break.choice(self.cotrailers_, reverse=True)
+        return self.tie_break.choose(self.cotrailers_, reverse=True)
 
     @cached_property
     def order_(self) -> list:

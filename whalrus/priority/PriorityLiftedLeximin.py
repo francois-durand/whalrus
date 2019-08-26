@@ -19,24 +19,26 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.priority.Priority import Priority
-from whalrus.priority.PriorityCommitteeLifted import PriorityCommitteeLifted
+from whalrus.priority.PriorityLifted import PriorityLifted
 
 
-class PriorityCommitteeLiftedLeximax(PriorityCommitteeLifted):
+class PriorityLiftedLeximin(PriorityLifted):
     """
-    Lexicographic max order (best elements compared first, then second ones, and so on). If one set is included in
+    Lexicographic min order (worst elements compared first, then second ones, and so on). If one set is included in
     another, the shortest is favoured.
 
-    >>> priority = PriorityCommitteeLiftedLeximax(Priority.ASCENDING)
+    >>> priority = PriorityLiftedLeximin(Priority.ASCENDING)
+    >>> print(priority)
+    Leximin(Ascending)
     >>> priority.sort_committees([['a', 'c', 'd'], ['a', 'b', 'e'], ['b', 'c'], ['a', 'b']])
-    [['a', 'b'], ['a', 'b', 'e'], ['a', 'c', 'd'], ['b', 'c']]
+    [['a', 'b'], ['b', 'c'], ['a', 'c', 'd'], ['a', 'b', 'e']]
     """
 
     def __init__(self, base_priority: Priority = Priority.UNAMBIGUOUS):
-        super().__init__(name="Leximax(%s)" % base_priority.name, base_priority=base_priority)
+        super().__init__(name="Leximin(%s)" % base_priority.name, base_priority=base_priority)
 
     def compare_committees(self, s, t) -> int:
-        for c, d in zip(self.base_priority.sort(s), self.base_priority.sort(t)):
+        for c, d in zip(self.base_priority.sort(s, reverse=True), self.base_priority.sort(t, reverse=True)):
             if c != d:
                 return self.base_priority.compare(c, d)
         return len(s) - len(t)

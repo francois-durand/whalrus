@@ -20,12 +20,13 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Union
 from whalrus.priority.Priority import Priority
-from whalrus.priority.PriorityCommittee import PriorityCommittee
 
 
-class PriorityCommitteeLifted(PriorityCommittee):
+class PriorityLifted(Priority):
     """
     A priority setting over committees (= sets of candidates), computed from lifting a priority on candidates.
+
+    For some examples, cf. :class:`PriorityLiftedLeximax`.
     """
 
     def __init__(self, name: str, base_priority: Priority = Priority.UNAMBIGUOUS):
@@ -38,8 +39,8 @@ class PriorityCommitteeLifted(PriorityCommittee):
     def compare(self, c, d) -> int:
         return self.base_priority.compare(c, d)
 
-    def choice(self, x: Union[set, list], reverse: bool = False) -> object:
-        return self.base_priority.choice(x, reverse)
+    def choose(self, x: Union[set, list], reverse: bool = False) -> object:
+        return self.base_priority.choose(x, reverse)
 
     def sort(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:
         return self.base_priority.sort(x, reverse)
