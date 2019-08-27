@@ -33,16 +33,32 @@ def test():
     assert plurality(profile, candidates={'b', 'c', 'd'}).gross_scores_ == {'b': 1, 'c': 1, 'd': 0}
 
 
-def test_order_and_trailers():
+def test_as_a_committee_rule():
     plurality = RulePlurality(
         ballots=['a', 'b', 'c', 'd', 'e'],
         weights=[2, 3, 1, 3, 1],
         tie_break=Priority.ASCENDING
     )
+    # As a single-winner rule
     assert plurality.order_ == [{'b', 'd'}, {'a'}, {'c', 'e'}]
     assert plurality.strict_order_ == ['b', 'd', 'a', 'c', 'e']
     assert plurality.cotrailers_ == {'c', 'e'}
     assert plurality.trailer_ == 'e'
+    assert plurality.cowinners_ == {'b', 'd'}
+    assert plurality.winner_ == 'b'
+    # As a committee rule
+
+    def singleton(c):
+        return frozenset({c})
+    assert plurality.order_on_committees_ == [{singleton('b'), singleton('d')},
+                                              {singleton('a')},
+                                              {singleton('c'), singleton('e')}]
+    assert plurality.strict_order_on_committees_ == [
+        singleton('b'), singleton('d'), singleton('a'), singleton('c'), singleton('e')]
+    assert plurality.cotrailing_committees_ == {singleton('c'), singleton('e')}
+    assert plurality.trailing_committee_ == singleton('e')
+    assert plurality.cowinning_committees_ == {singleton('b'), singleton('d')}
+    assert plurality.winning_committee_ == singleton('b')
 
 
 def test_exact_precision():

@@ -172,6 +172,22 @@ class NiceSet(set):
             return str(set(self))
 
 
+class NiceFrozenSet(frozenset):
+    """
+    An immutable set that prints in order (when the elements are comparable).
+
+    >>> my_set = NiceFrozenSet({'b', 'a', 'c'})
+    >>> my_set
+    {'a', 'b', 'c'}
+    """
+
+    def __repr__(self):
+        try:
+            return '{' + str(sorted(self))[1:-1] + '}'
+        except TypeError:
+            return str(set(self))
+
+
 def dict_to_items(d: dict) -> list:
     """
     Convert a dict to a list of pairs (key, value).
