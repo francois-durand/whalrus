@@ -8,7 +8,7 @@ __version__ = '0.4.2'
 
 # Utils
 from .utils.Utils import cached_property, DeleteCacheMixin, parse_weak_order, set_to_list, set_to_str, dict_to_items, \
-    dict_to_str, NiceSet, NiceFrozenSet, NicePowerSet, NiceDict, my_division, convert_number, take_closest
+    dict_to_str, NiceSet, NiceFrozenSet, NiceDict, my_division, convert_number, take_closest
 
 # Scales
 from .scale.Scale import Scale
@@ -113,6 +113,7 @@ from .rule.RuleVeto import RuleVeto
 # Voting Rules 3: Multi-winner (committee) voting rules
 from .rule_committee.RuleCommittee import RuleCommittee
 from .rule_committee.RuleKBest import RuleKBest
+from .rule_committee.RuleChamberlinCourant import RuleChamberlainCourant
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1

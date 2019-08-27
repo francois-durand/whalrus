@@ -23,7 +23,7 @@ from bisect import bisect_left
 from fractions import Fraction
 from decimal import Decimal
 from numbers import Number
-from functools import cmp_to_key
+from functools import total_ordering
 
 
 def _cache(f):
@@ -157,6 +157,21 @@ def set_to_str(s: set) -> str:
         return str(s)
 
 
+def _lexicographic_cmp(s1, s2):
+    """
+    Compare two sets by lexicographic order.
+
+    :param s1: A set.
+    :param s2: A set.
+    :return: -1, 0 or 1 depending on the comparison.
+    """
+    for a, b in zip(sorted(s1), sorted(s2)):
+        if a != b:
+            return -1 if a < b else 1
+    return len(s1) - len(s2)
+
+
+@total_ordering
 class NiceSet(set):
     """
     A set that prints in order (when the elements are comparable).
@@ -164,6 +179,8 @@ class NiceSet(set):
     >>> my_set = NiceSet({'b', 'a', 'c'})
     >>> my_set
     {'a', 'b', 'c'}
+    >>> NiceSet({'a', 'b'}) < NiceSet({'a', 'c'})
+    True
     """
 
     def __repr__(self):
@@ -172,7 +189,11 @@ class NiceSet(set):
         except TypeError:
             return str(set(self))
 
+    def __lt__(self, other):
+        return True if _lexicographic_cmp(self, other) < 0 else False
 
+
+@total_ordering
 class NiceFrozenSet(frozenset):
     """
     An immutable set that prints in order (when the elements are comparable).
@@ -188,35 +209,8 @@ class NiceFrozenSet(frozenset):
         except TypeError:
             return str(set(self))
 
-
-def _lexicographic_cmp(s1, s2):
-    """
-    Compare two sets by lexicographic order.
-
-    :param s1: A set.
-    :param s2: A set.
-    :return: -1, 0 or 1 depending on the comparison.
-    """
-    for a, b in zip(sorted(s1), sorted(s2)):
-        if a != b:
-            return -1 if a < b else 1
-    return len(s1) - len(s2)
-
-
-class NicePowerSet(set):
-    """
-    A set of sets that prints in lexicographic order (when the elements are comparable).
-
-    >>> my_set = NicePowerSet({NiceFrozenSet({'b'}), NiceFrozenSet({'b', 'a'}), NiceFrozenSet({'c', 'a'})})
-    >>> my_set
-    {{'a', 'b'}, {'a', 'c'}, {'b'}}
-    """
-
-    def __repr__(self):
-        try:
-            return '{' + str(sorted(self, key=cmp_to_key(_lexicographic_cmp)))[1:-1] + '}'
-        except TypeError:
-            return str(set(self))
+    def __lt__(self, other):
+        return True if _lexicographic_cmp(self, other) < 0 else False
 
 
 def dict_to_items(d: dict) -> list:

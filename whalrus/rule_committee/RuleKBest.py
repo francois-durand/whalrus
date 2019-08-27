@@ -18,7 +18,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.utils.Utils import cached_property, NiceSet, NiceFrozenSet, NicePowerSet
+from whalrus.utils.Utils import cached_property, NiceSet, NiceFrozenSet
 from whalrus.priority.Priority import Priority
 from whalrus.rule_committee.RuleCommittee import RuleCommittee
 from whalrus.rule.Rule import Rule
@@ -67,17 +67,17 @@ class RuleKBest(RuleCommittee):
             return super().winning_committee_
 
     @cached_property
-    def cowinning_committees_(self) -> NicePowerSet:
+    def cowinning_committees_(self) -> NiceSet:
         if self.use_base_rule_tie_break:
-            return NicePowerSet({NiceFrozenSet(self.winning_committee_)})
+            return NiceSet({NiceFrozenSet(self.winning_committee_)})
         else:
             base_set = set()
             free_seats = self.committee_size
             for equivalence_class in self.base_rule_.order_:
                 len_class = len(equivalence_class)
                 if len_class >= free_seats:
-                    return NicePowerSet(NiceFrozenSet(base_set.union(subset))
-                                        for subset in combinations(equivalence_class, free_seats))
+                    return NiceSet(NiceFrozenSet(base_set.union(subset))
+                                   for subset in combinations(equivalence_class, free_seats))
                 base_set.update(equivalence_class)
                 free_seats -= len_class
 
@@ -89,17 +89,17 @@ class RuleKBest(RuleCommittee):
             return super().trailing_committee_
 
     @cached_property
-    def cotrailing_committees_(self) -> NicePowerSet:
+    def cotrailing_committees_(self) -> NiceSet:
         if self.use_base_rule_tie_break:
-            return NicePowerSet({NiceFrozenSet(self.trailing_committee_)})
+            return NiceSet({NiceFrozenSet(self.trailing_committee_)})
         else:
             base_set = set()
             free_seats = self.committee_size
             for equivalence_class in self.base_rule_.order_[::-1]:
                 len_class = len(equivalence_class)
                 if len_class >= free_seats:
-                    return NicePowerSet(NiceFrozenSet(base_set.union(subset))
-                                        for subset in combinations(equivalence_class, free_seats))
+                    return NiceSet(NiceFrozenSet(base_set.union(subset))
+                                   for subset in combinations(equivalence_class, free_seats))
                 base_set.update(equivalence_class)
                 free_seats -= len_class
 

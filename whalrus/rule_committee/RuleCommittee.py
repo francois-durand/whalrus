@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import logging
-from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet, NicePowerSet
+from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.profile.Profile import Profile
@@ -99,7 +99,7 @@ class RuleCommittee(DeleteCacheMixin):
         return len(self.candidates_)
 
     @cached_property
-    def cowinning_committees_(self) -> NicePowerSet:
+    def cowinning_committees_(self) -> NiceSet:
         """
         Cowinning committees.
 
@@ -123,7 +123,7 @@ class RuleCommittee(DeleteCacheMixin):
         return self.tie_break.choose_committee(self.cowinning_committees_)
 
     @cached_property
-    def cotrailing_committees_(self) -> NicePowerSet:
+    def cotrailing_committees_(self) -> NiceSet:
         """
         "Cotrailing" committees.
 
@@ -159,7 +159,7 @@ class RuleCommittee(DeleteCacheMixin):
         """
         Result of the election as a (weak) order over the legal committees.
 
-        :return: a list of :class:`NicePowerSet`. The first set contains the committees that are tied for victory, etc.
+        :return: a list of :class:`NiceSet`. The first set contains the committees that are tied for victory, etc.
         """
         raise NotImplementedError
 
