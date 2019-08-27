@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import logging
-from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet
+from whalrus.utils.Utils import DeleteCacheMixin, cached_property, NiceSet, NicePowerSet
 from whalrus.priority.Priority import Priority
 from whalrus.converter_ballot.ConverterBallotGeneral import ConverterBallotGeneral
 from whalrus.profile.Profile import Profile
@@ -99,7 +99,7 @@ class RuleCommittee(DeleteCacheMixin):
         return len(self.candidates_)
 
     @cached_property
-    def cowinning_committees_(self) -> NiceSet:
+    def cowinning_committees_(self) -> NicePowerSet:
         """
         Cowinning committees.
 
@@ -111,7 +111,7 @@ class RuleCommittee(DeleteCacheMixin):
         return self.order_on_committees_[0]
 
     @cached_property
-    def winning_committee_(self) -> object:
+    def winning_committee_(self) -> NiceSet:
         """
         Winning committee.
 
@@ -119,10 +119,11 @@ class RuleCommittee(DeleteCacheMixin):
             :attr:`strict_order_on_committees_` and also the choice of the tie-breaking rule in
             :attr:`cowinning_committees_`.
         """
+        # noinspection PyTypeChecker
         return self.tie_break.choose_committee(self.cowinning_committees_)
 
     @cached_property
-    def cotrailing_committees_(self) -> NiceSet:
+    def cotrailing_committees_(self) -> NicePowerSet:
         """
         "Cotrailing" committees.
 
@@ -134,7 +135,7 @@ class RuleCommittee(DeleteCacheMixin):
         return self.order_on_committees_[-1]
 
     @cached_property
-    def trailing_committee_(self) -> object:
+    def trailing_committee_(self) -> NiceSet:
         """
         "Trailing" committee of the election.
 
@@ -146,9 +147,11 @@ class RuleCommittee(DeleteCacheMixin):
             return list(self.cotrailing_committees_)[0]
         if self.winning_committee_ in self.cotrailing_committees_:
             # Be careful not to output the winner (especially for random tie-breaking).
+            # noinspection PyTypeChecker
             return self.tie_break.choose_committee(
                 [committee for committee in self.cotrailing_committees_ if committee != self.winning_committee_],
                 reverse=True)
+        # noinspection PyTypeChecker
         return self.tie_break.choose_committee(self.cotrailing_committees_, reverse=True)
 
     @cached_property
@@ -156,7 +159,7 @@ class RuleCommittee(DeleteCacheMixin):
         """
         Result of the election as a (weak) order over the legal committees.
 
-        :return: a list of :class:`NiceSet`. The first set contains the committees that are tied for victory, etc.
+        :return: a list of :class:`NicePowerSet`. The first set contains the committees that are tied for victory, etc.
         """
         raise NotImplementedError
 

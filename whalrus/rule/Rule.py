@@ -18,7 +18,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.utils.Utils import cached_property, NiceSet, NiceFrozenSet
+from whalrus.utils.Utils import cached_property, NiceSet, NiceFrozenSet, NicePowerSet
 from whalrus.rule_committee.RuleCommittee import RuleCommittee
 
 
@@ -111,24 +111,24 @@ class Rule(RuleCommittee):
     # Methods to ensure compatibility with parent class RuleCommittee
 
     @cached_property
-    def cowinning_committees_(self) -> NiceSet:
-        return NiceSet({NiceFrozenSet({candidate}) for candidate in self.cowinners_})
+    def cowinning_committees_(self) -> NicePowerSet:
+        return NicePowerSet({NiceFrozenSet({candidate}) for candidate in self.cowinners_})
 
     @cached_property
-    def winning_committee_(self) -> object:
+    def winning_committee_(self) -> NiceSet:
         return NiceSet({self.winner_})
 
     @cached_property
-    def cotrailing_committees_(self) -> NiceSet:
-        return NiceSet({NiceFrozenSet({candidate}) for candidate in self.cotrailers_})
+    def cotrailing_committees_(self) -> NicePowerSet:
+        return NicePowerSet({NiceFrozenSet({candidate}) for candidate in self.cotrailers_})
 
     @cached_property
-    def trailing_committee_(self) -> object:
+    def trailing_committee_(self) -> NiceSet:
         return NiceSet({self.trailer_})
 
     @cached_property
     def order_on_committees_(self) -> list:
-        return [NiceSet({NiceFrozenSet({candidate}) for candidate in tie_class}) for tie_class in self.order_]
+        return [NicePowerSet({NiceFrozenSet({candidate}) for candidate in tie_class}) for tie_class in self.order_]
 
     @cached_property
     def strict_order_on_committees_(self) -> list:

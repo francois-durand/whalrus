@@ -23,6 +23,7 @@ from bisect import bisect_left
 from fractions import Fraction
 from decimal import Decimal
 from numbers import Number
+from functools import cmp_to_key
 
 
 def _cache(f):
@@ -184,6 +185,36 @@ class NiceFrozenSet(frozenset):
     def __repr__(self):
         try:
             return '{' + str(sorted(self))[1:-1] + '}'
+        except TypeError:
+            return str(set(self))
+
+
+def _lexicographic_cmp(s1, s2):
+    """
+    Compare two sets by lexicographic order.
+
+    :param s1: A set.
+    :param s2: A set.
+    :return: -1, 0 or 1 depending on the comparison.
+    """
+    for a, b in zip(sorted(s1), sorted(s2)):
+        if a != b:
+            return -1 if a < b else 1
+    return len(s1) - len(s2)
+
+
+class NicePowerSet(set):
+    """
+    A set of sets that prints in lexicographic order (when the elements are comparable).
+
+    >>> my_set = NicePowerSet({NiceFrozenSet({'b'}), NiceFrozenSet({'b', 'a'}), NiceFrozenSet({'c', 'a'})})
+    >>> my_set
+    {{'a', 'b'}, {'a', 'c'}, {'b'}}
+    """
+
+    def __repr__(self):
+        try:
+            return '{' + str(sorted(self, key=cmp_to_key(_lexicographic_cmp)))[1:-1] + '}'
         except TypeError:
             return str(set(self))
 
