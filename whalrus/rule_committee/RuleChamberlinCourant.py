@@ -28,12 +28,15 @@ from itertools import combinations
 
 
 class RuleChamberlainCourant(RuleCommittee):
+    # noinspection PyUnresolvedReferences
     """
     A multi-winner rule that select the best committee according to Chamberlin-Courant's voting rule.
 
     :param committee_size: the number of candidates that will be elected in the committee.
     :param scorer: the scorer used to compute the value of the representative candidate for each voter (default:
         :class:`ScorerBorda`).
+    :param committee_legality_function: a function that maps a committee to a Boolean, indicating whether the committee
+        is authorized or not. This can be used, for example, to ensure gender balance (cf. example below).
 
     Each possible committee is assigned a score in the following way: each voter gives the committee a number of points
     equal to her score (in the sense of the scorer) for her most liked candidate in the committee. The committee with
@@ -59,19 +62,40 @@ class RuleChamberlainCourant(RuleCommittee):
     {{'b', 'd'}, {'c', 'd'}}
     >>> cc.trailing_committee_
     {'c', 'd'}
+
+    >>> def gender_balance(committee):
+    ...     return abs(sum([candidate[1] == 'Male' for candidate in committee])
+    ...                - sum([candidate[1] == 'Female' for candidate in committee])) <= 1
+    >>> a, b, c, d = ('a', 'Female'), ('b', 'Male'), ('c', 'Male'), ('d', 'Female')
+    >>> cc = RuleChamberlainCourant([[a, b, c, d], [d, b, a, c], [a, b, c, d]], committee_size=2,
+    ...                             committee_legality_function=gender_balance)
+    >>> cc.winning_committee_
+    {('a', 'Female'), ('b', 'Male')}
     """
 
-    def __init__(self, *args, committee_size: int, scorer: Scorer = None, **kwargs):
+    def __init__(self, *args, committee_size: int = None, scorer: Scorer = None,
+                 committee_legality_function=None, **kwargs):
         # Default
         if scorer is None:
             scorer = ScorerBorda()
+        if committee_legality_function is None:
+            # noinspection PyUnusedLocal
+            def committee_legality_function(committee):
+                return True
         # Parameters
         self.committee_size = committee_size
         self.scorer = scorer
+        self.committee_legality_function = committee_legality_function
         super().__init__(*args, **kwargs)
 
     def _all_committees(self):
-        yield from (NiceFrozenSet(s) for s in combinations(self.candidates_, self.committee_size))
+        if self.committee_size is None:
+            possible_sizes = range(1, self.n_candidates_ + 1)
+        else:
+            possible_sizes = [self.committee_size]
+        yield from (NiceFrozenSet(s)
+                    for k in possible_sizes for s in combinations(self.candidates_, k)
+                    if self.committee_legality_function(s))
 
     def _cc_score(self, committee):
         return sum(self.scorer(ballot=ballot, candidates=self.candidates_).scores_[ballot.restrict(committee).first()]
