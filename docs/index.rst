@@ -14,7 +14,7 @@ Welcome to Whalrus' documentation!
    installation
    usage
    tutorial
-   reference
+   reference/index
    contributing
    authors
    history
