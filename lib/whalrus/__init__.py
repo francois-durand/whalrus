@@ -105,8 +105,3 @@ from .rule.RuleSchulze import RuleSchulze
 from .rule.RuleSimplifiedDodgson import RuleSimplifiedDodgson
 from .rule.RuleTwoRound import RuleTwoRound
 from .rule.RuleVeto import RuleVeto
-
-# Examples of documentation
-from .SubPackage1.MyClass1 import MyClass1
-from .SubPackage2.MyClass2 import MyClass2
-from .SubPackage2.MyClass3 import MyClass3
