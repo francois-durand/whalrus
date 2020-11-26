@@ -2,6 +2,12 @@
 History
 =======
 
+---------------------------------------------------
+0.4.5 (2020-11-26): Fix Missing Files in Deployment
+---------------------------------------------------
+
+* Files from some sub-packages, such as ``scale``, were missing. This release fixes that bug.
+
 ---------------------------------------
 0.4.4 (2020-11-26): Fix PyPI deployment
 ---------------------------------------
