@@ -96,13 +96,13 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.4.2 (2019-08-22)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.4.1 (2019-04-01)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.4.0 (2019-03-29)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.3.0 (2019-03-29)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">0.2.1 (2019-03-28)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">0.2.0 (2019-03-21)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">0.1.0 (2018-03-13)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#speeding-up">0.4.2 (2019-08-22): Speeding Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tie-breaking">0.4.1 (2019-04-01): Tie-breaking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schulze">0.4.0 (2019-03-29): Schulze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ranked-pairs">0.3.0 (2019-03-29): Ranked Pairs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimize-argument-passing">0.2.1 (2019-03-28): Optimize argument passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#classic-voting-systems">0.2.0 (2019-03-21): Classic voting systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#first-release">0.1.0 (2018-03-13): First release</a></li>
 </ul>
 </li>
 </ul>
@@ -196,46 +196,46 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>0.4.2 (2019-08-22)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="speeding-up">
+<h2>0.4.2 (2019-08-22): Speeding Up<a class="headerlink" href="#speeding-up" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Minor patch to speed up the computation of the winner in some cases.</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>0.4.1 (2019-04-01)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tie-breaking">
+<h2>0.4.1 (2019-04-01): Tie-breaking<a class="headerlink" href="#tie-breaking" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Fix a bug related to random tie-break.</p></li>
 <li><p>In the arguments of class <code class="docutils literal notranslate"><span class="pre">RuleRankedPairs</span></code>, the tie-break can be given directly, instead of having to go through
 the argument <code class="docutils literal notranslate"><span class="pre">matrix</span></code>.</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>0.4.0 (2019-03-29)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="schulze">
+<h2>0.4.0 (2019-03-29): Schulze<a class="headerlink" href="#schulze" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Implement Schulze rule.</p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>0.3.0 (2019-03-29)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ranked-pairs">
+<h2>0.3.0 (2019-03-29): Ranked Pairs<a class="headerlink" href="#ranked-pairs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Implement Ranked Pairs rule.</p></li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h2>0.2.1 (2019-03-28)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="optimize-argument-passing">
+<h2>0.2.1 (2019-03-28): Optimize argument passing<a class="headerlink" href="#optimize-argument-passing" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Optimize argument passing between child classes, their parent classes and their <code class="docutils literal notranslate"><span class="pre">__call__</span></code> function.</p></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2>0.2.0 (2019-03-21)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classic-voting-systems">
+<h2>0.2.0 (2019-03-21): Classic voting systems<a class="headerlink" href="#classic-voting-systems" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>First “real” release, where most classic voting systems are implemented.</p></li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h2>0.1.0 (2018-03-13)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="first-release">
+<h2>0.1.0 (2018-03-13): First release<a class="headerlink" href="#first-release" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>First release on PyPI.</p></li>
 </ul>
