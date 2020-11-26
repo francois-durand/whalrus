@@ -39,8 +39,8 @@ Credits
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
-We use the checklist provided by `My Toy Package`_.
+We use the checklist provided by `Package Helper 2`_.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-.. _`My Toy Package`: https://my-toy-package.readthedocs.io/en/latest/readme.html
+.. _`Package Helper 2`: https://package-helper-2.readthedocs.io/
