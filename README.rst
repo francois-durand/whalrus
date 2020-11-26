@@ -27,12 +27,13 @@ Which Alternative Represents Us, a package for voting rules
 * Free software: GNU General Public License v3
 * Documentation: https://francois-durand.github.io/whalrus/.
 
-
+--------
 Features
 --------
 
 * TODO
 
+-------
 Credits
 -------
 
