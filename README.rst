@@ -5,19 +5,19 @@ Whalrus
 
 .. image:: https://img.shields.io/pypi/v/whalrus.svg
         :target: https://pypi.python.org/pypi/whalrus
-        :alt: Version released on PyPI
+        :alt: PyPI Status
 
-.. image:: https://img.shields.io/travis/francois-durand/whalrus.svg
-        :target: https://travis-ci.org/francois-durand/whalrus
-        :alt: Build on Travis CI
+.. image:: https://github.com/francois-durand/whalrus/workflows/build/badge.svg?branch=master
+        :target: https://github.com/francois-durand/whalrus/actions?query=workflow%3Abuild
+        :alt: Build Status
 
-.. image:: https://readthedocs.org/projects/whalrus/badge/?version=latest
-        :target: https://whalrus.readthedocs.io/en/latest/?badge=latest
+.. image:: https://github.com/francois-durand/whalrus/workflows/docs/badge.svg?branch=master
+        :target: https://github.com/francois-durand/whalrus/actions?query=workflow%3Adocs
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/francois-durand/whalrus/shield.svg
-     :target: https://pyup.io/repos/github/francois-durand/whalrus/
-     :alt: Updates
+.. image:: https://codecov.io/gh/francois-durand/whalrus/branch/master/graphs/badge.svg
+        :target: https://codecov.io/gh/francois-durand/whalrus/branch/master/graphs
+        :alt: Code Coverage
 
 
 
@@ -25,7 +25,7 @@ Which Alternative Represents Us, a package for voting rules
 
 
 * Free software: GNU General Public License v3
-* Documentation: https://whalrus.readthedocs.io .
+* Documentation: https://francois-durand.github.io/whalrus/.
 
 
 Features
