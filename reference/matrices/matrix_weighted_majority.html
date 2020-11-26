@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MatrixWeightedMajority &mdash; Whalrus 0.4.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Priority" href="../priorities/index.html" />
+    <link rel="prev" title="MatrixSchulze" href="matrix_schulze.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ballots/index.html">Ballot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters_ballot/index.html">ConverterBallot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../eliminations/index.html">Elimination</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Matrix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="matrix_majority.html">MatrixMajority</a></li>
+<li class="toctree-l3"><a class="reference internal" href="matrix_ranked_pairs.html">MatrixRankedPairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="matrix_schulze.html">MatrixSchulze</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MatrixWeightedMajority</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../priorities/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profiles/index.html">Profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rules_in_general/index.html">Rule: In General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rules_in_particular/index.html">Rule: In Particular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scales/index.html">Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scorers/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Util Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Matrix</a> &raquo;</li>
+        
+      <li>MatrixWeightedMajority</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/matrices/matrix_weighted_majority.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="matrixweightedmajority">
+<h1>MatrixWeightedMajority<a class="headerlink" href="#matrixweightedmajority" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="whalrus.MatrixWeightedMajority">
+<em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">MatrixWeightedMajority</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">converter</span><span class="p">:</span> <span class="n">whalrus.converters_ballot.converter_ballot.ConverterBallot</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">higher_vs_lower</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">lower_vs_higher</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">indifference</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">Fraction(1, 2)</span></em>, <em class="sig-param"><span class="n">ordered_vs_unordered</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">unordered_vs_ordered</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">unordered_vs_unordered</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">Fraction(1, 2)</span></em>, <em class="sig-param"><span class="n">ordered_vs_absent</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">absent_vs_ordered</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">unordered_vs_absent</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">absent_vs_unordered</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">absent_vs_absent</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>numbers.Number<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">diagonal_score</span><span class="p">:</span> <span class="n">numbers.Number</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">default_score</span><span class="p">:</span> <span class="n">numbers.Number</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">antisymmetric</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/matrices/matrix_weighted_majority.html#MatrixWeightedMajority"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.MatrixWeightedMajority" title="Permalink to this definition">¶</a></dt>
+<dd><p>The weighted majority matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – cf. parent class.</p></li>
+<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
+<li><p><strong>higher_vs_lower</strong> – number of points for candidate <cite>c</cite> when it is ordered higher than candidate <cite>d</cite>.</p></li>
+<li><p><strong>lower_vs_higher</strong> – number of points for candidate <cite>c</cite> when it is ordered lower than candidate <cite>d</cite>.</p></li>
+<li><p><strong>indifference</strong> – number of points for candidate <cite>c</cite> when it is ordered and tied with candidate <cite>d</cite>.</p></li>
+<li><p><strong>ordered_vs_unordered</strong> – number of points for candidate <cite>c</cite> when it is ordered and <cite>d</cite> is unordered.</p></li>
+<li><p><strong>unordered_vs_ordered</strong> – number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is ordered.</p></li>
+<li><p><strong>unordered_vs_unordered</strong> – number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is unordered.</p></li>
+<li><p><strong>ordered_vs_absent</strong> – number of points for candidate <cite>c</cite> when it is ordered and <cite>d</cite> is absent.</p></li>
+<li><p><strong>absent_vs_ordered</strong> – number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is ordered.</p></li>
+<li><p><strong>unordered_vs_absent</strong> – number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is absent.</p></li>
+<li><p><strong>absent_vs_unordered</strong> – number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is unordered.</p></li>
+<li><p><strong>absent_vs_absent</strong> – number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is absent.</p></li>
+<li><p><strong>diagonal_score</strong> – value of the diagonal coefficients.</p></li>
+<li><p><strong>default_score</strong> – default score in the matrix in case of division by 0 (except for the diagonal coefficients).</p></li>
+<li><p><strong>antisymmetric</strong> – if True, then an antisymmetric version of the matrix is computed (by subtracting the
+transposed matrix at the end of the computation).</p></li>
+<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+</ul>
+</dd>
+</dl>
+<p>In the most general syntax, firstly, you define the matrix computation algorithm:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span> <span class="o">=</span> <span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">diagonal_score</span><span class="o">=.</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Secondly, you use it as a callable to load a particular election (profile, candidates):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;b &gt; a&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">voters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">],</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">})</span>  
+<span class="go">&lt;... object at ...&gt;</span>
+</pre></div>
+</div>
+<p>Finally, you can access the computed variables:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="o">.</span><span class="n">as_array_</span>
+<span class="go">array([[Fraction(1, 2), Fraction(3, 4)],</span>
+<span class="go">       [Fraction(1, 4), Fraction(1, 2)]], dtype=object)</span>
+</pre></div>
+</div>
+<p>Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.</p>
+<p>Optionally, you can specify an election (profile and candidates) as soon as the <a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> object is
+initialized. This allows for “one-liners” such as:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;b &gt; a&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">voters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span> <span class="n">diagonal_score</span><span class="o">=.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">as_array_</span>
+<span class="go">array([[Fraction(1, 2), Fraction(3, 4)],</span>
+<span class="go">       [Fraction(1, 4), Fraction(1, 2)]], dtype=object)</span>
+</pre></div>
+</div>
+<p>Antisymmetric version:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;b &gt; a&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">voters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span> <span class="n">antisymmetric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">as_array_</span>
+<span class="go">array([[0, Fraction(1, 2)],</span>
+<span class="go">       [Fraction(-1, 2), 0]], dtype=object)</span>
+</pre></div>
+</div>
+<p>An “unordered” candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the
+attribute <a class="reference internal" href="../ballots/ballot_order.html#whalrus.BallotOrder.candidates_not_in_b" title="whalrus.BallotOrder.candidates_not_in_b"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BallotOrder.candidates_not_in_b</span></code></a> of the ballot. An “absent” candidate is a candidate that the
+voter has not even seen; i.e. it is in <code class="docutils literal notranslate"><span class="pre">self.candidates_</span></code>, but not the attribute <a class="reference internal" href="../ballots/ballot.html#whalrus.Ballot.candidates" title="whalrus.Ballot.candidates"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Ballot.candidates</span></code></a> of the
+ballot. For all the “scoring” parameters (from <code class="docutils literal notranslate"><span class="pre">higher_vs_lower</span></code> to <code class="docutils literal notranslate"><span class="pre">absent_vs_absent</span></code>), the value None can
+be used. In that case, the corresponding occurrences are not taken into account in the average (neither the
+numerator, not the denominator). Consider this example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ballots</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;a ~ b&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">indifference=Fraction(1,</span> <span class="pre">2)</span></code> (default), the ratio of voters who prefer <cite>a</cite> to <cite>b</cite> is
+(1 + 1 / 2) / 2 = 3 / 4 (the indifferent voter gives 1 / 2 point and is counted in the denominator):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="p">)</span><span class="o">.</span><span class="n">as_array_</span>
+<span class="go">array([[0, Fraction(3, 4)],</span>
+<span class="go">       [Fraction(1, 4), 0]], dtype=object)</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">indifference=0</span></code>, the ratio of voters who prefer <cite>a</cite> to <cite>b</cite> is 1 / 2 (the indifferent voter
+gives no point, but is counted in the denominator):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="p">,</span> <span class="n">indifference</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_array_</span>
+<span class="go">array([[0, Fraction(1, 2)],</span>
+<span class="go">       [0, 0]], dtype=object)</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">indifference=None</span></code>, the ratio of voters who prefer <cite>a</cite> to <cite>b</cite> is 1 / 1 = 1 (the indifferent voter is not
+counted in the average at all):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="p">,</span> <span class="n">indifference</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">as_array_</span>
+<span class="go">array([[0, 1],</span>
+<span class="go">       [0, 0]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="whalrus.MatrixWeightedMajority.as_array_">
+<em class="property">property </em><code class="sig-name descname">as_array_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.as_array_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The matrix, as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a numpy array. Each row and each column corresponds to a candidate (in the order of
+<a class="reference internal" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="whalrus.MatrixWeightedMajority.candidates_as_list_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_as_list_</span></code></a>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.MatrixWeightedMajority.as_array_of_floats_">
+<em class="property">property </em><code class="sig-name descname">as_array_of_floats_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.as_array_of_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The matrix, as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.MatrixWeightedMajority.as_array_" title="whalrus.MatrixWeightedMajority.as_array_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code></a>, converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.MatrixWeightedMajority.candidates_as_list_">
+<em class="property">property </em><code class="sig-name descname">candidates_as_list_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a list. Candidates are sorted if possible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.MatrixWeightedMajority.candidates_indexes_">
+<em class="property">property </em><code class="sig-name descname">candidates_indexes_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.candidates_indexes_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The candidates as a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary. To each candidate, it associates its index in <a class="reference internal" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="whalrus.MatrixWeightedMajority.candidates_as_list_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_as_list_</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.MatrixWeightedMajority.gross_">
+<em class="property">property </em><code class="sig-name descname">gross_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.gross_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The “gross” matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (used as
+numerator in the average).</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whalrus</span> <span class="kn">import</span> <span class="n">MatrixWeightedMajority</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;a ~ b&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">gross_</span>
+<span class="go">{(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): Fraction(5, 2), (&#39;b&#39;, &#39;a&#39;): Fraction(1, 2), (&#39;b&#39;, &#39;b&#39;): 0}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.MatrixWeightedMajority.weights_">
+<em class="property">property </em><code class="sig-name descname">weights_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.weights_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The matrix of weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a NiceDict. Keys are pairs of candidates. Each coefficient is the total weight (used as
+denominator in the average).</p>
+</dd>
+</dl>
+<p>In most usual cases, all non-diagonal coefficients are equal, and are equal to the total weight of all voters:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whalrus</span> <span class="kn">import</span> <span class="n">MatrixWeightedMajority</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;a ~ b&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">weights_</span>
+<span class="go">{(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 3, (&#39;b&#39;, &#39;a&#39;): 3, (&#39;b&#39;, &#39;b&#39;): 0}</span>
+</pre></div>
+</div>
+<p>However, if some scoring parameters are None, some weights can be lower than the total weight of all voters:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whalrus</span> <span class="kn">import</span> <span class="n">MatrixWeightedMajority</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;a ~ b&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">indifference</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">weights_</span>
+<span class="go">{(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 2, (&#39;b&#39;, &#39;a&#39;): 2, (&#39;b&#39;, &#39;b&#39;): 0}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../priorities/index.html" class="btn btn-neutral float-right" title="Priority" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="matrix_schulze.html" class="btn btn-neutral float-left" title="MatrixSchulze" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

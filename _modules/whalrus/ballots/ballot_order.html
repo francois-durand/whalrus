@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.ballots.ballot_order &mdash; Whalrus 0.4.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.ballots.ballot_order</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.ballots.ballot_order</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand</span>
+<span class="sd">sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com</span>
+
+<span class="sd">This file is part of Whalrus.</span>
+
+<span class="sd">Whalrus is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">Whalrus is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with Whalrus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">whalrus.ballots.ballot</span> <span class="kn">import</span> <span class="n">Ballot</span>
+<span class="kn">from</span> <span class="nn">whalrus.utils.utils</span> <span class="kn">import</span> <span class="n">parse_weak_order</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">set_to_list</span><span class="p">,</span> <span class="n">NiceSet</span>
+<span class="kn">from</span> <span class="nn">whalrus.priorities.priority</span> <span class="kn">import</span> <span class="n">Priority</span>
+
+
+<div class="viewcode-block" id="BallotOrder"><a class="viewcode-back" href="../../../reference/ballots/ballot_order.html#whalrus.BallotOrder">[docs]</a><span class="k">class</span> <span class="nc">BallotOrder</span><span class="p">(</span><span class="n">Ballot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ballot with an ordering.</span>
+
+<span class="sd">    :param b: the ballot. Cf. examples below for the accepted formats.</span>
+<span class="sd">    :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:</span>
+<span class="sd">        candidates that are explicitly mentioned in the ballot :attr:`b`.</span>
+
+<span class="sd">    Most general syntax:</span>
+
+<span class="sd">    &gt;&gt;&gt; ballot = BallotOrder([{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">    &gt;&gt;&gt; ballot</span>
+<span class="sd">    BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">    &gt;&gt;&gt; print(ballot)</span>
+<span class="sd">    a ~ b &gt; c (unordered: d, e)</span>
+
+<span class="sd">    In the example above, candidates `a` and `b` are equally liked, and they are liked better than `c`. Candidates</span>
+<span class="sd">    `d` and `e` were available when the voter cast her ballot, but she chose not to include them in her preference</span>
+<span class="sd">    order.</span>
+
+<span class="sd">    Other examples of inputs:</span>
+
+<span class="sd">    &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;)</span>
+<span class="sd">    BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">    &gt;&gt;&gt; BallotOrder({&#39;a&#39;: 10, &#39;b&#39;: 10, &#39;c&#39;: 7})</span>
+<span class="sd">    BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+
+<span class="sd">    The ballot has a set-like behavior in the sense that it implements ``__len__`` and ``__contains__``:</span>
+
+<span class="sd">    &gt;&gt;&gt; ballot = BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">    &gt;&gt;&gt; len(ballot)</span>
+<span class="sd">    3</span>
+<span class="sd">    &gt;&gt;&gt; &#39;d&#39; in ballot</span>
+<span class="sd">    False</span>
+
+<span class="sd">    If the order is strict, then the ballot is also iterable:</span>
+
+<span class="sd">    &gt;&gt;&gt; ballot = BallotOrder(&#39;a &gt; b &gt; c&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; for candidate in ballot:</span>
+<span class="sd">    ...     print(candidate)</span>
+<span class="sd">    a</span>
+<span class="sd">    b</span>
+<span class="sd">    c</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Core features: ballot and candidates</span>
+    <span class="c1"># ====================================</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_input_candidates</span> <span class="o">=</span> <span class="n">candidates</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assign `self._internal_representation`.</span>
+
+<span class="sd">        :param b: the ballot in a loose input format (cf. documentation of the class and unit tests).</span>
+
+<span class="sd">        The form of `self._internal_representation` may depend on the subclass. For the mother class `BallotOrder`,</span>
+<span class="sd">        it is of the form [{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}], meaning a ~ b &gt; c. It is used directly for self.as_weak_order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span> <span class="o">=</span> <span class="p">[</span><span class="n">NiceSet</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span> <span class="k">else</span> <span class="n">NiceSet</span><span class="p">({</span><span class="n">s</span><span class="p">})</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">b</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span> <span class="o">=</span> <span class="p">[</span><span class="n">NiceSet</span><span class="p">({</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">})</span>
+                                             <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span> <span class="o">=</span> <span class="n">parse_weak_order</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Cannot interpret as an order: </span><span class="si">%r</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">as_weak_order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Weak order format.</span>
+
+<span class="sd">        :return: a list of sets. For example, ``[{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}]`` means that `a` and `b` are equally liked, and</span>
+<span class="sd">            they are liked better than `c`.</span>
+
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).as_weak_order</span>
+<span class="sd">        [{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_in_b</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The candidates that are explicitly mentioned in the ballot.</span>
+
+<span class="sd">        :return: a set of candidates.</span>
+
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).candidates_in_b</span>
+<span class="sd">        {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NiceSet</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">indifference_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">indifference_class</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The candidates.</span>
+
+<span class="sd">        :return: a set of candidates. If the set was not explicitly given, the candidates are inferred from the ballot.</span>
+
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).candidates</span>
+<span class="sd">        {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;).candidates</span>
+<span class="sd">        {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_in_b</span>
+        <span class="k">return</span> <span class="n">NiceSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_candidates</span><span class="p">)</span>
+
+    <span class="c1"># Misc</span>
+    <span class="c1"># ====</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_not_in_b</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.</span>
+
+<span class="sd">        :return: a set of candidates.</span>
+
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).candidates_not_in_b</span>
+<span class="sd">        {&#39;d&#39;, &#39;e&#39;}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NiceSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_in_b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Number of candidates explicitly mentioned in the ballot.</span>
+
+<span class="sd">        :return: the length of self.candidates_in_b.</span>
+
+<span class="sd">        &gt;&gt;&gt; len(BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}))</span>
+<span class="sd">        3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_in_b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether a candidate is explicitly mentioned in the ballot.</span>
+
+<span class="sd">        :param item: a candidate.</span>
+<span class="sd">        :return: True iff she is explicitly mentioned in the ballot.</span>
+
+<span class="sd">        &gt;&gt;&gt; &#39;d&#39; in BallotOrder(&#39;a ~ b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">        False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_in_b</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># noinspection PyProtectedMember,PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">candidates</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_internal_representation</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span><span class="p">))</span>
+
+    <span class="c1"># Representation</span>
+    <span class="c1"># ==============</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;BallotOrder(</span><span class="si">%s</span><span class="s1">, candidates=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="nb">repr</span><span class="p">(</span><span class="n">indifference_class</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indifference_class</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">indifference_class</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">indifference_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span>
+            <span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span>
+            <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_in_b</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &gt; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="s1">&#39; ~ &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">set_to_list</span><span class="p">(</span><span class="n">indifference_class</span><span class="p">)])</span>
+                <span class="k">for</span> <span class="n">indifference_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span>
+            <span class="p">]))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_not_in_b</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s1">&#39;(unordered: &#39;</span>
+                <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">set_to_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_not_in_b</span><span class="p">)])</span>
+                <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="c1"># Restrict the ballot</span>
+    <span class="c1"># ===================</span>
+
+<div class="viewcode-block" id="BallotOrder.restrict"><a class="viewcode-back" href="../../../reference/ballots/ballot_order.html#whalrus.BallotOrder.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;BallotOrder&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Typical usage:</span>
+
+<span class="sd">        &gt;&gt;&gt; ballot = BallotOrder(&#39;a ~ b &gt; c&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; ballot</span>
+<span class="sd">        BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; ballot.restrict(candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        BallotOrder([&#39;b&#39;, &#39;c&#39;], candidates={&#39;b&#39;, &#39;c&#39;})</span>
+
+<span class="sd">        More general usage:</span>
+
+<span class="sd">        &gt;&gt;&gt; ballot.restrict(candidates={&#39;b&#39;, &#39;c&#39;, &#39;d&#39;})</span>
+<span class="sd">        BallotOrder([&#39;b&#39;, &#39;c&#39;], candidates={&#39;b&#39;, &#39;c&#39;})</span>
+
+<span class="sd">        In the last example above, note that `d` is not in the candidates of the restricted ballot, as she was not</span>
+<span class="sd">        available at the moment when the voter cast her ballot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;restrict() got an unexpected keyword argument </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="n">weak</span> <span class="o">=</span> <span class="p">[</span><span class="n">indifference_class</span> <span class="o">&amp;</span> <span class="n">candidates</span> <span class="k">for</span> <span class="n">indifference_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">]</span>
+        <span class="n">weak</span> <span class="o">=</span> <span class="p">[</span><span class="n">indifference_class</span> <span class="k">for</span> <span class="n">indifference_class</span> <span class="ow">in</span> <span class="n">weak</span> <span class="k">if</span> <span class="n">indifference_class</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">BallotOrder</span><span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span> <span class="o">&amp;</span> <span class="n">candidates</span><span class="p">)</span></div>
+
+    <span class="c1"># First and last candidates</span>
+    <span class="c1"># =========================</span>
+
+<div class="viewcode-block" id="BallotOrder.first"><a class="viewcode-back" href="../../../reference/ballots/ballot_order.html#whalrus.BallotOrder.first">[docs]</a>    <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The first (= most liked) candidate.</span>
+
+<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
+<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
+<span class="sd">        :param kwargs:</span>
+<span class="sd">            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
+<span class="sd">            * `include_unordered`: a boolean. If True (default), then unordered candidates are considered present but</span>
+<span class="sd">              below the others.</span>
+<span class="sd">        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument</span>
+<span class="sd">            ``candidates``. Can return None for an &quot;abstention&quot;.</span>
+
+<span class="sd">        &gt;&gt;&gt; print(BallotOrder(&#39;a ~ b&#39;).first(priority=Priority.ASCENDING))</span>
+<span class="sd">        a</span>
+<span class="sd">        &gt;&gt;&gt; print(BallotOrder(&#39;a &gt; b&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first(candidates={&#39;c&#39;}))</span>
+<span class="sd">        c</span>
+<span class="sd">        &gt;&gt;&gt; print(BallotOrder(&#39;a &gt; b&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first(candidates={&#39;c&#39;},</span>
+<span class="sd">        ...                                                              include_unordered=False))</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>
+        <span class="n">include_unordered</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;include_unordered&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;first() got an unexpected keyword argument </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Do the job</span>
+        <span class="n">restricted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">restricted</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">include_unordered</span><span class="p">:</span>
+                <span class="n">top_indifference_class</span> <span class="o">=</span> <span class="n">restricted</span><span class="o">.</span><span class="n">candidates_not_in_b</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">top_indifference_class</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">top_indifference_class</span> <span class="o">=</span> <span class="n">restricted</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">priority</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">top_indifference_class</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BallotOrder.last"><a class="viewcode-back" href="../../../reference/ballots/ballot_order.html#whalrus.BallotOrder.last">[docs]</a>    <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The last (= most disliked) candidate.</span>
+
+<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
+<span class="sd">            ``self.candidates``). Default is ``self.candidates``.</span>
+<span class="sd">        :param kwargs:</span>
+<span class="sd">            * `priority`: a :class:`Priority` object. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
+<span class="sd">            * `include_unordered`: a boolean. If True (default), then unordered candidates are considered present but</span>
+<span class="sd">              below the others.</span>
+<span class="sd">        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the</span>
+<span class="sd">            argument ``candidates``. Can return None for an &quot;abstention&quot;.</span>
+
+<span class="sd">        &gt;&gt;&gt; print(BallotOrder(&#39;a ~ b&#39;).last(priority=Priority.ASCENDING))</span>
+<span class="sd">        b</span>
+<span class="sd">        &gt;&gt;&gt; print(BallotOrder(&#39;a &gt; b&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last())</span>
+<span class="sd">        c</span>
+<span class="sd">        &gt;&gt;&gt; print(BallotOrder(&#39;a &gt; b&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last(include_unordered=False))</span>
+<span class="sd">        b</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>
+        <span class="n">include_unordered</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;include_unordered&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;last() got an unexpected keyword argument </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Do the job</span>
+        <span class="n">restricted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">include_unordered</span> <span class="ow">and</span> <span class="n">restricted</span><span class="o">.</span><span class="n">candidates_not_in_b</span><span class="p">:</span>
+            <span class="n">bottom_indifference_class</span> <span class="o">=</span> <span class="n">restricted</span><span class="o">.</span><span class="n">candidates_not_in_b</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">restricted</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">bottom_indifference_class</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bottom_indifference_class</span> <span class="o">=</span> <span class="n">restricted</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">priority</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">bottom_indifference_class</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="c1"># Strict order features (if relevant)</span>
+    <span class="c1"># ===================================</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">is_strict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the ballot is a strict order or not.</span>
+
+<span class="sd">        :return: True if the order is strict, i.e. if each indifference class contains one element. There can be some</span>
+<span class="sd">            unordered candidates.</span>
+
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a &gt; b &gt; c&#39;).is_strict</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a &gt; b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).is_strict</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a ~ b &gt; c&#39;).is_strict</span>
+<span class="sd">        False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_check_strict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test strictness and raise an exception if not strict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_strict</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;This order is not strict: </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">as_strict_order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Strict order format.</span>
+
+<span class="sd">        :return: a list of candidates. For example, ``[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]`` means that `a` is preferred to `b`, who is</span>
+<span class="sd">            preferred to `c`.</span>
+<span class="sd">        :raise ValueError: if the ballot is not a strict order.</span>
+
+<span class="sd">        &gt;&gt;&gt; BallotOrder(&#39;a &gt; b &gt; c&#39;).as_strict_order</span>
+<span class="sd">        [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_strict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">indifference_class</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">indifference_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_weak_order</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over the candidates of a strict order.</span>
+
+<span class="sd">        &gt;&gt;&gt; for candidate in BallotOrder(&#39;a &gt; b &gt; c&#39;):</span>
+<span class="sd">        ...     print(candidate)</span>
+<span class="sd">        a</span>
+<span class="sd">        b</span>
+<span class="sd">        c</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_strict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">as_strict_order</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

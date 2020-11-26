@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RuleScoreNumAverage &mdash; Whalrus 0.4.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RuleScoreNumRowSum" href="rule_score_num_row_sum.html" />
+    <link rel="prev" title="RuleScoreNum" href="rule_score_num.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ballots/index.html">Ballot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters_ballot/index.html">ConverterBallot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../eliminations/index.html">Elimination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrices/index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../priorities/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profiles/index.html">Profile</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Rule: In General</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_iterated_elimination.html">RuleIteratedElimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_score.html">RuleScore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_score_num.html">RuleScoreNum</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RuleScoreNumAverage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_score_num_row_sum.html">RuleScoreNumRowSum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_score_positional.html">RuleScorePositional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_sequential_elimination.html">RuleSequentialElimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_sequential_tie_break.html">RuleSequentialTieBreak</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../rules_in_particular/index.html">Rule: In Particular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scales/index.html">Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scorers/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Util Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Rule: In General</a> &raquo;</li>
+        
+      <li>RuleScoreNumAverage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/rules_in_general/rule_score_num_average.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="rulescorenumaverage">
+<h1>RuleScoreNumAverage<a class="headerlink" href="#rulescorenumaverage" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="whalrus.RuleScoreNumAverage">
+<em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">RuleScoreNumAverage</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">scorer</span><span class="p">:</span> <span class="n">whalrus.scorers.scorer.Scorer</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default_average</span><span class="p">:</span> <span class="n">numbers.Number</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/rules/rule_score_num_average.html#RuleScoreNumAverage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.RuleScoreNumAverage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A voting rule where each candidate’s score is an average of the scores provided by the ballots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – cf. parent class.</p></li>
+<li><p><strong>scorer</strong> – the <a class="reference internal" href="../scorers/scorer.html#whalrus.Scorer" title="whalrus.Scorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scorer</span></code></a>. For each ballot, it is in charge of computing its contribution to each
+candidate’s score.</p></li>
+<li><p><strong>default_average</strong> – the default average score of a candidate when it receives no score whatsoever. It may
+happen, for example, if all voters abstain about this candidate. This avoids a division by zero when
+computing this candidate’s average score.</p></li>
+<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Cf. <a class="reference internal" href="../rules_in_particular/rule_range_voting.html#whalrus.RuleRangeVoting" title="whalrus.RuleRangeVoting"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleRangeVoting</span></code></a> for some examples.</p>
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.average_score_">
+<em class="property">property </em><code class="sig-name descname">average_score_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.average_score_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the average score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.average_score_as_float_">
+<em class="property">property </em><code class="sig-name descname">average_score_as_float_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.average_score_as_float_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average score as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleScoreNumAverage.average_score_" title="whalrus.RuleScoreNumAverage.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a> converted to a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.best_score_as_float_">
+<em class="property">property </em><code class="sig-name descname">best_score_as_float_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.best_score_as_float_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The best score as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a> converted to a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.compare_scores">
+<code class="sig-name descname">compare_scores</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">numbers.Number</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">numbers.Number</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#whalrus.RuleScoreNumAverage.compare_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one</strong> – a score.</p></li>
+<li><p><strong>another</strong> – a score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
+otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.cotrailers_">
+<em class="property">property </em><code class="sig-name descname">cotrailers_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.cotrailers_" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Cotrailers”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the set of candidates with the worst score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.cowinners_">
+<em class="property">property </em><code class="sig-name descname">cowinners_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.cowinners_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cowinners</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the set of candidates with the best score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.gross_scores_">
+<em class="property">property </em><code class="sig-name descname">gross_scores_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.gross_scores_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The gross scores of the candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code>. For each candidate, it gives the sum of its scores, multiplied by the weights
+of the corresponding voters. This is the numerator in the candidate’s average score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.gross_scores_as_floats_">
+<em class="property">property </em><code class="sig-name descname">gross_scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.gross_scores_as_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gross scores as floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleScoreNumAverage.gross_scores_" title="whalrus.RuleScoreNumAverage.gross_scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gross_scores_</span></code></a> converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.n_candidates_">
+<em class="property">property </em><code class="sig-name descname">n_candidates_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.n_candidates_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of candidates.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.scores_as_floats_">
+<em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scores as floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code> converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.strict_order_">
+<em class="property">property </em><code class="sig-name descname">strict_order_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.strict_order_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result of the election as a strict order over the candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a list whose first element is the winner, etc. This may use the tie-breaking rule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.trailer_">
+<em class="property">property </em><code class="sig-name descname">trailer_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.trailer_" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Trailer” of the election.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.strict_order_" title="whalrus.RuleScoreNumAverage.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+unfavorable choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.cotrailers_" title="whalrus.RuleScoreNumAverage.cotrailers_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cotrailers_</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.weights_">
+<em class="property">property </em><code class="sig-name descname">weights_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.weights_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The weights used for the candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code>. For each candidate, it gives the total weight for this candidate, i.e. the total
+weight of all voters who assign a score to this candidate. This is the denominator in the candidate’s
+average score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.weights_as_floats_">
+<em class="property">property </em><code class="sig-name descname">weights_as_floats_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.weights_as_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Weights as floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleScoreNumAverage.weights_" title="whalrus.RuleScoreNumAverage.weights_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">weights_</span></code></a> converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.winner_">
+<em class="property">property </em><code class="sig-name descname">winner_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.winner_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Winner of the election.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.strict_order_" title="whalrus.RuleScoreNumAverage.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.cowinners_" title="whalrus.RuleScoreNumAverage.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleScoreNumAverage.worst_score_as_float_">
+<em class="property">property </em><code class="sig-name descname">worst_score_as_float_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.worst_score_as_float_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The worst score as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="rule_score.html#whalrus.RuleScore.worst_score_" title="whalrus.RuleScore.worst_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.worst_score_</span></code></a> converted to a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rule_score_num_row_sum.html" class="btn btn-neutral float-right" title="RuleScoreNumRowSum" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rule_score_num.html" class="btn btn-neutral float-left" title="RuleScoreNum" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

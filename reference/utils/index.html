@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Contributing" href="../../contributing.html" />
-    <link rel="prev" title="ScorerVeto" href="../scorer/scorer_veto.html" /> 
+    <link rel="prev" title="ScorerVeto" href="../scorers/scorer_veto.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,16 +94,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../ballot/index.html">Ballot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../converter_ballot/index.html">ConverterBallot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../elimination/index.html">Elimination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../matrix/index.html">Matrix</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../priority/index.html">Priority</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../profile/index.html">Profile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../rule_in_general/index.html">Rule: In General</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../rule_in_particular/index.html">Rule: In Particular</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../scale/index.html">Scale</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../scorer/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ballots/index.html">Ballot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters_ballot/index.html">ConverterBallot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../eliminations/index.html">Elimination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrices/index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../priorities/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profiles/index.html">Profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rules_in_general/index.html">Rule: In General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rules_in_particular/index.html">Rule: In Particular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scales/index.html">Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scorers/index.html">Scorer</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Util Module</a></li>
 </ul>
 </li>
@@ -201,243 +201,8 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="module-whalrus.utils.Utils">
-<span id="util-module"></span><h1>Util Module<a class="headerlink" href="#module-whalrus.utils.Utils" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt id="whalrus.utils.Utils.DeleteCacheMixin">
-<em class="property">class </em><code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">DeleteCacheMixin</code><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#DeleteCacheMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.DeleteCacheMixin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mixin used to delete cached properties.</p>
-<p>Cf. decorator <a class="reference internal" href="#whalrus.utils.Utils.cached_property" title="whalrus.utils.Utils.cached_property"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cached_property()</span></code></a>.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Example</span><span class="p">(</span><span class="n">DeleteCacheMixin</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nd">@cached_property</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Big computation...&#39;</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">7</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Example</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">x</span>
-<span class="go">Big computation...</span>
-<span class="go">42</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">x</span>
-<span class="go">42</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">x</span>
-<span class="go">Big computation...</span>
-<span class="go">42</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py class">
-<dt id="whalrus.utils.Utils.NiceDict">
-<em class="property">class </em><code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">NiceDict</code><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#NiceDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.NiceDict" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dict that prints in the order of the keys (when they are comparable).</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_dict</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">({</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">51</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_dict</span>
-<span class="go">{&#39;a&#39;: 42, &#39;b&#39;: 51, &#39;c&#39;: 12}</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py class">
-<dt id="whalrus.utils.Utils.NiceSet">
-<em class="property">class </em><code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">NiceSet</code><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#NiceSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.NiceSet" title="Permalink to this definition">¶</a></dt>
-<dd><p>A set that prints in order (when the elements are comparable).</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span> <span class="o">=</span> <span class="n">NiceSet</span><span class="p">({</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">{&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.cached_property">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">cached_property</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#cached_property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.cached_property" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator used in replacement of &#64;property to put the value in cache automatically.</p>
-<p>The first time the attribute is used, it is computed on-demand and put in cache. Later accesses to the
-attributes will use the cached value.</p>
-<p>Cf. <a class="reference internal" href="#whalrus.utils.Utils.DeleteCacheMixin" title="whalrus.utils.Utils.DeleteCacheMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeleteCacheMixin</span></code></a> for an example.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.convert_number">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">convert_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">numbers.Number</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#convert_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.convert_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>Try to convert a number to a fraction (or an integer).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> – a number.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">x</span></code>, trying to convert it into a fraction (or an integer).</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">convert_number</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span>
-<span class="go">Fraction(5, 2)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">convert_number</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
-<span class="go">2</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.dict_to_items">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">dict_to_items</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#dict_to_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.dict_to_items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a dict to a list of pairs (key, value).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>d</strong> – a dictionary.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a list of pairs. The result is similar to d.items(), but if the keys are comparable, they appear in
-ascending order.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_to_items</span><span class="p">({</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-<span class="go">[(&#39;a&#39;, 1), (&#39;b&#39;, 2), (&#39;c&#39;, 0)]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.dict_to_str">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">dict_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#dict_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.dict_to_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert dict to string.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>d</strong> – a dictionary.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a string. The result is similar to str(d), but if the keys are comparable, they appear in ascending order.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_to_str</span><span class="p">({</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-<span class="go">&quot;{&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 0}&quot;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.my_division">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">my_division</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">numbers.Number</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">numbers.Number</span></em>, <em class="sig-param"><span class="n">divide_by_zero</span><span class="p">:</span> <span class="n">numbers.Number</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#my_division"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.my_division" title="Permalink to this definition">¶</a></dt>
-<dd><p>Division of two numbers, trying to be exact if it is reasonable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – a number.</p></li>
-<li><p><strong>y</strong> – a number.</p></li>
-<li><p><strong>divide_by_zero</strong> – the value to be returned in case of division by zero. If None (default), then it raises
-a ZeroDivisionError.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the division of <cite>x</cite> by <cite>y</cite>.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_division</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">Fraction(5, 2)</span>
-</pre></div>
-</div>
-<p>If <cite>x</cite> or <cite>y</cite> is a float, then the result is a float:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_division</span><span class="p">(</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="go">25.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_division</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">0.04</span>
-</pre></div>
-</div>
-<p>If <cite>x</cite> and <cite>y</cite> are integers, decimals or fractions, then the result is a fraction:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_division</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">Fraction(4, 5)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_division</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;0.1&#39;</span><span class="p">),</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">Fraction(1, 25)</span>
-</pre></div>
-</div>
-<p>You can specify a particular return value in case of division by zero:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_division</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">divide_by_zero</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="go">42</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.parse_weak_order">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">parse_weak_order</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#parse_weak_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.parse_weak_order" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a string representing a weak order to a list of sets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>s</strong> – a string.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a list of sets, where each set is an indifference class. The first set of the list contains the top
-(= most liked) candidates, while the last set of the list contains the bottom (= most disliked) candidates.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;Alice ~ Bob ~ Catherine32 &gt; me &gt; you ~ us &gt; them&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_weak_order</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="p">[{</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Catherine32&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;me&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;you&#39;</span><span class="p">,</span> <span class="s1">&#39;us&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;them&#39;</span><span class="p">}]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.set_to_list">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">set_to_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">set</span></em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#set_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.set_to_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a set to a list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>s</strong> – a set.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a list. The result is similar to list(s), but if the elements of the set are comparable, they appear in
-ascending order.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">set_to_list</span><span class="p">({</span><span class="mi">2</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">12</span><span class="p">})</span>
-<span class="go">[2, 12, 42]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.set_to_str">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">set_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">set</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#set_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.set_to_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a set to a string.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>s</strong> – a set.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a string. The result is similar to str(s), but if the elements of the set are comparable, they appear in
-ascending order.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">set_to_str</span><span class="p">({</span><span class="mi">2</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">12</span><span class="p">})</span>
-<span class="go">&#39;{2, 12, 42}&#39;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="whalrus.utils.Utils.take_closest">
-<code class="sig-prename descclassname">whalrus.utils.Utils.</code><code class="sig-name descname">take_closest</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">my_list</span></em>, <em class="sig-param"><span class="n">my_number</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/utils/Utils.html#take_closest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.utils.Utils.take_closest" title="Permalink to this definition">¶</a></dt>
-<dd><p>In a list, take the closest element to a given number.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>my_list</strong> – a list sorted in ascending order.</p></li>
-<li><p><strong>my_number</strong> – a number.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the element of <code class="docutils literal notranslate"><span class="pre">my_list</span></code> that is closest to <code class="docutils literal notranslate"><span class="pre">my_number</span></code>. If two numbers are equally close, return the
-smallest number.</p>
-</dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">take_closest</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
-<span class="go">5</span>
-</pre></div>
-</div>
-<p>From <a class="reference external" href="https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value">https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value</a> .</p>
-</dd></dl>
-
+<div class="section" id="util-module">
+<h1>Util Module<a class="headerlink" href="#util-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -451,7 +216,7 @@ smallest number.</p>
         <a href="../../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../scorer/scorer_veto.html" class="btn btn-neutral float-left" title="ScorerVeto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../scorers/scorer_veto.html" class="btn btn-neutral float-left" title="ScorerVeto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.eliminations.elimination_last &mdash; Whalrus 0.4.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.eliminations.elimination_last</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.eliminations.elimination_last</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand</span>
+<span class="sd">sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com</span>
+
+<span class="sd">This file is part of Whalrus.</span>
+
+<span class="sd">Whalrus is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">Whalrus is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with Whalrus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">whalrus.utils.utils</span> <span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">NiceSet</span>
+<span class="kn">from</span> <span class="nn">whalrus.eliminations.elimination</span> <span class="kn">import</span> <span class="n">Elimination</span>
+<span class="kn">from</span> <span class="nn">whalrus.rules.rule_plurality</span> <span class="kn">import</span> <span class="n">RulePlurality</span>
+<span class="kn">from</span> <span class="nn">whalrus.priorities.priority</span> <span class="kn">import</span> <span class="n">Priority</span>
+
+
+<div class="viewcode-block" id="EliminationLast"><a class="viewcode-back" href="../../../reference/eliminations/elimination_last.html#whalrus.EliminationLast">[docs]</a><span class="k">class</span> <span class="nc">EliminationLast</span><span class="p">(</span><span class="n">Elimination</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimination of the last candidates (with a fixed number of candidates to eliminate, or to qualify).</span>
+
+<span class="sd">    :param `*args`: cf. parent class.</span>
+<span class="sd">    :param k: an nonzero integer. The number of eliminated candidates. If this number is negative, then</span>
+<span class="sd">        ``len(rule.candidates_) - abs(k)`` candidates are eliminated, i.e. ``abs(k)`` candidates are qualified.</span>
+<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+
+<span class="sd">    In the most general syntax, firstly, you define the elimination method:</span>
+
+<span class="sd">    &gt;&gt;&gt; elimination = EliminationLast(k=1)</span>
+
+<span class="sd">    Secondly, you use it as a callable to load a particular election (rule, profile, candidates):</span>
+
+<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;])</span>
+<span class="sd">    &gt;&gt;&gt; elimination(rule)  # doctest:+ELLIPSIS</span>
+<span class="sd">    &lt;... object at ...&gt;</span>
+
+<span class="sd">    Finally, you can access the computed variables:</span>
+
+<span class="sd">    &gt;&gt;&gt; elimination.eliminated_</span>
+<span class="sd">    {&#39;c&#39;}</span>
+
+<span class="sd">    Later, if you wish, you can load another election with the same elimination method, and so on.</span>
+
+<span class="sd">    Optionally, you can specify an election (rule, profile, candidates) as soon as the :class:`Elimination` object is</span>
+<span class="sd">    initialized. This allows for one-liners such as:</span>
+
+<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;]), k=1).eliminated_</span>
+<span class="sd">    {&#39;c&#39;}</span>
+
+<span class="sd">    Typical usage with ``k = 1`` (e.g. for :class:`RuleIRV`):</span>
+
+<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
+<span class="sd">    ...                      tie_break=Priority.ASCENDING)</span>
+<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=1).eliminated_</span>
+<span class="sd">    {&#39;e&#39;}</span>
+
+<span class="sd">    Typical usage with ``k = -2`` (e.g. for :class:`RuleTwoRound`):</span>
+
+<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
+<span class="sd">    ...                      tie_break=Priority.ASCENDING)</span>
+<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).qualified_</span>
+<span class="sd">    {&#39;a&#39;, &#39;b&#39;}</span>
+
+<span class="sd">    Order of elimination:</span>
+
+<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
+<span class="sd">    ...                      tie_break=Priority.ASCENDING)</span>
+<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).eliminated_order_</span>
+<span class="sd">    [{&#39;c&#39;}, {&#39;d&#39;, &#39;e&#39;}]</span>
+
+<span class="sd">    There must always be at least one eliminated candidate. If it is not possible to eliminate (case ``k`` &gt; 0)  or keep</span>
+<span class="sd">    (case ``k`` &lt; 0) as many candidates as required, then everybody is eliminated:</span>
+
+<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;])</span>
+<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=1).eliminated_</span>
+<span class="sd">    {&#39;a&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).eliminated_</span>
+<span class="sd">    {&#39;a&#39;}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">eliminated_order_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n_wanted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_wanted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rule_</span><span class="o">.</span><span class="n">n_candidates_</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+        <span class="k">if</span> <span class="n">n_wanted</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n_wanted</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rule_</span><span class="o">.</span><span class="n">n_candidates_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rule_</span><span class="o">.</span><span class="n">order_</span>
+        <span class="n">worst_first</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tie_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rule_</span><span class="o">.</span><span class="n">order_</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">size_class</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tie_class</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">size_class</span> <span class="o">&lt;=</span> <span class="n">n_wanted</span><span class="p">:</span>
+                <span class="n">worst_first</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tie_class</span><span class="p">)</span>
+                <span class="n">n_wanted</span> <span class="o">-=</span> <span class="n">size_class</span>
+                <span class="k">if</span> <span class="n">n_wanted</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">worst_first</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NiceSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rule_</span><span class="o">.</span><span class="n">tie_break</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">tie_class</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">n_wanted</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">worst_first</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
