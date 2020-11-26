@@ -2,6 +2,16 @@
 History
 =======
 
+----------------------------------
+0.4.3 (2020-11-26): GitHub Actions
+----------------------------------
+
+* This patch concerns Whalrus' developpers only. To develop and maintain the package, it uses GitHub actions
+  instead of additional services such as Travis-CI and ReadTheDocs.
+* Use Codecov.
+* Prepare support for Numpy documentation style (not used yet).
+* Prepare support for notebooks in documentation (not used yet).
+
 -------------------------------
 0.4.2 (2019-08-22): Speeding Up
 -------------------------------
