@@ -1,5 +1,5 @@
-from whalrus.profile.Profile import Profile
-from whalrus.ballot.BallotOrder import BallotOrder
+from whalrus.profiles.profile import Profile
+from whalrus.ballots.ballot_order import BallotOrder
 
 
 def test():

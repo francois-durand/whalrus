@@ -4,14 +4,14 @@ Reference
 
 .. toctree::
 
-   ballot/index
-   converter_ballot/index
-   elimination/index
-   matrix/index
-   priority/index
-   profile/index
-   rule_in_general/index
-   rule_in_particular/index
-   scale/index
-   scorer/index
+   ballots/index
+   converters_ballot/index
+   eliminations/index
+   matrices/index
+   priorities/index
+   profiles/index
+   rules_in_general/index
+   rules_in_particular/index
+   scales/index
+   scorers/index
    utils/index

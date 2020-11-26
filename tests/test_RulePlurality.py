@@ -1,6 +1,6 @@
-from whalrus.rule.RulePlurality import RulePlurality
-from whalrus.ballot.BallotOneName import BallotOneName
-from whalrus.priority.Priority import Priority
+from whalrus.rules.rule_plurality import RulePlurality
+from whalrus.ballots.ballot_one_name import BallotOneName
+from whalrus.priorities.priority import Priority
 
 
 def test():

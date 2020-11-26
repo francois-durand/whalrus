@@ -1,6 +1,6 @@
-from whalrus.converter_ballot.ConverterBallotToLevelsInterval import ConverterBallotToLevelsInterval
-from whalrus.ballot.BallotLevels import BallotLevels
-from whalrus.scale.ScaleInterval import ScaleInterval
+from whalrus.converters_ballot.converter_ballot_to_levels_interval import ConverterBallotToLevelsInterval
+from whalrus.ballots.ballot_levels import BallotLevels
+from whalrus.scales.scale_interval import ScaleInterval
 from fractions import Fraction
 
 

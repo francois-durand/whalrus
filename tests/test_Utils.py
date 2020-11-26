@@ -1,6 +1,6 @@
 import pytest
 from pyparsing import ParseException
-from whalrus.utils.Utils import parse_weak_order, set_to_str, dict_to_str
+from whalrus.utils.utils import parse_weak_order, set_to_str, dict_to_str
 
 
 def test_parse_weak_order():

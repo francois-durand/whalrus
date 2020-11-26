@@ -1,4 +1,4 @@
-from whalrus.rule.RuleMaximin import RuleMaximin
+from whalrus.rules.rule_maximin import RuleMaximin
 
 
 def test():

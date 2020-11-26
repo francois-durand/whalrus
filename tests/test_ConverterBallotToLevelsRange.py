@@ -1,6 +1,6 @@
-from whalrus.converter_ballot.ConverterBallotToLevelsRange import ConverterBallotToLevelsRange
-from whalrus.ballot.BallotLevels import BallotLevels
-from whalrus.scale.ScaleRange import ScaleRange
+from whalrus.converters_ballot.converter_ballot_to_levels_range import ConverterBallotToLevelsRange
+from whalrus.ballots.ballot_levels import BallotLevels
+from whalrus.scales.scale_range import ScaleRange
 
 
 def test():

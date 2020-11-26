@@ -1,7 +1,7 @@
-from whalrus.converter_ballot.ConverterBallotToOrder import ConverterBallotToOrder
-from whalrus.ballot.BallotOneName import BallotOneName
-from whalrus.ballot.BallotOrder import BallotOrder
-from whalrus.ballot.BallotVeto import BallotVeto
+from whalrus.converters_ballot.converter_ballot_to_order import ConverterBallotToOrder
+from whalrus.ballots.ballot_one_name import BallotOneName
+from whalrus.ballots.ballot_order import BallotOrder
+from whalrus.ballots.ballot_veto import BallotVeto
 
 
 def test():

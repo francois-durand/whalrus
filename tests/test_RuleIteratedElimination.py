@@ -1,6 +1,6 @@
-from whalrus.rule.RuleIteratedElimination import RuleIteratedElimination
-from whalrus.rule.RulePlurality import RulePlurality
-from whalrus.priority.Priority import Priority
+from whalrus.rules.rule_iterated_elimination import RuleIteratedElimination
+from whalrus.rules.rule_plurality import RulePlurality
+from whalrus.priorities.priority import Priority
 
 
 def test():
