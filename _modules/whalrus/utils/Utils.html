@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.utils.Utils &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.utils.Utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.utils.Utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">pyparsing</span> <span class="kn">import</span> <span class="n">Group</span><span class="p">,</span> <span class="n">Word</span><span class="p">,</span> <span class="n">ZeroOrMore</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">nums</span><span class="p">,</span> <span class="n">ParseException</span>
+<span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
+<span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+
+
+<span class="k">def</span> <span class="nf">_cache</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Auxiliary decorator used by ``cached_property``.</span>
+
+<span class="sd">    :param f: a method with no argument (except ``self``).</span>
+<span class="sd">    :return: the same function, but with a `caching&#39; behavior.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="c1"># noinspection PyProtectedMember</span>
+    <span class="k">def</span> <span class="nf">_f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_cached_properties</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># Not stored in cache</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_cached_properties</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># cache does not even exist</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_cached_properties</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">value</span>
+    <span class="n">_f</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
+    <span class="k">return</span> <span class="n">_f</span>
+
+
+<div class="viewcode-block" id="cached_property"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.cached_property">[docs]</a><span class="k">def</span> <span class="nf">cached_property</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator used in replacement of @property to put the value in cache automatically.</span>
+
+<span class="sd">    The first time the attribute is used, it is computed on-demand and put in cache. Later accesses to the</span>
+<span class="sd">    attributes will use the cached value.</span>
+
+<span class="sd">    Cf. :class:`DeleteCacheMixin` for an example.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">_cache</span><span class="p">(</span><span class="n">f</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="DeleteCacheMixin"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.DeleteCacheMixin">[docs]</a><span class="k">class</span> <span class="nc">DeleteCacheMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mixin used to delete cached properties.</span>
+
+<span class="sd">    Cf. decorator :meth:`cached_property`.</span>
+
+<span class="sd">    &gt;&gt;&gt; class Example(DeleteCacheMixin):</span>
+<span class="sd">    ...     @cached_property</span>
+<span class="sd">    ...     def x(self):</span>
+<span class="sd">    ...         print(&#39;Big computation...&#39;)</span>
+<span class="sd">    ...         return 6 * 7</span>
+<span class="sd">    &gt;&gt;&gt; a = Example()</span>
+<span class="sd">    &gt;&gt;&gt; a.x</span>
+<span class="sd">    Big computation...</span>
+<span class="sd">    42</span>
+<span class="sd">    &gt;&gt;&gt; a.x</span>
+<span class="sd">    42</span>
+<span class="sd">    &gt;&gt;&gt; a.delete_cache()</span>
+<span class="sd">    &gt;&gt;&gt; a.x</span>
+<span class="sd">    Big computation...</span>
+<span class="sd">    42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyAttributeOutsideInit</span>
+    <span class="k">def</span> <span class="nf">delete_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_properties</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="parse_weak_order"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.parse_weak_order">[docs]</a><span class="k">def</span> <span class="nf">parse_weak_order</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a string representing a weak order to a list of sets.</span>
+
+<span class="sd">    :param s: a string.</span>
+<span class="sd">    :return: a list of sets, where each set is an indifference class. The first set of the list contains the top</span>
+<span class="sd">        (= most liked) candidates, while the last set of the list contains the bottom (= most disliked) candidates.</span>
+
+<span class="sd">    &gt;&gt;&gt; s = &#39;Alice ~ Bob ~ Catherine32 &gt; me &gt; you ~ us &gt; them&#39;</span>
+<span class="sd">    &gt;&gt;&gt; parse_weak_order(s) == [{&#39;Alice&#39;, &#39;Bob&#39;, &#39;Catherine32&#39;}, {&#39;me&#39;}, {&#39;you&#39;, &#39;us&#39;}, {&#39;them&#39;}]</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Build the parser</span>
+    <span class="n">candidate</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span><span class="n">alphas</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="n">alphas</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="n">nums</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="n">equiv_class</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="n">candidate</span> <span class="o">+</span> <span class="n">ZeroOrMore</span><span class="p">(</span><span class="n">Word</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">suppress</span><span class="p">()</span> <span class="o">+</span> <span class="n">candidate</span><span class="p">))</span>
+    <span class="n">weak_preference</span> <span class="o">=</span> <span class="n">equiv_class</span> <span class="o">+</span> <span class="n">ZeroOrMore</span><span class="p">(</span><span class="n">Word</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">suppress</span><span class="p">()</span> <span class="o">+</span> <span class="n">equiv_class</span><span class="p">)</span>
+    <span class="n">empty_preference</span> <span class="o">=</span> <span class="n">ZeroOrMore</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+    <span class="c1"># if s = &#39;Jean ~ Titi ~ tata32 &gt; me &gt; you ~ us &gt; them&#39;, then</span>
+    <span class="c1"># parsed = [[&#39;Jean&#39;, &#39;Titi&#39;, &#39;tata32&#39;], [&#39;me&#39;], [&#39;you&#39;, &#39;us&#39;], [&#39;them&#39;]]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">empty_preference</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">parseAll</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">asList</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">ParseException</span><span class="p">:</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">weak_preference</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">parseAll</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">asList</span><span class="p">()</span>
+
+    <span class="c1"># Final conversion to format [{&#39;Jean&#39;, &#39;tata32&#39;, &#39;Titi&#39;}, {&#39;me&#39;}, {&#39;us&#39;, &#39;you&#39;}, {&#39;them&#39;}]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">NiceSet</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">parsed</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="set_to_list"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.set_to_list">[docs]</a><span class="k">def</span> <span class="nf">set_to_list</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a set to a list.</span>
+
+<span class="sd">    :param s: a set.</span>
+<span class="sd">    :return: a list. The result is similar to list(s), but if the elements of the set are comparable, they appear in</span>
+<span class="sd">        ascending order.</span>
+
+<span class="sd">    &gt;&gt;&gt; set_to_list({2, 42, 12})</span>
+<span class="sd">    [2, 12, 42]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_to_str"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.set_to_str">[docs]</a><span class="k">def</span> <span class="nf">set_to_str</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a set to a string.</span>
+
+<span class="sd">    :param s: a set.</span>
+<span class="sd">    :return: a string. The result is similar to str(s), but if the elements of the set are comparable, they appear in</span>
+<span class="sd">        ascending order.</span>
+
+<span class="sd">    &gt;&gt;&gt; set_to_str({2, 42, 12})</span>
+<span class="sd">    &#39;{2, 12, 42}&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">))[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NiceSet"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.NiceSet">[docs]</a><span class="k">class</span> <span class="nc">NiceSet</span><span class="p">(</span><span class="nb">set</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A set that prints in order (when the elements are comparable).</span>
+
+<span class="sd">    &gt;&gt;&gt; my_set = NiceSet({&#39;b&#39;, &#39;a&#39;, &#39;c&#39;})</span>
+<span class="sd">    &gt;&gt;&gt; my_set</span>
+<span class="sd">    {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">))[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="dict_to_items"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.dict_to_items">[docs]</a><span class="k">def</span> <span class="nf">dict_to_items</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a dict to a list of pairs (key, value).</span>
+
+<span class="sd">    :param d: a dictionary.</span>
+<span class="sd">    :return: a list of pairs. The result is similar to d.items(), but if the keys are comparable, they appear in</span>
+<span class="sd">        ascending order.</span>
+
+<span class="sd">    &gt;&gt;&gt; dict_to_items({&#39;b&#39;: 2, &#39;c&#39;: 0, &#39;a&#39;: 1})</span>
+<span class="sd">    [(&#39;a&#39;, 1), (&#39;b&#39;, 2), (&#39;c&#39;, 0)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())]</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="dict_to_str"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.dict_to_str">[docs]</a><span class="k">def</span> <span class="nf">dict_to_str</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert dict to string.</span>
+
+<span class="sd">    :param d: a dictionary.</span>
+<span class="sd">    :return: a string. The result is similar to str(d), but if the keys are comparable, they appear in ascending order.</span>
+
+<span class="sd">    &gt;&gt;&gt; dict_to_str({&#39;b&#39;: 2, &#39;c&#39;: 0, &#39;a&#39;: 1})</span>
+<span class="sd">    &quot;{&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 0}&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())])</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NiceDict"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.NiceDict">[docs]</a><span class="k">class</span> <span class="nc">NiceDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A dict that prints in the order of the keys (when they are comparable).</span>
+
+<span class="sd">    &gt;&gt;&gt; my_dict = NiceDict({&#39;b&#39;: 51, &#39;a&#39;: 42, &#39;c&#39;: 12})</span>
+<span class="sd">    &gt;&gt;&gt; my_dict</span>
+<span class="sd">    {&#39;a&#39;: 42, &#39;b&#39;: 51, &#39;c&#39;: 12}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dict_to_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="take_closest"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.take_closest">[docs]</a><span class="k">def</span> <span class="nf">take_closest</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">my_number</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In a list, take the closest element to a given number.</span>
+
+<span class="sd">    :param my_list: a list sorted in ascending order.</span>
+<span class="sd">    :param my_number: a number.</span>
+<span class="sd">    :return: the element of ``my_list`` that is closest to ``my_number``. If two numbers are equally close, return the</span>
+<span class="sd">        smallest number.</span>
+
+<span class="sd">    &gt;&gt;&gt; take_closest([0, 5, 10], 3)</span>
+<span class="sd">    5</span>
+
+<span class="sd">    From https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">my_number</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">my_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">my_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">my_list</span><span class="p">[</span><span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">my_list</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">after</span> <span class="o">-</span> <span class="n">my_number</span> <span class="o">&lt;</span> <span class="n">my_number</span> <span class="o">-</span> <span class="n">before</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">after</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">before</span></div>
+
+
+<div class="viewcode-block" id="convert_number"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.convert_number">[docs]</a><span class="k">def</span> <span class="nf">convert_number</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Number</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Try to convert a number to a fraction (or an integer).</span>
+
+<span class="sd">    :param x: a number.</span>
+<span class="sd">    :return: ``x``, trying to convert it into a fraction (or an integer).</span>
+
+<span class="sd">    &gt;&gt;&gt; convert_number(2.5)</span>
+<span class="sd">    Fraction(5, 2)</span>
+<span class="sd">    &gt;&gt;&gt; convert_number(2.0)</span>
+<span class="sd">    2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">denominator</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">numerator</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="my_division"><a class="viewcode-back" href="../../../reference/utils/index.html#whalrus.utils.Utils.my_division">[docs]</a><span class="k">def</span> <span class="nf">my_division</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">divide_by_zero</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Division of two numbers, trying to be exact if it is reasonable.</span>
+
+<span class="sd">    :param x: a number.</span>
+<span class="sd">    :param y: a number.</span>
+<span class="sd">    :param divide_by_zero: the value to be returned in case of division by zero. If None (default), then it raises</span>
+<span class="sd">        a ZeroDivisionError.</span>
+<span class="sd">    :return: the division of `x` by `y`.</span>
+
+<span class="sd">    &gt;&gt;&gt; my_division(5, 2)</span>
+<span class="sd">    Fraction(5, 2)</span>
+
+<span class="sd">    If `x` or `y` is a float, then the result is a float:</span>
+
+<span class="sd">    &gt;&gt;&gt; my_division(Fraction(5, 2), 0.1)</span>
+<span class="sd">    25.0</span>
+<span class="sd">    &gt;&gt;&gt; my_division(0.1, Fraction(5, 2))</span>
+<span class="sd">    0.04</span>
+
+<span class="sd">    If `x` and `y` are integers, decimals or fractions, then the result is a fraction:</span>
+
+<span class="sd">    &gt;&gt;&gt; my_division(2, Fraction(5, 2))</span>
+<span class="sd">    Fraction(4, 5)</span>
+<span class="sd">    &gt;&gt;&gt; my_division(Decimal(&#39;0.1&#39;), Fraction(5, 2))</span>
+<span class="sd">    Fraction(1, 25)</span>
+
+<span class="sd">    You can specify a particular return value in case of division by zero:</span>
+
+<span class="sd">    &gt;&gt;&gt; my_division(1, 0, divide_by_zero=42)</span>
+<span class="sd">    42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">divide_by_zero</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ZeroDivisionError</span>
+        <span class="k">return</span> <span class="n">divide_by_zero</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">Fraction</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">Fraction</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

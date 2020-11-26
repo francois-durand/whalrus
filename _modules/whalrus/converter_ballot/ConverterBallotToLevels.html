@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.converter_ballot.ConverterBallotToLevels &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.converter_ballot.ConverterBallotToLevels</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.converter_ballot.ConverterBallotToLevels</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand</span>
+<span class="sd">sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com</span>
+
+<span class="sd">This file is part of Whalrus.</span>
+
+<span class="sd">Whalrus is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">Whalrus is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with Whalrus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">whalrus.ballot.BallotLevels</span> <span class="kn">import</span> <span class="n">BallotLevels</span>
+<span class="kn">from</span> <span class="nn">whalrus.scale.Scale</span> <span class="kn">import</span> <span class="n">Scale</span>
+<span class="kn">from</span> <span class="nn">whalrus.scale.ScaleInterval</span> <span class="kn">import</span> <span class="n">ScaleInterval</span>
+<span class="kn">from</span> <span class="nn">whalrus.scale.ScaleRange</span> <span class="kn">import</span> <span class="n">ScaleRange</span>
+<span class="kn">from</span> <span class="nn">whalrus.scale.ScaleFromList</span> <span class="kn">import</span> <span class="n">ScaleFromList</span>
+<span class="kn">from</span> <span class="nn">whalrus.scale.ScaleFromSet</span> <span class="kn">import</span> <span class="n">ScaleFromSet</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallot</span> <span class="kn">import</span> <span class="n">ConverterBallot</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallotToLevelsInterval</span> <span class="kn">import</span> <span class="n">ConverterBallotToLevelsInterval</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallotToLevelsRange</span> <span class="kn">import</span> <span class="n">ConverterBallotToLevelsRange</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallotToLevelsListNumeric</span> <span class="kn">import</span> <span class="n">ConverterBallotToLevelsListNumeric</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallotToLevelsListNonNumeric</span> <span class="kn">import</span> <span class="n">ConverterBallotToLevelsListNonNumeric</span>
+
+
+<div class="viewcode-block" id="ConverterBallotToLevels"><a class="viewcode-back" href="../../../reference/converter_ballot/converter_ballot_to_levels.html#whalrus.ConverterBallotToLevels">[docs]</a><span class="k">class</span> <span class="nc">ConverterBallotToLevels</span><span class="p">(</span><span class="n">ConverterBallot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Default converter to a :class:`BallotLevels` (representing grades, appreciations, etc).</span>
+
+<span class="sd">    :param scale: a :class:`Scale`. If specified, then the ballot will be converted to this scale. If it is None,</span>
+<span class="sd">        then any ballot of class :class:`BallotLevels` will be kept as it is, and any other ballot will converted to</span>
+<span class="sd">        a :class:`BallotLevels` using a :class:`ScaleInterval` with bounds 0 and 1</span>
+<span class="sd">    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,</span>
+<span class="sd">        we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the</span>
+<span class="sd">        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.</span>
+
+<span class="sd">    This is a default converter to a :class:`BallotLevels`. It tries to infer the type of input and converts it to</span>
+<span class="sd">    a :class:`BallotLevels`. It is a wrapper for the specialized converters :class:`ConverterBallotToLevelsInterval`,</span>
+<span class="sd">    :class:`ConverterBallotToLevelsRange`, :class:`ConverterBallotToLevelsListNumeric`, and</span>
+<span class="sd">    :class:`ConverterBallotToLevelsListNonNumeric`.</span>
+
+<span class="sd">    Typical usages:</span>
+
+<span class="sd">    &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 100, &#39;b&#39;: 57}, scale=ScaleRange(0, 100))</span>
+<span class="sd">    &gt;&gt;&gt; ConverterBallotToLevels(scale=ScaleInterval(low=0, high=10))(ballot).as_dict</span>
+<span class="sd">    {&#39;a&#39;: 10, &#39;b&#39;: Fraction(57, 10)}</span>
+<span class="sd">    &gt;&gt;&gt; ConverterBallotToLevels(scale=ScaleRange(low=0, high=10))(ballot).as_dict</span>
+<span class="sd">    {&#39;a&#39;: 10, &#39;b&#39;: 6}</span>
+<span class="sd">    &gt;&gt;&gt; ConverterBallotToLevels(scale=ScaleFromList([</span>
+<span class="sd">    ...     &#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Great&#39;, &#39;Excellent&#39;]))(ballot).as_dict</span>
+<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; ConverterBallotToLevels(scale=ScaleFromSet({0, 2, 4, 10}))(ballot).as_dict</span>
+<span class="sd">    {&#39;a&#39;: 10, &#39;b&#39;: 4}</span>
+
+<span class="sd">    For more examples, cf. :class:`ConverterBallotToLevelsInterval`, :class:`ConverterBallotToLevelsRange`,</span>
+<span class="sd">    :class:`ConverterBallotToLevelsListNumeric`, and :class:`ConverterBallotToLevelsListNonNumeric`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Scale</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">borda_unordered_give_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">borda_unordered_give_points</span> <span class="o">=</span> <span class="n">borda_unordered_give_points</span>
+        <span class="k">if</span> <span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsInterval</span><span class="p">(</span>
+                <span class="n">scale</span><span class="o">=</span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">borda_unordered_give_points</span><span class="o">=</span><span class="n">borda_unordered_give_points</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">ScaleInterval</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsInterval</span><span class="p">(</span>
+                <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">borda_unordered_give_points</span><span class="o">=</span><span class="n">borda_unordered_give_points</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">ScaleRange</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsRange</span><span class="p">(</span>
+                <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">borda_unordered_give_points</span><span class="o">=</span><span class="n">borda_unordered_give_points</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">ScaleFromList</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">scale</span><span class="o">.</span><span class="n">is_numeric</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsListNumeric</span><span class="p">(</span>
+                    <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">borda_unordered_give_points</span><span class="o">=</span><span class="n">borda_unordered_give_points</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsListNonNumeric</span><span class="p">(</span>
+                    <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">borda_unordered_give_points</span><span class="o">=</span><span class="n">borda_unordered_give_points</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsInterval</span><span class="p">(</span>
+                <span class="n">scale</span><span class="o">=</span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">borda_unordered_give_points</span><span class="o">=</span><span class="n">borda_unordered_give_points</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BallotLevels</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">BallotLevels</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aux_converter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

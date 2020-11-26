@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.ballot.Ballot &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.ballot.Ballot</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.ballot.Ballot</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand</span>
+<span class="sd">sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com</span>
+
+<span class="sd">This file is part of Whalrus.</span>
+
+<span class="sd">Whalrus is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">Whalrus is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with Whalrus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">whalrus.utils.Utils</span> <span class="kn">import</span> <span class="n">NiceSet</span>
+
+
+<div class="viewcode-block" id="Ballot"><a class="viewcode-back" href="../../../reference/ballot/ballot.html#whalrus.Ballot">[docs]</a><span class="k">class</span> <span class="nc">Ballot</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ballot.</span>
+
+<span class="sd">    The philosophy of this class is to stick as much as possible to the message that the voter emitted, in the</span>
+<span class="sd">    context where she emitted it. For example, consider a range voting setting with candidates `a`, `b`, `c`</span>
+<span class="sd">    and a scale of grades from 0 to 100. If the voter emits a ballot where `a` has grade 60 and `b` has grade 30, then</span>
+<span class="sd">    the :class:`Ballot` object simply records all this: what candidates were present, what was the scale of authorized</span>
+<span class="sd">    grades, and what the voter indicated in her ballot. But, for example:</span>
+
+<span class="sd">    * It makes no assumption whether the voter prefers `a` to `c`. Maybe she did not mention `c` because she didn&#39;t</span>
+<span class="sd">      like it, maybe because she didn&#39;t know it.</span>
+<span class="sd">    * It makes no assumption about what would be the voter&#39;s ballot with a scale from 0 to 10. Maybe it would be</span>
+<span class="sd">      ``{&#39;a&#39;: 6, &#39;b&#39;: 3}``, maybe not.</span>
+
+<span class="sd">    Ballot converters (cf. :class:`ConverterBallot`) will be used each time we need an information that is beyond</span>
+<span class="sd">    what the ballot clearly indicated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The candidates that were available at the moment when the voter cast her ballot.</span>
+
+<span class="sd">        :return: a :class:`NiceSet`. As a consequence, candidates must be hashable objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="Ballot.first"><a class="viewcode-back" href="../../../reference/ballot/ballot.html#whalrus.Ballot.first">[docs]</a>    <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The first (= most liked) candidate. Implementation is optional.</span>
+
+<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
+<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
+<span class="sd">        :param kwargs: some options (depending on the subclass).</span>
+<span class="sd">        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument</span>
+<span class="sd">            ``candidates``. Can return None for an &quot;abstention&quot;.</span>
+
+<span class="sd">        Typical example: the ballot was cast in a context where candidates `a`, `b`, `c`, `d` were declared. Hence</span>
+<span class="sd">        ``self.candidates == {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;}``. Later, candidate `a` is removed from the election. Then we can</span>
+<span class="sd">        use this method with the optional argument ``candidates = {&#39;b&#39;, &#39;c&#39;, &#39;d&#39;}`` to know who is the most liked</span>
+<span class="sd">        candidate of the voter in this new context.</span>
+
+<span class="sd">        In most subclasses, this method needs some options (``kwargs``) to solve ambiguities in this conversion. In</span>
+<span class="sd">        some other subclasses, this method may even stay unimplemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Ballot.last"><a class="viewcode-back" href="../../../reference/ballot/ballot.html#whalrus.Ballot.last">[docs]</a>    <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The last (= most disliked) candidate. Implementation is optional.</span>
+
+<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
+<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
+<span class="sd">        :param kwargs: some options (depending on the subclass).</span>
+<span class="sd">        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the</span>
+<span class="sd">            argument ``candidates``. Can return None for an &quot;abstention&quot;.</span>
+
+<span class="sd">        Cf. :meth:`first` for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Ballot.restrict"><a class="viewcode-back" href="../../../reference/ballot/ballot.html#whalrus.Ballot.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Ballot&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrict the ballot to less candidates. Implementation is optional.</span>
+
+<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
+<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
+<span class="sd">        :param kwargs: some options (depending of the subclass).</span>
+<span class="sd">        :return: the same ballot, &quot;restricted&quot; to the candidates given.</span>
+
+<span class="sd">        Additional candidates (that are in the argument ``candidates`` but not in ``self.candidates``) are generally not</span>
+<span class="sd">        taken into account in the restricted ballot. For example, in a election with candidates `a`, `b`, `c`, assume</span>
+<span class="sd">        that the voter emits an ordered ballot ``a &gt; b &gt; c``. Later, candidate `a` is removed and candidate `d` is</span>
+<span class="sd">        added. Then the &quot;restricted&quot; ballot to ``{&#39;b, &#39;c&#39;, &#39;d&#39;}`` is ``b &gt; c``. For more details, see for example</span>
+<span class="sd">        :meth:`BallotOrder.restrict`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ScaleFromList &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ScaleFromSet" href="scale_from_set.html" />
+    <link rel="prev" title="Scale" href="scale.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ballot/index.html">Ballot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converter_ballot/index.html">ConverterBallot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../elimination/index.html">Elimination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../priority/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profile/index.html">Profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_general/index.html">Rule: In General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_particular/index.html">Rule: In Particular</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Scale</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="scale.html">Scale</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ScaleFromList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scale_from_set.html">ScaleFromSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scale_interval.html">ScaleInterval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scale_range.html">ScaleRange</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../scorer/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Util Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Scale</a> &raquo;</li>
+        
+      <li>ScaleFromList</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/scale/scale_from_list.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scalefromlist">
+<h1>ScaleFromList<a class="headerlink" href="#scalefromlist" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="whalrus.ScaleFromList">
+<em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">ScaleFromList</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">levels</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/scale/ScaleFromList.html#ScaleFromList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleFromList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale derived from a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>levels</strong> – the list of levels, from the worst to the best.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.argsort">
+<code class="sig-name descname">argsort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_list</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../../_modules/whalrus/scale/ScaleFromList.html#ScaleFromList.argsort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleFromList.argsort" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">argsort</span><span class="p">([</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="go">[1, 0, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.compare">
+<code class="sig-name descname">compare</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#whalrus.ScaleFromList.compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two levels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one</strong> – a level.</p></li>
+<li><p><strong>another</strong> – a level.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
+otherwise.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.eq">
+<code class="sig-name descname">eq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#whalrus.ScaleFromList.eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test “equal”. Cf. <a class="reference internal" href="#whalrus.ScaleFromList.lt" title="whalrus.ScaleFromList.lt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lt()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.ge">
+<code class="sig-name descname">ge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#whalrus.ScaleFromList.ge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test “greater or equal”. Cf. <a class="reference internal" href="#whalrus.ScaleFromList.lt" title="whalrus.ScaleFromList.lt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lt()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.gt">
+<code class="sig-name descname">gt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#whalrus.ScaleFromList.gt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test “greater than”. Cf. <a class="reference internal" href="#whalrus.ScaleFromList.lt" title="whalrus.ScaleFromList.lt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lt()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.high">
+<em class="property">property </em><code class="sig-name descname">high</code><a class="headerlink" href="#whalrus.ScaleFromList.high" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">high</span>
+<span class="go">&#39;Excellent&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.le">
+<code class="sig-name descname">le</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#whalrus.ScaleFromList.le" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test “lower or equal”. Cf. <a class="reference internal" href="#whalrus.ScaleFromList.lt" title="whalrus.ScaleFromList.lt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lt()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.low">
+<em class="property">property </em><code class="sig-name descname">low</code><a class="headerlink" href="#whalrus.ScaleFromList.low" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">low</span>
+<span class="go">&#39;Bad&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.lt">
+<code class="sig-name descname">lt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../../_modules/whalrus/scale/ScaleFromList.html#ScaleFromList.lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleFromList.lt" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.max">
+<code class="sig-name descname">max</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/scale/ScaleFromList.html#ScaleFromList.max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleFromList.max" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="go">&#39;Excellent&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.min">
+<code class="sig-name descname">min</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/scale/ScaleFromList.html#ScaleFromList.min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleFromList.min" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="go">&#39;Bad&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.ne">
+<code class="sig-name descname">ne</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#whalrus.ScaleFromList.ne" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test “not equal”. Cf. <a class="reference internal" href="#whalrus.ScaleFromList.lt" title="whalrus.ScaleFromList.lt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lt()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.ScaleFromList.sort">
+<code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_list</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../_modules/whalrus/scale/ScaleFromList.html#ScaleFromList.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleFromList.sort" title="Permalink to this definition">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">ScaleFromList</span><span class="p">([</span><span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Bad&#39;</span><span class="p">,</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span>
+<span class="go">[&#39;Bad&#39;, &#39;Good&#39;, &#39;Excellent&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scale_from_set.html" class="btn btn-neutral float-right" title="ScaleFromSet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="scale.html" class="btn btn-neutral float-left" title="Scale" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

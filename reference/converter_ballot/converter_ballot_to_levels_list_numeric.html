@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ConverterBallotToLevelsListNumeric &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ConverterBallotToLevelsRange" href="converter_ballot_to_levels_range.html" />
+    <link rel="prev" title="ConverterBallotToLevelsListNonNumeric" href="converter_ballot_to_levels_list_non_numeric.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ballot/index.html">Ballot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">ConverterBallot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot.html">ConverterBallot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_general.html">ConverterBallotGeneral</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_grades.html">ConverterBallotToGrades</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_levels.html">ConverterBallotToLevels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_levels_interval.html">ConverterBallotToLevelsInterval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_levels_list_non_numeric.html">ConverterBallotToLevelsListNonNumeric</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ConverterBallotToLevelsListNumeric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_levels_range.html">ConverterBallotToLevelsRange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_order.html">ConverterBallotToOrder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_plurality.html">ConverterBallotToPlurality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_strict_order.html">ConverterBallotToStrictOrder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter_ballot_to_veto.html">ConverterBallotToVeto</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../elimination/index.html">Elimination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../priority/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profile/index.html">Profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_general/index.html">Rule: In General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_particular/index.html">Rule: In Particular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scale/index.html">Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scorer/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Util Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">ConverterBallot</a> &raquo;</li>
+        
+      <li>ConverterBallotToLevelsListNumeric</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/converter_ballot/converter_ballot_to_levels_list_numeric.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="converterballottolevelslistnumeric">
+<h1>ConverterBallotToLevelsListNumeric<a class="headerlink" href="#converterballottolevelslistnumeric" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="whalrus.ConverterBallotToLevelsListNumeric">
+<em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">ConverterBallotToLevelsListNumeric</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scale</span><span class="p">:</span> <span class="n">whalrus.scale.ScaleFromList.ScaleFromList</span></em>, <em class="sig-param"><span class="n">borda_unordered_give_points</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/converter_ballot/ConverterBallotToLevelsListNumeric.html#ConverterBallotToLevelsListNumeric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ConverterBallotToLevelsListNumeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default converter to a <a class="reference internal" href="../ballot/ballot_levels.html#whalrus.BallotLevels" title="whalrus.BallotLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotLevels</span></code></a> using a <a class="reference internal" href="../scale/scale_from_list.html#whalrus.ScaleFromList" title="whalrus.ScaleFromList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScaleFromList</span></code></a> of numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scale</strong> – the scale.</p></li>
+<li><p><strong>borda_unordered_give_points</strong> – when converting a <a class="reference internal" href="../ballot/ballot_order.html#whalrus.BallotOrder" title="whalrus.BallotOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotOrder</span></code></a> that is not a <a class="reference internal" href="../ballot/ballot_levels.html#whalrus.BallotLevels" title="whalrus.BallotLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotLevels</span></code></a>,
+we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
+ballot give points to the ordered candidates. Cf. <a class="reference internal" href="../scorer/scorer_borda.html#whalrus.ScorerBorda" title="whalrus.ScorerBorda"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerBorda</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This converter works essentially the same as <a class="reference internal" href="converter_ballot_to_levels_interval.html#whalrus.ConverterBallotToLevelsInterval" title="whalrus.ConverterBallotToLevelsInterval"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToLevelsInterval</span></code></a>, but it then maps the
+evaluations to levels of the scale.</p>
+<p>Typical usages:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span> <span class="o">=</span> <span class="n">ConverterBallotToLevelsListNumeric</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">ScaleFromList</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">BallotLevels</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">},</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">},</span> <span class="n">scale</span><span class="o">=</span><span class="n">ScaleInterval</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: 4, &#39;b&#39;: 3}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">BallotLevels</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">},</span> <span class="n">scale</span><span class="o">=</span><span class="n">ScaleRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: 4, &#39;b&#39;: 3}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">BallotLevels</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">},</span> <span class="n">scale</span><span class="o">=</span><span class="n">ScaleFromSet</span><span class="p">({</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">}))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: 4, &#39;b&#39;: 0}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">BallotOneName</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">}))</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: 4, &#39;b&#39;: -1, &#39;c&#39;: -1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">BallotPlurality</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">}))</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: 4, &#39;b&#39;: -1, &#39;c&#39;: -1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">}))</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: -1, &#39;b&#39;: 4, &#39;c&#39;: 4}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="s1">&#39;a &gt; b &gt; c &gt; d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span>
+<span class="go">{&#39;a&#39;: 4, &#39;b&#39;: 3, &#39;c&#39;: 0, &#39;d&#39;: -1}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="converter_ballot_to_levels_range.html" class="btn btn-neutral float-right" title="ConverterBallotToLevelsRange" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="converter_ballot_to_levels_list_non_numeric.html" class="btn btn-neutral float-left" title="ConverterBallotToLevelsListNonNumeric" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

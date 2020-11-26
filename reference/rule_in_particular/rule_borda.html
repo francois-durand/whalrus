@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RuleBorda &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RuleBucklinByRounds" href="rule_bucklin_by_rounds.html" />
+    <link rel="prev" title="RuleBlack" href="rule_black.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ballot/index.html">Ballot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converter_ballot/index.html">ConverterBallot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../elimination/index.html">Elimination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../priority/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profile/index.html">Profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_general/index.html">Rule: In General</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Rule: In Particular</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_black.html">RuleBlack</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RuleBorda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_bucklin_by_rounds.html">RuleBucklinByRounds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_bucklin_instant.html">RuleBucklinInstant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_condorcet.html">RuleCondorcet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_copeland.html">RuleCopeland</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_irv.html">RuleIRV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_k_approval.html">RuleKApproval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_kim_roush.html">RuleKimRoush</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_majority_judgment.html">RuleMajorityJudgment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_maximin.html">RuleMaximin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_nanson.html">RuleNanson</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_plurality.html">RulePlurality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_range_voting.html">RuleRangeVoting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_ranked_pairs.html">RuleRankedPairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_schulze.html">RuleSchulze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_simplified_dodgson.html">RuleSimplifiedDodgson</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_two_round.html">RuleTwoRound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_veto.html">RuleVeto</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../scale/index.html">Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scorer/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Util Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Rule: In Particular</a> &raquo;</li>
+        
+      <li>RuleBorda</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/rule_in_particular/rule_borda.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ruleborda">
+<h1>RuleBorda<a class="headerlink" href="#ruleborda" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="whalrus.RuleBorda">
+<em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">RuleBorda</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">converter</span><span class="p">:</span> <span class="n">whalrus.converter_ballot.ConverterBallot.ConverterBallot</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scorer</span><span class="p">:</span> <span class="n">whalrus.scorer.Scorer.Scorer</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/rule/RuleBorda.html#RuleBorda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.RuleBorda" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Borda rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – cf. parent class.</p></li>
+<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converter_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
+<li><p><strong>scorer</strong> – the default is <a class="reference internal" href="../scorer/scorer_borda.html#whalrus.ScorerBorda" title="whalrus.ScorerBorda"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerBorda</span></code></a>.</p></li>
+<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleBorda</span><span class="p">([</span><span class="s1">&#39;a ~ b &gt; c&#39;</span><span class="p">,</span> <span class="s1">&#39;b &gt; c &gt; a&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">gross_scores_</span>
+<span class="go">{&#39;a&#39;: Fraction(3, 2), &#39;b&#39;: Fraction(7, 2), &#39;c&#39;: 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">scores_</span>
+<span class="go">{&#39;a&#39;: Fraction(3, 4), &#39;b&#39;: Fraction(7, 4), &#39;c&#39;: Fraction(1, 2)}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="whalrus.RuleBorda.average_score_">
+<em class="property">property </em><code class="sig-name descname">average_score_</code><a class="headerlink" href="#whalrus.RuleBorda.average_score_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the average score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.average_score_as_float_">
+<em class="property">property </em><code class="sig-name descname">average_score_as_float_</code><a class="headerlink" href="#whalrus.RuleBorda.average_score_as_float_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average score as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleBorda.average_score_" title="whalrus.RuleBorda.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a> converted to a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.best_score_as_float_">
+<em class="property">property </em><code class="sig-name descname">best_score_as_float_</code><a class="headerlink" href="#whalrus.RuleBorda.best_score_as_float_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The best score as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../rule_in_general/rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a> converted to a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.compare_scores">
+<code class="sig-name descname">compare_scores</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">numbers.Number</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">numbers.Number</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#whalrus.RuleBorda.compare_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one</strong> – a score.</p></li>
+<li><p><strong>another</strong> – a score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
+otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.cotrailers_">
+<em class="property">property </em><code class="sig-name descname">cotrailers_</code><a class="headerlink" href="#whalrus.RuleBorda.cotrailers_" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Cotrailers”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the set of candidates with the worst score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.cowinners_">
+<em class="property">property </em><code class="sig-name descname">cowinners_</code><a class="headerlink" href="#whalrus.RuleBorda.cowinners_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cowinners</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the set of candidates with the best score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.gross_scores_">
+<em class="property">property </em><code class="sig-name descname">gross_scores_</code><a class="headerlink" href="#whalrus.RuleBorda.gross_scores_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The gross scores of the candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code>. For each candidate, it gives the sum of its scores, multiplied by the weights
+of the corresponding voters. This is the numerator in the candidate’s average score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.gross_scores_as_floats_">
+<em class="property">property </em><code class="sig-name descname">gross_scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleBorda.gross_scores_as_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gross scores as floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleBorda.gross_scores_" title="whalrus.RuleBorda.gross_scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gross_scores_</span></code></a> converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.n_candidates_">
+<em class="property">property </em><code class="sig-name descname">n_candidates_</code><a class="headerlink" href="#whalrus.RuleBorda.n_candidates_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of candidates.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.scores_as_floats_">
+<em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleBorda.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scores as floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code> converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.strict_order_">
+<em class="property">property </em><code class="sig-name descname">strict_order_</code><a class="headerlink" href="#whalrus.RuleBorda.strict_order_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result of the election as a strict order over the candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a list whose first element is the winner, etc. This may use the tie-breaking rule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.trailer_">
+<em class="property">property </em><code class="sig-name descname">trailer_</code><a class="headerlink" href="#whalrus.RuleBorda.trailer_" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Trailer” of the election.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RuleBorda.strict_order_" title="whalrus.RuleBorda.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+unfavorable choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleBorda.cotrailers_" title="whalrus.RuleBorda.cotrailers_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cotrailers_</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.weights_">
+<em class="property">property </em><code class="sig-name descname">weights_</code><a class="headerlink" href="#whalrus.RuleBorda.weights_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The weights used for the candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code>. For each candidate, it gives the total weight for this candidate, i.e. the total
+weight of all voters who assign a score to this candidate. This is the denominator in the candidate’s
+average score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.weights_as_floats_">
+<em class="property">property </em><code class="sig-name descname">weights_as_floats_</code><a class="headerlink" href="#whalrus.RuleBorda.weights_as_floats_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Weights as floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleBorda.weights_" title="whalrus.RuleBorda.weights_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">weights_</span></code></a> converted to floats.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.winner_">
+<em class="property">property </em><code class="sig-name descname">winner_</code><a class="headerlink" href="#whalrus.RuleBorda.winner_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Winner of the election.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RuleBorda.strict_order_" title="whalrus.RuleBorda.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleBorda.cowinners_" title="whalrus.RuleBorda.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.RuleBorda.worst_score_as_float_">
+<em class="property">property </em><code class="sig-name descname">worst_score_as_float_</code><a class="headerlink" href="#whalrus.RuleBorda.worst_score_as_float_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The worst score as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../rule_in_general/rule_score.html#whalrus.RuleScore.worst_score_" title="whalrus.RuleScore.worst_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.worst_score_</span></code></a> converted to a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rule_bucklin_by_rounds.html" class="btn btn-neutral float-right" title="RuleBucklinByRounds" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rule_black.html" class="btn btn-neutral float-left" title="RuleBlack" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

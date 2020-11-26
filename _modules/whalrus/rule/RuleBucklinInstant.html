@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.rule.RuleBucklinInstant &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.rule.RuleBucklinInstant</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.rule.RuleBucklinInstant</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand</span>
+<span class="sd">sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com</span>
+
+<span class="sd">This file is part of Whalrus.</span>
+
+<span class="sd">Whalrus is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">Whalrus is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with Whalrus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">whalrus.scorer.Scorer</span> <span class="kn">import</span> <span class="n">Scorer</span>
+<span class="kn">from</span> <span class="nn">whalrus.scorer.ScorerBorda</span> <span class="kn">import</span> <span class="n">ScorerBorda</span>
+<span class="kn">from</span> <span class="nn">whalrus.rule.RuleScore</span> <span class="kn">import</span> <span class="n">RuleScore</span>
+<span class="kn">from</span> <span class="nn">whalrus.rule.RuleBucklinByRounds</span> <span class="kn">import</span> <span class="n">RuleBucklinByRounds</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallotToOrder</span> <span class="kn">import</span> <span class="n">ConverterBallotToOrder</span>
+<span class="kn">from</span> <span class="nn">whalrus.utils.Utils</span> <span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">NiceDict</span><span class="p">,</span> <span class="n">my_division</span><span class="p">,</span> <span class="n">convert_number</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallot</span> <span class="kn">import</span> <span class="n">ConverterBallot</span>
+<span class="kn">from</span> <span class="nn">whalrus.profile.Profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+
+<div class="viewcode-block" id="RuleBucklinInstant"><a class="viewcode-back" href="../../../reference/rule_in_particular/rule_bucklin_instant.html#whalrus.RuleBucklinInstant">[docs]</a><span class="k">class</span> <span class="nc">RuleBucklinInstant</span><span class="p">(</span><span class="n">RuleScore</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bucklin&#39;s rule (instant version).</span>
+
+<span class="sd">    :param `*args`: cf. parent class.</span>
+<span class="sd">    :param converter: the default is :class:`ConverterBallotToOrder`.</span>
+<span class="sd">    :param scorer: a :class:`Scorer`. Default: :class:`ScorerBorda` with ``absent_give_points=True``,</span>
+<span class="sd">        ``absent_receive_points=None``, ``unordered_give_points=True``, ``unordered_receive_points=False``.</span>
+<span class="sd">    :param default_median: the default median of a candidate when it receives no score whatsoever.</span>
+<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+
+<span class="sd">    &gt;&gt;&gt; rule = RuleBucklinInstant(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;])</span>
+<span class="sd">    &gt;&gt;&gt; rule.scores_</span>
+<span class="sd">    {&#39;a&#39;: (1, 3), &#39;b&#39;: (1, 2), &#39;c&#39;: (0, 3)}</span>
+<span class="sd">    &gt;&gt;&gt; rule.winner_</span>
+<span class="sd">    &#39;a&#39;</span>
+
+<span class="sd">    For each candidate, its median Borda score `m` is computed. Let `x` be the number of voters who give this</span>
+<span class="sd">    candidate a Borda score that is greater or equal to `m`. Then the candidate&#39;s score is `(m, x)`. Scores are</span>
+<span class="sd">    compared lexicographically.</span>
+
+<span class="sd">    When preferences are strict orders, it is equivalent to say that:</span>
+
+<span class="sd">        * The candidate with the lowest median rank is declared the winner.</span>
+<span class="sd">        * If several candidates have the lowest median rank, this tie is broken by examining how many voters rank</span>
+<span class="sd">          each of them with this rank or better.</span>
+
+<span class="sd">    For another variant of Bucklin&#39;s rule, cf. :class:`RuleBucklinByRounds`. With the default settings,</span>
+<span class="sd">    and when preferences are strict total orders, :class:`RuleBucklinByRounds` and :class:`RuleBucklinInstant` have</span>
+<span class="sd">    the same winner (although not necessarily the same order over the candidates). Otherwise, the winners may differ:</span>
+
+<span class="sd">    &gt;&gt;&gt; profile = Profile(ballots=[&#39;a &gt; b &gt; c &gt; d&#39;, &#39;b &gt; a ~ d &gt; c&#39;, &#39;c &gt; a ~ d &gt; b&#39;],</span>
+<span class="sd">    ...                   weights=[3, 3, 4])</span>
+<span class="sd">    &gt;&gt;&gt; rule_bucklin_by_rounds = RuleBucklinByRounds(profile)</span>
+<span class="sd">    &gt;&gt;&gt; rule_bucklin_by_rounds.detailed_scores_[0]</span>
+<span class="sd">    {&#39;a&#39;: Fraction(3, 10), &#39;b&#39;: Fraction(3, 10), &#39;c&#39;: Fraction(2, 5), &#39;d&#39;: 0}</span>
+<span class="sd">    &gt;&gt;&gt; rule_bucklin_by_rounds.detailed_scores_[1]</span>
+<span class="sd">    {&#39;a&#39;: Fraction(13, 20), &#39;b&#39;: Fraction(3, 5), &#39;c&#39;: Fraction(2, 5), &#39;d&#39;: Fraction(7, 20)}</span>
+<span class="sd">    &gt;&gt;&gt; rule_bucklin_by_rounds.winner_</span>
+<span class="sd">    &#39;a&#39;</span>
+<span class="sd">    &gt;&gt;&gt; rule_bucklin_instant = RuleBucklinInstant(profile)</span>
+<span class="sd">    &gt;&gt;&gt; rule_bucklin_instant.scores_</span>
+<span class="sd">    {&#39;a&#39;: (Fraction(3, 2), 10), &#39;b&#39;: (2, 6), &#39;c&#39;: (1, 7), &#39;d&#39;: (Fraction(3, 2), 7)}</span>
+<span class="sd">    &gt;&gt;&gt; RuleBucklinInstant(profile).winner_</span>
+<span class="sd">    &#39;b&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scorer</span><span class="p">:</span> <span class="n">Scorer</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">default_median</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Default value</span>
+        <span class="k">if</span> <span class="n">converter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">converter</span> <span class="o">=</span> <span class="n">ConverterBallotToOrder</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scorer</span> <span class="o">=</span> <span class="n">ScorerBorda</span><span class="p">(</span><span class="n">absent_give_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">absent_receive_points</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                 <span class="n">unordered_give_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unordered_receive_points</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scorer</span> <span class="o">=</span> <span class="n">scorer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_median</span> <span class="o">=</span> <span class="n">default_median</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
+        <span class="n">levels_</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">})</span>
+        <span class="n">weights_</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">ballot</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">voter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_converted_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">level</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scorer</span><span class="p">(</span><span class="n">ballot</span><span class="o">=</span><span class="n">ballot</span><span class="p">,</span> <span class="n">voter</span><span class="o">=</span><span class="n">voter</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">)</span><span class="o">.</span><span class="n">scores_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+                <span class="n">weights_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+        <span class="n">scores_</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+                <span class="n">scores_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_median</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scorer</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+            <span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">]</span>
+            <span class="n">weights_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">weights_</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">]</span>
+            <span class="n">total_weight</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">weights_</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+            <span class="n">half_total_weight</span> <span class="o">=</span> <span class="n">my_division</span><span class="p">(</span><span class="n">total_weight</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">cumulative_weight</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">median</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">weights_</span><span class="p">[</span><span class="n">c</span><span class="p">]):</span>
+                <span class="n">cumulative_weight</span> <span class="o">+=</span> <span class="n">weight</span>
+                <span class="k">if</span> <span class="n">cumulative_weight</span> <span class="o">&gt;=</span> <span class="n">half_total_weight</span><span class="p">:</span>
+                    <span class="n">median</span> <span class="o">=</span> <span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">break</span>
+            <span class="n">support</span> <span class="o">=</span> <span class="n">convert_number</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span>
+                <span class="n">weights_</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">levels_</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scorer</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">median</span><span class="p">)]))</span>
+            <span class="n">scores_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">median</span><span class="p">,</span> <span class="n">support</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scores_</span>
+
+<div class="viewcode-block" id="RuleBucklinInstant.compare_scores"><a class="viewcode-back" href="../../../reference/rule_in_particular/rule_bucklin_instant.html#whalrus.RuleBucklinInstant.compare_scores">[docs]</a>    <span class="k">def</span> <span class="nf">compare_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">another</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">one</span> <span class="o">==</span> <span class="n">another</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scorer</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">one</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">another</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scorer</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">one</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">another</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">one</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">another</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span></div>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">scores_as_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :return: :attr:`scores_`, converted to floats.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">my_float</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">x</span>
+        <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="p">(</span><span class="n">my_float</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

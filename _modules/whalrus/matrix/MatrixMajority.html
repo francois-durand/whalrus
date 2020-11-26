@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whalrus.matrix.MatrixMajority &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whalrus.matrix.MatrixMajority</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whalrus.matrix.MatrixMajority</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright Sylvain Bouveret, Yann Chevaleyre and François Durand</span>
+<span class="sd">sylvain.bouveret@imag.fr, yann.chevaleyre@dauphine.fr, fradurand@gmail.com</span>
+
+<span class="sd">This file is part of Whalrus.</span>
+
+<span class="sd">Whalrus is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">Whalrus is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with Whalrus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">whalrus.utils.Utils</span> <span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">NiceDict</span><span class="p">,</span> <span class="n">convert_number</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallotToOrder</span> <span class="kn">import</span> <span class="n">ConverterBallotToOrder</span>
+<span class="kn">from</span> <span class="nn">whalrus.converter_ballot.ConverterBallot</span> <span class="kn">import</span> <span class="n">ConverterBallot</span>
+<span class="kn">from</span> <span class="nn">whalrus.matrix.Matrix</span> <span class="kn">import</span> <span class="n">Matrix</span>
+<span class="kn">from</span> <span class="nn">whalrus.matrix.MatrixWeightedMajority</span> <span class="kn">import</span> <span class="n">MatrixWeightedMajority</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
+
+
+<div class="viewcode-block" id="MatrixMajority"><a class="viewcode-back" href="../../../reference/matrix/matrix_majority.html#whalrus.MatrixMajority">[docs]</a><span class="k">class</span> <span class="nc">MatrixMajority</span><span class="p">(</span><span class="n">Matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The majority matrix.</span>
+
+<span class="sd">    :param `*args`: cf. parent class.</span>
+<span class="sd">    :param converter: the default is :class:`ConverterBallotToOrder`.</span>
+<span class="sd">    :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.</span>
+<span class="sd">        Default: :class:`MatrixWeightedMajority`.</span>
+<span class="sd">    :param greater: value used when `W(c, d) &gt; W(d, c)`.</span>
+<span class="sd">    :param lower: value used when `W(c, d) &lt; W(d, c)`.</span>
+<span class="sd">    :param equal: value used when `W(c, d) = W(d, c)` (except for diagonal coefficients).</span>
+<span class="sd">    :param diagonal: value used for the diagonal coefficients.</span>
+<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+
+<span class="sd">    First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.</span>
+<span class="sd">    Then for each pair of candidates `(c, d)`, the coefficient of the majority matrix is set to :attr:`greater`,</span>
+<span class="sd">    :attr:`lower`, :attr:`equal` or :attr:`diagonal`, depending on the values of `W(c, d)` and `W(d, c)`.</span>
+
+<span class="sd">    &gt;&gt;&gt; MatrixMajority(ballots=[&#39;a &gt; b ~ c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;]).as_array_</span>
+<span class="sd">    array([[Fraction(1, 2), 1, 1],</span>
+<span class="sd">           [0, Fraction(1, 2), Fraction(1, 2)],</span>
+<span class="sd">           [0, Fraction(1, 2), Fraction(1, 2)]], dtype=object)</span>
+
+<span class="sd">    Using the options:</span>
+
+<span class="sd">    &gt;&gt;&gt; MatrixMajority(ballots=[&#39;a &gt; b ~ c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;], equal=0, diagonal=0).as_array_</span>
+<span class="sd">    array([[0, 1, 1],</span>
+<span class="sd">           [0, 0, 0],</span>
+<span class="sd">           [0, 0, 0]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">matrix_weighted_majority</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">greater</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lower</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">equal</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                 <span class="n">diagonal</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">converter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">converter</span> <span class="o">=</span> <span class="n">ConverterBallotToOrder</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">matrix_weighted_majority</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">matrix_weighted_majority</span> <span class="o">=</span> <span class="n">MatrixWeightedMajority</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix_weighted_majority</span> <span class="o">=</span> <span class="n">matrix_weighted_majority</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greater</span> <span class="o">=</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">greater</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="o">=</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">lower</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equal</span> <span class="o">=</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">equal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagonal</span> <span class="o">=</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">diagonal</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">matrix_weighted_majority_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The weighted majority matrix (upon which the computation of the majority matrix is based).</span>
+
+<span class="sd">        :return: the weighted majority matrix (once computed with the given profile).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_weighted_majority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_converted_</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_as_list_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_weighted_majority_</span><span class="o">.</span><span class="n">candidates_as_list_</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_indexes_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_weighted_majority_</span><span class="o">.</span><span class="n">candidates_indexes_</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">as_dict_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">equal</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">greater</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">lower</span>
+        <span class="n">weighted_as_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_weighted_majority_</span><span class="o">.</span><span class="n">as_dict_</span>
+        <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span>
+            <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">diagonal</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">d</span> <span class="k">else</span> <span class="n">convert</span><span class="p">(</span><span class="n">weighted_as_dict</span><span class="p">[(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)],</span> <span class="n">weighted_as_dict</span><span class="p">[(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="ow">in</span> <span class="n">weighted_as_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">})</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

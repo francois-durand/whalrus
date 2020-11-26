@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EliminationLast &mdash; Whalrus 0.4.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Matrix" href="../matrix/index.html" />
+    <link rel="prev" title="EliminationBelowAverage" href="elimination_below_average.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Whalrus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Whalrus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ballot/index.html">Ballot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converter_ballot/index.html">ConverterBallot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Elimination</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="elimination.html">Elimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elimination_below_average.html">EliminationBelowAverage</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">EliminationLast</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../priority/index.html">Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../profile/index.html">Profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_general/index.html">Rule: In General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rule_in_particular/index.html">Rule: In Particular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scale/index.html">Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scorer/index.html">Scorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Util Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Whalrus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Elimination</a> &raquo;</li>
+        
+      <li>EliminationLast</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/elimination/elimination_last.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="eliminationlast">
+<h1>EliminationLast<a class="headerlink" href="#eliminationlast" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="whalrus.EliminationLast">
+<em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">EliminationLast</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">k</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/elimination/EliminationLast.html#EliminationLast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.EliminationLast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elimination of the last candidates (with a fixed number of candidates to eliminate, or to qualify).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – cf. parent class.</p></li>
+<li><p><strong>k</strong> – an nonzero integer. The number of eliminated candidates. If this number is negative, then
+<code class="docutils literal notranslate"><span class="pre">len(rule.candidates_)</span> <span class="pre">-</span> <span class="pre">abs(k)</span></code> candidates are eliminated, i.e. <code class="docutils literal notranslate"><span class="pre">abs(k)</span></code> candidates are qualified.</p></li>
+<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+</ul>
+</dd>
+</dl>
+<p>In the most general syntax, firstly, you define the elimination method:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">elimination</span> <span class="o">=</span> <span class="n">EliminationLast</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Secondly, you use it as a callable to load a particular election (rule, profile, candidates):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elimination</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>  
+<span class="go">&lt;... object at ...&gt;</span>
+</pre></div>
+</div>
+<p>Finally, you can access the computed variables:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">elimination</span><span class="o">.</span><span class="n">eliminated_</span>
+<span class="go">{&#39;c&#39;}</span>
+</pre></div>
+</div>
+<p>Later, if you wish, you can load another election with the same elimination method, and so on.</p>
+<p>Optionally, you can specify an election (rule, profile, candidates) as soon as the <a class="reference internal" href="elimination.html#whalrus.Elimination" title="whalrus.Elimination"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elimination</span></code></a> object is
+initialized. This allows for one-liners such as:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EliminationLast</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]),</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">eliminated_</span>
+<span class="go">{&#39;c&#39;}</span>
+</pre></div>
+</div>
+<p>Typical usage with <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">1</span></code> (e.g. for <a class="reference internal" href="../rule_in_particular/rule_irv.html#whalrus.RuleIRV" title="whalrus.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                     <span class="n">tie_break</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">EliminationLast</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">eliminated_</span>
+<span class="go">{&#39;e&#39;}</span>
+</pre></div>
+</div>
+<p>Typical usage with <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">-2</span></code> (e.g. for <a class="reference internal" href="../rule_in_particular/rule_two_round.html#whalrus.RuleTwoRound" title="whalrus.RuleTwoRound"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleTwoRound</span></code></a>):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                     <span class="n">tie_break</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">EliminationLast</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span> <span class="n">k</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">qualified_</span>
+<span class="go">{&#39;a&#39;, &#39;b&#39;}</span>
+</pre></div>
+</div>
+<p>Order of elimination:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                     <span class="n">tie_break</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">EliminationLast</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span> <span class="n">k</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">eliminated_order_</span>
+<span class="go">[{&#39;c&#39;}, {&#39;d&#39;, &#39;e&#39;}]</span>
+</pre></div>
+</div>
+<p>There must always be at least one eliminated candidate. If it is not possible to eliminate (case <code class="docutils literal notranslate"><span class="pre">k</span></code> &gt; 0)  or keep
+(case <code class="docutils literal notranslate"><span class="pre">k</span></code> &lt; 0) as many candidates as required, then everybody is eliminated:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">EliminationLast</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">eliminated_</span>
+<span class="go">{&#39;a&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">EliminationLast</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span> <span class="n">k</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">eliminated_</span>
+<span class="go">{&#39;a&#39;}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="whalrus.EliminationLast.eliminated_">
+<em class="property">property </em><code class="sig-name descname">eliminated_</code><a class="headerlink" href="#whalrus.EliminationLast.eliminated_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The eliminated candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
+</dd>
+</dl>
+<p>This should always be non-empty. It may contain all the candidates (for example, it is always the case
+when there was only one candidate in the election).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whalrus.EliminationLast.qualified_">
+<em class="property">property </em><code class="sig-name descname">qualified_</code><a class="headerlink" href="#whalrus.EliminationLast.qualified_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The candidates that are qualified (not eliminated).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../matrix/index.html" class="btn btn-neutral float-right" title="Matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="elimination_below_average.html" class="btn btn-neutral float-left" title="EliminationBelowAverage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, François Durand
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
