@@ -28,7 +28,10 @@ class ScaleFromList(Scale):
     """
     Scale derived from a list.
 
-    :param levels: the list of levels, from the worst to the best.
+    Parameters
+    ----------
+    levels : list
+        The list of levels, from the worst to the best.
     """
 
     def __init__(self, levels: list):
@@ -80,34 +83,42 @@ class ScaleFromList(Scale):
 
     def min(self, iterable: Iterable) -> object:
         """
-        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
-        >>> scale.min(['Good', 'Bad', 'Excellent'])
-        'Bad'
+        Examples
+        --------
+            >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+            >>> scale.min(['Good', 'Bad', 'Excellent'])
+            'Bad'
         """
         return min(iterable, key=lambda level: self.as_dict[level])
 
     def max(self, iterable: Iterable) -> object:
         """
-        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
-        >>> scale.max(['Good', 'Bad', 'Excellent'])
-        'Excellent'
+        Examples
+        --------
+            >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+            >>> scale.max(['Good', 'Bad', 'Excellent'])
+            'Excellent'
         """
         return max(iterable, key=lambda level: self.as_dict[level])
 
     def sort(self, some_list: list, reverse: bool = False) -> None:
         """
-        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
-        >>> some_list = ['Good', 'Bad', 'Excellent']
-        >>> scale.sort(some_list)
-        >>> some_list
-        ['Bad', 'Good', 'Excellent']
+        Examples
+        --------
+            >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+            >>> some_list = ['Good', 'Bad', 'Excellent']
+            >>> scale.sort(some_list)
+            >>> some_list
+            ['Bad', 'Good', 'Excellent']
         """
         some_list.sort(key=lambda level: self.as_dict[level], reverse=reverse)
 
     def argsort(self, some_list: list, reverse: bool = False) -> list:
         """
-        >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
-        >>> scale.argsort(['Good', 'Bad', 'Excellent'])
-        [1, 0, 2]
+        Examples
+        --------
+            >>> scale = ScaleFromList(['Bad', 'Medium', 'Good', 'Very good', 'Excellent'])
+            >>> scale.argsort(['Good', 'Bad', 'Excellent'])
+            [1, 0, 2]
         """
         return sorted(range(len(some_list)), key=lambda i: self.as_dict[some_list[i]], reverse=reverse)

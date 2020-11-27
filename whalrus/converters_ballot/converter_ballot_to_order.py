@@ -33,19 +33,21 @@ class ConverterBallotToOrder(ConverterBallot):
     This is a default converter to a :class:`BallotOrder`. It tries to infer the type of input and converts it to
     an ordered ballot (possibly a ballot of a subclass, such as :class:`BallotLevels`).
 
-    >>> converter = ConverterBallotToOrder()
-    >>> converter('a > b ~ c')
-    BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
-    >>> converter(['a', {'b', 'c'}])
-    BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
-    >>> converter({'a': 10, 'b': 7, 'c': 0})
-    BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=Scale())
-    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))
-    BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
-    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))
-    BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}))
-    BallotOrder([{'b', 'c'}, 'a'], candidates={'a', 'b', 'c'})
+    Examples
+    --------
+        >>> converter = ConverterBallotToOrder()
+        >>> converter('a > b ~ c')
+        BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
+        >>> converter(['a', {'b', 'c'}])
+        BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
+        >>> converter({'a': 10, 'b': 7, 'c': 0})
+        BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=Scale())
+        >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}))
+        BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
+        >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}))
+        BallotOrder(['a', {'b', 'c'}], candidates={'a', 'b', 'c'})
+        >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}))
+        BallotOrder([{'b', 'c'}, 'a'], candidates={'a', 'b', 'c'})
     """
 
     def __call__(self, x: object, candidates: set = None) -> BallotOrder:

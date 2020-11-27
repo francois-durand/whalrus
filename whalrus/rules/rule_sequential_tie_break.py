@@ -29,26 +29,32 @@ class RuleSequentialTieBreak(Rule):
     """
     A rule by sequential tie-break.
 
-    :param `*args`: cf. parent class.
-    :param rules: a list of rules.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    rules : list of Rule
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     The winner is determined by the first rule. If there is a tie, it is broken by the second rule. Etc. There may
     still be a tie at the end: in that case, it is broken by the tie-breaking rule of this object.
 
-    >>> rule = RuleSequentialTieBreak(
-    ...     ['a > d > e > b > c', 'b > d > e > a > c', 'c > d > e > a > b',
-    ...      'd > e > b > a > c', 'e > d > b > a > c'],
-    ...     weights=[2, 2, 2, 1, 1],
-    ...     rules=[RulePlurality(), RuleBorda()], tie_break=Priority.ASCENDING)
-    >>> rule.rules_[0].gross_scores_
-    {'a': 2, 'b': 2, 'c': 2, 'd': 1, 'e': 1}
-    >>> rule.rules_[1].gross_scores_
-    {'a': 14, 'b': 14, 'c': 8, 'd': 25, 'e': 19}
-    >>> rule.order_
-    [{'a', 'b'}, {'c'}, {'d'}, {'e'}]
-    >>> rule.winner_
-    'a'
+        >>> rule = RuleSequentialTieBreak(
+        ...     ['a > d > e > b > c', 'b > d > e > a > c', 'c > d > e > a > b',
+        ...      'd > e > b > a > c', 'e > d > b > a > c'],
+        ...     weights=[2, 2, 2, 1, 1],
+        ...     rules=[RulePlurality(), RuleBorda()], tie_break=Priority.ASCENDING)
+        >>> rule.rules_[0].gross_scores_
+        {'a': 2, 'b': 2, 'c': 2, 'd': 1, 'e': 1}
+        >>> rule.rules_[1].gross_scores_
+        {'a': 14, 'b': 14, 'c': 8, 'd': 25, 'e': 19}
+        >>> rule.order_
+        [{'a', 'b'}, {'c'}, {'d'}, {'e'}]
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, rules: list = None, **kwargs):
@@ -57,10 +63,7 @@ class RuleSequentialTieBreak(Rule):
 
     @cached_property
     def rules_(self) -> list:
-        """
-        The rules (once applied to the profile).
-
-        :return: a list of :class:`Rule` objects (once applied to the profile).
+        """list: The rules (once applied to the profile).
         """
         return [rule(self.profile_converted_) for rule in self.rules]
 

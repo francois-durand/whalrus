@@ -35,49 +35,58 @@ class RuleSequentialElimination(Rule):
     """
     A rule by sequential elimination (such as :class:`RuleTwoRound`).
 
-    :param `*args`: cf. parent class.
-    :param rules: a list of rules, one for each round. Unlike for :class:`RuleIteratedElimination`, different rounds
-        may use different voting rules.
-    :param eliminations: a list of elimination algorithms, one for each round except the last one.
-    :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the
-        base rules. Cf. :class:`RuleIteratedElimination` for more explanation on this parameter.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    rules : list of Rule
+        A list of rules, one for each round. Unlike for :class:`RuleIteratedElimination`, different rounds may use
+        different voting rules.
+    eliminations: list of Elimination
+        A list of elimination algorithms, one for each round except the last one.
+    propagate_tie_break : bool
+        If True (default), then the tie-breaking rule of this object is also used for the base rules. Cf.
+        :class:`RuleIteratedElimination` for more explanation on this parameter.
+    kwargs
+        Cf. parent class.
 
-    >>> rule = RuleSequentialElimination(
-    ...     ['a > b > c > d > e', 'b > c > d > e > a'], weights=[2, 1],
-    ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
-    ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
-    >>> rule.elimination_rounds_[0].rule_.gross_scores_
-    {'a': 8, 'b': 10, 'c': 7, 'd': 4, 'e': 1}
-    >>> rule.elimination_rounds_[1].rule_.gross_scores_
-    {'a': 2, 'b': 1, 'c': 0}
-    >>> rule.final_round_.gross_scores_
-    {'a': 2, 'b': 1}
+    Examples
+    --------
+        >>> rule = RuleSequentialElimination(
+        ...     ['a > b > c > d > e', 'b > c > d > e > a'], weights=[2, 1],
+        ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
+        ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
+        >>> rule.elimination_rounds_[0].rule_.gross_scores_
+        {'a': 8, 'b': 10, 'c': 7, 'd': 4, 'e': 1}
+        >>> rule.elimination_rounds_[1].rule_.gross_scores_
+        {'a': 2, 'b': 1, 'c': 0}
+        >>> rule.final_round_.gross_scores_
+        {'a': 2, 'b': 1}
 
     If ``rules`` is not a list, the number of rounds is inferred from ``eliminations``. An application of this is to
     define the two-round system:
 
-    >>> rule = RuleSequentialElimination(
-    ...     ['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
-    ...     rules=RulePlurality(), eliminations=[EliminationLast(k=-2)])
-    >>> rule.elimination_rounds_[0].rule_.gross_scores_
-    {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
-    >>> rule.final_round_.gross_scores_
-    {'a': 3, 'b': 2}
+        >>> rule = RuleSequentialElimination(
+        ...     ['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'], weights=[2, 2, 1],
+        ...     rules=RulePlurality(), eliminations=[EliminationLast(k=-2)])
+        >>> rule.elimination_rounds_[0].rule_.gross_scores_
+        {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
+        >>> rule.final_round_.gross_scores_
+        {'a': 3, 'b': 2}
 
     Note: there exists a shortcut for the above rule in particular, the class :class:`RuleTwoRound`.
 
     Similarly, if ``elimination`` is not a list, the number of rounds is deduced from ``rules``:
 
-    >>> rule = RuleSequentialElimination(
-    ...     ['a > b > c > d > e', 'b > a > c > d > e'], weights=[2, 1],
-    ...     rules=[RuleBorda(), RuleBorda(), RulePlurality()], eliminations=EliminationLast(k=1))
-    >>> rule.elimination_rounds_[0].rule_.gross_scores_
-    {'a': 11, 'b': 10, 'c': 6, 'd': 3, 'e': 0}
-    >>> rule.elimination_rounds_[1].rule_.gross_scores_
-    {'a': 8, 'b': 7, 'c': 3, 'd': 0}
-    >>> rule.final_round_.gross_scores_
-    {'a': 2, 'b': 1, 'c': 0}
+        >>> rule = RuleSequentialElimination(
+        ...     ['a > b > c > d > e', 'b > a > c > d > e'], weights=[2, 1],
+        ...     rules=[RuleBorda(), RuleBorda(), RulePlurality()], eliminations=EliminationLast(k=1))
+        >>> rule.elimination_rounds_[0].rule_.gross_scores_
+        {'a': 11, 'b': 10, 'c': 6, 'd': 3, 'e': 0}
+        >>> rule.elimination_rounds_[1].rule_.gross_scores_
+        {'a': 8, 'b': 7, 'c': 3, 'd': 0}
+        >>> rule.final_round_.gross_scores_
+        {'a': 2, 'b': 1, 'c': 0}
     """
 
     def __init__(self, *args, rules: Union[list, Rule] = None, eliminations: Union[list, Elimination] = None,
@@ -111,24 +120,23 @@ class RuleSequentialElimination(Rule):
     @cached_property
     def rounds_(self) -> list:
         # noinspection PyUnresolvedReferences
-        """
-        The rounds.
+        """list: The rounds. All rounds but the last one are :class:`Elimination` objects. The last one is a
+        :class:`Rule` object.
 
-        :return: a list. All rounds but the last one are :class:`Elimination` objects. The last one is a :class:`Rule`
-            object.
-
+        Examples
+        --------
         Note that in some cases, there may be fewer actual rounds than declared in the definition of the rule:
 
-        >>> rule = RuleSequentialElimination(
-        ...     ['a > b > c > d', 'a > c > d > b', 'a > d > b > c'],
-        ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
-        ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
-        >>> len(rule.rounds_)
-        2
-        >>> rule.elimination_rounds_[0].rule_.gross_scores_
-        {'a': 9, 'b': 3, 'c': 3, 'd': 3}
-        >>> rule.final_round_.gross_scores_
-        {'a': 3}
+            >>> rule = RuleSequentialElimination(
+            ...     ['a > b > c > d', 'a > c > d > b', 'a > d > b > c'],
+            ...     rules=[RuleBorda(), RulePlurality(), RulePlurality()],
+            ...     eliminations=[EliminationBelowAverage(), EliminationLast(k=1)])
+            >>> len(rule.rounds_)
+            2
+            >>> rule.elimination_rounds_[0].rule_.gross_scores_
+            {'a': 9, 'b': 3, 'c': 3, 'd': 3}
+            >>> rule.final_round_.gross_scores_
+            {'a': 3}
         """
         rounds = []
         candidates = self.candidates_
@@ -154,19 +162,13 @@ class RuleSequentialElimination(Rule):
 
     @cached_property
     def elimination_rounds_(self) -> list:
-        """
-        The elimination rounds.
-
-        :return: a list of :class:`Elimination` objects. All rounds except the last one.
+        """list: The elimination rounds. A list of :class:`Elimination` objects. All rounds except the last one.
         """
         return self.rounds_[:-1]
 
     @cached_property
     def final_round_(self) -> Rule:
-        """
-        The final round.
-
-        :return: a :class:`Rule` object. The last round, which decides the winner of the election.
+        """Rule: The final round, which decides the winner of the election.
         """
         return self.rounds_[-1]
 

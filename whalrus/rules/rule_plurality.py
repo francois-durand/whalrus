@@ -32,35 +32,43 @@ class RulePlurality(RuleScoreNumAverage):
     """
     The plurality rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToPlurality`.
-    :param scorer: the default is :class:`ScorerPlurality`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToPlurality`.
+    scorer : Scorer
+        Default: :class:`ScorerPlurality`.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     In the most general syntax, firstly, you define the rule:
 
-    >>> plurality = RulePlurality(tie_break=Priority.ASCENDING)
+        >>> plurality = RulePlurality(tie_break=Priority.ASCENDING)
 
     Secondly, you use it as a callable to load a particular election (profile, candidates):
 
-    >>> plurality(ballots=['a', 'b', 'c'], weights=[2, 2, 1], voters=['Alice', 'Bob', 'Cate'],
-    ...           candidates={'a', 'b', 'c', 'd'})  # doctest:+ELLIPSIS
-    <... object at ...>
+        >>> plurality(ballots=['a', 'b', 'c'], weights=[2, 2, 1], voters=['Alice', 'Bob', 'Cate'],
+        ...           candidates={'a', 'b', 'c', 'd'})  # doctest:+ELLIPSIS
+        <... object at ...>
 
     Finally, you can access the computed variables:
 
-    >>> plurality.gross_scores_
-    {'a': 2, 'b': 2, 'c': 1, 'd': 0}
-    >>> plurality.winner_
-    'a'
+        >>> plurality.gross_scores_
+        {'a': 2, 'b': 2, 'c': 1, 'd': 0}
+        >>> plurality.winner_
+        'a'
 
     Later, if you wish, you can load another profile with the same voting rule, and so on.
 
     Optionally, you can specify an election (profile and candidates) as soon as the :class:`Rule` object is initialized.
     This allows for one-liners such as:
 
-    >>> RulePlurality(['a', 'a', 'b', 'c']).winner_
-    'a'
+        >>> RulePlurality(['a', 'a', 'b', 'c']).winner_
+        'a'
 
     Cf. :class:`Rule` for more information about the arguments.
     """

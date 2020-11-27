@@ -34,32 +34,38 @@ class ConverterBallotToGrades(ConverterBallot):
     """
     Default converter to a :class:`BallotLevels` using numeric grades.
 
-    :param scale: a numeric :class:`Scale`. If specified, then the ballot will be converted to this scale. If it is
-        None, then any ballot that is of class :class:`BallotLevels` and numeric will be kept as it is, and any other
-        ballot will converted to a :class:`BallotLevels` using a :class:`ScaleInterval` with bounds 0 and 1
-    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,
-        we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the
-        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
-
     This is a default converter to a :class:`BallotLevels` using numeric grades. It tries to infer the type of input
     and converts it to a :class:`BallotLevels`, with a numeric scale. It is a wrapper for the specialized converters
     :class:`ConverterBallotToLevelsInterval`, :class:`ConverterBallotToLevelsRange`,
     and :class:`ConverterBallotToLevelsListNumeric`.
 
+    Parameters
+    ----------
+    scale : numeric :class:`Scale`
+        If specified, then the ballot will be converted to this scale. If it is None, then any ballot that is of
+        class :class:`BallotLevels` and numeric will be kept as it is, and any other ballot will converted to a
+        :class:`BallotLevels` using a :class:`ScaleInterval` with bounds 0 and 1.
+    borda_unordered_give_points : bool
+        When converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we use Borda scores as a
+        calculation step. This parameter decides whether the unordered candidates of the ballot give points to the
+        ordered candidates. Cf. :class:`ScorerBorda`.
+
+    Examples
+    --------
     Typical usages:
 
-    >>> ballot = BallotLevels({'a': 100, 'b': 57}, scale=ScaleRange(0, 100))
-    >>> ConverterBallotToGrades(scale=ScaleInterval(low=0, high=10))(ballot).as_dict
-    {'a': 10, 'b': Fraction(57, 10)}
-    >>> ConverterBallotToGrades(scale=ScaleRange(low=0, high=10))(ballot).as_dict
-    {'a': 10, 'b': 6}
-    >>> ConverterBallotToGrades(scale=ScaleFromSet({0, 2, 4, 10}))(ballot).as_dict
-    {'a': 10, 'b': 4}
+        >>> ballot = BallotLevels({'a': 100, 'b': 57}, scale=ScaleRange(0, 100))
+        >>> ConverterBallotToGrades(scale=ScaleInterval(low=0, high=10))(ballot).as_dict
+        {'a': 10, 'b': Fraction(57, 10)}
+        >>> ConverterBallotToGrades(scale=ScaleRange(low=0, high=10))(ballot).as_dict
+        {'a': 10, 'b': 6}
+        >>> ConverterBallotToGrades(scale=ScaleFromSet({0, 2, 4, 10}))(ballot).as_dict
+        {'a': 10, 'b': 4}
 
-    >>> ballot = BallotLevels({'a': 'Good', 'b': 'Medium'},
-    ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
-    >>> ConverterBallotToGrades()(ballot).as_dict
-    {'a': 1, 'b': Fraction(1, 2)}
+        >>> ballot = BallotLevels({'a': 'Good', 'b': 'Medium'},
+        ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
+        >>> ConverterBallotToGrades()(ballot).as_dict
+        {'a': 1, 'b': Fraction(1, 2)}
 
     For more examples, cf. :class:`ConverterBallotToLevelsInterval`, :class:`ConverterBallotToLevelsRange`,
     and :class:`ConverterBallotToLevelsListNumeric`.

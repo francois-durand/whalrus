@@ -28,14 +28,21 @@ class RuleScoreNumAverage(RuleScoreNum):
     """
     A voting rule where each candidate's score is an average of the scores provided by the ballots.
 
-    :param `*args`: cf. parent class.
-    :param scorer: the :class:`Scorer`. For each ballot, it is in charge of computing its contribution to each
-        candidate's score.
-    :param default_average: the default average score of a candidate when it receives no score whatsoever. It may
-        happen, for example, if all voters abstain about this candidate. This avoids a division by zero when
-        computing this candidate's average score.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    scorer : Scorer
+        For each ballot, it is in charge of computing its contribution to each candidate's score.
+    default_average : Number
+        The default average score of a candidate when it receives no score whatsoever. It may happen, for example, if
+        all voters abstain about this candidate. This avoids a division by zero when computing this candidate's average
+        score.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     Cf. :class:`RuleRangeVoting` for some examples.
     """
 
@@ -56,22 +63,17 @@ class RuleScoreNumAverage(RuleScoreNum):
 
     @cached_property
     def gross_scores_(self) -> NiceDict:
-        """
-        The gross scores of the candidates.
-
-        :return: a :class:`NiceDict`. For each candidate, it gives the sum of its scores, multiplied by the weights
-            of the corresponding voters. This is the numerator in the candidate's average score.
+        """NiceDict: The gross scores of the candidates. For each candidate, this dictionary gives the sum of its
+        scores, multiplied by the weights of the corresponding voters. This is the numerator in the candidate's average
+        score.
         """
         return self._gross_scores_and_weights_['gross_scores']
 
     @cached_property
     def weights_(self) -> NiceDict:
-        """
-        The weights used for the candidates.
-
-        :return: a :class:`NiceDict`. For each candidate, it gives the total weight for this candidate, i.e. the total
-            weight of all voters who assign a score to this candidate. This is the denominator in the candidate's
-            average score.
+        """NiceDict: The weights used for the candidates. For each candidate, this dictionary gives the total weight
+        for this candidate, i.e. the total weight of all voters who assign a score to this candidate. This is the
+        denominator in the candidate's average score.
         """
         return self._gross_scores_and_weights_['weights']
 
@@ -85,18 +87,12 @@ class RuleScoreNumAverage(RuleScoreNum):
 
     @cached_property
     def gross_scores_as_floats_(self) -> NiceDict:
-        """
-        Gross scores as floats.
-
-        :return: :attr:`gross_scores_` converted to floats.
+        """NiceDict: Gross scores as floats. It is the same as :attr:`gross_scores_`, but converted to floats.
         """
         return NiceDict({c: float(v) for c, v in self.gross_scores_.items()})
 
     @cached_property
     def weights_as_floats_(self) -> NiceDict:
-        """
-        Weights as floats.
-
-        :return: :attr:`weights_` converted to floats.
+        """NiceDict: Weights as floats. It is the same as :attr:`weights_`, but converted to floats.
         """
         return NiceDict({c: float(v) for c, v in self.weights_.items()})

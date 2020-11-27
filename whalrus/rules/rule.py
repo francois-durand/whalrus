@@ -31,12 +31,6 @@ class Rule(DeleteCacheMixin):
     """
     A voting rule.
 
-    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-    :param tie_break: a tie-break rule.
-    :param converter: the converter that is used to convert input ballots in order to compute
-        :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
-    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-
     A :class:`Rule` object is a callable whose inputs are ballots and optionally weights, voters and candidates.
     When the rule is called, it loads the profile. The output of the call is the rule itself. But
     after the call, you can access to the computed variables (ending with an underscore), such as
@@ -45,15 +39,34 @@ class Rule(DeleteCacheMixin):
     At the initialization of a :class:`Rule` object, some options can be given, such as a tie-break rule or a
     converter. In some subclasses, there can also be an option about the way to count abstentions, etc.
 
-    Cf. :class:`RulePlurality` for some examples.
+    Parameters
+    ----------
+    args
+        If present, these parameters will be passed to ``__call__`` immediately after initialization.
+    tie_break : Priority
+        A tie-break rule.
+    converter : ConverterBallot
+        The converter that is used to convert input ballots in order to compute :attr:`profile_converted_`.
+        Default: :class:`ConverterBallotGeneral`.
+    kwargs
+        If present, these parameters will be passed to ``__call__`` immediately after initialization.
 
-    :ivar profile_original\_: the profile as it is entered by the user. Since it uses the constructor of
-        :class:`Profile`, it indirectly uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
-        ``'a > b > c'`` are converted to :class:`Ballot` objects.
-    :ivar profile_converted\_: the profile, with ballots that are adapted to the voting rule. For example,
-        in :class:`RulePlurality`, it will be :class:`BallotPlurality` objects, even if the original ballots are
-        :class:`BallotOrder` objects. This uses the parameter ``converter`` of the rule.
-    :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
+    Attributes
+    ----------
+    profile_original_ : Profile
+        The profile as it is entered by the user. Since it uses the constructor of :class:`Profile`, it indirectly uses
+        :class:`ConverterBallotGeneral` to ensure, for example, that strings like ``'a > b > c'`` are converted to
+        :class:`Ballot` objects.
+    profile_converted_ : Profile
+        The profile, with ballots that are adapted to the voting rule. For example, in :class:`RulePlurality`, it will
+        be :class:`BallotPlurality` objects, even if the original ballots are :class:`BallotOrder` objects. This uses
+        the parameter ``converter`` of the rule.
+    candidates_ : NiceSet
+        The candidates of the election, as entered in the ``__call__``.
+
+    Examples
+    --------
+    Cf. :class:`RulePlurality` for some examples.
     """
 
     def __init__(self, *args, tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None, **kwargs):
@@ -79,8 +92,8 @@ class Rule(DeleteCacheMixin):
         self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_original_],
                                           weights=self.profile_original_.weights, voters=self.profile_original_.voters)
         if candidates is None:
-            candidates = NiceSet(set().union(*[b.candidates for b in self.profile_converted_]))
-        self.candidates_ = candidates
+            candidates = set().union(*[b.candidates for b in self.profile_converted_])
+        self.candidates_ = NiceSet(candidates)
         self._check_profile(candidates)
         self.delete_cache()
         return self
@@ -91,54 +104,39 @@ class Rule(DeleteCacheMixin):
 
     @cached_property
     def n_candidates_(self) -> int:
-        """
-        Number of candidates.
-
-        :return: the number of candidates.
+        """int: Number of candidates.
         """
         return len(self.candidates_)
 
     @cached_property
     def cowinners_(self) -> NiceSet:
-        """
-        Cowinners of the election.
-
-        :return: the set of cowinners, i.e. the candidates that fare best in the election.. This is the first
-            equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that are
-            tied for the best score.
+        """NiceSet: Cowinners of the election, i.e. the candidates that fare best in the election.. This is the first
+        equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that are tied
+        for the best score.
         """
         # N.B.: it is recommended to override this method when it is possible to make computation cheaper.
         return self.order_[0]
 
     @cached_property
     def winner_(self) -> object:
-        """
-        Winner of the election.
-
-        :return: the winner of the election. This is the first candidate in :attr:`strict_order_` and also the
-            choice of the tie-breaking rule in :attr:`cowinners_`.
+        """object: The winner of the election. This is the first candidate in :attr:`strict_order_` and also the
+        choice of the tie-breaking rule in :attr:`cowinners_`.
         """
         return self.tie_break.choice(self.cowinners_)
 
     @cached_property
     def cotrailers_(self) -> NiceSet:
-        """
-        "Cotrailers" of the election.
-
-        :return: the set of "cotrailers", i.e. the candidates that fare worst in the election. This is the last
-            equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that
-            are tied for the worst score.
+        """NiceSet: "Cotrailers" of the election, i.e. the candidates that fare worst in the election. This is the last
+        equivalence class in :attr:`order_`. For example, in :class:`RuleScoreNum`, it is the candidates that are tied
+        for the worst score.
         """
         # N.B.: it is recommended to override this method when it is possible to make computation cheaper.
         return self.order_[-1]
 
     @cached_property
     def trailer_(self) -> object:
-        """
-        "Trailer" of the election.
-
-        :return: the "trailer" of the election. This is the last candidate in :attr:`strict_order_` and also the
-            unfavorable choice of the tie-breaking rule in :attr:`cotrailers_`.
+        """object: The "trailer" of the election. This is the last candidate in :attr:`strict_order_` and also the
+        unfavorable choice of the tie-breaking rule in :attr:`cotrailers_`.
         """
         if len(self.cotrailers_) == self.n_candidates_:
             # Caution, the winner is in ``self.cotrailers_``...
@@ -153,19 +151,15 @@ class Rule(DeleteCacheMixin):
 
     @cached_property
     def order_(self) -> list:
-        """
-        Result of the election as a (weak) order over the candidates.
-
-        :return: a list of :class:`NiceSet`. The first set contains the candidates that are tied for victory, etc.
+        """list: Result of the election as a (weak) order over the candidates. This is a list of :class:`NiceSet`. The
+        first set contains the candidates that are tied for victory, etc.
         """
         raise NotImplementedError
 
     @cached_property
     def strict_order_(self) -> list:
-        """
-        Result of the election as a strict order over the candidates.
-
-        :return: a list whose first element is the winner, etc. This may use the tie-breaking rule.
+        """list: Result of the election as a strict order over the candidates. The first element is the winner, etc.
+        This may use the tie-breaking rule.
         """
         strict_order = [candidate for tie_class in self.order_ for candidate in self.tie_break.sort(tie_class)]
         # Check if this is consistent with ``self.winner_`` and ``self.trailer_`` (especially for random tie-breaking).

@@ -31,25 +31,37 @@ class Matrix(DeleteCacheMixin):
     """
     A way to compute a matrix from a profile.
 
-    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-    :param converter: the converter that is used to convert input ballots in order to compute
-        :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
-    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-
     A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters and candidates. When
     it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.
     But after the call, you can access to the computed variables (ending with an underscore), such as
     :attr:`as_dict_` or :attr:`as_array_`.
 
-    Cf. :class:`MatrixWeightedMajority` for some examples.
+    Parameters
+    ----------
+    args
+        If present, these parameters will be passed to ``__call__`` immediately after initialization.
+    converter : ConverterBallot
+        The converter that is used to convert input ballots in order to compute :attr:`profile_converted_`.
+        Default: :class:`ConverterBallotGeneral`.
+    kwargs
+        If present, these parameters will be passed to ``__call__`` immediately after initialization.
 
-    :ivar profile_original\_: the profile as it is entered by the user. This uses the constructor of :class:`Profile`.
-        Hence indirectly, it uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
-        ``'a > b > c'`` are converted to :class:``Ballot`` objects.
-    :ivar profile_converted\_: the profile, with ballots that are adequate for the voting rule. For example,
-        in :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects. This uses the parameter
-        ``converter`` of the object.
-    :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
+    Attributes
+    ----------
+    profile_original_ : Profile
+        The profile as it is entered by the user. This uses the constructor of :class:`Profile`. Hence indirectly, it
+        uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like ``'a > b > c'`` are converted to
+        :class:``Ballot`` objects.
+    profile_converted_: Profile
+        The profile, with ballots that are adequate for the voting rule. For example, in
+        :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects. This uses the parameter ``converter``
+        of the object.
+    candidates_ : NiceSet
+        The candidates of the election, as entered in the ``__call__``.
+
+    Examples
+    --------
+    Cf. :class:`MatrixWeightedMajority` for some examples.
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, **kwargs):
@@ -86,46 +98,33 @@ class Matrix(DeleteCacheMixin):
 
     @cached_property
     def as_dict_(self) -> NiceDict:
-        """
-        The matrix, as a :class:`NiceDict`.
-
-        :return: a :class:`NiceDict`. Keys are pairs of candidates, and values are the coefficients of the matrix.
+        """NiceDict: The matrix, as a :class:`NiceDict`. Keys are pairs of candidates, and values are the coefficients
+        of the matrix.
         """
         raise NotImplementedError
 
     @cached_property
     def candidates_as_list_(self) -> list:
-        """
-        The list of candidates.
-
-        :return: a list. Candidates are sorted if possible.
+        """list: The list of candidates. Candidates are sorted if possible.
         """
         return set_to_list(self.candidates_)
 
     @cached_property
     def candidates_indexes_(self) -> NiceDict:
-        """
-        The candidates as a dictionary.
-
-        :return: a dictionary. To each candidate, it associates its index in :attr:`candidates_as_list_`.
+        """NiceDict: The candidates as a dictionary. To each candidate, it associates its index in
+        :attr:`candidates_as_list_`.
         """
         return NiceDict({c: i for i, c in enumerate(self.candidates_as_list_)})
 
     @cached_property
     def as_array_(self) -> np.array:
-        """
-        The matrix, as a numpy array.
-
-        :return: a numpy array. Each row and each column corresponds to a candidate (in the order of
-            :attr:`candidates_as_list_`).
+        """Array : The matrix, as a numpy array. Each row and each column corresponds to a candidate (in the order of
+        :attr:`candidates_as_list_`).
         """
         return np.array([[self.as_dict_[(c, d)] for d in self.candidates_as_list_] for c in self.candidates_as_list_])
 
     @cached_property
     def as_array_of_floats_(self) -> np.array:
-        """
-        The matrix, as a numpy array.
-
-        :return: :attr:`as_array_`, converted to floats.
+        """Array : The matrix, as a numpy array. It is the same as :attr:`as_array_`, but converted to floats.
         """
         return self.as_array_.astype(float)

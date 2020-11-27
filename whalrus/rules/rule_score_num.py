@@ -33,10 +33,7 @@ class RuleScoreNum(RuleScore):
 
     @cached_property
     def scores_(self) -> NiceDict:
-        """
-        The scores.
-
-        :return: a :class:`NiceDict` that, to each candidate, assigns a numeric score.
+        """NiceDict: The scores. To each candidate, this dictionary assigns a numeric score.
         """
         raise NotImplementedError
 
@@ -55,10 +52,7 @@ class RuleScoreNum(RuleScore):
 
     @cached_property
     def average_score_(self) -> Number:
-        """
-        The average score.
-
-        :return: the average score.
+        """Number: The average score.
         """
         return my_division(sum(self.scores_.values()), self.n_candidates_)
 
@@ -72,39 +66,28 @@ class RuleScoreNum(RuleScore):
 
     @cached_property
     def scores_as_floats_(self) -> NiceDict:
-        """
-        Scores as floats.
-
-        :return: :attr:`scores_` converted to floats.
+        """NiceDict: Scores as floats. It is the same as :attr:`scores_`, but converted to floats.
         """
         return NiceDict({c: float(v) for c, v in self.scores_.items()})
 
     @cached_property
     def best_score_as_float_(self) -> Number:
-        """
-        The best score as a float.
-
-        :return: :attr:`RuleScore.best_score_` converted to a float.
+        """Number: The best score as a float. It is the same as :attr:`RuleScore.best_score_`, but converted to a float.
         """
         # noinspection PyTypeChecker
         return float(self.best_score_)
 
     @cached_property
     def worst_score_as_float_(self) -> Number:
-        """
-        The worst score as a float.
-
-        :return: :attr:`RuleScore.worst_score_` converted to a float.
+        """Number: The worst score as a float. It is the same as :attr:`RuleScore.worst_score_`, but converted to a
+        float.
         """
         # noinspection PyTypeChecker
         return float(self.worst_score_)
 
     @cached_property
     def average_score_as_float_(self) -> Number:
-        """
-        The average score as a float.
-
-        :return: :attr:`average_score_` converted to a float.
+        """Number: The average score as a float. It is the same as :attr:`average_score_`, but converted to a float.
         """
         # noinspection PyTypeChecker
         return float(self.average_score_)

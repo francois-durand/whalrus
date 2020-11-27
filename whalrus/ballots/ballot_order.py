@@ -28,17 +28,23 @@ class BallotOrder(Ballot):
     """
     Ballot with an ordering.
 
-    :param b: the ballot. Cf. examples below for the accepted formats.
-    :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
+    Parameters
+    ----------
+    b : object
+        The ballot. Cf. examples below for the accepted formats.
+    candidates : set
+        The candidates that were available at the moment when the voter cast her ballot. Default:
         candidates that are explicitly mentioned in the ballot :attr:`b`.
 
+    Examples
+    --------
     Most general syntax:
 
-    >>> ballot = BallotOrder([{'a', 'b'}, {'c'}], candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> ballot
-    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> print(ballot)
-    a ~ b > c (unordered: d, e)
+        >>> ballot = BallotOrder([{'a', 'b'}, {'c'}], candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> ballot
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> print(ballot)
+        a ~ b > c (unordered: d, e)
 
     In the example above, candidates `a` and `b` are equally liked, and they are liked better than `c`. Candidates
     `d` and `e` were available when the voter cast her ballot, but she chose not to include them in her preference
@@ -46,27 +52,27 @@ class BallotOrder(Ballot):
 
     Other examples of inputs:
 
-    >>> BallotOrder('a ~ b > c')
-    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
-    >>> BallotOrder({'a': 10, 'b': 10, 'c': 7})
-    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+        >>> BallotOrder('a ~ b > c')
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+        >>> BallotOrder({'a': 10, 'b': 10, 'c': 7})
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
 
     The ballot has a set-like behavior in the sense that it implements ``__len__`` and ``__contains__``:
 
-    >>> ballot = BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> len(ballot)
-    3
-    >>> 'd' in ballot
-    False
+        >>> ballot = BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> len(ballot)
+        3
+        >>> 'd' in ballot
+        False
 
     If the order is strict, then the ballot is also iterable:
 
-    >>> ballot = BallotOrder('a > b > c')
-    >>> for candidate in ballot:
-    ...     print(candidate)
-    a
-    b
-    c
+        >>> ballot = BallotOrder('a > b > c')
+        >>> for candidate in ballot:
+        ...     print(candidate)
+        a
+        b
+        c
     """
 
     # Core features: ballot and candidates
@@ -82,10 +88,13 @@ class BallotOrder(Ballot):
         """
         Assign `self._internal_representation`.
 
-        :param b: the ballot in a loose input format (cf. documentation of the class and unit tests).
-
         The form of `self._internal_representation` may depend on the subclass. For the mother class `BallotOrder`,
         it is of the form [{'a', 'b'}, {'c'}], meaning a ~ b > c. It is used directly for self.as_weak_order.
+
+        Parameters
+        ----------
+        b : object
+            The ballot in a loose input format (cf. documentation of the class and unit tests).
         """
         if isinstance(b, tuple):
             b = list(b)
@@ -101,40 +110,41 @@ class BallotOrder(Ballot):
 
     @cached_property
     def as_weak_order(self) -> list:
-        """
-        Weak order format.
+        """list: Weak order format.
 
-        :return: a list of sets. For example, ``[{'a', 'b'}, {'c'}]`` means that `a` and `b` are equally liked, and
-            they are liked better than `c`.
+        A list of sets. For example, ``[{'a', 'b'}, {'c'}]`` means that `a` and `b` are equally liked, and they are
+        liked better than `c`.
 
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).as_weak_order
-        [{'a', 'b'}, {'c'}]
+        Examples
+        --------
+            >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).as_weak_order
+            [{'a', 'b'}, {'c'}]
         """
         return self._internal_representation
 
     @cached_property
     def candidates_in_b(self) -> NiceSet:
-        """
-        The candidates that are explicitly mentioned in the ballot.
+        """NiceSet: the candidates that are explicitly mentioned in the ballot.
 
-        :return: a set of candidates.
-
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_in_b
-        {'a', 'b', 'c'}
+        Examples
+        --------
+            >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_in_b
+            {'a', 'b', 'c'}
         """
         return NiceSet(c for indifference_class in self.as_weak_order for c in indifference_class)
 
     @cached_property
     def candidates(self) -> NiceSet:
-        """
-        The candidates.
+        """NiceSet: the candidates.
 
-        :return: a set of candidates. If the set was not explicitly given, the candidates are inferred from the ballot.
+        If the set was not explicitly given, the candidates are inferred from the ballot.
 
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates
-        {'a', 'b', 'c', 'd', 'e'}
-        >>> BallotOrder('a ~ b > c').candidates
-        {'a', 'b', 'c'}
+        Examples
+        --------
+            >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates
+            {'a', 'b', 'c', 'd', 'e'}
+            >>> BallotOrder('a ~ b > c').candidates
+            {'a', 'b', 'c'}
         """
         if self._input_candidates is None:
             return self.candidates_in_b
@@ -145,24 +155,25 @@ class BallotOrder(Ballot):
 
     @cached_property
     def candidates_not_in_b(self) -> NiceSet:
-        """
-        The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.
+        """NiceSet: the candidates that were available at the moment of the vote, but are not explicitly mentioned in
+        the ballot.
 
-        :return: a set of candidates.
-
-        >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_not_in_b
-        {'d', 'e'}
+        Examples
+        --------
+            >>> BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}).candidates_not_in_b
+            {'d', 'e'}
         """
         return NiceSet(self.candidates - self.candidates_in_b)
 
     def __len__(self) -> int:
-        """
-        Number of candidates explicitly mentioned in the ballot.
+        """int: Number of candidates explicitly mentioned in the ballot.
 
-        :return: the length of self.candidates_in_b.
+        It is the length of self.candidates_in_b.
 
-        >>> len(BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}))
-        3
+        Examples
+        --------
+            >>> len(BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'}))
+            3
         """
         return len(self.candidates_in_b)
 
@@ -170,11 +181,19 @@ class BallotOrder(Ballot):
         """
         Whether a candidate is explicitly mentioned in the ballot.
 
-        :param item: a candidate.
-        :return: True iff she is explicitly mentioned in the ballot.
+        Parameters
+        ----------
+        item : candidate
 
-        >>> 'd' in BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
-        False
+        Returns
+        -------
+        bool
+            True iff the candidate is explicitly mentioned in the ballot.
+
+        Examples
+        --------
+            >>> 'd' in BallotOrder('a ~ b > c', candidates={'a', 'b', 'c', 'd', 'e'})
+            False
         """
         return item in self.candidates_in_b
 
@@ -219,18 +238,35 @@ class BallotOrder(Ballot):
 
     def restrict(self, candidates: set=None, **kwargs) -> 'BallotOrder':
         """
+        Restrict the ballot to less candidates.
+
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``).
+            Default: ``self.candidates``.
+        kwargs
+            Some options (depending on the subclass).
+
+        Returns
+        -------
+        BallotOrder
+            The same ballot, "restricted" to the candidates given.
+
+        Examples
+        --------
         Typical usage:
 
-        >>> ballot = BallotOrder('a ~ b > c')
-        >>> ballot
-        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
-        >>> ballot.restrict(candidates={'b', 'c'})
-        BallotOrder(['b', 'c'], candidates={'b', 'c'})
+            >>> ballot = BallotOrder('a ~ b > c')
+            >>> ballot
+            BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+            >>> ballot.restrict(candidates={'b', 'c'})
+            BallotOrder(['b', 'c'], candidates={'b', 'c'})
 
         More general usage:
 
-        >>> ballot.restrict(candidates={'b', 'c', 'd'})
-        BallotOrder(['b', 'c'], candidates={'b', 'c'})
+            >>> ballot.restrict(candidates={'b', 'c', 'd'})
+            BallotOrder(['b', 'c'], candidates={'b', 'c'})
 
         In the last example above, note that `d` is not in the candidates of the restricted ballot, as she was not
         available at the moment when the voter cast her ballot.
@@ -250,22 +286,31 @@ class BallotOrder(Ballot):
         """
         The first (= most liked) candidate.
 
-        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            ``self.candidates``). Default: ``self.candidates``.
-        :param kwargs:
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``.
+            Default: ``self.candidates``.
+        kwargs
             * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
             * `include_unordered`: a boolean. If True (default), then unordered candidates are considered present but
               below the others.
-        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
+
+        Returns
+        -------
+        candidate
+            The first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
             ``candidates``. Can return None for an "abstention".
 
-        >>> print(BallotOrder('a ~ b').first(priority=Priority.ASCENDING))
-        a
-        >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'}))
-        c
-        >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'},
-        ...                                                              include_unordered=False))
-        None
+        Examples
+        --------
+            >>> print(BallotOrder('a ~ b').first(priority=Priority.ASCENDING))
+            a
+            >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'}))
+            c
+            >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).first(candidates={'c'},
+            ...                                                              include_unordered=False))
+            None
         """
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
         include_unordered = kwargs.pop('include_unordered', True)
@@ -286,21 +331,30 @@ class BallotOrder(Ballot):
         """
         The last (= most disliked) candidate.
 
-        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            ``self.candidates``). Default is ``self.candidates``.
-        :param kwargs:
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``.
+            Default is ``self.candidates``.
+        kwargs
             * `priority`: a :class:`Priority` object. Default: :attr:`Priority.UNAMBIGUOUS`.
             * `include_unordered`: a boolean. If True (default), then unordered candidates are considered present but
               below the others.
-        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the
+
+        Returns
+        -------
+        candidate
+            The last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the
             argument ``candidates``. Can return None for an "abstention".
 
-        >>> print(BallotOrder('a ~ b').last(priority=Priority.ASCENDING))
-        b
-        >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).last())
-        c
-        >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).last(include_unordered=False))
-        b
+        Examples
+        --------
+            >>> print(BallotOrder('a ~ b').last(priority=Priority.ASCENDING))
+            b
+            >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).last())
+            c
+            >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).last(include_unordered=False))
+            b
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
@@ -322,52 +376,69 @@ class BallotOrder(Ballot):
 
     @cached_property
     def is_strict(self) -> bool:
-        """
-        Whether the ballot is a strict order or not.
+        """bool: Whether the ballot is a strict order or not.
 
-        :return: True if the order is strict, i.e. if each indifference class contains one element. There can be some
-            unordered candidates.
+        True if the order is strict, i.e. if each indifference class contains one element. There can be some unordered
+        candidates.
 
-        >>> BallotOrder('a > b > c').is_strict
-        True
-        >>> BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'}).is_strict
-        True
-        >>> BallotOrder('a ~ b > c').is_strict
-        False
+        Examples
+        --------
+            >>> BallotOrder('a > b > c').is_strict
+            True
+            >>> BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'}).is_strict
+            True
+            >>> BallotOrder('a ~ b > c').is_strict
+            False
         """
         return all([len(s) == 1 for s in self.as_weak_order])
 
     def _check_strict(self) -> None:
         """
         Test strictness and raise an exception if not strict.
+
+        Raises
+        ------
+        ValueError
+            If the order is not strict.
         """
         if not self.is_strict:
             raise ValueError('This order is not strict: %s.' % self.as_weak_order)
 
     @cached_property
     def as_strict_order(self) -> list:
-        """
-        Strict order format.
+        """list : Strict order format.
 
-        :return: a list of candidates. For example, ``['a', 'b', 'c']`` means that `a` is preferred to `b`, who is
-            preferred to `c`.
-        :raise ValueError: if the ballot is not a strict order.
+        It is a list of candidates. For example, ``['a', 'b', 'c']`` means that `a` is preferred to `b`, who is
+        preferred to `c`.
 
-        >>> BallotOrder('a > b > c').as_strict_order
-        ['a', 'b', 'c']
+        Raises
+        ------
+        ValueError
+            If the ballot is not a strict order.
+
+        Examples
+        --------
+            >>> BallotOrder('a > b > c').as_strict_order
+            ['a', 'b', 'c']
         """
         self._check_strict()
         return [list(indifference_class)[0] for indifference_class in self.as_weak_order]
 
     def __iter__(self) -> Iterable:
-        """
-        Iterate over the candidates of a strict order.
+        """Iterate over the candidates of a strict order.
 
-        >>> for candidate in BallotOrder('a > b > c'):
-        ...     print(candidate)
-        a
-        b
-        c
+        Returns
+        -------
+        Iterable
+            Over the candidates, from most liked to least liked.
+
+        Examples
+        --------
+            >>> for candidate in BallotOrder('a > b > c'):
+            ...     print(candidate)
+            a
+            b
+            c
         """
         self._check_strict()
         return iter(self.as_strict_order)

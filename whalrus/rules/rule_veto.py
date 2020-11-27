@@ -31,13 +31,21 @@ class RuleVeto(RuleScoreNumAverage):
     """
     The veto rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToVeto`.
-    :param scorer: the default is :class:`ScorerVeto`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToVeto`.
+    scorer : Scorer
+        Default: :class:`ScorerVeto`.
+    kwargs
+        Cf. parent class.
 
-    >>> RuleVeto(['a', 'b', 'b', 'c', 'c']).winner_
-    'a'
+    Examples
+    --------
+        >>> RuleVeto(['a', 'b', 'b', 'c', 'c']).winner_
+        'a'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, **kwargs):

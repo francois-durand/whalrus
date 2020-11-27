@@ -32,39 +32,48 @@ class RuleTwoRound(RuleSequentialElimination):
     """
     The two-round system.
 
-    :param `*args`: cf. parent class.
-    :param rule1: the first rule. Default: :class:`RulePlurality`.
-    :param rule2: the second rule. Default: :class:`RulePlurality`.
-    :param elimination: the elimination algorithm used during the first round. Default: :class:`EliminationLast`
-        with ``k=-2``, which only keeps the 2 best candidates.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    rule1
+        The first rule. Default: :class:`RulePlurality`.
+    rule2
+        The second rule. Default: :class:`RulePlurality`.
+    elimination : Elimination
+        The elimination algorithm used during the first round. Default: :class:`EliminationLast` with ``k=-2``, which
+        only keeps the 2 best candidates.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     With its default settings, this class implements the classic two-round system, using plurality at both rounds:
 
-    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
-    ...                     weights=[2, 2, 1])
-    >>> rule.first_round_.rule_.gross_scores_
-    {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
-    >>> rule.second_round_.gross_scores_
-    {'a': 3, 'b': 2}
+        >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
+        ...                     weights=[2, 2, 1])
+        >>> rule.first_round_.rule_.gross_scores_
+        {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
+        >>> rule.second_round_.gross_scores_
+        {'a': 3, 'b': 2}
 
     Using the options, some more exotic two-round systems can be defined, such as changing the rule of a round:
 
-    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
-    ...                     weights=[2, 2, 1], rule1=RuleBorda())
-    >>> rule.first_round_.rule_.gross_scores_
-    {'a': 17, 'b': 16, 'c': 12, 'd': 5, 'e': 0}
-    >>> rule.second_round_.gross_scores_
-    {'a': 3, 'b': 2}
+        >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
+        ...                     weights=[2, 2, 1], rule1=RuleBorda())
+        >>> rule.first_round_.rule_.gross_scores_
+        {'a': 17, 'b': 16, 'c': 12, 'd': 5, 'e': 0}
+        >>> rule.second_round_.gross_scores_
+        {'a': 3, 'b': 2}
 
     ... or changing the elimination algorithm:
 
-    >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
-    ...                     weights=[2, 2, 1], elimination=EliminationLast(k=-3))
-    >>> rule.first_round_.rule_.gross_scores_
-    {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
-    >>> rule.second_round_.gross_scores_
-    {'a': 2, 'b': 2, 'c': 1}
+        >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
+        ...                     weights=[2, 2, 1], elimination=EliminationLast(k=-3))
+        >>> rule.first_round_.rule_.gross_scores_
+        {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
+        >>> rule.second_round_.gross_scores_
+        {'a': 2, 'b': 2, 'c': 1}
     """
 
     def __init__(self, *args, rule1: Rule = None, rule2: Rule = None, elimination: Elimination = None, **kwargs):
@@ -78,19 +87,12 @@ class RuleTwoRound(RuleSequentialElimination):
 
     @cached_property
     def first_round_(self) -> Elimination:
-        """
-        The first round.
-
-        :return: an :class:`Elimination` object, the first round. This is just a shortcut for
-            ``self.elimination_rounds_[0]``.
+        """Elimination: The first round. This is just a shortcut for ``self.elimination_rounds_[0]``.
         """
         return self.elimination_rounds_[0]
 
     @cached_property
     def second_round_(self) -> Rule:
-        """
-        The second round.
-
-        :return: a :class:`Rule` object, the second round. This is just an alternative name for ``self.final_round_``.
+        """Rule: The second round. This is just an alternative name for ``self.final_round_``.
         """
         return self.final_round_

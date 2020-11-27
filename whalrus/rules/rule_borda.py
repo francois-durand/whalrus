@@ -29,16 +29,24 @@ class RuleBorda(RuleScoreNumAverage):
     """
     The Borda rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param scorer: the default is :class:`ScorerBorda`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    scorer : Scorer
+        Default: :class:`ScorerBorda`.
+    kwargs
+        Cf. parent class.
 
-    >>> rule = RuleBorda(['a ~ b > c', 'b > c > a'])
-    >>> rule.gross_scores_
-    {'a': Fraction(3, 2), 'b': Fraction(7, 2), 'c': 1}
-    >>> rule.scores_
-    {'a': Fraction(3, 4), 'b': Fraction(7, 4), 'c': Fraction(1, 2)}
+    Examples
+    --------
+        >>> rule = RuleBorda(['a ~ b > c', 'b > c > a'])
+        >>> rule.gross_scores_
+        {'a': Fraction(3, 2), 'b': Fraction(7, 2), 'c': 1}
+        >>> rule.scores_
+        {'a': Fraction(3, 4), 'b': Fraction(7, 4), 'c': Fraction(1, 2)}
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, **kwargs):

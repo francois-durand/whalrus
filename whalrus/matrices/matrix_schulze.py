@@ -30,21 +30,28 @@ class MatrixSchulze(Matrix):
     """
     The Schulze matrix.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.
-        Default: :class:`MatrixWeightedMajority`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_weighted_majority : Matrix
+        Algorithm used to compute the weighted majority matrix `W`. Default: :class:`MatrixWeightedMajority`.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.
     The Schulze matrix gives, for each pair of candidates `(c, d)`, the width of the widest path from `c` to `d`, where
     the width of a path is the minimum weight of its edges.
 
-    >>> m = MatrixSchulze(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
-    >>> m.as_array_
-    array([[0, Fraction(2, 3), Fraction(2, 3)],
-           [Fraction(5, 9), 0, Fraction(7, 9)],
-           [Fraction(5, 9), Fraction(5, 9), 0]], dtype=object)
+        >>> m = MatrixSchulze(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
+        >>> m.as_array_
+        array([[0, Fraction(2, 3), Fraction(2, 3)],
+               [Fraction(5, 9), 0, Fraction(7, 9)],
+               [Fraction(5, 9), Fraction(5, 9), 0]], dtype=object)
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None, **kwargs):
@@ -57,10 +64,8 @@ class MatrixSchulze(Matrix):
 
     @cached_property
     def matrix_weighted_majority_(self):
-        """
-        The weighted majority matrix (upon which the computation of the Schulze is based).
-
-        :return: the weighted majority matrix (once computed with the given profile).
+        """Matrix: The weighted majority matrix (upon which the computation of the Schulze is based), once computed
+        with the given profile.
         """
         return self.matrix_weighted_majority(self.profile_converted_)
 

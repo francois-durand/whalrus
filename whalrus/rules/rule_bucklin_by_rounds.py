@@ -30,29 +30,37 @@ class RuleBucklinByRounds(RuleScoreNum):
     """
     Bucklin's rule (round by round version).
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param scorer: the default is :class:`ScorerBucklin`.
-    :param `**kwargs`: cf. parent class.
-
-    >>> rule = RuleBucklinByRounds(['a > b > c > d', 'b > a > c > d',
-    ...                             'c > a > b > d', 'd > a > b > c'])
-    >>> rule.detailed_scores_[0]
-    {'a': Fraction(1, 4), 'b': Fraction(1, 4), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
-    >>> rule.detailed_scores_[1]
-    {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
-    >>> rule.n_rounds_
-    2
-    >>> rule.scores_
-    {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
-    >>> rule.winner_
-    'a'
-
     During the first round, a candidate's score is the proportion of voters who rank it first. During the second
     round, its score is the proportion of voters who rank it first or second. Etc. More precisely, at each round, the
     ``scorer`` is used with ``k`` equal to the round number; cf. :class:`ScorerBucklin`.
 
     For another variant of Bucklin's rule, cf. :class:`RuleBucklinInstant`.
+
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    scorer : Scorer
+        Default: :class:`ScorerBucklin`.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleBucklinByRounds(['a > b > c > d', 'b > a > c > d',
+        ...                             'c > a > b > d', 'd > a > b > c'])
+        >>> rule.detailed_scores_[0]
+        {'a': Fraction(1, 4), 'b': Fraction(1, 4), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
+        >>> rule.detailed_scores_[1]
+        {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
+        >>> rule.n_rounds_
+        2
+        >>> rule.scores_
+        {'a': 1, 'b': Fraction(1, 2), 'c': Fraction(1, 4), 'd': Fraction(1, 4)}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, scorer: ScorerBucklin = None, **kwargs):
@@ -67,10 +75,8 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     @cached_property
     def detailed_scores_(self) -> list:
-        """
-        Detailed scores.
-
-        :return: a list of :class:`NiceDict`. The first dictionary gives the scores of the first round, etc.
+        """list: Detailed scores. A list of :class:`NiceDict`. The first dictionary gives the scores of the first round,
+        etc.
         """
         n_candidates = len(self.candidates_)
         detailed_scores = []
@@ -91,20 +97,14 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     @cached_property
     def scores_(self) -> NiceDict:
-        """
-        The scores.
-
-        :return: a :class:`NiceDict`. For each candidate, it gives its score during the final round, i.e. the first
-            round where at least one candidate has a score above 1 / 2.
+        """NiceDict: The scores. For each candidate, it gives its score during the final round, i.e. the first
+        round where at least one candidate has a score above 1 / 2.
         """
         return self.detailed_scores_[-1]
 
     @cached_property
     def n_rounds_(self) -> int:
-        """
-        Number of rounds
-
-        :return: the number of rounds.
+        """int: The number of rounds.
         """
         return len(self.detailed_scores_)
 
@@ -113,9 +113,6 @@ class RuleBucklinByRounds(RuleScoreNum):
 
     @cached_property
     def detailed_scores_as_floats_(self) -> list:
-        """
-        Detailed scores, as floats.
-
-        :return: :attr:`detailed_scores_`, converted to floats.
+        """list: Detailed scores, as floats. It is the same as :attr:`detailed_scores_`, but converted to floats.
         """
         return [NiceDict({c: float(v) for c, v in counting_round.items()}) for counting_round in self.detailed_scores_]

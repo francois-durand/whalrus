@@ -30,35 +30,43 @@ class RuleIRV(RuleIteratedElimination):
     """
     Instant-Runoff Voting, also known as Alternative Vote, Single Transferable Vote, etc.
 
-    :param `*args`: cf. parent class.
-    :param base_rule: the default is :class:`RulePlurality`.
-    :param elimination: the default is :class:`EliminationLast` with ``k=1``.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    base_rule : Rule
+        Default: :class:`RulePlurality`.
+    elimination : Elimination
+        Default: :class:`EliminationLast` with ``k=1``.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     At each round, the candidate with the worst Plurality score is eliminated.
 
-    >>> rule = RuleIRV(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
-    >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 2, 'b': 3, 'c': 4}
-    >>> rule.eliminations_[1].rule_.gross_scores_
-    {'b': 5, 'c': 4}
-    >>> rule.eliminations_[2].rule_.gross_scores_
-    {'b': 9}
-    >>> rule.winner_
-    'b'
+        >>> rule = RuleIRV(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
+        >>> rule.eliminations_[0].rule_.gross_scores_
+        {'a': 2, 'b': 3, 'c': 4}
+        >>> rule.eliminations_[1].rule_.gross_scores_
+        {'b': 5, 'c': 4}
+        >>> rule.eliminations_[2].rule_.gross_scores_
+        {'b': 9}
+        >>> rule.winner_
+        'b'
 
     An example using the tie-break:
 
-    >>> rule = RuleIRV(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
-    ...                tie_break=Priority.ASCENDING)
-    >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 1, 'b': 2, 'c': 1}
-    >>> rule.eliminations_[1].rule_.gross_scores_
-    {'a': 2, 'b': 2}
-    >>> rule.eliminations_[2].rule_.gross_scores_
-    {'a': 4}
-    >>> rule.winner_
-    'a'
+        >>> rule = RuleIRV(['a > c > b', 'b > a > c', 'c > a > b'], weights=[1, 2, 1],
+        ...                tie_break=Priority.ASCENDING)
+        >>> rule.eliminations_[0].rule_.gross_scores_
+        {'a': 1, 'b': 2, 'c': 1}
+        >>> rule.eliminations_[1].rule_.gross_scores_
+        {'a': 2, 'b': 2}
+        >>> rule.eliminations_[2].rule_.gross_scores_
+        {'a': 4}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None, **kwargs):

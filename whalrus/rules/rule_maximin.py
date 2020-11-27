@@ -30,22 +30,30 @@ class RuleMaximin(RuleScoreNum):
     """
     Maximin rule. Also known as Simpson-Kramer rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority`.
-    :param `**kwargs`: cf. parent class.
-
     The score of a candidate is the minimal non-diagonal coefficient on its raw of the matrix.
 
-    >>> rule = RuleMaximin(ballots=['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 3])
-    >>> rule.matrix_weighted_majority_.as_array_of_floats_
-    array([[0. , 0.7, 0.4],
-           [0.3, 0. , 0.7],
-           [0.6, 0.3, 0. ]])
-    >>> rule.scores_as_floats_
-    {'a': 0.4, 'b': 0.3, 'c': 0.3}
-    >>> rule.winner_
-    'a'
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_weighted_majority : Matrix
+        Default: :class:`MatrixWeightedMajority`.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleMaximin(ballots=['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 3])
+        >>> rule.matrix_weighted_majority_.as_array_of_floats_
+        array([[0. , 0.7, 0.4],
+               [0.3, 0. , 0.7],
+               [0.6, 0.3, 0. ]])
+        >>> rule.scores_as_floats_
+        {'a': 0.4, 'b': 0.3, 'c': 0.3}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None, **kwargs):
@@ -58,10 +66,7 @@ class RuleMaximin(RuleScoreNum):
 
     @cached_property
     def matrix_weighted_majority_(self):
-        """
-        The weighted majority matrix.
-
-        :return: the weighted majority matrix (once computed with the given profile).
+        """Matrix: The weighted majority matrix (once computed with the given profile).
         """
         return self.matrix_weighted_majority(self.profile_converted_)
 

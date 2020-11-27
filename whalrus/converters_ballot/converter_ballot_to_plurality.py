@@ -32,32 +32,41 @@ class ConverterBallotToPlurality(ConverterBallot):
     """
     Default converter to a :class:`BallotPlurality`.
 
-    :param priority: serves as a default value for the other parameters if they are not explicitly mentioned. Default:
+    Parameters
+    ----------
+    priority : Priority
+        Serves as a default value for the other parameters if they are not explicitly mentioned. Default:
         :attr:`Priority.UNAMBIGUOUS`.
-    :param order_priority: option passed to :meth:`BallotOrder.first`. Default: ``priority``.
-    :param plurality_priority: option passed to :meth:`BallotPlurality.first`. Default: ``priority``.
-    :param veto_priority: option passed to :meth:`BallotVeto.first`. Default: ``priority``.
-    :param one_name_priority: option passed to :meth:`BallotOneName.first`. Default: ``priority``.
+    order_priority : Priority
+        Option passed to :meth:`BallotOrder.first`. Default: ``priority``.
+    plurality_priority : Priority
+        Option passed to :meth:`BallotPlurality.first`. Default: ``priority``.
+    veto_priority : Priority
+        Option passed to :meth:`BallotVeto.first`. Default: ``priority``.
+    one_name_priority : Priority
+        Option passed to :meth:`BallotOneName.first`. Default: ``priority``.
 
+    Examples
+    --------
     Typical usages:
 
-    >>> converter = ConverterBallotToPlurality()
-    >>> converter(BallotOneName('a', candidates={'a', 'b'}))
-    BallotPlurality('a', candidates={'a', 'b'})
-    >>> converter(BallotVeto('a', candidates={'a', 'b'}))
-    BallotPlurality('b', candidates={'a', 'b'})
-    >>> converter({'a': 10, 'b': 7, 'c':0})
-    BallotPlurality('a', candidates={'a', 'b', 'c'})
-    >>> converter('a > b ~ c')
-    BallotPlurality('a', candidates={'a', 'b', 'c'})
-    >>> converter(['a', {'b', 'c'}])
-    BallotPlurality('a', candidates={'a', 'b', 'c'})
+        >>> converter = ConverterBallotToPlurality()
+        >>> converter(BallotOneName('a', candidates={'a', 'b'}))
+        BallotPlurality('a', candidates={'a', 'b'})
+        >>> converter(BallotVeto('a', candidates={'a', 'b'}))
+        BallotPlurality('b', candidates={'a', 'b'})
+        >>> converter({'a': 10, 'b': 7, 'c':0})
+        BallotPlurality('a', candidates={'a', 'b', 'c'})
+        >>> converter('a > b ~ c')
+        BallotPlurality('a', candidates={'a', 'b', 'c'})
+        >>> converter(['a', {'b', 'c'}])
+        BallotPlurality('a', candidates={'a', 'b', 'c'})
 
     Use options for the restrictions:
 
-    >>> converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)
-    >>> converter('a ~ b > c')
-    BallotPlurality('a', candidates={'a', 'b', 'c'})
+        >>> converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)
+        >>> converter('a ~ b > c')
+        BallotPlurality('a', candidates={'a', 'b', 'c'})
     """
 
     def __init__(self,

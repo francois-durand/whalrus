@@ -29,21 +29,28 @@ class RuleScorePositional(RuleScoreNumAverage):
     """
     A positional scoring rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToStrictOrder`.
-    :param points_scheme: the list of points to be attributed to the candidates of a ballot.
-        Cf. :class:`ScorerPositional`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToStrictOrder`.
+    points_scheme : list
+        The list of points to be attributed to the candidates of a ballot. Cf. :class:`ScorerPositional`.
+    kwargs
+        Cf. parent class.
 
-    >>> RuleScorePositional(['a > b > c', 'b > c > a'], points_scheme=[3, 2, 1]).gross_scores_
-    {'a': 4, 'b': 5, 'c': 3}
+    Examples
+    --------
+        >>> RuleScorePositional(['a > b > c', 'b > c > a'], points_scheme=[3, 2, 1]).gross_scores_
+        {'a': 4, 'b': 5, 'c': 3}
 
     Since this voting rule needs strict orders, problems may occur as soon as there is indifference in the ballots. To
     avoid these issues, specify the ballot converter explicitly:
 
-    >>> RuleScorePositional(['a > b ~ c', 'b > c > a'], points_scheme=[1, 1, 0],
-    ...     converter=ConverterBallotToStrictOrder(priority=Priority.ASCENDING)).gross_scores_
-    {'a': 1, 'b': 2, 'c': 1}
+        >>> RuleScorePositional(['a > b ~ c', 'b > c > a'], points_scheme=[1, 1, 0],
+        ...     converter=ConverterBallotToStrictOrder(priority=Priority.ASCENDING)).gross_scores_
+        {'a': 1, 'b': 2, 'c': 1}
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, points_scheme: list = None, **kwargs):

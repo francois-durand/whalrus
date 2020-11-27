@@ -32,9 +32,11 @@ class Scale:
     For a subclass, it is sufficient to override the method :meth:`lt` and the other comparison methods will be
     modified accordingly (assuming it describes a total order).
 
-    >>> scale = Scale()
-    >>> scale.lt(1, 7)
-    True
+    Examples
+    --------
+        >>> scale = Scale()
+        >>> scale.lt(1, 7)
+        True
     """
 
     # noinspection PyMethodMayBeStatic
@@ -56,14 +58,24 @@ class Scale:
         """
         Test "lower than".
 
-        :param one: a level of the scale.
-        :param another: a level of the scale.
-        :return: True iff :attr:`one` is lower than :attr:`another`.
-
         Generally, only this method is overridden in the subclasses.
 
-        >>> Scale().lt('a', 'z')
-        True
+        Parameters
+        ----------
+        one : object
+            A level of the scale.
+        another : object
+            A level of the scale.
+
+        Returns
+        -------
+        bool
+            True iff :attr:`one` is lower than :attr:`another`.
+
+        Examples
+        --------
+            >>> Scale().lt('a', 'z')
+            True
         """
         return one < another
 
@@ -90,19 +102,13 @@ class Scale:
 
     @property
     def low(self):
-        """
-        The lowest element of the scale.
-
-        :return: the lowest element (or None if the scale is unbounded below).
+        """object: The lowest element of the scale (or None if the scale is unbounded below).
         """
         return None
 
     @property
     def high(self):
-        """
-        The highest element of the scale.
-
-        :return: the highest element (or None if the scale is unbounded above).
+        """object: The highest element of the scale (or None if the scale is unbounded above).
         """
         return None
 
@@ -120,11 +126,20 @@ class Scale:
         """
         Compare two levels.
 
-        :param one: a level.
-        :param another: a level.
-        :return: 0 if they are equal, a positive number if ``one`` is greater than ``another``, a negative number
-            otherwise.
+        Parameters
+        ----------
+        one : object
+            A level.
+        another : object
+            A level.
 
+        Returns
+        -------
+        int
+            0 if they are equal, a positive number if ``one`` is greater than ``another``, a negative number otherwise.
+
+        Examples
+        --------
         >>> Scale().compare('a', 'z')
         -1
         """
@@ -136,10 +151,15 @@ class Scale:
         """
         Minimum of some levels.
 
-        :param iterable: an iterable of levels (list, set, etc).
+        Parameters
+        ----------
+        iterable : Iterable
+            An iterable of levels (list, set, etc).
 
-        >>> Scale().min({'x', 'a', 'z'})
-        'a'
+        Examples
+        --------
+            >>> Scale().min({'x', 'a', 'z'})
+            'a'
         """
         return min(iterable, key=cmp_to_key(self.compare))
 
@@ -147,10 +167,15 @@ class Scale:
         """
         Maximum of some levels.
 
-        :param iterable: an iterable of levels (list, set, etc).
+        Parameters
+        ----------
+        iterable : Iterable
+            An iterable of levels (list, set, etc).
 
-        >>> Scale().max({4, 1, 12})
-        12
+        Examples
+        --------
+            >>> Scale().max({4, 1, 12})
+            12
         """
         return max(iterable, key=cmp_to_key(self.compare))
 
@@ -158,13 +183,19 @@ class Scale:
         """
         Sort a list of levels (in place).
 
-        :param some_list: a list of levels.
-        :param reverse: if True, then sort in decreasing order.
+        Parameters
+        ----------
+        some_list : list
+            A list of levels.
+        reverse : bool
+            If True, then sort in decreasing order.
 
-        >>> some_list = [42, 3, 12]
-        >>> Scale().sort(some_list)
-        >>> some_list
-        [3, 12, 42]
+        Examples
+        --------
+            >>> some_list = [42, 3, 12]
+            >>> Scale().sort(some_list)
+            >>> some_list
+            [3, 12, 42]
         """
         some_list.sort(key=cmp_to_key(self.compare), reverse=reverse)
 
@@ -172,12 +203,22 @@ class Scale:
         """
         "Argsort" a list of levels.
 
-        :param some_list: a list of levels.
-        :param reverse: if True, then argsort in decreasing order.
-        :return: a list of indexes.
+        Parameters
+        ----------
+        some_list : list
+            A list of levels.
+        reverse : bool
+            If True, then argsort in decreasing order.
 
-        >>> Scale().argsort(['a', 'c', 'b'])
-        [0, 2, 1]
+        Returns
+        -------
+        list
+            A list of indexes.
+
+        Examples
+        --------
+            >>> Scale().argsort(['a', 'c', 'b'])
+            [0, 2, 1]
         """
         def compare_indexes(one: int, another: int) -> int:
             return self.compare(some_list[one], some_list[another])

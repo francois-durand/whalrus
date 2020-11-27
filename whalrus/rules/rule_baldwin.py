@@ -29,22 +29,30 @@ class RuleBaldwin(RuleIteratedElimination):
     """
     Baldwin's rule.
 
-    :param `*args`: cf. parent class.
-    :param base_rule: the default is :class:`RuleBorda`.
-    :param elimination: the default is :class:`EliminationLast` with ``k=1``.
-    :param `**kwargs`: cf. parent class.
-
     At each round, the candidate with the lowest Borda score is eliminated.
 
-    >>> rule = RuleBaldwin(['a > b > c', 'a > b ~ c'])
-    >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 4, 'b': Fraction(3, 2), 'c': Fraction(1, 2)}
-    >>> rule.eliminations_[1].rule_.gross_scores_
-    {'a': 2, 'b': 0}
-    >>> rule.eliminations_[2].rule_.gross_scores_
-    {'a': 0}
-    >>> rule.winner_
-    'a'
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    base_rule : Rule
+        Default: :class:`RuleBorda`.
+    elimination : Elimination
+        Default: :class:`EliminationLast` with ``k=1``.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleBaldwin(['a > b > c', 'a > b ~ c'])
+        >>> rule.eliminations_[0].rule_.gross_scores_
+        {'a': 4, 'b': Fraction(3, 2), 'c': Fraction(1, 2)}
+        >>> rule.eliminations_[1].rule_.gross_scores_
+        {'a': 2, 'b': 0}
+        >>> rule.eliminations_[2].rule_.gross_scores_
+        {'a': 0}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None, **kwargs):

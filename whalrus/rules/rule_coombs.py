@@ -29,22 +29,30 @@ class RuleCoombs(RuleIteratedElimination):
     """
     Coombs' rule.
 
-    :param `*args`: cf. parent class.
-    :param base_rule: the default is :class:`RuleVeto`.
-    :param elimination: the default is :class:`EliminationLast` with ``k=1``.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    base_rule : Rule
+        Default: :class:`RuleVeto`.
+    elimination : Elimination
+        Default: :class:`EliminationLast` with ``k=1``.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     At each round, the candidate with the worst Veto score is eliminated.
 
-    >>> rule = RuleCoombs(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
-    >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 0, 'b': -4, 'c': -5}
-    >>> rule.eliminations_[1].rule_.gross_scores_
-    {'a': -3, 'b': -6}
-    >>> rule.eliminations_[2].rule_.gross_scores_
-    {'a': -9}
-    >>> rule.winner_
-    'a'
+        >>> rule = RuleCoombs(['a > b > c', 'b > a > c', 'c > a > b'], weights=[2, 3, 4])
+        >>> rule.eliminations_[0].rule_.gross_scores_
+        {'a': 0, 'b': -4, 'c': -5}
+        >>> rule.eliminations_[1].rule_.gross_scores_
+        {'a': -3, 'b': -6}
+        >>> rule.eliminations_[2].rule_.gross_scores_
+        {'a': -9}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None, **kwargs):

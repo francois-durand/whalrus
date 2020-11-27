@@ -20,16 +20,12 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.ballots.ballot import Ballot
 from whalrus.scales.scale import Scale
-from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceDict
+from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceDict, NiceSet
 
 
 class Scorer(DeleteCacheMixin):
     """
     A "scorer".
-
-    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-    :param scale: the scale in which scores are computed.
-    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
 
     A :class:`Scorer` is a callable whose inputs are a ballot, a voter and a set of candidates (the set of candidates
     of the election).  When the scorer is called, it loads its arguments. The output of the call is the scorer
@@ -39,11 +35,27 @@ class Scorer(DeleteCacheMixin):
     At the initialization of a :class:`Scorer` object, some options can be given, such as a scale. In some
     subclasses, there can be some additional options.
 
-    Cf. :class:`ScorerLevels` for some examples.
+    Parameters
+    ----------
+    args
+        If present, these parameters will be passed to ``__call__`` immediately after initialization.
+    scale : Scale
+        The scale in which scores are computed.
+    kwargs
+        If present, these parameters will be passed to ``__call__`` immediately after initialization.
 
-    :ivar ballot\_: this attribute stores the ballot given in argument of the ``__call__``.
-    :ivar voter\_: this attribute stores the voter given in argument of the ``__call__``.
-    :ivar candidates\_: this attribute stores the candidates given in argument of the ``__call__``.
+    Attributes
+    ----------
+    ballot_: Ballot
+        This attribute stores the ballot given in argument of the ``__call__``.
+    voter_: object
+        This attribute stores the voter given in argument of the ``__call__``.
+    candidates_: NiceSet
+        This attribute stores the candidates given in argument of the ``__call__``.
+
+    Examples
+    --------
+    Cf. :class:`ScorerLevels` for some examples.
     """
 
     def __init__(self, *args, scale: Scale = None, **kwargs):
@@ -63,10 +75,15 @@ class Scorer(DeleteCacheMixin):
         """
         Load the arguments.
 
-        :param ballot: a ballot. We assume that it is already in the correct subclass of :class:`Ballot` and that it is
-            already restricted to the candidates of the election (if necessary).
-        :param voter: the voter.
-        :param candidates: the candidates.
+        Parameters
+        ----------
+        ballot : Ballot
+            We assume that it is already in the correct subclass of :class:`Ballot` and that it is already restricted
+            to the candidates of the election (if necessary).
+        voter : object
+            The voter.
+        candidates : set
+            The candidates.
         """
         self.ballot_ = ballot
         self.voter_ = voter
@@ -76,27 +93,25 @@ class Scorer(DeleteCacheMixin):
 
     @cached_property
     def scores_(self) -> NiceDict:
-        """
-        The scores.
-
-        :return: a :class:`NiceDict` that, to each candidate, associates either a level in the scale or None.
-            For the meaning of None, cf. :class:`RuleRangeVoting` for example. Intuitively: a score of 0 means that
-            the value 0 is counted in the average, whereas None is not counted at all (i.e. the weight of the voter
-            is not even counted in the denominator when computing the average).
+        """NiceDict: The scores. To each candidate, this dictionary associates either a level in the scale or None.
+        For the meaning of None, cf. :class:`RuleRangeVoting` for example. Intuitively: a score of 0 means that
+        the value 0 is counted in the average, whereas None is not counted at all (i.e. the weight of the voter
+        is not even counted in the denominator when computing the average).
         """
         raise NotImplementedError
 
     @cached_property
     def scores_as_floats_(self) -> NiceDict:
-        """
-        The scores, given as floats.
-
-        :return: :attr:`scores_`, converted to floats.
-        :raise ValueError: if the scores cannot be converted to floats.
+        """NiceDict: The scores, given as floats. It is the same as :attr:`scores_`, but converted to floats.
 
         Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,
         you should always use :attr:`scores_`, which usually manipulates fractions and therefore allows for exact
         computation.
+
+        Raises
+        ------
+        ValueError
+            If the scores cannot be converted to floats.
         """
         try:
             return NiceDict({c: float(v) for c, v in self.scores_.items()})
