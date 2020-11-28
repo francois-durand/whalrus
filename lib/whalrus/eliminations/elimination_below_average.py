@@ -28,27 +28,34 @@ class EliminationBelowAverage(Elimination):
     """
     Elimination of the candidates whose score is lower than the average score
 
-    :param `*args`: cf. parent class.
-    :param strict: if True (resp. False), then eliminate the candidates whose score is strictly lower than
-        (resp. lower or equal to) the average.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    strict : bool
+        If True (resp. False), then eliminate the candidates whose score is strictly lower than (resp. lower or equal
+        to) the average.
+    kwargs
+        Cf. parent class.
 
-    >>> rule = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
-    >>> rule.gross_scores_
-    {'a': 35, 'b': 30, 'c': 25, 'd': 10}
-    >>> EliminationBelowAverage(rule=rule).eliminated_
-    {'d'}
-    >>> EliminationBelowAverage(rule=rule, strict=False).eliminated_
-    {'c', 'd'}
+    Examples
+    --------
+        >>> rule = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
+        >>> rule.gross_scores_
+        {'a': 35, 'b': 30, 'c': 25, 'd': 10}
+        >>> EliminationBelowAverage(rule=rule).eliminated_
+        {'d'}
+        >>> EliminationBelowAverage(rule=rule, strict=False).eliminated_
+        {'c', 'd'}
 
     If no candidates should be eliminated (which may happen only if ``strict`` is True), then all candidates are
     eliminated.
 
-    >>> rule = RulePlurality(ballots=['a', 'b'])
-    >>> rule.gross_scores_
-    {'a': 1, 'b': 1}
-    >>> EliminationBelowAverage(rule=rule).eliminated_
-    {'a', 'b'}
+        >>> rule = RulePlurality(ballots=['a', 'b'])
+        >>> rule.gross_scores_
+        {'a': 1, 'b': 1}
+        >>> EliminationBelowAverage(rule=rule).eliminated_
+        {'a', 'b'}
     """
 
     def __init__(self, *args, strict=True, **kwargs):

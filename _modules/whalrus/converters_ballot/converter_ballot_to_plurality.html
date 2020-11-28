@@ -193,32 +193,41 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Default converter to a :class:`BallotPlurality`.</span>
 
-<span class="sd">    :param priority: serves as a default value for the other parameters if they are not explicitly mentioned. Default:</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    priority : Priority</span>
+<span class="sd">        Serves as a default value for the other parameters if they are not explicitly mentioned. Default:</span>
 <span class="sd">        :attr:`Priority.UNAMBIGUOUS`.</span>
-<span class="sd">    :param order_priority: option passed to :meth:`BallotOrder.first`. Default: ``priority``.</span>
-<span class="sd">    :param plurality_priority: option passed to :meth:`BallotPlurality.first`. Default: ``priority``.</span>
-<span class="sd">    :param veto_priority: option passed to :meth:`BallotVeto.first`. Default: ``priority``.</span>
-<span class="sd">    :param one_name_priority: option passed to :meth:`BallotOneName.first`. Default: ``priority``.</span>
+<span class="sd">    order_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotOrder.first`. Default: ``priority``.</span>
+<span class="sd">    plurality_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotPlurality.first`. Default: ``priority``.</span>
+<span class="sd">    veto_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotVeto.first`. Default: ``priority``.</span>
+<span class="sd">    one_name_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotOneName.first`. Default: ``priority``.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usages:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotToPlurality()</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}))</span>
-<span class="sd">    BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}))</span>
-<span class="sd">    BallotPlurality(&#39;b&#39;, candidates={&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;:0})</span>
-<span class="sd">    BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a &gt; b ~ c&#39;)</span>
-<span class="sd">    BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}])</span>
-<span class="sd">    BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToPlurality()</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}))</span>
+<span class="sd">        BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}))</span>
+<span class="sd">        BallotPlurality(&#39;b&#39;, candidates={&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;:0})</span>
+<span class="sd">        BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a &gt; b ~ c&#39;)</span>
+<span class="sd">        BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}])</span>
+<span class="sd">        BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
 
 <span class="sd">    Use options for the restrictions:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;)</span>
-<span class="sd">    BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;)</span>
+<span class="sd">        BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>

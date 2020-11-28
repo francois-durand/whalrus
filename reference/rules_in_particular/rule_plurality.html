@@ -236,13 +236,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_plurality.html#whalrus.ConverterBallotToPlurality" title="whalrus.ConverterBallotToPlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToPlurality</span></code></a>.</p></li>
-<li><p><strong>scorer</strong> – the default is <a class="reference internal" href="../scorers/scorer_plurality.html#whalrus.ScorerPlurality" title="whalrus.ScorerPlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerPlurality</span></code></a>.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – Default: <a class="reference internal" href="../converters_ballot/converter_ballot_to_plurality.html#whalrus.ConverterBallotToPlurality" title="whalrus.ConverterBallotToPlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToPlurality</span></code></a>.</p></li>
+<li><p><strong>scorer</strong> (<a class="reference internal" href="../scorers/scorer.html#whalrus.Scorer" title="whalrus.Scorer"><em>Scorer</em></a>) – Default: <a class="reference internal" href="../scorers/scorer_plurality.html#whalrus.ScorerPlurality" title="whalrus.ScorerPlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerPlurality</span></code></a>.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>In the most general syntax, firstly, you define the rule:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plurality</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">tie_break</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span>
 </pre></div>
@@ -273,8 +274,8 @@ This allows for one-liners such as:</p>
 <em class="property">property </em><code class="sig-name descname">average_score_</code><a class="headerlink" href="#whalrus.RulePlurality.average_score_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The average score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the average score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>
@@ -282,10 +283,10 @@ This allows for one-liners such as:</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.average_score_as_float_">
 <em class="property">property </em><code class="sig-name descname">average_score_as_float_</code><a class="headerlink" href="#whalrus.RulePlurality.average_score_as_float_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The average score as a float.</p>
+<dd><p>The average score as a float. It is the same as <a class="reference internal" href="#whalrus.RulePlurality.average_score_" title="whalrus.RulePlurality.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a>, but converted to a float.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RulePlurality.average_score_" title="whalrus.RulePlurality.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a> converted to a float.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>
@@ -293,10 +294,10 @@ This allows for one-liners such as:</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.best_score_as_float_">
 <em class="property">property </em><code class="sig-name descname">best_score_as_float_</code><a class="headerlink" href="#whalrus.RulePlurality.best_score_as_float_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The best score as a float.</p>
+<dd><p>The best score as a float. It is the same as <a class="reference internal" href="../rules_in_general/rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a>, but converted to a float.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../rules_in_general/rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a> converted to a float.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>
@@ -308,13 +309,15 @@ This allows for one-liners such as:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a score.</p></li>
-<li><p><strong>another</strong> – a score.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A score.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A score.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
-otherwise.</p>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,10 +325,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.cotrailers_">
 <em class="property">property </em><code class="sig-name descname">cotrailers_</code><a class="headerlink" href="#whalrus.RulePlurality.cotrailers_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Cotrailers”</p>
+<dd><p>“Cotrailers”. The set of candidates with the worst score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of candidates with the worst score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -333,10 +336,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.cowinners_">
 <em class="property">property </em><code class="sig-name descname">cowinners_</code><a class="headerlink" href="#whalrus.RulePlurality.cowinners_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cowinners</p>
+<dd><p>Cowinners. The set of candidates with the best score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of candidates with the best score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,10 +347,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.gross_scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">gross_scores_as_floats_</code><a class="headerlink" href="#whalrus.RulePlurality.gross_scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gross scores as floats.</p>
+<dd><p>Gross scores as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">gross_scores_</span></code>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">gross_scores_</span></code> converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -357,8 +360,8 @@ otherwise.</p>
 <em class="property">property </em><code class="sig-name descname">n_candidates_</code><a class="headerlink" href="#whalrus.RulePlurality.n_candidates_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of candidates.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the number of candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -366,10 +369,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.RulePlurality.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scores as floats.</p>
+<dd><p>Scores as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code> converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -377,10 +380,11 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.strict_order_">
 <em class="property">property </em><code class="sig-name descname">strict_order_</code><a class="headerlink" href="#whalrus.RulePlurality.strict_order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result of the election as a strict order over the candidates.</p>
+<dd><p>Result of the election as a strict order over the candidates. The first element is the winner, etc.
+This may use the tie-breaking rule.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list whose first element is the winner, etc. This may use the tie-breaking rule.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -388,11 +392,11 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RulePlurality.trailer_">
 <em class="property">property </em><code class="sig-name descname">trailer_</code><a class="headerlink" href="#whalrus.RulePlurality.trailer_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Trailer” of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RulePlurality.strict_order_" title="whalrus.RulePlurality.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RulePlurality.strict_order_" title="whalrus.RulePlurality.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 unfavorable choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RulePlurality.cotrailers_" title="whalrus.RulePlurality.cotrailers_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cotrailers_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -400,10 +404,10 @@ unfavorable choice of the tie-breaking rule in <a class="reference internal" hre
 <dl class="py method">
 <dt id="whalrus.RulePlurality.weights_as_floats_">
 <em class="property">property </em><code class="sig-name descname">weights_as_floats_</code><a class="headerlink" href="#whalrus.RulePlurality.weights_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Weights as floats.</p>
+<dd><p>Weights as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">weights_</span></code>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">weights_</span></code> converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -411,11 +415,11 @@ unfavorable choice of the tie-breaking rule in <a class="reference internal" hre
 <dl class="py method">
 <dt id="whalrus.RulePlurality.winner_">
 <em class="property">property </em><code class="sig-name descname">winner_</code><a class="headerlink" href="#whalrus.RulePlurality.winner_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Winner of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RulePlurality.strict_order_" title="whalrus.RulePlurality.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RulePlurality.strict_order_" title="whalrus.RulePlurality.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RulePlurality.cowinners_" title="whalrus.RulePlurality.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -423,10 +427,11 @@ choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.
 <dl class="py method">
 <dt id="whalrus.RulePlurality.worst_score_as_float_">
 <em class="property">property </em><code class="sig-name descname">worst_score_as_float_</code><a class="headerlink" href="#whalrus.RulePlurality.worst_score_as_float_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The worst score as a float.</p>
+<dd><p>The worst score as a float. It is the same as <a class="reference internal" href="../rules_in_general/rule_score.html#whalrus.RuleScore.worst_score_" title="whalrus.RuleScore.worst_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.worst_score_</span></code></a>, but converted to a
+float.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../rules_in_general/rule_score.html#whalrus.RuleScore.worst_score_" title="whalrus.RuleScore.worst_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.worst_score_</span></code></a> converted to a float.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>

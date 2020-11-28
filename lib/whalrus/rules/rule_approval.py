@@ -28,13 +28,20 @@ class RuleApproval(RuleRangeVoting):
     """
     Approval voting.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``. This is the only difference
-        with the parent class :class:`RuleRangeVoting`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``. This is the only difference with the parent class
+        :class:`RuleRangeVoting`.
+    kwargs
+        Cf. parent class.
 
-    >>> RuleApproval([{'a': 1, 'b': 0, 'c': 0}, {'a': 1, 'b': 1, 'c': 0}]).gross_scores_
-    {'a': 2, 'b': 1, 'c': 0}
+    Examples
+    --------
+        >>> RuleApproval([{'a': 1, 'b': 0, 'c': 0}, {'a': 1, 'b': 1, 'c': 0}]).gross_scores_
+        {'a': 2, 'b': 1, 'c': 0}
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, **kwargs):

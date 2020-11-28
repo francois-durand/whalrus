@@ -28,39 +28,48 @@ class ScorerBucklin(Scorer):
     """
     Scorer for Bucklin's rule.
 
-    :param `*args`: cf. parent class.
-    :param k: the number of points to distribute. Intuitively: the ``k`` candidates at the highest ranks will receive
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    k : int
+        The number of points to distribute. Intuitively: the ``k`` candidates at the highest ranks will receive
         1 point each. In case of tie, some points may be divided between the tied candidates (see below).
-    :param unordered_receive_points: bool or None. Whether unordered candidates should receive points (see below).
-    :param absent_receive_points: bool or None. Whether absent candidates should receive points (see below).
-    :param `**kwargs`: cf. parent class.
+    unordered_receive_points : bool or None.
+        Whether unordered candidates should receive points (see below).
+    absent_receive_points : bool or None.
+        Whether absent candidates should receive points (see below).
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     Typical usage:
 
-    >>> ScorerBucklin(BallotOrder('a > b > c > d > e'),
-    ...               candidates={'a', 'b', 'c', 'd', 'e'}, k=2).scores_
-    {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
+        >>> ScorerBucklin(BallotOrder('a > b > c > d > e'),
+        ...               candidates={'a', 'b', 'c', 'd', 'e'}, k=2).scores_
+        {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
 
     In the example below, candidates `a`, `b` and `c` are "ordered", `d` and `e` are "unordered",
     and `f` and `g` are "absent" in the ballot, meaning that they were not even available when the voter cast
     her ballot. By default, we count as if the unordered candidates were below the ordered candidates,
     and the absent candidates even lower:
 
-    >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> candidates_election = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=2).scores_as_floats_
-    {'a': 1.0, 'b': 0.5, 'c': 0.5, 'd': 0.0, 'e': 0.0, 'f': 0.0, 'g': 0.0}
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=4).scores_as_floats_
-    {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 0.5, 'e': 0.5, 'f': 0.0, 'g': 0.0}
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=6).scores_as_floats_
-    {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 1.0, 'e': 1.0, 'f': 0.5, 'g': 0.5}
+        >>> ballot = BallotOrder('a > b ~ c', candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> candidates_election = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}
+        >>> ScorerBucklin(ballot, candidates=candidates_election, k=2).scores_as_floats_
+        {'a': 1.0, 'b': 0.5, 'c': 0.5, 'd': 0.0, 'e': 0.0, 'f': 0.0, 'g': 0.0}
+        >>> ScorerBucklin(ballot, candidates=candidates_election, k=4).scores_as_floats_
+        {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 0.5, 'e': 0.5, 'f': 0.0, 'g': 0.0}
+        >>> ScorerBucklin(ballot, candidates=candidates_election, k=6).scores_as_floats_
+        {'a': 1.0, 'b': 1.0, 'c': 1.0, 'd': 1.0, 'e': 1.0, 'f': 0.5, 'g': 0.5}
 
     Using the options, unordered and/or absent candidates can always receive 0 point, or even not be mentioned in the
     score dictionary at all:
 
-    >>> ScorerBucklin(ballot, candidates=candidates_election, k=6,
-    ...     unordered_receive_points=False, absent_receive_points=None).scores_
-    {'a': 1, 'b': 1, 'c': 1, 'd': 0, 'e': 0}
+        >>> ScorerBucklin(ballot, candidates=candidates_election, k=6,
+        ...     unordered_receive_points=False, absent_receive_points=None).scores_
+        {'a': 1, 'b': 1, 'c': 1, 'd': 0, 'e': 0}
     """
 
     def __init__(self, *args, k: int = 1, unordered_receive_points: Union[bool, None] = True,

@@ -31,31 +31,42 @@ class MatrixMajority(Matrix):
     """
     The majority matrix.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.
-        Default: :class:`MatrixWeightedMajority`.
-    :param greater: value used when `W(c, d) > W(d, c)`.
-    :param lower: value used when `W(c, d) < W(d, c)`.
-    :param equal: value used when `W(c, d) = W(d, c)` (except for diagonal coefficients).
-    :param diagonal: value used for the diagonal coefficients.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_weighted_majority : Matrix.
+        Algorithm used to compute the weighted majority matrix `W`. Default: :class:`MatrixWeightedMajority`.
+    greater : Number
+        Value used when `W(c, d) > W(d, c)`.
+    lower : Number
+        Value used when `W(c, d) < W(d, c)`.
+    equal : Number
+        Value used when `W(c, d) = W(d, c)` (except for diagonal coefficients).
+    diagonal : Number
+        Value used for the diagonal coefficients.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.
     Then for each pair of candidates `(c, d)`, the coefficient of the majority matrix is set to :attr:`greater`,
     :attr:`lower`, :attr:`equal` or :attr:`diagonal`, depending on the values of `W(c, d)` and `W(d, c)`.
 
-    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b']).as_array_
-    array([[Fraction(1, 2), 1, 1],
-           [0, Fraction(1, 2), Fraction(1, 2)],
-           [0, Fraction(1, 2), Fraction(1, 2)]], dtype=object)
+        >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b']).as_array_
+        array([[Fraction(1, 2), 1, 1],
+               [0, Fraction(1, 2), Fraction(1, 2)],
+               [0, Fraction(1, 2), Fraction(1, 2)]], dtype=object)
 
     Using the options:
 
-    >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0, diagonal=0).as_array_
-    array([[0, 1, 1],
-           [0, 0, 0],
-           [0, 0, 0]])
+        >>> MatrixMajority(ballots=['a > b ~ c', 'b > a > c', 'c > a > b'], equal=0, diagonal=0).as_array_
+        array([[0, 1, 1],
+               [0, 0, 0],
+               [0, 0, 0]])
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None,
@@ -74,10 +85,8 @@ class MatrixMajority(Matrix):
 
     @cached_property
     def matrix_weighted_majority_(self):
-        """
-        The weighted majority matrix (upon which the computation of the majority matrix is based).
-
-        :return: the weighted majority matrix (once computed with the given profile).
+        """Matrix: The weighted majority matrix (upon which the computation of the majority matrix is based), once
+        computed with the given profile.
         """
         return self.matrix_weighted_majority(self.profile_converted_)
 

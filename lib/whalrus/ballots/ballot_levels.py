@@ -32,31 +32,37 @@ class BallotLevels(BallotOrder):
     """
     Ballot with an evaluation of the candidates.
 
-    :param b: a dictionary whose keys are candidates and whose values represent some form of evaluation. The keys and
-        the values must be hashable.
-    :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:
+    Parameters
+    ----------
+    b : dict
+        Keys: candidates. Values represent some form of evaluation. The keys and the values must be hashable.
+    candidates : set
+        The candidates that were available at the moment when the voter cast her ballot. Default:
         candidates that are explicitly mentioned in the ballot :attr:`b`.
-    :param scale: the authorized scale of evaluations at the moment when the voter cast her ballot.
+    scale : Scale
+        The authorized scale of evaluations at the moment when the voter cast her ballot.
         Default: ``Scale()`` (meaning in this case "unknown").
 
+    Examples
+    --------
     Most general syntax:
 
-    >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3},
-    ...                       candidates={'a', 'b', 'c', 'd', 'e'},
-    ...                       scale=ScaleRange(low=0, high=10))
+        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3},
+        ...                       candidates={'a', 'b', 'c', 'd', 'e'},
+        ...                       scale=ScaleRange(low=0, high=10))
 
     Other examples of syntax:
 
-    >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
-    >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'},
-    ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
+        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
+        >>> ballot = BallotLevels({'a': 'Good', 'b': 'Bad', 'c': 'Bad'},
+        ...                       scale=ScaleFromList(['Bad', 'Medium', 'Good']))
 
     In addition to the set-like and list-like behaviors defined in parent class :class:`BallotOrder`, it also has
     a dictionary-like behavior in the sense that it implements ``__getitem__``:
 
-    >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
-    >>> ballot['a']
-    10
+        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
+        >>> ballot['a']
+        10
     """
 
     # Core features: ballot and candidates
@@ -73,19 +79,20 @@ class BallotLevels(BallotOrder):
         For this subclass, the internal representation is of the form {'a': 10, 'b': 7, 'c': 3}, meaning
         that a has evaluation 10; b, 7; and c, 3.
 
-        :param b: a dictionary.
+        Parameters
+        ----------
+        b : dict
         """
         self._internal_representation = NiceDict({c: convert_number(v) for c, v in b.items()})
 
     @cached_property
     def as_dict(self) -> NiceDict:
-        """
-        Dictionary format.
+        """NiceDict: keys are candidates and values are levels of evaluation.
 
-        :return: a :class:`NiceDict`, whose keys are candidates and values are levels of evaluation.
-
-        >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}).as_dict
-        {'a': 10, 'b': 7, 'c': 3}
+        Examples
+        --------
+            >>> BallotLevels({'a': 10, 'b': 7, 'c': 3}).as_dict
+            {'a': 10, 'b': 7, 'c': 3}
         """
         return self._internal_representation
 
@@ -131,12 +138,20 @@ class BallotLevels(BallotOrder):
         """
         Get an evaluation.
 
-        :param item: a candidate.
-        :return: the evaluation for this candidate.
+        Parameters
+        ----------
+        item : candidate
 
-        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
-        >>> ballot['a']
-        10
+        Returns
+        -------
+        object
+            The evaluation for this candidate.
+
+        Examples
+        --------
+            >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3})
+            >>> ballot['a']
+            10
         """
         return self.as_dict[item]
 
@@ -144,11 +159,16 @@ class BallotLevels(BallotOrder):
         """
         Keys of the ballot.
 
-        :return: This is a shortcut for ``self.as_dict.keys()``.
+        Returns
+        -------
+        KeysView
+            This is a shortcut for ``self.as_dict.keys()``.
 
-        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
-        >>> sorted(ballot.keys())
-        ['a', 'b', 'c']
+        Examples
+        --------
+            >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
+            >>> sorted(ballot.keys())
+            ['a', 'b', 'c']
         """
         return self.as_dict.keys()
 
@@ -156,11 +176,16 @@ class BallotLevels(BallotOrder):
         """
         Values of the ballot.
 
-        :return: This is a shortcut for ``self.as_dict.values()``.
+        Returns
+        -------
+        ValuesView
+            This is a shortcut for ``self.as_dict.values()``.
 
-        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
-        >>> sorted(ballot.values())
-        [3, 7, 10]
+        Examples
+        --------
+            >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
+            >>> sorted(ballot.values())
+            [3, 7, 10]
         """
         return self.as_dict.values()
 
@@ -168,10 +193,15 @@ class BallotLevels(BallotOrder):
         """
         Items of the ballot.
 
-        :return: this is a shortcut for ``self.as_dict.items()``.
+        Returns
+        -------
+        ItemsView
+            This is a shortcut for ``self.as_dict.items()``.
 
-        >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
-        >>> sorted(ballot.items())
-        [('a', 10), ('b', 7), ('c', 3)]
+        Examples
+        --------
+            >>> ballot = BallotLevels({'a': 10, 'b': 7, 'c': 3}, candidates={'a', 'b', 'c', 'd', 'e'})
+            >>> sorted(ballot.items())
+            [('a', 10), ('b', 7), ('c', 3)]
         """
         return self.as_dict.items()

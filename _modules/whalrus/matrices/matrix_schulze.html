@@ -191,21 +191,28 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Schulze matrix.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToOrder`.</span>
-<span class="sd">    :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.</span>
-<span class="sd">        Default: :class:`MatrixWeightedMajority`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToOrder`.</span>
+<span class="sd">    matrix_weighted_majority : Matrix</span>
+<span class="sd">        Algorithm used to compute the weighted majority matrix `W`. Default: :class:`MatrixWeightedMajority`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.</span>
 <span class="sd">    The Schulze matrix gives, for each pair of candidates `(c, d)`, the width of the widest path from `c` to `d`, where</span>
 <span class="sd">    the width of a path is the minimum weight of its edges.</span>
 
-<span class="sd">    &gt;&gt;&gt; m = MatrixSchulze([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;], weights=[4, 3, 2])</span>
-<span class="sd">    &gt;&gt;&gt; m.as_array_</span>
-<span class="sd">    array([[0, Fraction(2, 3), Fraction(2, 3)],</span>
-<span class="sd">           [Fraction(5, 9), 0, Fraction(7, 9)],</span>
-<span class="sd">           [Fraction(5, 9), Fraction(5, 9), 0]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; m = MatrixSchulze([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;], weights=[4, 3, 2])</span>
+<span class="sd">        &gt;&gt;&gt; m.as_array_</span>
+<span class="sd">        array([[0, Fraction(2, 3), Fraction(2, 3)],</span>
+<span class="sd">               [Fraction(5, 9), 0, Fraction(7, 9)],</span>
+<span class="sd">               [Fraction(5, 9), Fraction(5, 9), 0]], dtype=object)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">matrix_weighted_majority</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -218,10 +225,8 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">matrix_weighted_majority_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The weighted majority matrix (upon which the computation of the Schulze is based).</span>
-
-<span class="sd">        :return: the weighted majority matrix (once computed with the given profile).</span>
+        <span class="sd">&quot;&quot;&quot;Matrix: The weighted majority matrix (upon which the computation of the Schulze is based), once computed</span>
+<span class="sd">        with the given profile.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_weighted_majority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_converted_</span><span class="p">)</span>
 

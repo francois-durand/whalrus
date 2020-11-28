@@ -225,6 +225,7 @@
 <dd><p>Default converter to a <a class="reference internal" href="../ballots/ballot_order.html#whalrus.BallotOrder" title="whalrus.BallotOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotOrder</span></code></a>.</p>
 <p>This is a default converter to a <a class="reference internal" href="../ballots/ballot_order.html#whalrus.BallotOrder" title="whalrus.BallotOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotOrder</span></code></a>. It tries to infer the type of input and converts it to
 an ordered ballot (possibly a ballot of a subclass, such as <a class="reference internal" href="../ballots/ballot_levels.html#whalrus.BallotLevels" title="whalrus.BallotLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotLevels</span></code></a>).</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span> <span class="o">=</span> <span class="n">ConverterBallotToOrder</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="s1">&#39;a &gt; b ~ c&#39;</span><span class="p">)</span>
 <span class="go">BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>

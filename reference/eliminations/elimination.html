@@ -214,46 +214,54 @@
 <dt id="whalrus.Elimination">
 <em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">Elimination</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/eliminations/elimination.html#Elimination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Elimination" title="Permalink to this definition">¶</a></dt>
 <dd><p>An elimination method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – if present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
-<li><p><strong>**kwargs</strong> – if present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
-</ul>
-</dd>
-</dl>
 <p>An <a class="reference internal" href="#whalrus.Elimination" title="whalrus.Elimination"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elimination</span></code></a> object is a callable whose input is a <a class="reference internal" href="../rules_in_general/rule.html#whalrus.Rule" title="whalrus.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> (which has already loaded a profile).
 When the <a class="reference internal" href="#whalrus.Elimination" title="whalrus.Elimination"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elimination</span></code></a> object is called, it loads the rule. The output of the call is the
 <a class="reference internal" href="#whalrus.Elimination" title="whalrus.Elimination"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elimination</span></code></a> object itself. But after the call, you can access to the computed variables (ending with an
 underscore), such as <a class="reference internal" href="#whalrus.Elimination.eliminated_order_" title="whalrus.Elimination.eliminated_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">eliminated_order_</span></code></a>, <a class="reference internal" href="#whalrus.Elimination.eliminated_" title="whalrus.Elimination.eliminated_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">eliminated_</span></code></a> or <a class="reference internal" href="#whalrus.Elimination.qualified_" title="whalrus.Elimination.qualified_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">qualified_</span></code></a>.</p>
-<p>Cf. <a class="reference internal" href="elimination_last.html#whalrus.EliminationLast" title="whalrus.EliminationLast"><code class="xref py py-class docutils literal notranslate"><span class="pre">EliminationLast</span></code></a> for some examples.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><strong>rule_</strong> – this attribute stores the rule given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – If present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
+<li><p><strong>kwargs</strong> – If present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt id="whalrus.Elimination.rule_">
+<code class="sig-name descname">rule_</code><a class="headerlink" href="#whalrus.Elimination.rule_" title="Permalink to this definition">¶</a></dt>
+<dd><p>This attribute stores the rule given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../rules_in_general/rule.html#whalrus.Rule" title="whalrus.Rule">Rule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<p>Cf. <a class="reference internal" href="elimination_last.html#whalrus.EliminationLast" title="whalrus.EliminationLast"><code class="xref py py-class docutils literal notranslate"><span class="pre">EliminationLast</span></code></a> for some examples.</p>
 <dl class="py method">
 <dt id="whalrus.Elimination.eliminated_">
 <em class="property">property </em><code class="sig-name descname">eliminated_</code><a class="headerlink" href="#whalrus.Elimination.eliminated_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The eliminated candidates.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
-</dd>
-</dl>
 <p>This should always be non-empty. It may contain all the candidates (for example, it is always the case
 when there was only one candidate in the election).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.Elimination.eliminated_order_">
 <em class="property">property </em><code class="sig-name descname">eliminated_order_</code><a class="headerlink" href="#whalrus.Elimination.eliminated_order_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The order on the eliminated candidates.</p>
+<p>It is a list where each element is a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. Each set represents a class of tied candidates. The
+first set in the list represents the “best” eliminated candidates, whereas the last set represent the “worst”
+candidates.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list where each element is a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. Each set represents a class of tied
-candidates. The first set in the list represents the “best” eliminated candidates, whereas the last set
-represent the “worst” candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -263,8 +271,8 @@ represent the “worst” candidates.</p>
 <em class="property">property </em><code class="sig-name descname">qualified_</code><a class="headerlink" href="#whalrus.Elimination.qualified_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The candidates that are qualified (not eliminated).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -220,46 +220,71 @@
 <dt id="whalrus.Rule">
 <em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">Rule</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">tie_break</span><span class="p">:</span> <span class="n">whalrus.priorities.priority.Priority</span> <span class="o">=</span> <span class="default_value">Priority.UNAMBIGUOUS</span></em>, <em class="sig-param"><span class="n">converter</span><span class="p">:</span> <span class="n">whalrus.converters_ballot.converter_ballot.ConverterBallot</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/rules/rule.html#Rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Rule" title="Permalink to this definition">¶</a></dt>
 <dd><p>A voting rule.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – if present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
-<li><p><strong>tie_break</strong> – a tie-break rule.</p></li>
-<li><p><strong>converter</strong> – the converter that is used to convert input ballots in order to compute
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">profile_converted_</span></code>. Default: <a class="reference internal" href="../converters_ballot/converter_ballot_general.html#whalrus.ConverterBallotGeneral" title="whalrus.ConverterBallotGeneral"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotGeneral</span></code></a>.</p></li>
-<li><p><strong>**kwargs</strong> – if present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
-</ul>
-</dd>
-</dl>
 <p>A <a class="reference internal" href="#whalrus.Rule" title="whalrus.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> object is a callable whose inputs are ballots and optionally weights, voters and candidates.
 When the rule is called, it loads the profile. The output of the call is the rule itself. But
 after the call, you can access to the computed variables (ending with an underscore), such as
 <a class="reference internal" href="#whalrus.Rule.cowinners_" title="whalrus.Rule.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
 <p>At the initialization of a <a class="reference internal" href="#whalrus.Rule" title="whalrus.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> object, some options can be given, such as a tie-break rule or a
 converter. In some subclasses, there can also be an option about the way to count abstentions, etc.</p>
-<p>Cf. <a class="reference internal" href="../rules_in_particular/rule_plurality.html#whalrus.RulePlurality" title="whalrus.RulePlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">RulePlurality</span></code></a> for some examples.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>profile_original_</strong> – the profile as it is entered by the user. Since it uses the constructor of
-<a class="reference internal" href="../profiles/index.html#whalrus.Profile" title="whalrus.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>, it indirectly uses <a class="reference internal" href="../converters_ballot/converter_ballot_general.html#whalrus.ConverterBallotGeneral" title="whalrus.ConverterBallotGeneral"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotGeneral</span></code></a> to ensure, for example, that strings like
-<code class="docutils literal notranslate"><span class="pre">'a</span> <span class="pre">&gt;</span> <span class="pre">b</span> <span class="pre">&gt;</span> <span class="pre">c'</span></code> are converted to <a class="reference internal" href="../ballots/ballot.html#whalrus.Ballot" title="whalrus.Ballot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ballot</span></code></a> objects.</p></li>
-<li><p><strong>profile_converted_</strong> – the profile, with ballots that are adapted to the voting rule. For example,
-in <a class="reference internal" href="../rules_in_particular/rule_plurality.html#whalrus.RulePlurality" title="whalrus.RulePlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">RulePlurality</span></code></a>, it will be <a class="reference internal" href="../ballots/ballot_plurality.html#whalrus.BallotPlurality" title="whalrus.BallotPlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotPlurality</span></code></a> objects, even if the original ballots are
-<a class="reference internal" href="../ballots/ballot_order.html#whalrus.BallotOrder" title="whalrus.BallotOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotOrder</span></code></a> objects. This uses the parameter <code class="docutils literal notranslate"><span class="pre">converter</span></code> of the rule.</p></li>
-<li><p><strong>candidates_</strong> – the candidates of the election, as entered in the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p></li>
+<li><p><strong>args</strong> – If present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
+<li><p><strong>tie_break</strong> (<a class="reference internal" href="../priorities/priority.html#whalrus.Priority" title="whalrus.Priority"><em>Priority</em></a>) – A tie-break rule.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – The converter that is used to convert input ballots in order to compute <a class="reference internal" href="#whalrus.Rule.profile_converted_" title="whalrus.Rule.profile_converted_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">profile_converted_</span></code></a>.
+Default: <a class="reference internal" href="../converters_ballot/converter_ballot_general.html#whalrus.ConverterBallotGeneral" title="whalrus.ConverterBallotGeneral"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotGeneral</span></code></a>.</p></li>
+<li><p><strong>kwargs</strong> – If present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt id="whalrus.Rule.profile_original_">
+<code class="sig-name descname">profile_original_</code><a class="headerlink" href="#whalrus.Rule.profile_original_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The profile as it is entered by the user. Since it uses the constructor of <a class="reference internal" href="../profiles/index.html#whalrus.Profile" title="whalrus.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>, it indirectly uses
+<a class="reference internal" href="../converters_ballot/converter_ballot_general.html#whalrus.ConverterBallotGeneral" title="whalrus.ConverterBallotGeneral"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotGeneral</span></code></a> to ensure, for example, that strings like <code class="docutils literal notranslate"><span class="pre">'a</span> <span class="pre">&gt;</span> <span class="pre">b</span> <span class="pre">&gt;</span> <span class="pre">c'</span></code> are converted to
+<a class="reference internal" href="../ballots/ballot.html#whalrus.Ballot" title="whalrus.Ballot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ballot</span></code></a> objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../profiles/index.html#whalrus.Profile" title="whalrus.Profile">Profile</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Rule.profile_converted_">
+<code class="sig-name descname">profile_converted_</code><a class="headerlink" href="#whalrus.Rule.profile_converted_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The profile, with ballots that are adapted to the voting rule. For example, in <a class="reference internal" href="../rules_in_particular/rule_plurality.html#whalrus.RulePlurality" title="whalrus.RulePlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">RulePlurality</span></code></a>, it will
+be <a class="reference internal" href="../ballots/ballot_plurality.html#whalrus.BallotPlurality" title="whalrus.BallotPlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotPlurality</span></code></a> objects, even if the original ballots are <a class="reference internal" href="../ballots/ballot_order.html#whalrus.BallotOrder" title="whalrus.BallotOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">BallotOrder</span></code></a> objects. This uses
+the parameter <code class="docutils literal notranslate"><span class="pre">converter</span></code> of the rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../profiles/index.html#whalrus.Profile" title="whalrus.Profile">Profile</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Rule.candidates_">
+<code class="sig-name descname">candidates_</code><a class="headerlink" href="#whalrus.Rule.candidates_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The candidates of the election, as entered in the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<p>Cf. <a class="reference internal" href="../rules_in_particular/rule_plurality.html#whalrus.RulePlurality" title="whalrus.RulePlurality"><code class="xref py py-class docutils literal notranslate"><span class="pre">RulePlurality</span></code></a> for some examples.</p>
 <dl class="py method">
 <dt id="whalrus.Rule.cotrailers_">
 <em class="property">property </em><code class="sig-name descname">cotrailers_</code><a class="headerlink" href="#whalrus.Rule.cotrailers_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Cotrailers” of the election.</p>
+<dd><p>“Cotrailers” of the election, i.e. the candidates that fare worst in the election. This is the last
+equivalence class in <a class="reference internal" href="#whalrus.Rule.order_" title="whalrus.Rule.order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">order_</span></code></a>. For example, in <a class="reference internal" href="rule_score_num.html#whalrus.RuleScoreNum" title="whalrus.RuleScoreNum"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleScoreNum</span></code></a>, it is the candidates that are tied
+for the worst score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of “cotrailers”, i.e. the candidates that fare worst in the election. This is the last
-equivalence class in <a class="reference internal" href="#whalrus.Rule.order_" title="whalrus.Rule.order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">order_</span></code></a>. For example, in <a class="reference internal" href="rule_score_num.html#whalrus.RuleScoreNum" title="whalrus.RuleScoreNum"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleScoreNum</span></code></a>, it is the candidates that
-are tied for the worst score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -267,12 +292,12 @@ are tied for the worst score.</p>
 <dl class="py method">
 <dt id="whalrus.Rule.cowinners_">
 <em class="property">property </em><code class="sig-name descname">cowinners_</code><a class="headerlink" href="#whalrus.Rule.cowinners_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cowinners of the election.</p>
+<dd><p>Cowinners of the election, i.e. the candidates that fare best in the election.. This is the first
+equivalence class in <a class="reference internal" href="#whalrus.Rule.order_" title="whalrus.Rule.order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">order_</span></code></a>. For example, in <a class="reference internal" href="rule_score_num.html#whalrus.RuleScoreNum" title="whalrus.RuleScoreNum"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleScoreNum</span></code></a>, it is the candidates that are tied
+for the best score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of cowinners, i.e. the candidates that fare best in the election.. This is the first
-equivalence class in <a class="reference internal" href="#whalrus.Rule.order_" title="whalrus.Rule.order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">order_</span></code></a>. For example, in <a class="reference internal" href="rule_score_num.html#whalrus.RuleScoreNum" title="whalrus.RuleScoreNum"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleScoreNum</span></code></a>, it is the candidates that are
-tied for the best score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -282,8 +307,8 @@ tied for the best score.</p>
 <em class="property">property </em><code class="sig-name descname">n_candidates_</code><a class="headerlink" href="#whalrus.Rule.n_candidates_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of candidates.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the number of candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -291,10 +316,11 @@ tied for the best score.</p>
 <dl class="py method">
 <dt id="whalrus.Rule.order_">
 <em class="property">property </em><code class="sig-name descname">order_</code><a class="headerlink" href="#whalrus.Rule.order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result of the election as a (weak) order over the candidates.</p>
+<dd><p>Result of the election as a (weak) order over the candidates. This is a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. The
+first set contains the candidates that are tied for victory, etc.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. The first set contains the candidates that are tied for victory, etc.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,10 +328,11 @@ tied for the best score.</p>
 <dl class="py method">
 <dt id="whalrus.Rule.strict_order_">
 <em class="property">property </em><code class="sig-name descname">strict_order_</code><a class="headerlink" href="#whalrus.Rule.strict_order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result of the election as a strict order over the candidates.</p>
+<dd><p>Result of the election as a strict order over the candidates. The first element is the winner, etc.
+This may use the tie-breaking rule.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list whose first element is the winner, etc. This may use the tie-breaking rule.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,11 +340,11 @@ tied for the best score.</p>
 <dl class="py method">
 <dt id="whalrus.Rule.trailer_">
 <em class="property">property </em><code class="sig-name descname">trailer_</code><a class="headerlink" href="#whalrus.Rule.trailer_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Trailer” of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.Rule.strict_order_" title="whalrus.Rule.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.Rule.strict_order_" title="whalrus.Rule.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 unfavorable choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.Rule.cotrailers_" title="whalrus.Rule.cotrailers_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cotrailers_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,11 +352,11 @@ unfavorable choice of the tie-breaking rule in <a class="reference internal" hre
 <dl class="py method">
 <dt id="whalrus.Rule.winner_">
 <em class="property">property </em><code class="sig-name descname">winner_</code><a class="headerlink" href="#whalrus.Rule.winner_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Winner of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.Rule.strict_order_" title="whalrus.Rule.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.Rule.strict_order_" title="whalrus.Rule.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.Rule.cowinners_" title="whalrus.Rule.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>

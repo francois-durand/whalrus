@@ -181,16 +181,12 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">whalrus.ballots.ballot</span> <span class="kn">import</span> <span class="n">Ballot</span>
 <span class="kn">from</span> <span class="nn">whalrus.scales.scale</span> <span class="kn">import</span> <span class="n">Scale</span>
-<span class="kn">from</span> <span class="nn">whalrus.utils.utils</span> <span class="kn">import</span> <span class="n">DeleteCacheMixin</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">NiceDict</span>
+<span class="kn">from</span> <span class="nn">whalrus.utils.utils</span> <span class="kn">import</span> <span class="n">DeleteCacheMixin</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">NiceDict</span><span class="p">,</span> <span class="n">NiceSet</span>
 
 
 <div class="viewcode-block" id="Scorer"><a class="viewcode-back" href="../../../reference/scorers/scorer.html#whalrus.Scorer">[docs]</a><span class="k">class</span> <span class="nc">Scorer</span><span class="p">(</span><span class="n">DeleteCacheMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A &quot;scorer&quot;.</span>
-
-<span class="sd">    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
-<span class="sd">    :param scale: the scale in which scores are computed.</span>
-<span class="sd">    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
 
 <span class="sd">    A :class:`Scorer` is a callable whose inputs are a ballot, a voter and a set of candidates (the set of candidates</span>
 <span class="sd">    of the election).  When the scorer is called, it loads its arguments. The output of the call is the scorer</span>
@@ -200,11 +196,27 @@
 <span class="sd">    At the initialization of a :class:`Scorer` object, some options can be given, such as a scale. In some</span>
 <span class="sd">    subclasses, there can be some additional options.</span>
 
-<span class="sd">    Cf. :class:`ScorerLevels` for some examples.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        If present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
+<span class="sd">    scale : Scale</span>
+<span class="sd">        The scale in which scores are computed.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        If present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
 
-<span class="sd">    :ivar ballot\_: this attribute stores the ballot given in argument of the ``__call__``.</span>
-<span class="sd">    :ivar voter\_: this attribute stores the voter given in argument of the ``__call__``.</span>
-<span class="sd">    :ivar candidates\_: this attribute stores the candidates given in argument of the ``__call__``.</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ballot_: Ballot</span>
+<span class="sd">        This attribute stores the ballot given in argument of the ``__call__``.</span>
+<span class="sd">    voter_: object</span>
+<span class="sd">        This attribute stores the voter given in argument of the ``__call__``.</span>
+<span class="sd">    candidates_: NiceSet</span>
+<span class="sd">        This attribute stores the candidates given in argument of the ``__call__``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Cf. :class:`ScorerLevels` for some examples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Scale</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -224,10 +236,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the arguments.</span>
 
-<span class="sd">        :param ballot: a ballot. We assume that it is already in the correct subclass of :class:`Ballot` and that it is</span>
-<span class="sd">            already restricted to the candidates of the election (if necessary).</span>
-<span class="sd">        :param voter: the voter.</span>
-<span class="sd">        :param candidates: the candidates.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ballot : Ballot</span>
+<span class="sd">            We assume that it is already in the correct subclass of :class:`Ballot` and that it is already restricted</span>
+<span class="sd">            to the candidates of the election (if necessary).</span>
+<span class="sd">        voter : object</span>
+<span class="sd">            The voter.</span>
+<span class="sd">        candidates : set</span>
+<span class="sd">            The candidates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ballot_</span> <span class="o">=</span> <span class="n">ballot</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">voter_</span> <span class="o">=</span> <span class="n">voter</span>
@@ -237,27 +254,25 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The scores.</span>
-
-<span class="sd">        :return: a :class:`NiceDict` that, to each candidate, associates either a level in the scale or None.</span>
-<span class="sd">            For the meaning of None, cf. :class:`RuleRangeVoting` for example. Intuitively: a score of 0 means that</span>
-<span class="sd">            the value 0 is counted in the average, whereas None is not counted at all (i.e. the weight of the voter</span>
-<span class="sd">            is not even counted in the denominator when computing the average).</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The scores. To each candidate, this dictionary associates either a level in the scale or None.</span>
+<span class="sd">        For the meaning of None, cf. :class:`RuleRangeVoting` for example. Intuitively: a score of 0 means that</span>
+<span class="sd">        the value 0 is counted in the average, whereas None is not counted at all (i.e. the weight of the voter</span>
+<span class="sd">        is not even counted in the denominator when computing the average).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_as_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The scores, given as floats.</span>
-
-<span class="sd">        :return: :attr:`scores_`, converted to floats.</span>
-<span class="sd">        :raise ValueError: if the scores cannot be converted to floats.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The scores, given as floats. It is the same as :attr:`scores_`, but converted to floats.</span>
 
 <span class="sd">        Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,</span>
 <span class="sd">        you should always use :attr:`scores_`, which usually manipulates fractions and therefore allows for exact</span>
 <span class="sd">        computation.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the scores cannot be converted to floats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>

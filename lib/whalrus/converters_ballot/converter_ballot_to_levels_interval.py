@@ -36,46 +36,51 @@ from whalrus.utils.utils import my_division
 
 
 class ConverterBallotToLevelsInterval(ConverterBallot):
-    """
+    """0
     Default converter to a :class:`BallotLevels` using a :class:`ScaleInterval` (interval of real numbers).
 
-    :param scale: a :class:`ScaleInterval`.
-    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we
-        use Borda scores (normalized to the interval [``scale.low``, ``scale.high``]. This parameter decides whether
-        the unordered candidates of the ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
+    Parameters
+    ----------
+    scale : ScaleInterval
+    borda_unordered_give_points : bool
+        When converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we use Borda scores (normalized to
+        the interval [``scale.low``, ``scale.high``]. This parameter decides whether the unordered candidates of the
+        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.
 
+    Examples
+    --------
     Typical usages:
 
-    >>> converter = ConverterBallotToLevelsInterval()
-    >>> b = BallotLevels({'a': 1, 'b': .5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1, 1))
-    >>> converter(b).as_dict
-    {'a': 1, 'b': Fraction(3, 4)}
-    >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
-    >>> converter(b).as_dict
-    {'a': 1, 'b': Fraction(4, 5)}
-    >>> b = BallotLevels({'a': 3, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 3}))
-    >>> converter(b).as_dict
-    {'a': 1, 'b': Fraction(1, 4)}
-    >>> b = BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
-    ...                  scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Excellent']))
-    >>> converter(b).as_dict
-    {'a': 1, 'b': Fraction(3, 4)}
-    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'})).as_dict
-    {'a': 1, 'b': 0, 'c': 0}
-    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'})).as_dict
-    {'a': 1, 'b': 0, 'c': 0}
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'})).as_dict
-    {'a': 0, 'b': 1, 'c': 1}
-    >>> converter('a > b > c').as_dict
-    {'a': 1, 'b': Fraction(1, 2), 'c': 0}
+        >>> converter = ConverterBallotToLevelsInterval()
+        >>> b = BallotLevels({'a': 1, 'b': .5}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(-1, 1))
+        >>> converter(b).as_dict
+        {'a': 1, 'b': Fraction(3, 4)}
+        >>> b = BallotLevels({'a': 5, 'b': 4}, candidates={'a', 'b', 'c'}, scale=ScaleRange(0, 5))
+        >>> converter(b).as_dict
+        {'a': 1, 'b': Fraction(4, 5)}
+        >>> b = BallotLevels({'a': 3, 'b': 0}, candidates={'a', 'b', 'c'}, scale=ScaleFromSet({-1, 0, 3}))
+        >>> converter(b).as_dict
+        {'a': 1, 'b': Fraction(1, 4)}
+        >>> b = BallotLevels({'a': 'Excellent', 'b': 'Very Good'}, candidates={'a', 'b', 'c'},
+        ...                  scale=ScaleFromList(['Bad', 'Medium', 'Good', 'Very Good', 'Excellent']))
+        >>> converter(b).as_dict
+        {'a': 1, 'b': Fraction(3, 4)}
+        >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'})).as_dict
+        {'a': 1, 'b': 0, 'c': 0}
+        >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'})).as_dict
+        {'a': 1, 'b': 0, 'c': 0}
+        >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'})).as_dict
+        {'a': 0, 'b': 1, 'c': 1}
+        >>> converter('a > b > c').as_dict
+        {'a': 1, 'b': Fraction(1, 2), 'c': 0}
 
     Options for converting ordered ballots:
 
-    >>> b = BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'})
-    >>> ConverterBallotToLevelsInterval(borda_unordered_give_points=False)(b).as_dict
-    {'a': 1, 'b': Fraction(1, 2), 'c': 0}
-    >>> ConverterBallotToLevelsInterval(borda_unordered_give_points=True)(b).as_dict
-    {'a': 1, 'b': Fraction(3, 4), 'c': Fraction(1, 2)}
+        >>> b = BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd', 'e'})
+        >>> ConverterBallotToLevelsInterval(borda_unordered_give_points=False)(b).as_dict
+        {'a': 1, 'b': Fraction(1, 2), 'c': 0}
+        >>> ConverterBallotToLevelsInterval(borda_unordered_give_points=True)(b).as_dict
+        {'a': 1, 'b': Fraction(3, 4), 'c': Fraction(1, 2)}
     """
 
     def __init__(self, scale: Scale = ScaleInterval(0, 1), borda_unordered_give_points: bool = True):

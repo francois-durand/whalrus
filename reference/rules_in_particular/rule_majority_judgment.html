@@ -236,15 +236,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_levels.html#whalrus.ConverterBallotToLevels" title="whalrus.ConverterBallotToLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToLevels</span></code></a>, with <code class="docutils literal notranslate"><span class="pre">scale=scorer.scale</span></code>.</p></li>
-<li><p><strong>scorer</strong> – the default is <a class="reference internal" href="../scorers/scorer_levels.html#whalrus.ScorerLevels" title="whalrus.ScorerLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerLevels</span></code></a>. Alternatively, you may provide an argument <code class="docutils literal notranslate"><span class="pre">scale</span></code>. In that
-case, the scorer will be <code class="docutils literal notranslate"><span class="pre">ScorerLevels(scale)</span></code>.</p></li>
-<li><p><strong>default_median</strong> – the median level that a candidate has when it receives absolutely no evaluation whatsoever.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – Default: <a class="reference internal" href="../converters_ballot/converter_ballot_to_levels.html#whalrus.ConverterBallotToLevels" title="whalrus.ConverterBallotToLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToLevels</span></code></a>, with <code class="docutils literal notranslate"><span class="pre">scale=scorer.scale</span></code>.</p></li>
+<li><p><strong>scorer</strong> (<a class="reference internal" href="../scorers/scorer.html#whalrus.Scorer" title="whalrus.Scorer"><em>Scorer</em></a>) – Default: <a class="reference internal" href="../scorers/scorer_levels.html#whalrus.ScorerLevels" title="whalrus.ScorerLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerLevels</span></code></a>. Alternatively, you may provide an argument <code class="docutils literal notranslate"><span class="pre">scale</span></code>. In that case, the scorer
+will be <code class="docutils literal notranslate"><span class="pre">ScorerLevels(scale)</span></code>.</p></li>
+<li><p><strong>default_median</strong> (<em>object</em>) – The median level that a candidate has when it receives absolutely no evaluation whatsoever.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleMajorityJudgment</span><span class="p">([{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">6</span><span class="p">},</span>
 <span class="gp">... </span>                             <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">4</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">}])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">scores_as_floats_</span>
@@ -286,8 +287,8 @@ voters who give a candidate more / less than its median Borda score):</p>
 <em class="property">property </em><code class="sig-name descname">best_score_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.best_score_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the best score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -299,13 +300,15 @@ voters who give a candidate more / less than its median Borda score):</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a score.</p></li>
-<li><p><strong>another</strong> – a score.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A score.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A score.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
-otherwise.</p>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,10 +316,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.cotrailers_">
 <em class="property">property </em><code class="sig-name descname">cotrailers_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.cotrailers_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Cotrailers”</p>
+<dd><p>“Cotrailers”. The set of candidates with the worst score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of candidates with the worst score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -324,10 +327,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.cowinners_">
 <em class="property">property </em><code class="sig-name descname">cowinners_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.cowinners_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cowinners</p>
+<dd><p>Cowinners. The set of candidates with the best score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of candidates with the best score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -337,8 +340,8 @@ otherwise.</p>
 <em class="property">property </em><code class="sig-name descname">n_candidates_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.n_candidates_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of candidates.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the number of candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -346,11 +349,12 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.order_">
 <em class="property">property </em><code class="sig-name descname">order_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result of the election as a (weak) order over the candidates.</p>
+<dd><p>Result of the election as a (weak) order over the candidates. It is a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. The
+first set contains the candidates that have the best score, the second set contains those with the second best
+score, etc.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. The first set contains the candidates that have the best score,
-the second set contains those with the second best score, etc.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -358,10 +362,10 @@ the second set contains those with the second best score, etc.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.scores_">
 <em class="property">property </em><code class="sig-name descname">scores_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.scores_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The scores.</p>
+<dd><p>The scores. A <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code> of triples.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code> of triples.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -369,10 +373,10 @@ the second set contains those with the second best score, etc.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference internal" href="#whalrus.RuleMajorityJudgment.scores_" title="whalrus.RuleMajorityJudgment.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a>, converted to floats.</p>
+<dd><p>Scores as floats. It is the same as <a class="reference internal" href="#whalrus.RuleMajorityJudgment.scores_" title="whalrus.RuleMajorityJudgment.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a>, but converted to floats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>return</p>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -380,10 +384,11 @@ the second set contains those with the second best score, etc.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.strict_order_">
 <em class="property">property </em><code class="sig-name descname">strict_order_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.strict_order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result of the election as a strict order over the candidates.</p>
+<dd><p>Result of the election as a strict order over the candidates. The first element is the winner, etc.
+This may use the tie-breaking rule.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list whose first element is the winner, etc. This may use the tie-breaking rule.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,11 +396,11 @@ the second set contains those with the second best score, etc.</p>
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.trailer_">
 <em class="property">property </em><code class="sig-name descname">trailer_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.trailer_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Trailer” of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RuleMajorityJudgment.strict_order_" title="whalrus.RuleMajorityJudgment.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RuleMajorityJudgment.strict_order_" title="whalrus.RuleMajorityJudgment.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 unfavorable choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleMajorityJudgment.cotrailers_" title="whalrus.RuleMajorityJudgment.cotrailers_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cotrailers_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,11 +408,11 @@ unfavorable choice of the tie-breaking rule in <a class="reference internal" hre
 <dl class="py method">
 <dt id="whalrus.RuleMajorityJudgment.winner_">
 <em class="property">property </em><code class="sig-name descname">winner_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.winner_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Winner of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RuleMajorityJudgment.strict_order_" title="whalrus.RuleMajorityJudgment.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RuleMajorityJudgment.strict_order_" title="whalrus.RuleMajorityJudgment.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleMajorityJudgment.cowinners_" title="whalrus.RuleMajorityJudgment.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -417,8 +422,8 @@ choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.
 <em class="property">property </em><code class="sig-name descname">worst_score_</code><a class="headerlink" href="#whalrus.RuleMajorityJudgment.worst_score_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The worst score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the worst score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>

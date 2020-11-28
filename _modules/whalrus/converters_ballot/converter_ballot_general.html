@@ -195,49 +195,56 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    General ballot converter.</span>
 
-<span class="sd">    :param plurality_priority: option passed to :meth:`BallotPlurality.restrict` when restricting the ballot if,</span>
-<span class="sd">        once converted, it is a :class:`BallotPlurality`.</span>
-<span class="sd">    :param veto_priority: option passed to :meth:`BallotVeto.restrict` when restricting the ballot if, once converted,</span>
-<span class="sd">        if is a :class:`BallotVeto`.</span>
-<span class="sd">    :param one_name_priority: option passed to :meth:`BallotOneName.restrict` when restricting the ballot if, once</span>
-<span class="sd">        converted, it is a :class:`BallotOneName` (but not a :class:`BallotPlurality` or :class:`BallotVeto`).</span>
-
 <span class="sd">    This is a default general converter. It tries to infer the type of input and converts it to an object of the</span>
 <span class="sd">    relevant subclass of :class:`Ballot`.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    plurality_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotPlurality.restrict` when restricting the ballot if, once converted, it is a</span>
+<span class="sd">        :class:`BallotPlurality`.</span>
+<span class="sd">    veto_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotVeto.restrict` when restricting the ballot if, once converted, if is a</span>
+<span class="sd">        :class:`BallotVeto`.</span>
+<span class="sd">    one_name_priority : Priority</span>
+<span class="sd">        Option passed to :meth:`BallotOneName.restrict` when restricting the ballot if, once converted, it is a</span>
+<span class="sd">        :class:`BallotOneName` (but not a :class:`BallotPlurality` or :class:`BallotVeto`).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotGeneral()</span>
-<span class="sd">    &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0})</span>
-<span class="sd">    BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=Scale())</span>
-<span class="sd">    &gt;&gt;&gt; converter([{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}])</span>
-<span class="sd">    BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;)</span>
-<span class="sd">    BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;Alice&#39;)</span>
-<span class="sd">    BallotOneName(&#39;Alice&#39;, candidates={&#39;Alice&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotGeneral()</span>
+<span class="sd">        &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0})</span>
+<span class="sd">        BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=Scale())</span>
+<span class="sd">        &gt;&gt;&gt; converter([{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}])</span>
+<span class="sd">        BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;)</span>
+<span class="sd">        BallotOrder([{&#39;a&#39;, &#39;b&#39;}, &#39;c&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;Alice&#39;)</span>
+<span class="sd">        BallotOneName(&#39;Alice&#39;, candidates={&#39;Alice&#39;})</span>
 
 <span class="sd">    It is also possible to &quot;restrict&quot; the set of candidates on-the-fly:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotGeneral()</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    BallotOrder([&#39;b&#39;, &#39;c&#39;], candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    BallotLevels({&#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;b&#39;, &#39;c&#39;}, scale=Scale())</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotGeneral()</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        BallotOrder([&#39;b&#39;, &#39;c&#39;], candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        BallotLevels({&#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;b&#39;, &#39;c&#39;}, scale=Scale())</span>
 
 <span class="sd">    Cf. :meth:`Ballot.restrict` for more information.</span>
 
 <span class="sd">    Use options for the restrictions:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotGeneral(one_name_priority=Priority.ASCENDING,</span>
-<span class="sd">    ...                                    plurality_priority=Priority.ASCENDING,</span>
-<span class="sd">    ...                                    veto_priority=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}), candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}), candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    BallotPlurality(&#39;b&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}), candidates={&#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    BallotVeto(&#39;c&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotGeneral(one_name_priority=Priority.ASCENDING,</span>
+<span class="sd">        ...                                    plurality_priority=Priority.ASCENDING,</span>
+<span class="sd">        ...                                    veto_priority=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}), candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}), candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        BallotPlurality(&#39;b&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}), candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        BallotVeto(&#39;c&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>

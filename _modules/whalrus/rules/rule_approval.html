@@ -189,13 +189,20 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Approval voting.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``. This is the only difference</span>
-<span class="sd">        with the parent class :class:`RuleRangeVoting`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: ``ConverterBallotToGrades(scale=ScaleRange(0, 1))``. This is the only difference with the parent class</span>
+<span class="sd">        :class:`RuleRangeVoting`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
-<span class="sd">    &gt;&gt;&gt; RuleApproval([{&#39;a&#39;: 1, &#39;b&#39;: 0, &#39;c&#39;: 0}, {&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 0}]).gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 1, &#39;c&#39;: 0}</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; RuleApproval([{&#39;a&#39;: 1, &#39;b&#39;: 0, &#39;c&#39;: 0}, {&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 0}]).gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 1, &#39;c&#39;: 0}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

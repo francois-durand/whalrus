@@ -217,6 +217,7 @@
 <dt id="whalrus.BallotVeto">
 <em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">BallotVeto</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">b</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">candidates</span><span class="p">:</span> <span class="n">set</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/ballots/ballot_veto.html#BallotVeto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.BallotVeto" title="Permalink to this definition">¶</a></dt>
 <dd><p>A veto (anti-plurality) ballot.</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ballot</span> <span class="o">=</span> <span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ballot</span><span class="p">)</span>
 <span class="go">a</span>
@@ -231,39 +232,43 @@
 <dt id="whalrus.BallotVeto.candidates_in_b">
 <em class="property">property </em><code class="sig-name descname">candidates_in_b</code><a class="headerlink" href="#whalrus.BallotVeto.candidates_in_b" title="Permalink to this definition">¶</a></dt>
 <dd><p>The candidate that is explicitly mentioned in the ballot.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> containing the only candidate contained in the ballot (or an empty set in case
-of abstention).</p>
-</dd>
-</dl>
+<p>This is a singleton with the only candidate contained in the ballot (or an empty set in case of abstention).</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotOneName</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">candidates_in_b</span>
 <span class="go">{&#39;a&#39;}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">BallotOneName</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">candidates_in_b</span>
 <span class="go">{}</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.BallotVeto.candidates_not_in_b">
 <em class="property">property </em><code class="sig-name descname">candidates_not_in_b</code><a class="headerlink" href="#whalrus.BallotVeto.candidates_not_in_b" title="Permalink to this definition">¶</a></dt>
-<dd><p>The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
-</dd>
-</dl>
+<dd><p>The candidates that were available at the moment of the vote, but are not explicitly mentioned in
+the ballot.</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotOneName</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">candidates_not_in_b</span>
 <span class="go">{&#39;b&#39;, &#39;c&#39;}</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.BallotVeto.first">
 <code class="sig-name descname">first</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">candidates</span><span class="p">:</span> <span class="n">set</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/ballots/ballot_veto.html#BallotVeto.first"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.BallotVeto.first" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 <span class="go">&#39;b&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span>
 <span class="go">&#39;b&#39;</span>
@@ -274,7 +279,8 @@ of abstention).</p>
 <dl class="py method">
 <dt id="whalrus.BallotVeto.last">
 <code class="sig-name descname">last</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">candidates</span><span class="p">:</span> <span class="n">set</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/ballots/ballot_veto.html#BallotVeto.last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.BallotVeto.last" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
 <span class="go">&#39;a&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">last</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">},</span>
 <span class="gp">... </span>                                                 <span class="n">priority</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span>
@@ -290,18 +296,22 @@ of abstention).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>candidates</strong> – a set of candidates (it can be any set of candidates, not necessarily a subset of
-<code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>). Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
+<li><p><strong>candidates</strong> (<em>set of candidates</em>) – It can be any set of candidates, not necessarily a subset of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>).
+Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
 <li><p><strong>kwargs</strong> – <ul>
-<li><p><cite>priority</cite>: a <a class="reference internal" href="../priorities/priority.html#whalrus.Priority" title="whalrus.Priority"><code class="xref py py-class docutils literal notranslate"><span class="pre">Priority</span></code></a>. Default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">Priority.UNAMBIGUOUS</span></code>.</p></li>
+<li><p><cite>priority</cite>: a <a class="reference internal" href="../priorities/priority.html#whalrus.Priority" title="whalrus.Priority"><code class="xref py py-class docutils literal notranslate"><span class="pre">Priority</span></code></a>. Default: <a class="reference internal" href="../priorities/priority.html#whalrus.Priority.UNAMBIGUOUS" title="whalrus.Priority.UNAMBIGUOUS"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Priority.UNAMBIGUOUS</span></code></a>.</p></li>
 </ul>
 </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the same ballot, “restricted” to the candidates given.</p>
+<dd class="field-even"><p>The same ballot, “restricted” to the candidates given.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ballot_one_name.html#whalrus.BallotOneName" title="whalrus.BallotOneName">BallotOneName</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BallotOneName</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">})</span>
 <span class="go">BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">BallotOneName</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">},</span>

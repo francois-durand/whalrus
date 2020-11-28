@@ -30,31 +30,39 @@ class RuleCondorcet(Rule):
     """
     Condorcet Rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_majority: the majority matrix. Default: :class:`MatrixMajority`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_majority : Matrix
+        The majority matrix. Default: :class:`MatrixMajority`.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     If there is a Condorcet winner, then it it the winner and all other candidates are tied. If there is no Condorcet
     winner, then all candidates are tied.
 
-    >>> RuleCondorcet(ballots=['a > b > c', 'b > a > c', 'c > a > b']).order_
-    [{'a'}, {'b', 'c'}]
-    >>> RuleCondorcet(ballots=['a > b > c', 'b > c > a', 'c > a > b']).order_
-    [{'a', 'b', 'c'}]
+        >>> RuleCondorcet(ballots=['a > b > c', 'b > a > c', 'c > a > b']).order_
+        [{'a'}, {'b', 'c'}]
+        >>> RuleCondorcet(ballots=['a > b > c', 'b > c > a', 'c > a > b']).order_
+        [{'a', 'b', 'c'}]
 
     More precisely, and in all generality, a candidate is considered a `Condorcet winner` if all the non-diagonal
     coefficients on its raw of :attr:`matrix_majority_` are equal to 1. With the default setting of ``matrix_majority =
     MatrixMajority()``, the Condorcet winner is necessarily unique when it exists, but that might not be the case
     with some more exotic settings:
 
-    >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1))
-    >>> rule.matrix_majority_.as_array_
-    array([[Fraction(1, 2), 1, 1],
-           [1, Fraction(1, 2), 1],
-           [0, 0, Fraction(1, 2)]], dtype=object)
-    >>> rule.order_
-    [{'a', 'b'}, {'c'}]
+        >>> rule = RuleCondorcet(ballots=['a ~ b > c'], matrix_majority=MatrixMajority(equal=1))
+        >>> rule.matrix_majority_.as_array_
+        array([[Fraction(1, 2), 1, 1],
+               [1, Fraction(1, 2), 1],
+               [0, 0, Fraction(1, 2)]], dtype=object)
+        >>> rule.order_
+        [{'a', 'b'}, {'c'}]
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_majority: Matrix = None, **kwargs):
@@ -67,10 +75,7 @@ class RuleCondorcet(Rule):
 
     @cached_property
     def matrix_majority_(self):
-        """
-        The majority matrix.
-
-        :return: the majority matrix (once computed with the given profile).
+        """Matrix: The majority matrix (once computed with the given profile).
         """
         return self.matrix_majority(self.profile_converted_)
 

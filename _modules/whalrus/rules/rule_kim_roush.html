@@ -190,22 +190,30 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Kim-Roush rule.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param base_rule: the default is :class:`RuleVeto`.</span>
-<span class="sd">    :param elimination: the default is :class:`EliminationBelowAverage`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
-
 <span class="sd">    At each round, all candidates whose Veto score is lower than the average Veto score are eliminated.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleKimRoush([&#39;a &gt; b &gt; c &gt; d&#39;, &#39;a &gt; b &gt; d &gt; c&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; rule.eliminations_[0].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: -1, &#39;d&#39;: -1}</span>
-<span class="sd">    &gt;&gt;&gt; rule.eliminations_[1].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 0, &#39;b&#39;: -2}</span>
-<span class="sd">    &gt;&gt;&gt; rule.eliminations_[2].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: -2}</span>
-<span class="sd">    &gt;&gt;&gt; rule.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    base_rule : Rule</span>
+<span class="sd">        Default: :class:`RuleVeto`.</span>
+<span class="sd">    elimination : Elimination</span>
+<span class="sd">        Default: :class:`EliminationBelowAverage`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleKimRoush([&#39;a &gt; b &gt; c &gt; d&#39;, &#39;a &gt; b &gt; d &gt; c&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; rule.eliminations_[0].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: -1, &#39;d&#39;: -1}</span>
+<span class="sd">        &gt;&gt;&gt; rule.eliminations_[1].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 0, &#39;b&#39;: -2}</span>
+<span class="sd">        &gt;&gt;&gt; rule.eliminations_[2].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: -2}</span>
+<span class="sd">        &gt;&gt;&gt; rule.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">base_rule</span><span class="p">:</span> <span class="n">Rule</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">elimination</span><span class="p">:</span> <span class="n">Elimination</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

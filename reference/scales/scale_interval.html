@@ -219,11 +219,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>low</strong> – lowest grade.</p></li>
-<li><p><strong>high</strong> – highest grade.</p></li>
+<li><p><strong>low</strong> (<em>Number</em>) – Lowest grade.</p></li>
+<li><p><strong>high</strong> (<em>Number</em>) – Highest grade.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
 <span class="go">ScaleInterval(low=0, high=Fraction(5, 2))</span>
 </pre></div>
@@ -231,7 +232,8 @@
 <dl class="py method">
 <dt id="whalrus.ScaleInterval.argsort">
 <code class="sig-name descname">argsort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_list</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../../_modules/whalrus/scales/scale_interval.html#ScaleInterval.argsort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleInterval.argsort" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">([</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">])</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">([</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">])</span>
 <span class="go">[1, 0, 2]</span>
 </pre></div>
 </div>
@@ -244,15 +246,18 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a level.</p></li>
-<li><p><strong>another</strong> – a level.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A level.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A level.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
-otherwise.</p>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
 <span class="go">-1</span>
 </pre></div>
@@ -280,7 +285,8 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.ScaleInterval.high">
 <em class="property">property </em><code class="sig-name descname">high</code><a class="headerlink" href="#whalrus.ScaleInterval.high" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">high</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">high</span>
 <span class="go">1</span>
 </pre></div>
 </div>
@@ -295,7 +301,8 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.ScaleInterval.low">
 <em class="property">property </em><code class="sig-name descname">low</code><a class="headerlink" href="#whalrus.ScaleInterval.low" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">low</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">low</span>
 <span class="go">0</span>
 </pre></div>
 </div>
@@ -305,18 +312,22 @@ otherwise.</p>
 <dt id="whalrus.ScaleInterval.lt">
 <code class="sig-name descname">lt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#whalrus.ScaleInterval.lt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test “lower than”.</p>
+<p>Generally, only this method is overridden in the subclasses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a level of the scale.</p></li>
-<li><p><strong>another</strong> – a level of the scale.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A level of the scale.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A level of the scale.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True iff <code class="xref py py-attr docutils literal notranslate"><span class="pre">one</span></code> is lower than <code class="xref py py-attr docutils literal notranslate"><span class="pre">another</span></code>.</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
 </dl>
-<p>Generally, only this method is overridden in the subclasses.</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
@@ -326,7 +337,8 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.ScaleInterval.max">
 <code class="sig-name descname">max</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/scales/scale_interval.html#ScaleInterval.max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleInterval.max" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">])</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">])</span>
 <span class="go">0.7</span>
 </pre></div>
 </div>
@@ -335,7 +347,8 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.ScaleInterval.min">
 <code class="sig-name descname">min</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/scales/scale_interval.html#ScaleInterval.min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleInterval.min" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">])</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">])</span>
 <span class="go">0.1</span>
 </pre></div>
 </div>
@@ -350,7 +363,8 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.ScaleInterval.sort">
 <code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_list</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../_modules/whalrus/scales/scale_interval.html#ScaleInterval.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.ScaleInterval.sort" title="Permalink to this definition">¶</a></dt>
-<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">]</span>
+<dd><p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ScaleInterval</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span>
 <span class="go">[0.1, 0.3, 0.7]</span>

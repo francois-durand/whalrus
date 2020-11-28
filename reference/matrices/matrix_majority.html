@@ -219,18 +219,18 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
-<li><p><strong>matrix_weighted_majority</strong> – a <a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>. Algorithm used to compute the weighted majority matrix <cite>W</cite>.
-Default: <a class="reference internal" href="matrix_weighted_majority.html#whalrus.MatrixWeightedMajority" title="whalrus.MatrixWeightedMajority"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code></a>.</p></li>
-<li><p><strong>greater</strong> – value used when <cite>W(c, d) &gt; W(d, c)</cite>.</p></li>
-<li><p><strong>lower</strong> – value used when <cite>W(c, d) &lt; W(d, c)</cite>.</p></li>
-<li><p><strong>equal</strong> – value used when <cite>W(c, d) = W(d, c)</cite> (except for diagonal coefficients).</p></li>
-<li><p><strong>diagonal</strong> – value used for the diagonal coefficients.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – Default: <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
+<li><p><strong>matrix_weighted_majority</strong> (<em>Matrix.</em>) – Algorithm used to compute the weighted majority matrix <cite>W</cite>. Default: <a class="reference internal" href="matrix_weighted_majority.html#whalrus.MatrixWeightedMajority" title="whalrus.MatrixWeightedMajority"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code></a>.</p></li>
+<li><p><strong>greater</strong> (<em>Number</em>) – Value used when <cite>W(c, d) &gt; W(d, c)</cite>.</p></li>
+<li><p><strong>lower</strong> (<em>Number</em>) – Value used when <cite>W(c, d) &lt; W(d, c)</cite>.</p></li>
+<li><p><strong>equal</strong> (<em>Number</em>) – Value used when <cite>W(c, d) = W(d, c)</cite> (except for diagonal coefficients).</p></li>
+<li><p><strong>diagonal</strong> (<em>Number</em>) – Value used for the diagonal coefficients.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>First, we compute a matrix <cite>W</cite> with the algorithm given in the parameter <code class="docutils literal notranslate"><span class="pre">matrix_weighted_majority</span></code>.
 Then for each pair of candidates <cite>(c, d)</cite>, the coefficient of the majority matrix is set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">greater</span></code>,
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">lower</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">equal</span></code> or <code class="xref py py-attr docutils literal notranslate"><span class="pre">diagonal</span></code>, depending on the values of <cite>W(c, d)</cite> and <cite>W(d, c)</cite>.</p>
@@ -250,11 +250,11 @@ Then for each pair of candidates <cite>(c, d)</cite>, the coefficient of the maj
 <dl class="py method">
 <dt id="whalrus.MatrixMajority.as_array_">
 <em class="property">property </em><code class="sig-name descname">as_array_</code><a class="headerlink" href="#whalrus.MatrixMajority.as_array_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix, as a numpy array.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a numpy array. Each row and each column corresponds to a candidate (in the order of
+<dd><p>The matrix, as a numpy array. Each row and each column corresponds to a candidate (in the order of
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_as_list_</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -262,10 +262,10 @@ Then for each pair of candidates <cite>(c, d)</cite>, the coefficient of the maj
 <dl class="py method">
 <dt id="whalrus.MatrixMajority.as_array_of_floats_">
 <em class="property">property </em><code class="sig-name descname">as_array_of_floats_</code><a class="headerlink" href="#whalrus.MatrixMajority.as_array_of_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix, as a numpy array.</p>
+<dd><p>The matrix, as a numpy array. It is the same as <a class="reference internal" href="#whalrus.MatrixMajority.as_array_" title="whalrus.MatrixMajority.as_array_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code></a>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.MatrixMajority.as_array_" title="whalrus.MatrixMajority.as_array_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code></a>, converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -273,10 +273,11 @@ Then for each pair of candidates <cite>(c, d)</cite>, the coefficient of the maj
 <dl class="py method">
 <dt id="whalrus.MatrixMajority.matrix_weighted_majority_">
 <em class="property">property </em><code class="sig-name descname">matrix_weighted_majority_</code><a class="headerlink" href="#whalrus.MatrixMajority.matrix_weighted_majority_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The weighted majority matrix (upon which the computation of the majority matrix is based).</p>
+<dd><p>The weighted majority matrix (upon which the computation of the majority matrix is based), once
+computed with the given profile.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the weighted majority matrix (once computed with the given profile).</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -189,14 +189,21 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A voting rule where each candidate&#39;s score is an average of the scores provided by the ballots.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param scorer: the :class:`Scorer`. For each ballot, it is in charge of computing its contribution to each</span>
-<span class="sd">        candidate&#39;s score.</span>
-<span class="sd">    :param default_average: the default average score of a candidate when it receives no score whatsoever. It may</span>
-<span class="sd">        happen, for example, if all voters abstain about this candidate. This avoids a division by zero when</span>
-<span class="sd">        computing this candidate&#39;s average score.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    scorer : Scorer</span>
+<span class="sd">        For each ballot, it is in charge of computing its contribution to each candidate&#39;s score.</span>
+<span class="sd">    default_average : Number</span>
+<span class="sd">        The default average score of a candidate when it receives no score whatsoever. It may happen, for example, if</span>
+<span class="sd">        all voters abstain about this candidate. This avoids a division by zero when computing this candidate&#39;s average</span>
+<span class="sd">        score.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Cf. :class:`RuleRangeVoting` for some examples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -217,22 +224,17 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">gross_scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The gross scores of the candidates.</span>
-
-<span class="sd">        :return: a :class:`NiceDict`. For each candidate, it gives the sum of its scores, multiplied by the weights</span>
-<span class="sd">            of the corresponding voters. This is the numerator in the candidate&#39;s average score.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The gross scores of the candidates. For each candidate, this dictionary gives the sum of its</span>
+<span class="sd">        scores, multiplied by the weights of the corresponding voters. This is the numerator in the candidate&#39;s average</span>
+<span class="sd">        score.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gross_scores_and_weights_</span><span class="p">[</span><span class="s1">&#39;gross_scores&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">weights_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The weights used for the candidates.</span>
-
-<span class="sd">        :return: a :class:`NiceDict`. For each candidate, it gives the total weight for this candidate, i.e. the total</span>
-<span class="sd">            weight of all voters who assign a score to this candidate. This is the denominator in the candidate&#39;s</span>
-<span class="sd">            average score.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The weights used for the candidates. For each candidate, this dictionary gives the total weight</span>
+<span class="sd">        for this candidate, i.e. the total weight of all voters who assign a score to this candidate. This is the</span>
+<span class="sd">        denominator in the candidate&#39;s average score.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gross_scores_and_weights_</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">]</span>
 
@@ -246,19 +248,13 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">gross_scores_as_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gross scores as floats.</span>
-
-<span class="sd">        :return: :attr:`gross_scores_` converted to floats.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: Gross scores as floats. It is the same as :attr:`gross_scores_`, but converted to floats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">gross_scores_</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">weights_as_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Weights as floats.</span>
-
-<span class="sd">        :return: :attr:`weights_` converted to floats.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: Weights as floats. It is the same as :attr:`weights_`, but converted to floats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span></div>
 </pre></div>

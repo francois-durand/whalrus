@@ -192,56 +192,77 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The weighted majority matrix.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToOrder`.</span>
-<span class="sd">    :param higher_vs_lower: number of points for candidate `c` when it is ordered higher than candidate `d`.</span>
-<span class="sd">    :param lower_vs_higher: number of points for candidate `c` when it is ordered lower than candidate `d`.</span>
-<span class="sd">    :param indifference: number of points for candidate `c` when it is ordered and tied with candidate `d`.</span>
-<span class="sd">    :param ordered_vs_unordered: number of points for candidate `c` when it is ordered and `d` is unordered.</span>
-<span class="sd">    :param unordered_vs_ordered: number of points for candidate `c` when it is unordered and `d` is ordered.</span>
-<span class="sd">    :param unordered_vs_unordered: number of points for candidate `c` when it is unordered and `d` is unordered.</span>
-<span class="sd">    :param ordered_vs_absent: number of points for candidate `c` when it is ordered and `d` is absent.</span>
-<span class="sd">    :param absent_vs_ordered: number of points for candidate `c` when it is absent and `d` is ordered.</span>
-<span class="sd">    :param unordered_vs_absent: number of points for candidate `c` when it is unordered and `d` is absent.</span>
-<span class="sd">    :param absent_vs_unordered: number of points for candidate `c` when it is absent and `d` is unordered.</span>
-<span class="sd">    :param absent_vs_absent: number of points for candidate `c` when it is absent and `d` is absent.</span>
-<span class="sd">    :param diagonal_score: value of the diagonal coefficients.</span>
-<span class="sd">    :param default_score: default score in the matrix in case of division by 0 (except for the diagonal coefficients).</span>
-<span class="sd">    :param antisymmetric: if True, then an antisymmetric version of the matrix is computed (by subtracting the</span>
-<span class="sd">        transposed matrix at the end of the computation).</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToOrder`.</span>
+<span class="sd">    higher_vs_lower : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is ordered higher than candidate `d`.</span>
+<span class="sd">    lower_vs_higher : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is ordered lower than candidate `d`.</span>
+<span class="sd">    indifference : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is ordered and tied with candidate `d`.</span>
+<span class="sd">    ordered_vs_unordered : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is ordered and `d` is unordered.</span>
+<span class="sd">    unordered_vs_ordered : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is unordered and `d` is ordered.</span>
+<span class="sd">    unordered_vs_unordered : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is unordered and `d` is unordered.</span>
+<span class="sd">    ordered_vs_absent : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is ordered and `d` is absent.</span>
+<span class="sd">    absent_vs_ordered : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is absent and `d` is ordered.</span>
+<span class="sd">    unordered_vs_absent : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is unordered and `d` is absent.</span>
+<span class="sd">    absent_vs_unordered : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is absent and `d` is unordered.</span>
+<span class="sd">    absent_vs_absent : Number or None</span>
+<span class="sd">        Number of points for candidate `c` when it is absent and `d` is absent.</span>
+<span class="sd">    diagonal_score : Number</span>
+<span class="sd">        Value of the diagonal coefficients.</span>
+<span class="sd">    default_score : Number</span>
+<span class="sd">        Default score in the matrix in case of division by 0 (except for the diagonal coefficients).</span>
+<span class="sd">    antisymmetric : bool</span>
+<span class="sd">        If True, then an antisymmetric version of the matrix is computed (by subtracting the transposed matrix at the</span>
+<span class="sd">        end of the computation).</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    In the most general syntax, firstly, you define the matrix computation algorithm:</span>
 
-<span class="sd">    &gt;&gt;&gt; matrix = MatrixWeightedMajority(diagonal_score=.5)</span>
+<span class="sd">        &gt;&gt;&gt; matrix = MatrixWeightedMajority(diagonal_score=.5)</span>
 
 <span class="sd">    Secondly, you use it as a callable to load a particular election (profile, candidates):</span>
 
-<span class="sd">    &gt;&gt;&gt; matrix(ballots=[&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], weights=[3, 1], voters=[&#39;v&#39;, &#39;w&#39;], candidates={&#39;a&#39;, &#39;b&#39;})  # doctest:+ELLIPSIS</span>
-<span class="sd">    &lt;... object at ...&gt;</span>
+<span class="sd">        &gt;&gt;&gt; matrix(ballots=[&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], weights=[3, 1], voters=[&#39;v&#39;, &#39;w&#39;], candidates={&#39;a&#39;, &#39;b&#39;})  # doctest:+ELLIPSIS</span>
+<span class="sd">        &lt;... object at ...&gt;</span>
 
 <span class="sd">    Finally, you can access the computed variables:</span>
 
-<span class="sd">    &gt;&gt;&gt; matrix.as_array_</span>
-<span class="sd">    array([[Fraction(1, 2), Fraction(3, 4)],</span>
-<span class="sd">           [Fraction(1, 4), Fraction(1, 2)]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; matrix.as_array_</span>
+<span class="sd">        array([[Fraction(1, 2), Fraction(3, 4)],</span>
+<span class="sd">               [Fraction(1, 4), Fraction(1, 2)]], dtype=object)</span>
 
 <span class="sd">    Later, if you wish, you can load another profile with the same matrix computation algorithm, and so on.</span>
 
 <span class="sd">    Optionally, you can specify an election (profile and candidates) as soon as the :class:`Matrix` object is</span>
 <span class="sd">    initialized. This allows for &quot;one-liners&quot; such as:</span>
 
-<span class="sd">    &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], weights=[3, 1], voters=[&#39;x&#39;, &#39;y&#39;],</span>
-<span class="sd">    ...                        candidates={&#39;a&#39;, &#39;b&#39;}, diagonal_score=.5).as_array_</span>
-<span class="sd">    array([[Fraction(1, 2), Fraction(3, 4)],</span>
-<span class="sd">           [Fraction(1, 4), Fraction(1, 2)]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], weights=[3, 1], voters=[&#39;x&#39;, &#39;y&#39;],</span>
+<span class="sd">        ...                        candidates={&#39;a&#39;, &#39;b&#39;}, diagonal_score=.5).as_array_</span>
+<span class="sd">        array([[Fraction(1, 2), Fraction(3, 4)],</span>
+<span class="sd">               [Fraction(1, 4), Fraction(1, 2)]], dtype=object)</span>
 
 <span class="sd">    Antisymmetric version:</span>
 
-<span class="sd">    &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], weights=[3, 1], voters=[&#39;x&#39;, &#39;y&#39;],</span>
-<span class="sd">    ...                        candidates={&#39;a&#39;, &#39;b&#39;}, antisymmetric=True).as_array_</span>
-<span class="sd">    array([[0, Fraction(1, 2)],</span>
-<span class="sd">           [Fraction(-1, 2), 0]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], weights=[3, 1], voters=[&#39;x&#39;, &#39;y&#39;],</span>
+<span class="sd">        ...                        candidates={&#39;a&#39;, &#39;b&#39;}, antisymmetric=True).as_array_</span>
+<span class="sd">        array([[0, Fraction(1, 2)],</span>
+<span class="sd">               [Fraction(-1, 2), 0]], dtype=object)</span>
 
 <span class="sd">    An &quot;unordered&quot; candidate is a candidate that the voter has seen but not included in her ranking; i.e. it is in the</span>
 <span class="sd">    attribute :attr:`BallotOrder.candidates_not_in_b` of the ballot. An &quot;absent&quot; candidate is a candidate that the</span>
@@ -250,28 +271,28 @@
 <span class="sd">    be used. In that case, the corresponding occurrences are not taken into account in the average (neither the</span>
 <span class="sd">    numerator, not the denominator). Consider this example:</span>
 
-<span class="sd">    &gt;&gt;&gt; ballots = [&#39;a &gt; b&#39;, &#39;a ~ b&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; ballots = [&#39;a &gt; b&#39;, &#39;a ~ b&#39;]</span>
 
 <span class="sd">    With ``indifference=Fraction(1, 2)`` (default), the ratio of voters who prefer `a` to `b` is</span>
 <span class="sd">    (1 + 1 / 2) / 2 = 3 / 4 (the indifferent voter gives 1 / 2 point and is counted in the denominator):</span>
 
-<span class="sd">    &gt;&gt;&gt; MatrixWeightedMajority(ballots).as_array_</span>
-<span class="sd">    array([[0, Fraction(3, 4)],</span>
-<span class="sd">           [Fraction(1, 4), 0]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots).as_array_</span>
+<span class="sd">        array([[0, Fraction(3, 4)],</span>
+<span class="sd">               [Fraction(1, 4), 0]], dtype=object)</span>
 
 <span class="sd">    With ``indifference=0``, the ratio of voters who prefer `a` to `b` is 1 / 2 (the indifferent voter</span>
 <span class="sd">    gives no point, but is counted in the denominator):</span>
 
-<span class="sd">    &gt;&gt;&gt; MatrixWeightedMajority(ballots, indifference=0).as_array_</span>
-<span class="sd">    array([[0, Fraction(1, 2)],</span>
-<span class="sd">           [0, 0]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots, indifference=0).as_array_</span>
+<span class="sd">        array([[0, Fraction(1, 2)],</span>
+<span class="sd">               [0, 0]], dtype=object)</span>
 
 <span class="sd">    With ``indifference=None``, the ratio of voters who prefer `a` to `b` is 1 / 1 = 1 (the indifferent voter is not</span>
 <span class="sd">    counted in the average at all):</span>
 
-<span class="sd">    &gt;&gt;&gt; MatrixWeightedMajority(ballots, indifference=None).as_array_</span>
-<span class="sd">    array([[0, 1],</span>
-<span class="sd">           [0, 0]])</span>
+<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots, indifference=None).as_array_</span>
+<span class="sd">        array([[0, 1],</span>
+<span class="sd">               [0, 0]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -378,39 +399,36 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">gross_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The &quot;gross&quot; matrix. Keys are pairs of candidates. Each coefficient is the weighted number of</span>
+<span class="sd">        points (used as numerator in the average).</span>
 
-<span class="sd">        The &quot;gross&quot; matrix.</span>
-
-<span class="sd">        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (used as</span>
-<span class="sd">            numerator in the average).</span>
-
-<span class="sd">        &gt;&gt;&gt; from whalrus import MatrixWeightedMajority</span>
-<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;a ~ b&#39;], weights=[2, 1]).gross_</span>
-<span class="sd">        {(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): Fraction(5, 2), (&#39;b&#39;, &#39;a&#39;): Fraction(1, 2), (&#39;b&#39;, &#39;b&#39;): 0}</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from whalrus import MatrixWeightedMajority</span>
+<span class="sd">            &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;a ~ b&#39;], weights=[2, 1]).gross_</span>
+<span class="sd">            {(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): Fraction(5, 2), (&#39;b&#39;, &#39;a&#39;): Fraction(1, 2), (&#39;b&#39;, &#39;b&#39;): 0}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gross_and_weights_</span><span class="p">[</span><span class="s1">&#39;gross&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">weights_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The matrix of weights.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The matrix of weights. Keys are pairs of candidates. Each coefficient is the total weight (used as</span>
+<span class="sd">        denominator in the average).</span>
 
-<span class="sd">        :return: a NiceDict. Keys are pairs of candidates. Each coefficient is the total weight (used as</span>
-<span class="sd">            denominator in the average).</span>
-
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
 <span class="sd">        In most usual cases, all non-diagonal coefficients are equal, and are equal to the total weight of all voters:</span>
 
-<span class="sd">        &gt;&gt;&gt; from whalrus import MatrixWeightedMajority</span>
-<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;a ~ b&#39;], weights=[2, 1]).weights_</span>
-<span class="sd">        {(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 3, (&#39;b&#39;, &#39;a&#39;): 3, (&#39;b&#39;, &#39;b&#39;): 0}</span>
+<span class="sd">            &gt;&gt;&gt; from whalrus import MatrixWeightedMajority</span>
+<span class="sd">            &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;a ~ b&#39;], weights=[2, 1]).weights_</span>
+<span class="sd">            {(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 3, (&#39;b&#39;, &#39;a&#39;): 3, (&#39;b&#39;, &#39;b&#39;): 0}</span>
 
 <span class="sd">        However, if some scoring parameters are None, some weights can be lower than the total weight of all voters:</span>
 
-<span class="sd">        &gt;&gt;&gt; from whalrus import MatrixWeightedMajority</span>
-<span class="sd">        &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;a ~ b&#39;], weights=[2, 1],</span>
-<span class="sd">        ...                        indifference=None).weights_</span>
-<span class="sd">        {(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 2, (&#39;b&#39;, &#39;a&#39;): 2, (&#39;b&#39;, &#39;b&#39;): 0}</span>
+<span class="sd">            &gt;&gt;&gt; from whalrus import MatrixWeightedMajority</span>
+<span class="sd">            &gt;&gt;&gt; MatrixWeightedMajority(ballots=[&#39;a &gt; b&#39;, &#39;a ~ b&#39;], weights=[2, 1],</span>
+<span class="sd">            ...                        indifference=None).weights_</span>
+<span class="sd">            {(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 2, (&#39;b&#39;, &#39;a&#39;): 2, (&#39;b&#39;, &#39;b&#39;): 0}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gross_and_weights_</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">]</span>
 

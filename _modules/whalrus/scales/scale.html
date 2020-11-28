@@ -193,9 +193,11 @@
 <span class="sd">    For a subclass, it is sufficient to override the method :meth:`lt` and the other comparison methods will be</span>
 <span class="sd">    modified accordingly (assuming it describes a total order).</span>
 
-<span class="sd">    &gt;&gt;&gt; scale = Scale()</span>
-<span class="sd">    &gt;&gt;&gt; scale.lt(1, 7)</span>
-<span class="sd">    True</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; scale = Scale()</span>
+<span class="sd">        &gt;&gt;&gt; scale.lt(1, 7)</span>
+<span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># noinspection PyMethodMayBeStatic</span>
@@ -217,14 +219,24 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test &quot;lower than&quot;.</span>
 
-<span class="sd">        :param one: a level of the scale.</span>
-<span class="sd">        :param another: a level of the scale.</span>
-<span class="sd">        :return: True iff :attr:`one` is lower than :attr:`another`.</span>
-
 <span class="sd">        Generally, only this method is overridden in the subclasses.</span>
 
-<span class="sd">        &gt;&gt;&gt; Scale().lt(&#39;a&#39;, &#39;z&#39;)</span>
-<span class="sd">        True</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        one : object</span>
+<span class="sd">            A level of the scale.</span>
+<span class="sd">        another : object</span>
+<span class="sd">            A level of the scale.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True iff :attr:`one` is lower than :attr:`another`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; Scale().lt(&#39;a&#39;, &#39;z&#39;)</span>
+<span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">one</span> <span class="o">&lt;</span> <span class="n">another</span></div>
 
@@ -251,19 +263,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">low</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The lowest element of the scale.</span>
-
-<span class="sd">        :return: the lowest element (or None if the scale is unbounded below).</span>
+        <span class="sd">&quot;&quot;&quot;object: The lowest element of the scale (or None if the scale is unbounded below).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">high</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The highest element of the scale.</span>
-
-<span class="sd">        :return: the highest element (or None if the scale is unbounded above).</span>
+        <span class="sd">&quot;&quot;&quot;object: The highest element of the scale (or None if the scale is unbounded above).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span>
 
@@ -281,11 +287,20 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compare two levels.</span>
 
-<span class="sd">        :param one: a level.</span>
-<span class="sd">        :param another: a level.</span>
-<span class="sd">        :return: 0 if they are equal, a positive number if ``one`` is greater than ``another``, a negative number</span>
-<span class="sd">            otherwise.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        one : object</span>
+<span class="sd">            A level.</span>
+<span class="sd">        another : object</span>
+<span class="sd">            A level.</span>
 
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            0 if they are equal, a positive number if ``one`` is greater than ``another``, a negative number otherwise.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; Scale().compare(&#39;a&#39;, &#39;z&#39;)</span>
 <span class="sd">        -1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -297,10 +312,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Minimum of some levels.</span>
 
-<span class="sd">        :param iterable: an iterable of levels (list, set, etc).</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        iterable : Iterable</span>
+<span class="sd">            An iterable of levels (list, set, etc).</span>
 
-<span class="sd">        &gt;&gt;&gt; Scale().min({&#39;x&#39;, &#39;a&#39;, &#39;z&#39;})</span>
-<span class="sd">        &#39;a&#39;</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; Scale().min({&#39;x&#39;, &#39;a&#39;, &#39;z&#39;})</span>
+<span class="sd">            &#39;a&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compare</span><span class="p">))</span></div>
 
@@ -308,10 +328,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Maximum of some levels.</span>
 
-<span class="sd">        :param iterable: an iterable of levels (list, set, etc).</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        iterable : Iterable</span>
+<span class="sd">            An iterable of levels (list, set, etc).</span>
 
-<span class="sd">        &gt;&gt;&gt; Scale().max({4, 1, 12})</span>
-<span class="sd">        12</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; Scale().max({4, 1, 12})</span>
+<span class="sd">            12</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compare</span><span class="p">))</span></div>
 
@@ -319,13 +344,19 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sort a list of levels (in place).</span>
 
-<span class="sd">        :param some_list: a list of levels.</span>
-<span class="sd">        :param reverse: if True, then sort in decreasing order.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        some_list : list</span>
+<span class="sd">            A list of levels.</span>
+<span class="sd">        reverse : bool</span>
+<span class="sd">            If True, then sort in decreasing order.</span>
 
-<span class="sd">        &gt;&gt;&gt; some_list = [42, 3, 12]</span>
-<span class="sd">        &gt;&gt;&gt; Scale().sort(some_list)</span>
-<span class="sd">        &gt;&gt;&gt; some_list</span>
-<span class="sd">        [3, 12, 42]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; some_list = [42, 3, 12]</span>
+<span class="sd">            &gt;&gt;&gt; Scale().sort(some_list)</span>
+<span class="sd">            &gt;&gt;&gt; some_list</span>
+<span class="sd">            [3, 12, 42]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">some_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compare</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div>
 
@@ -333,12 +364,22 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;Argsort&quot; a list of levels.</span>
 
-<span class="sd">        :param some_list: a list of levels.</span>
-<span class="sd">        :param reverse: if True, then argsort in decreasing order.</span>
-<span class="sd">        :return: a list of indexes.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        some_list : list</span>
+<span class="sd">            A list of levels.</span>
+<span class="sd">        reverse : bool</span>
+<span class="sd">            If True, then argsort in decreasing order.</span>
 
-<span class="sd">        &gt;&gt;&gt; Scale().argsort([&#39;a&#39;, &#39;c&#39;, &#39;b&#39;])</span>
-<span class="sd">        [0, 2, 1]</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            A list of indexes.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; Scale().argsort([&#39;a&#39;, &#39;c&#39;, &#39;b&#39;])</span>
+<span class="sd">            [0, 2, 1]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">compare_indexes</span><span class="p">(</span><span class="n">one</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">another</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="n">some_list</span><span class="p">[</span><span class="n">one</span><span class="p">],</span> <span class="n">some_list</span><span class="p">[</span><span class="n">another</span><span class="p">])</span>

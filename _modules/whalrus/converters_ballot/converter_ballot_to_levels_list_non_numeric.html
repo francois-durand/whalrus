@@ -197,35 +197,41 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Default converter to a :class:`BallotLevels` using a :class:`ScaleFromList` of levels that are not numbers.</span>
 
-<span class="sd">    :param scale: the scale.</span>
-<span class="sd">    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`,</span>
-<span class="sd">        we use Borda scores as a calculation step. This parameter decides whether the unordered candidates of the</span>
-<span class="sd">        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.</span>
-
 <span class="sd">    This converter works essentially the same as :class:`ConverterBallotToLevelsInterval`, but it then maps the</span>
 <span class="sd">    evaluation to levels of the scale.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scale : ScaleFromList</span>
+<span class="sd">        The scale.</span>
+<span class="sd">    borda_unordered_give_points : bool</span>
+<span class="sd">        When converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we use Borda scores as a</span>
+<span class="sd">        calculation step. This parameter decides whether the unordered candidates of the ballot give points to the</span>
+<span class="sd">        ordered candidates. Cf. :class:`ScorerBorda`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usages:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotToLevelsListNonNumeric(</span>
-<span class="sd">    ...     scale=ScaleFromList([&#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Great&#39;, &#39;Excellent&#39;]))</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 1, &#39;b&#39;: .2}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleInterval(-1, 1))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 5, &#39;b&#39;: 4}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleRange(0, 5))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Great&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 4, &#39;b&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleFromSet({-1, 0, 4}))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Medium&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Bad&#39;, &#39;c&#39;: &#39;Bad&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Bad&#39;, &#39;c&#39;: &#39;Bad&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Bad&#39;, &#39;b&#39;: &#39;Excellent&#39;, &#39;c&#39;: &#39;Excellent&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a &gt; b &gt; c &gt; d&#39;).as_dict</span>
-<span class="sd">    {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;, &#39;c&#39;: &#39;Good&#39;, &#39;d&#39;: &#39;Bad&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToLevelsListNonNumeric(</span>
+<span class="sd">        ...     scale=ScaleFromList([&#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Great&#39;, &#39;Excellent&#39;]))</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 1, &#39;b&#39;: .2}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleInterval(-1, 1))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 5, &#39;b&#39;: 4}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleRange(0, 5))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Great&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 4, &#39;b&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleFromSet({-1, 0, 4}))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Medium&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Bad&#39;, &#39;c&#39;: &#39;Bad&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Bad&#39;, &#39;c&#39;: &#39;Bad&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Bad&#39;, &#39;b&#39;: &#39;Excellent&#39;, &#39;c&#39;: &#39;Excellent&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a &gt; b &gt; c &gt; d&#39;).as_dict</span>
+<span class="sd">        {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;, &#39;c&#39;: &#39;Good&#39;, &#39;d&#39;: &#39;Bad&#39;}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">ScaleFromList</span><span class="p">,</span> <span class="n">borda_unordered_give_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>

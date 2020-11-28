@@ -218,41 +218,66 @@
 <dt id="whalrus.Scorer">
 <em class="property">class </em><code class="sig-prename descclassname">whalrus.</code><code class="sig-name descname">Scorer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">scale</span><span class="p">:</span> <span class="n">whalrus.scales.scale.Scale</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/whalrus/scorers/scorer.html#Scorer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Scorer" title="Permalink to this definition">¶</a></dt>
 <dd><p>A “scorer”.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – if present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
-<li><p><strong>scale</strong> – the scale in which scores are computed.</p></li>
-<li><p><strong>**kwargs</strong> – if present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
-</ul>
-</dd>
-</dl>
 <p>A <a class="reference internal" href="#whalrus.Scorer" title="whalrus.Scorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scorer</span></code></a> is a callable whose inputs are a ballot, a voter and a set of candidates (the set of candidates
 of the election).  When the scorer is called, it loads its arguments. The output of the call is the scorer
 itself. But after the call, you can access to the computed variables (ending with an underscore),
 such as <a class="reference internal" href="#whalrus.Scorer.scores_" title="whalrus.Scorer.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a>.</p>
 <p>At the initialization of a <a class="reference internal" href="#whalrus.Scorer" title="whalrus.Scorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scorer</span></code></a> object, some options can be given, such as a scale. In some
 subclasses, there can be some additional options.</p>
-<p>Cf. <a class="reference internal" href="scorer_levels.html#whalrus.ScorerLevels" title="whalrus.ScorerLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerLevels</span></code></a> for some examples.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ballot_</strong> – this attribute stores the ballot given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p></li>
-<li><p><strong>voter_</strong> – this attribute stores the voter given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p></li>
-<li><p><strong>candidates_</strong> – this attribute stores the candidates given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p></li>
+<li><p><strong>args</strong> – If present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
+<li><p><strong>scale</strong> (<a class="reference internal" href="../scales/scale.html#whalrus.Scale" title="whalrus.Scale"><em>Scale</em></a>) – The scale in which scores are computed.</p></li>
+<li><p><strong>kwargs</strong> – If present, these parameters will be passed to <code class="docutils literal notranslate"><span class="pre">__call__</span></code> immediately after initialization.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt id="whalrus.Scorer.ballot_">
+<code class="sig-name descname">ballot_</code><a class="headerlink" href="#whalrus.Scorer.ballot_" title="Permalink to this definition">¶</a></dt>
+<dd><p>This attribute stores the ballot given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../ballots/ballot.html#whalrus.Ballot" title="whalrus.Ballot">Ballot</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Scorer.voter_">
+<code class="sig-name descname">voter_</code><a class="headerlink" href="#whalrus.Scorer.voter_" title="Permalink to this definition">¶</a></dt>
+<dd><p>This attribute stores the voter given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Scorer.candidates_">
+<code class="sig-name descname">candidates_</code><a class="headerlink" href="#whalrus.Scorer.candidates_" title="Permalink to this definition">¶</a></dt>
+<dd><p>This attribute stores the candidates given in argument of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<p>Cf. <a class="reference internal" href="scorer_levels.html#whalrus.ScorerLevels" title="whalrus.ScorerLevels"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScorerLevels</span></code></a> for some examples.</p>
 <dl class="py method">
 <dt id="whalrus.Scorer.scores_">
 <em class="property">property </em><code class="sig-name descname">scores_</code><a class="headerlink" href="#whalrus.Scorer.scores_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The scores.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code> that, to each candidate, associates either a level in the scale or None.
+<dd><p>The scores. To each candidate, this dictionary associates either a level in the scale or None.
 For the meaning of None, cf. <a class="reference internal" href="../rules_in_particular/rule_range_voting.html#whalrus.RuleRangeVoting" title="whalrus.RuleRangeVoting"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleRangeVoting</span></code></a> for example. Intuitively: a score of 0 means that
 the value 0 is counted in the average, whereas None is not counted at all (i.e. the weight of the voter
 is not even counted in the denominator when computing the average).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -260,18 +285,18 @@ is not even counted in the denominator when computing the average).</p>
 <dl class="py method">
 <dt id="whalrus.Scorer.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.Scorer.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The scores, given as floats.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.Scorer.scores_" title="whalrus.Scorer.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a>, converted to floats.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – if the scores cannot be converted to floats.</p>
-</dd>
-</dl>
+<dd><p>The scores, given as floats. It is the same as <a class="reference internal" href="#whalrus.Scorer.scores_" title="whalrus.Scorer.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a>, but converted to floats.</p>
 <p>Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,
 you should always use <a class="reference internal" href="#whalrus.Scorer.scores_" title="whalrus.Scorer.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a>, which usually manipulates fractions and therefore allows for exact
 computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the scores cannot be converted to floats.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

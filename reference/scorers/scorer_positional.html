@@ -221,15 +221,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>points_scheme</strong> – the list of points to be attributed to the (first) candidates of a ballot.</p></li>
-<li><p><strong>points_fill</strong> – points for ordered candidates that have a rank beyond the <code class="docutils literal notranslate"><span class="pre">points_scheme</span></code>.</p></li>
-<li><p><strong>points_unordered</strong> – points for the unordered candidates.</p></li>
-<li><p><strong>points_absent</strong> – points for the absent candidates.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>points_scheme</strong> (<em>list</em>) – The list of points to be attributed to the (first) candidates of a ballot.</p></li>
+<li><p><strong>points_fill</strong> (<em>Number</em><em> or </em><em>None</em>) – Points for ordered candidates that have a rank beyond the <code class="docutils literal notranslate"><span class="pre">points_scheme</span></code>.</p></li>
+<li><p><strong>points_unordered</strong> (<em>Number</em><em> or </em><em>None</em>) – Points for the unordered candidates.</p></li>
+<li><p><strong>points_absent</strong> (<em>Number</em><em> or </em><em>None</em>) – Points for the absent candidates.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>The top candidate in the ballot receives <code class="docutils literal notranslate"><span class="pre">points_scheme[0]</span></code> points, the second one receives <code class="docutils literal notranslate"><span class="pre">points_scheme[1]</span></code>
 points, etc:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScorerPositional</span><span class="p">(</span><span class="n">ballot</span><span class="o">=</span><span class="n">BallotOrder</span><span class="p">(</span><span class="s1">&#39;a &gt; b &gt; c&#39;</span><span class="p">),</span> <span class="n">points_scheme</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">scores_</span>
@@ -266,18 +267,18 @@ scorer provide different ways to take these special cases into account:</p>
 <dl class="py method">
 <dt id="whalrus.ScorerPositional.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.ScorerPositional.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The scores, given as floats.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, converted to floats.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – if the scores cannot be converted to floats.</p>
-</dd>
-</dl>
+<dd><p>The scores, given as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, but converted to floats.</p>
 <p>Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,
 you should always use <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, which usually manipulates fractions and therefore allows for exact
 computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the scores cannot be converted to floats.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

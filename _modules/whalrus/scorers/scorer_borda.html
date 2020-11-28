@@ -189,52 +189,62 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Borda scorer for :class:`BallotOrder`.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param absent_give_points: whether absent candidates give points to the other candidates.</span>
-<span class="sd">    :param absent_receive_points: whether absent candidates receives points. Remark: 0 means that any absent</span>
-<span class="sd">        candidate receives the score 0 (which will be counted in its average Borda score, median Borda score,</span>
-<span class="sd">        etc); in contrast, None means that the absent candidate receives no score (hence this voter will be excluded</span>
-<span class="sd">        from the computation of its average Borda score, median Borda score, etc).</span>
-<span class="sd">    :param unordered_give_points: whether unordered candidates give points to the ordered candidates, i.e. they are</span>
-<span class="sd">        considered as being in a lower position in the ranking.</span>
-<span class="sd">    :param unordered_receive_points: whether unordered candidates receive points. Like for ``absent_receive_points``,</span>
-<span class="sd">        None means that an unordered candidate receives no score at all.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    absent_give_points : bool</span>
+<span class="sd">        Whether absent candidates give points to the other candidates.</span>
+<span class="sd">    absent_receive_points : bool or None</span>
+<span class="sd">        Whether absent candidates receives points. Remark: 0 means that any absent candidate receives the score 0</span>
+<span class="sd">        (which will be counted in its average Borda score, median Borda score, etc); in contrast, None means that the</span>
+<span class="sd">        absent candidate receives no score (hence this voter will be excluded from the computation of its average Borda</span>
+<span class="sd">        score, median Borda score, etc).</span>
+<span class="sd">    unordered_give_points : bool</span>
+<span class="sd">        Whether unordered candidates give points to the ordered candidates, i.e. they are considered as being in a</span>
+<span class="sd">        lower position in the ranking.</span>
+<span class="sd">    unordered_receive_points : bool or None</span>
+<span class="sd">        Whether unordered candidates receive points. Like for ``absent_receive_points``, None means that an unordered</span>
+<span class="sd">        candidate receives no score at all.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot=BallotOrder(&#39;a &gt; b &gt; c&#39;), voter=&#39;Alice&#39;,</span>
-<span class="sd">    ...             candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 1, &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot=BallotOrder(&#39;a &gt; b &gt; c&#39;), voter=&#39;Alice&#39;,</span>
+<span class="sd">        ...             candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 1, &#39;c&#39;: 0}</span>
 
 <span class="sd">    In the example below, candidates `a`, `b` and `c` are &quot;ordered&quot;, `d` and `e` are &quot;unordered&quot;, and `f`</span>
 <span class="sd">    and `g` are &quot;absent&quot; in the ballot, meaning that these candidates were not even available when the voter cast</span>
 <span class="sd">    her ballot. The options allows for different ways to take these special cases into account:</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotOrder(&#39;a &gt; b ~ c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; candidates_election = {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 6.0, &#39;b&#39;: 4.5, &#39;c&#39;: 4.5, &#39;d&#39;: 2.5, &#39;e&#39;: 2.5, &#39;f&#39;: 0.5, &#39;g&#39;: 0.5}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
-<span class="sd">    ...             absent_receive_points=False).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 6.0, &#39;b&#39;: 4.5, &#39;c&#39;: 4.5, &#39;d&#39;: 2.5, &#39;e&#39;: 2.5, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
-<span class="sd">    ...             absent_receive_points=False, absent_give_points=False).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 4.0, &#39;b&#39;: 2.5, &#39;c&#39;: 2.5, &#39;d&#39;: 0.5, &#39;e&#39;: 0.5, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
-<span class="sd">    ...             absent_receive_points=False, absent_give_points=False,</span>
-<span class="sd">    ...             unordered_receive_points=False).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 4.0, &#39;b&#39;: 2.5, &#39;c&#39;: 2.5, &#39;d&#39;: 0.0, &#39;e&#39;: 0.0, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
-<span class="sd">    ...             absent_receive_points=False, absent_give_points=False,</span>
-<span class="sd">    ...             unordered_receive_points=False, unordered_give_points=False).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 2.0, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5, &#39;d&#39;: 0.0, &#39;e&#39;: 0.0, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotOrder(&#39;a &gt; b ~ c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; candidates_election = {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 6.0, &#39;b&#39;: 4.5, &#39;c&#39;: 4.5, &#39;d&#39;: 2.5, &#39;e&#39;: 2.5, &#39;f&#39;: 0.5, &#39;g&#39;: 0.5}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
+<span class="sd">        ...             absent_receive_points=False).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 6.0, &#39;b&#39;: 4.5, &#39;c&#39;: 4.5, &#39;d&#39;: 2.5, &#39;e&#39;: 2.5, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
+<span class="sd">        ...             absent_receive_points=False, absent_give_points=False).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 4.0, &#39;b&#39;: 2.5, &#39;c&#39;: 2.5, &#39;d&#39;: 0.5, &#39;e&#39;: 0.5, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
+<span class="sd">        ...             absent_receive_points=False, absent_give_points=False,</span>
+<span class="sd">        ...             unordered_receive_points=False).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 4.0, &#39;b&#39;: 2.5, &#39;c&#39;: 2.5, &#39;d&#39;: 0.0, &#39;e&#39;: 0.0, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
+<span class="sd">        ...             absent_receive_points=False, absent_give_points=False,</span>
+<span class="sd">        ...             unordered_receive_points=False, unordered_give_points=False).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 2.0, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5, &#39;d&#39;: 0.0, &#39;e&#39;: 0.0, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
 
 <span class="sd">    Usage of None in the options:</span>
 
-<span class="sd">    &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
-<span class="sd">    ...             absent_receive_points=None, unordered_receive_points=None).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 6.0, &#39;b&#39;: 4.5, &#39;c&#39;: 4.5}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBorda(ballot, candidates=candidates_election,</span>
+<span class="sd">        ...             absent_receive_points=None, unordered_receive_points=None).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 6.0, &#39;b&#39;: 4.5, &#39;c&#39;: 4.5}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>

@@ -1,4 +1,4 @@
 Util Module
 ===========
-.. automodule:: whalrus.utils.Utils
+.. automodule:: whalrus.utils.utils
     :members:

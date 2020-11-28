@@ -29,22 +29,30 @@ class RuleNanson(RuleIteratedElimination):
     """
     Nanson's rule.
 
-    :param `*args`: cf. parent class.
-    :param base_rule: the default is :class:`RuleBorda`.
-    :param elimination: the default is :class:`EliminationBelowAverage`.
-    :param `**kwargs`: cf. parent class.
-
     At each round, all candidates whose Borda score is lower than the average Borda score are eliminated.
 
-    >>> rule = RuleNanson(['a > b > c > d', 'a > b > d > c'])
-    >>> rule.eliminations_[0].rule_.gross_scores_
-    {'a': 6, 'b': 4, 'c': 1, 'd': 1}
-    >>> rule.eliminations_[1].rule_.gross_scores_
-    {'a': 2, 'b': 0}
-    >>> rule.eliminations_[2].rule_.gross_scores_
-    {'a': 0}
-    >>> rule.winner_
-    'a'
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    base_rule : Rule
+        Default: :class:`RuleBorda`.
+    elimination : Elimination
+        Default: :class:`EliminationBelowAverage`.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleNanson(['a > b > c > d', 'a > b > d > c'])
+        >>> rule.eliminations_[0].rule_.gross_scores_
+        {'a': 6, 'b': 4, 'c': 1, 'd': 1}
+        >>> rule.eliminations_[1].rule_.gross_scores_
+        {'a': 2, 'b': 0}
+        >>> rule.eliminations_[2].rule_.gross_scores_
+        {'a': 0}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None, **kwargs):

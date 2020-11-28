@@ -193,72 +193,80 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A rule by iterated elimination (such as :class:`RuleIRV`, :class:`RuleCoombs`, :class:`RuleNanson`, etc.)</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param base_rule: the rule used at each round to determine the eliminated candidate(s). Unlike for</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    base_rule : Rule</span>
+<span class="sd">        The rule used at each round to determine the eliminated candidate(s). Unlike for</span>
 <span class="sd">        :class:`RuleSequentialElimination`, all the rounds use the same voting rule.</span>
-<span class="sd">    :param elimination: the elimination algorithm. Default: ``EliminationLast(k=1)``.</span>
-<span class="sd">    :param propagate_tie_break: if True (default), then the tie-breaking rule of this object is also used for the</span>
-<span class="sd">        base rule (cf. below).</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    elimination : Elimination</span>
+<span class="sd">        The elimination algorithm. Default: ``EliminationLast(k=1)``.</span>
+<span class="sd">    propagate_tie_break : bool</span>
+<span class="sd">        If True (default), then the tie-breaking rule of this object is also used for the base rule (cf. below).</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
-<span class="sd">    &gt;&gt;&gt; irv = RuleIteratedElimination([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;], weights=[2, 3, 4],</span>
-<span class="sd">    ...                                 base_rule=RulePlurality())</span>
-<span class="sd">    &gt;&gt;&gt; irv.eliminations_[0].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 3, &#39;c&#39;: 4}</span>
-<span class="sd">    &gt;&gt;&gt; irv.eliminations_[1].rule_.gross_scores_</span>
-<span class="sd">    {&#39;b&#39;: 5, &#39;c&#39;: 4}</span>
-<span class="sd">    &gt;&gt;&gt; irv.eliminations_[2].rule_.gross_scores_</span>
-<span class="sd">    {&#39;b&#39;: 9}</span>
-<span class="sd">    &gt;&gt;&gt; irv.winner_</span>
-<span class="sd">    &#39;b&#39;</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; irv = RuleIteratedElimination([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;], weights=[2, 3, 4],</span>
+<span class="sd">        ...                                 base_rule=RulePlurality())</span>
+<span class="sd">        &gt;&gt;&gt; irv.eliminations_[0].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 3, &#39;c&#39;: 4}</span>
+<span class="sd">        &gt;&gt;&gt; irv.eliminations_[1].rule_.gross_scores_</span>
+<span class="sd">        {&#39;b&#39;: 5, &#39;c&#39;: 4}</span>
+<span class="sd">        &gt;&gt;&gt; irv.eliminations_[2].rule_.gross_scores_</span>
+<span class="sd">        {&#39;b&#39;: 9}</span>
+<span class="sd">        &gt;&gt;&gt; irv.winner_</span>
+<span class="sd">        &#39;b&#39;</span>
 
 <span class="sd">    Remark: there exists a shortcut for the above rule in particular, the class :class:`RuleIRV`.</span>
 
 <span class="sd">    By default, ``propagate_tie_break`` is True. So if you want to specify a tie-breaking rule, just do it in the</span>
 <span class="sd">    parameters of this object, and it will also be used in the base rule. This is probably what you want to do:</span>
 
-<span class="sd">    &gt;&gt;&gt; irv = RuleIteratedElimination([&#39;a &gt; c &gt; b&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;], weights=[1, 2, 1],</span>
-<span class="sd">    ...                                 base_rule=RulePlurality(), tie_break=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; irv.eliminations_[0].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 1}</span>
-<span class="sd">    &gt;&gt;&gt; irv.eliminations_[1].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 2}</span>
-<span class="sd">    &gt;&gt;&gt; irv.eliminations_[2].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 4}</span>
-<span class="sd">    &gt;&gt;&gt; irv.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; irv = RuleIteratedElimination([&#39;a &gt; c &gt; b&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;], weights=[1, 2, 1],</span>
+<span class="sd">        ...                                 base_rule=RulePlurality(), tie_break=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; irv.eliminations_[0].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 1}</span>
+<span class="sd">        &gt;&gt;&gt; irv.eliminations_[1].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 2}</span>
+<span class="sd">        &gt;&gt;&gt; irv.eliminations_[2].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 4}</span>
+<span class="sd">        &gt;&gt;&gt; irv.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 
 <span class="sd">    If ``propagate_tie_break`` is False, then there is a subtlety between the tie-breaking rule of this object, and the</span>
 <span class="sd">    tie-breaking rule of the base rule. The following (somewhat contrived) example illustrates the respective roles of</span>
 <span class="sd">    the two tie-breaking rules.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleIteratedElimination(</span>
-<span class="sd">    ...     [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], weights=[3, 2, 2, 2, 1],</span>
-<span class="sd">    ...     tie_break=Priority.DESCENDING, propagate_tie_break=False,</span>
-<span class="sd">    ...     base_rule=RulePlurality(tie_break=Priority.ASCENDING), elimination=EliminationLast(k=2))</span>
-<span class="sd">    &gt;&gt;&gt; rule.eliminations_[0].rule_.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 3, &#39;b&#39;: 2, &#39;c&#39;: 2, &#39;d&#39;: 2, &#39;e&#39;: 1}</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIteratedElimination(</span>
+<span class="sd">        ...     [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], weights=[3, 2, 2, 2, 1],</span>
+<span class="sd">        ...     tie_break=Priority.DESCENDING, propagate_tie_break=False,</span>
+<span class="sd">        ...     base_rule=RulePlurality(tie_break=Priority.ASCENDING), elimination=EliminationLast(k=2))</span>
+<span class="sd">        &gt;&gt;&gt; rule.eliminations_[0].rule_.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 3, &#39;b&#39;: 2, &#39;c&#39;: 2, &#39;d&#39;: 2, &#39;e&#39;: 1}</span>
 
 <span class="sd">    With the worst score, ``e`` is eliminated anyway, but we need to eliminate a second candidate because ``k = 2``. In</span>
 <span class="sd">    Plurality, ``b``, ``c`` and ``d`` are tied, but since Plurality&#39;s tie-breaking rule is ``ASCENDING``, candidates</span>
 <span class="sd">    ``b`` or ``c`` get an advantage over ``d``. Hence ``d`` is eliminated:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule.eliminations_[0].eliminated_</span>
-<span class="sd">    {&#39;d&#39;, &#39;e&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; rule.eliminations_[0].eliminated_</span>
+<span class="sd">        {&#39;d&#39;, &#39;e&#39;}</span>
 
 <span class="sd">    Note that the tie-breaking rule of the base rule (here Plurality) is always sufficient to compute the weak order</span>
 <span class="sd">    over the candidates. This order may be finer than the elimination order, because being eliminated at the same</span>
 <span class="sd">    time does not mean being tied, as ``d`` and ``e`` illustrate here:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule.order_</span>
-<span class="sd">    [{&#39;a&#39;}, {&#39;b&#39;, &#39;c&#39;}, {&#39;d&#39;}, {&#39;e&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; rule.order_</span>
+<span class="sd">        [{&#39;a&#39;}, {&#39;b&#39;, &#39;c&#39;}, {&#39;d&#39;}, {&#39;e&#39;}]</span>
 
 <span class="sd">    So, where does the tie-breaking rule of this object come in? It is simply used to get the strict order over</span>
 <span class="sd">    the candidates, as usual in a :class:`Rule`. In our example, since it is ``DESCENDING``, candidate ``c`` gets an</span>
 <span class="sd">    advantage over ``b``:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule.strict_order_</span>
-<span class="sd">    [&#39;a&#39;, &#39;c&#39;, &#39;b&#39;, &#39;d&#39;, &#39;e&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; rule.strict_order_</span>
+<span class="sd">        [&#39;a&#39;, &#39;c&#39;, &#39;b&#39;, &#39;d&#39;, &#39;e&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">base_rule</span><span class="p">:</span> <span class="n">Rule</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">elimination</span><span class="p">:</span> <span class="n">Elimination</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">propagate_tie_break</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -276,10 +284,8 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">eliminations_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The elimination rounds.</span>
-
-<span class="sd">        :return: a list of :class:`Elimination` objects. The first one corresponds to the first round, etc.</span>
+        <span class="sd">&quot;&quot;&quot;list: The elimination rounds. A list of :class:`Elimination` objects. The first one corresponds to the first</span>
+<span class="sd">        round, etc.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elimination</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_rule</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>

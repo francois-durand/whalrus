@@ -223,24 +223,24 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>scorer</strong> – the <a class="reference internal" href="../scorers/scorer.html#whalrus.Scorer" title="whalrus.Scorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scorer</span></code></a>. For each ballot, it is in charge of computing its contribution to each
-candidate’s score.</p></li>
-<li><p><strong>default_average</strong> – the default average score of a candidate when it receives no score whatsoever. It may
-happen, for example, if all voters abstain about this candidate. This avoids a division by zero when
-computing this candidate’s average score.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>scorer</strong> (<a class="reference internal" href="../scorers/scorer.html#whalrus.Scorer" title="whalrus.Scorer"><em>Scorer</em></a>) – For each ballot, it is in charge of computing its contribution to each candidate’s score.</p></li>
+<li><p><strong>default_average</strong> (<em>Number</em>) – The default average score of a candidate when it receives no score whatsoever. It may happen, for example, if
+all voters abstain about this candidate. This avoids a division by zero when computing this candidate’s average
+score.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>Cf. <a class="reference internal" href="../rules_in_particular/rule_range_voting.html#whalrus.RuleRangeVoting" title="whalrus.RuleRangeVoting"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleRangeVoting</span></code></a> for some examples.</p>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.average_score_">
 <em class="property">property </em><code class="sig-name descname">average_score_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.average_score_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The average score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the average score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>
@@ -248,10 +248,10 @@ computing this candidate’s average score.</p></li>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.average_score_as_float_">
 <em class="property">property </em><code class="sig-name descname">average_score_as_float_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.average_score_as_float_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The average score as a float.</p>
+<dd><p>The average score as a float. It is the same as <a class="reference internal" href="#whalrus.RuleScoreNumAverage.average_score_" title="whalrus.RuleScoreNumAverage.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a>, but converted to a float.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleScoreNumAverage.average_score_" title="whalrus.RuleScoreNumAverage.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a> converted to a float.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>
@@ -259,10 +259,10 @@ computing this candidate’s average score.</p></li>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.best_score_as_float_">
 <em class="property">property </em><code class="sig-name descname">best_score_as_float_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.best_score_as_float_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The best score as a float.</p>
+<dd><p>The best score as a float. It is the same as <a class="reference internal" href="rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a>, but converted to a float.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a> converted to a float.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,13 +274,15 @@ computing this candidate’s average score.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a score.</p></li>
-<li><p><strong>another</strong> – a score.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A score.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A score.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
-otherwise.</p>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -288,10 +290,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.cotrailers_">
 <em class="property">property </em><code class="sig-name descname">cotrailers_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.cotrailers_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Cotrailers”</p>
+<dd><p>“Cotrailers”. The set of candidates with the worst score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of candidates with the worst score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -299,10 +301,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.cowinners_">
 <em class="property">property </em><code class="sig-name descname">cowinners_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.cowinners_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cowinners</p>
+<dd><p>Cowinners. The set of candidates with the best score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the set of candidates with the best score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -310,11 +312,12 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.gross_scores_">
 <em class="property">property </em><code class="sig-name descname">gross_scores_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.gross_scores_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The gross scores of the candidates.</p>
+<dd><p>The gross scores of the candidates. For each candidate, this dictionary gives the sum of its
+scores, multiplied by the weights of the corresponding voters. This is the numerator in the candidate’s average
+score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code>. For each candidate, it gives the sum of its scores, multiplied by the weights
-of the corresponding voters. This is the numerator in the candidate’s average score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,10 +325,10 @@ of the corresponding voters. This is the numerator in the candidate’s average 
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.gross_scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">gross_scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.gross_scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gross scores as floats.</p>
+<dd><p>Gross scores as floats. It is the same as <a class="reference internal" href="#whalrus.RuleScoreNumAverage.gross_scores_" title="whalrus.RuleScoreNumAverage.gross_scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gross_scores_</span></code></a>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleScoreNumAverage.gross_scores_" title="whalrus.RuleScoreNumAverage.gross_scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gross_scores_</span></code></a> converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -335,8 +338,8 @@ of the corresponding voters. This is the numerator in the candidate’s average 
 <em class="property">property </em><code class="sig-name descname">n_candidates_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.n_candidates_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of candidates.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the number of candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,10 +347,10 @@ of the corresponding voters. This is the numerator in the candidate’s average 
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scores as floats.</p>
+<dd><p>Scores as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code> converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -355,10 +358,11 @@ of the corresponding voters. This is the numerator in the candidate’s average 
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.strict_order_">
 <em class="property">property </em><code class="sig-name descname">strict_order_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.strict_order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result of the election as a strict order over the candidates.</p>
+<dd><p>Result of the election as a strict order over the candidates. The first element is the winner, etc.
+This may use the tie-breaking rule.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list whose first element is the winner, etc. This may use the tie-breaking rule.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -366,11 +370,11 @@ of the corresponding voters. This is the numerator in the candidate’s average 
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.trailer_">
 <em class="property">property </em><code class="sig-name descname">trailer_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.trailer_" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Trailer” of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.strict_order_" title="whalrus.RuleScoreNumAverage.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The “trailer” of the election. This is the last candidate in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.strict_order_" title="whalrus.RuleScoreNumAverage.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 unfavorable choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.cotrailers_" title="whalrus.RuleScoreNumAverage.cotrailers_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cotrailers_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -378,12 +382,12 @@ unfavorable choice of the tie-breaking rule in <a class="reference internal" hre
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.weights_">
 <em class="property">property </em><code class="sig-name descname">weights_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.weights_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The weights used for the candidates.</p>
+<dd><p>The weights used for the candidates. For each candidate, this dictionary gives the total weight
+for this candidate, i.e. the total weight of all voters who assign a score to this candidate. This is the
+denominator in the candidate’s average score.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceDict</span></code>. For each candidate, it gives the total weight for this candidate, i.e. the total
-weight of all voters who assign a score to this candidate. This is the denominator in the candidate’s
-average score.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,10 +395,10 @@ average score.</p>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.weights_as_floats_">
 <em class="property">property </em><code class="sig-name descname">weights_as_floats_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.weights_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Weights as floats.</p>
+<dd><p>Weights as floats. It is the same as <a class="reference internal" href="#whalrus.RuleScoreNumAverage.weights_" title="whalrus.RuleScoreNumAverage.weights_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">weights_</span></code></a>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.RuleScoreNumAverage.weights_" title="whalrus.RuleScoreNumAverage.weights_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">weights_</span></code></a> converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -402,11 +406,11 @@ average score.</p>
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.winner_">
 <em class="property">property </em><code class="sig-name descname">winner_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.winner_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Winner of the election.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.strict_order_" title="whalrus.RuleScoreNumAverage.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
+<dd><p>The winner of the election. This is the first candidate in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.strict_order_" title="whalrus.RuleScoreNumAverage.strict_order_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">strict_order_</span></code></a> and also the
 choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.RuleScoreNumAverage.cowinners_" title="whalrus.RuleScoreNumAverage.cowinners_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cowinners_</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -414,10 +418,11 @@ choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.
 <dl class="py method">
 <dt id="whalrus.RuleScoreNumAverage.worst_score_as_float_">
 <em class="property">property </em><code class="sig-name descname">worst_score_as_float_</code><a class="headerlink" href="#whalrus.RuleScoreNumAverage.worst_score_as_float_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The worst score as a float.</p>
+<dd><p>The worst score as a float. It is the same as <a class="reference internal" href="rule_score.html#whalrus.RuleScore.worst_score_" title="whalrus.RuleScore.worst_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.worst_score_</span></code></a>, but converted to a
+float.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="rule_score.html#whalrus.RuleScore.worst_score_" title="whalrus.RuleScore.worst_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.worst_score_</span></code></a> converted to a float.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Number</p>
 </dd>
 </dl>
 </dd></dl>

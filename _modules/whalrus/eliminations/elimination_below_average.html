@@ -189,27 +189,34 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Elimination of the candidates whose score is lower than the average score</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param strict: if True (resp. False), then eliminate the candidates whose score is strictly lower than</span>
-<span class="sd">        (resp. lower or equal to) the average.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    strict : bool</span>
+<span class="sd">        If True (resp. False), then eliminate the candidates whose score is strictly lower than (resp. lower or equal</span>
+<span class="sd">        to) the average.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], weights=[35, 30, 25, 10])</span>
-<span class="sd">    &gt;&gt;&gt; rule.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 35, &#39;b&#39;: 30, &#39;c&#39;: 25, &#39;d&#39;: 10}</span>
-<span class="sd">    &gt;&gt;&gt; EliminationBelowAverage(rule=rule).eliminated_</span>
-<span class="sd">    {&#39;d&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; EliminationBelowAverage(rule=rule, strict=False).eliminated_</span>
-<span class="sd">    {&#39;c&#39;, &#39;d&#39;}</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], weights=[35, 30, 25, 10])</span>
+<span class="sd">        &gt;&gt;&gt; rule.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 35, &#39;b&#39;: 30, &#39;c&#39;: 25, &#39;d&#39;: 10}</span>
+<span class="sd">        &gt;&gt;&gt; EliminationBelowAverage(rule=rule).eliminated_</span>
+<span class="sd">        {&#39;d&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; EliminationBelowAverage(rule=rule, strict=False).eliminated_</span>
+<span class="sd">        {&#39;c&#39;, &#39;d&#39;}</span>
 
 <span class="sd">    If no candidates should be eliminated (which may happen only if ``strict`` is True), then all candidates are</span>
 <span class="sd">    eliminated.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;b&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; rule.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 1}</span>
-<span class="sd">    &gt;&gt;&gt; EliminationBelowAverage(rule=rule).eliminated_</span>
-<span class="sd">    {&#39;a&#39;, &#39;b&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;b&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; rule.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 1}</span>
+<span class="sd">        &gt;&gt;&gt; EliminationBelowAverage(rule=rule).eliminated_</span>
+<span class="sd">        {&#39;a&#39;, &#39;b&#39;}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

@@ -221,15 +221,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>k</strong> – the number of points to distribute. Intuitively: the <code class="docutils literal notranslate"><span class="pre">k</span></code> candidates at the highest ranks will receive
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – The number of points to distribute. Intuitively: the <code class="docutils literal notranslate"><span class="pre">k</span></code> candidates at the highest ranks will receive
 1 point each. In case of tie, some points may be divided between the tied candidates (see below).</p></li>
-<li><p><strong>unordered_receive_points</strong> – bool or None. Whether unordered candidates should receive points (see below).</p></li>
-<li><p><strong>absent_receive_points</strong> – bool or None. Whether absent candidates should receive points (see below).</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>unordered_receive_points</strong> (<em>bool</em><em> or </em><em>None.</em>) – Whether unordered candidates should receive points (see below).</p></li>
+<li><p><strong>absent_receive_points</strong> (<em>bool</em><em> or </em><em>None.</em>) – Whether absent candidates should receive points (see below).</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>Typical usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ScorerBucklin</span><span class="p">(</span><span class="n">BallotOrder</span><span class="p">(</span><span class="s1">&#39;a &gt; b &gt; c &gt; d &gt; e&#39;</span><span class="p">),</span>
 <span class="gp">... </span>              <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">},</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">scores_</span>
@@ -260,18 +261,18 @@ score dictionary at all:</p>
 <dl class="py method">
 <dt id="whalrus.ScorerBucklin.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.ScorerBucklin.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The scores, given as floats.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, converted to floats.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – if the scores cannot be converted to floats.</p>
-</dd>
-</dl>
+<dd><p>The scores, given as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, but converted to floats.</p>
 <p>Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,
 you should always use <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, which usually manipulates fractions and therefore allows for exact
 computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the scores cannot be converted to floats.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

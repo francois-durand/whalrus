@@ -32,19 +32,6 @@ class RuleBucklinInstant(RuleScore):
     """
     Bucklin's rule (instant version).
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param scorer: a :class:`Scorer`. Default: :class:`ScorerBorda` with ``absent_give_points=True``,
-        ``absent_receive_points=None``, ``unordered_give_points=True``, ``unordered_receive_points=False``.
-    :param default_median: the default median of a candidate when it receives no score whatsoever.
-    :param `**kwargs`: cf. parent class.
-
-    >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
-    >>> rule.scores_
-    {'a': (1, 3), 'b': (1, 2), 'c': (0, 3)}
-    >>> rule.winner_
-    'a'
-
     For each candidate, its median Borda score `m` is computed. Let `x` be the number of voters who give this
     candidate a Borda score that is greater or equal to `m`. Then the candidate's score is `(m, x)`. Scores are
     compared lexicographically.
@@ -55,24 +42,48 @@ class RuleBucklinInstant(RuleScore):
         * If several candidates have the lowest median rank, this tie is broken by examining how many voters rank
           each of them with this rank or better.
 
-    For another variant of Bucklin's rule, cf. :class:`RuleBucklinByRounds`. With the default settings,
-    and when preferences are strict total orders, :class:`RuleBucklinByRounds` and :class:`RuleBucklinInstant` have
-    the same winner (although not necessarily the same order over the candidates). Otherwise, the winners may differ:
+    For another variant of Bucklin's rule, cf. :class:`RuleBucklinByRounds`.
 
-    >>> profile = Profile(ballots=['a > b > c > d', 'b > a ~ d > c', 'c > a ~ d > b'],
-    ...                   weights=[3, 3, 4])
-    >>> rule_bucklin_by_rounds = RuleBucklinByRounds(profile)
-    >>> rule_bucklin_by_rounds.detailed_scores_[0]
-    {'a': Fraction(3, 10), 'b': Fraction(3, 10), 'c': Fraction(2, 5), 'd': 0}
-    >>> rule_bucklin_by_rounds.detailed_scores_[1]
-    {'a': Fraction(13, 20), 'b': Fraction(3, 5), 'c': Fraction(2, 5), 'd': Fraction(7, 20)}
-    >>> rule_bucklin_by_rounds.winner_
-    'a'
-    >>> rule_bucklin_instant = RuleBucklinInstant(profile)
-    >>> rule_bucklin_instant.scores_
-    {'a': (Fraction(3, 2), 10), 'b': (2, 6), 'c': (1, 7), 'd': (Fraction(3, 2), 7)}
-    >>> RuleBucklinInstant(profile).winner_
-    'b'
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    scorer : Scorer
+        Default: :class:`ScorerBorda` with ``absent_give_points=True``, ``absent_receive_points=None``,
+        ``unordered_give_points=True``, ``unordered_receive_points=False``.
+    default_median : object
+        The default median of a candidate when it receives no score whatsoever.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
+        >>> rule.scores_
+        {'a': (1, 3), 'b': (1, 2), 'c': (0, 3)}
+        >>> rule.winner_
+        'a'
+
+    With the default settings, and when preferences are strict total orders, :class:`RuleBucklinByRounds` and
+    :class:`RuleBucklinInstant` have the same winner (although not necessarily the same order over the candidates).
+    Otherwise, the winners may differ:
+
+        >>> profile = Profile(ballots=['a > b > c > d', 'b > a ~ d > c', 'c > a ~ d > b'],
+        ...                   weights=[3, 3, 4])
+        >>> rule_bucklin_by_rounds = RuleBucklinByRounds(profile)
+        >>> rule_bucklin_by_rounds.detailed_scores_[0]
+        {'a': Fraction(3, 10), 'b': Fraction(3, 10), 'c': Fraction(2, 5), 'd': 0}
+        >>> rule_bucklin_by_rounds.detailed_scores_[1]
+        {'a': Fraction(13, 20), 'b': Fraction(3, 5), 'c': Fraction(2, 5), 'd': Fraction(7, 20)}
+        >>> rule_bucklin_by_rounds.winner_
+        'a'
+        >>> rule_bucklin_instant = RuleBucklinInstant(profile)
+        >>> rule_bucklin_instant.scores_
+        {'a': (Fraction(3, 2), 10), 'b': (2, 6), 'c': (1, 7), 'd': (Fraction(3, 2), 7)}
+        >>> RuleBucklinInstant(profile).winner_
+        'b'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None, default_median: object = 0,
@@ -129,9 +140,7 @@ class RuleBucklinInstant(RuleScore):
 
     @cached_property
     def scores_as_floats_(self) -> NiceDict:
-        """
-
-        :return: :attr:`scores_`, converted to floats.
+        """NiceDict: Scores as floats. It is the same as :attr:`scores_`, but converted to floats.
         """
         def my_float(x):
             try:

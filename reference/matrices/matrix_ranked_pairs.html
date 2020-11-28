@@ -219,15 +219,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
-<li><p><strong>matrix_weighted_majority</strong> – a <a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>. Algorithm used to compute the weighted majority matrix <cite>W</cite>.
-Default: <a class="reference internal" href="matrix_weighted_majority.html#whalrus.MatrixWeightedMajority" title="whalrus.MatrixWeightedMajority"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code></a>.</p></li>
-<li><p><strong>tie_break</strong> – a <a class="reference internal" href="../priorities/priority.html#whalrus.Priority" title="whalrus.Priority"><code class="xref py py-class docutils literal notranslate"><span class="pre">Priority</span></code></a>. The tie-break used when two duels have the same score.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – Default: <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
+<li><p><strong>matrix_weighted_majority</strong> (<a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix"><em>Matrix</em></a>) – Algorithm used to compute the weighted majority matrix <cite>W</cite>. Default: <a class="reference internal" href="matrix_weighted_majority.html#whalrus.MatrixWeightedMajority" title="whalrus.MatrixWeightedMajority"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code></a>.</p></li>
+<li><p><strong>tie_break</strong> (<a class="reference internal" href="../priorities/priority.html#whalrus.Priority" title="whalrus.Priority"><em>Priority</em></a>) – The tie-break used when two duels have the same score.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>First, we compute a matrix <cite>W</cite> with the algorithm given in the parameter <code class="docutils literal notranslate"><span class="pre">matrix_weighted_majority</span></code>.
 The ranked pair matrix represents a graph whose vertices are the candidates. In order to build it, we consider
 all duels between two distinct candidates <cite>(c, d)</cite>, by decreasing order of the value <cite>W(c, d)</cite>. We add an edge
@@ -245,7 +245,7 @@ closure.</p>
 <p>In the example example above, the edge <cite>(b, c)</cite> is added. Then it is the edge <cite>(a, b)</cite> which, by transitive closure,
 also adds the edge <cite>(a, c)</cite>. Finally the edge <cite>(c, a)</cite> (representing the victory of <cite>c</cite> over <cite>a</cite> in the weighted
 majority matrix) should be added, but it would introduce a cycle in the graph, so it is ignored.</p>
-<p>If two duels have the same score, the tie-break is used. For example, with <code class="xref py py-attr docutils literal notranslate"><span class="pre">Priority.ASCENDING</span></code>, we add a
+<p>If two duels have the same score, the tie-break is used. For example, with <a class="reference internal" href="../priorities/priority.html#whalrus.Priority.ASCENDING" title="whalrus.Priority.ASCENDING"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Priority.ASCENDING</span></code></a>, we add a
 victory <cite>(a, …)</cite> before a victory <cite>(b, …)</cite>; and we add a victory <cite>(a, c)</cite> before a victory <cite>(a, b)</cite> (because
 <cite>b</cite> is favored over <cite>c</cite>). A very simple but illustrative example:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixRankedPairs</span><span class="p">([</span><span class="s1">&#39;a &gt; b &gt; c&#39;</span><span class="p">],</span> <span class="n">tie_break</span><span class="o">=</span><span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span><span class="p">)</span><span class="o">.</span><span class="n">edges_order_</span>
@@ -255,10 +255,10 @@ victory <cite>(a, …)</cite> before a victory <cite>(b, …)</cite>; and we add
 <dl class="py method">
 <dt id="whalrus.MatrixRankedPairs.as_array_of_floats_">
 <em class="property">property </em><code class="sig-name descname">as_array_of_floats_</code><a class="headerlink" href="#whalrus.MatrixRankedPairs.as_array_of_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix, as a numpy array.</p>
+<dd><p>The matrix, as a numpy array. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code>, converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -266,11 +266,11 @@ victory <cite>(a, …)</cite> before a victory <cite>(b, …)</cite>; and we add
 <dl class="py method">
 <dt id="whalrus.MatrixRankedPairs.edges_order_">
 <em class="property">property </em><code class="sig-name descname">edges_order_</code><a class="headerlink" href="#whalrus.MatrixRankedPairs.edges_order_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The order in which edges should be added (if possible).</p>
+<dd><p>The order in which edges should be added (if possible). It is a list of pairs of candidates.
+E.g. <code class="docutils literal notranslate"><span class="pre">[('b',</span> <span class="pre">'c'),</span> <span class="pre">('c',</span> <span class="pre">'a'),</span> <span class="pre">('a',</span> <span class="pre">'b')]</span></code>, where (‘b’, ‘c’) is the first edge to add.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list of pairs of candidates. E.g. <code class="docutils literal notranslate"><span class="pre">[('b',</span> <span class="pre">'c'),</span> <span class="pre">('c',</span> <span class="pre">'a'),</span> <span class="pre">('a',</span> <span class="pre">'b')]</span></code>, where (‘b’, ‘c’) is the
-first edge to add.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -278,10 +278,11 @@ first edge to add.</p>
 <dl class="py method">
 <dt id="whalrus.MatrixRankedPairs.matrix_weighted_majority_">
 <em class="property">property </em><code class="sig-name descname">matrix_weighted_majority_</code><a class="headerlink" href="#whalrus.MatrixRankedPairs.matrix_weighted_majority_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The weighted majority matrix (upon which the computation of the Ranked Pairs matrix is based).</p>
+<dd><p>The weighted majority matrix (upon which the computation of the Ranked Pairs matrix is based), once
+computed with the given profile).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the weighted majority matrix (once computed with the given profile).</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>

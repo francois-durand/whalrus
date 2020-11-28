@@ -189,21 +189,33 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A priority setting, i.e. a policy to break ties and indifference classes.</span>
 
-<span class="sd">    :param name: the name of this priority setting.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        The name of this priority setting.</span>
 
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    UNAMBIGUOUS</span>
+<span class="sd">        Shortcut for :class:`PriorityUnambiguous`.</span>
+<span class="sd">    ABSTAIN</span>
+<span class="sd">        Shortcut for :class:`PriorityAbstain`.</span>
+<span class="sd">    ASCENDING</span>
+<span class="sd">        Shortcut for :class:`PriorityAscending`.</span>
+<span class="sd">    DESCENDING</span>
+<span class="sd">        Shortcut for :class:`PriorityDescending`.</span>
+<span class="sd">    RANDOM</span>
+<span class="sd">        Shortcut for :class:`PriorityRandom`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; priority = Priority.ASCENDING</span>
-<span class="sd">    &gt;&gt;&gt; priority.choice({&#39;c&#39;, &#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &#39;a&#39;</span>
-<span class="sd">    &gt;&gt;&gt; priority.sort({&#39;c&#39;, &#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
-
-<span class="sd">    :cvar UNAMBIGUOUS: shortcut for :class:`PriorityUnambiguous`.</span>
-<span class="sd">    :cvar ABSTAIN: shortcut for :class:`PriorityAbstain`.</span>
-<span class="sd">    :cvar ASCENDING: shortcut for :class:`PriorityAscending`.</span>
-<span class="sd">    :cvar DESCENDING: shortcut for :class:`PriorityDescending`.</span>
-<span class="sd">    :cvar RANDOM: shortcut for :class:`PriorityRandom`.</span>
+<span class="sd">        &gt;&gt;&gt; priority = Priority.ASCENDING</span>
+<span class="sd">        &gt;&gt;&gt; priority.choice({&#39;c&#39;, &#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; priority.sort({&#39;c&#39;, &#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -216,9 +228,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compare two candidates.</span>
 
-<span class="sd">        :param c: a candidate.</span>
-<span class="sd">        :param d: another candidate.</span>
-<span class="sd">        :return: 0 if `c = d`, -1 if the tie is broken in favor of `c` over `d`, 1 otherwise.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        c : candidate</span>
+<span class="sd">        d : candidate.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            0 if `c = d`, -1 if the tie is broken in favor of `c` over `d`, 1 otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
@@ -226,12 +244,20 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Choose an element from a list, set, etc.</span>
 
-<span class="sd">        :param x: the list, set, etc where the element is to be chosen.</span>
-<span class="sd">        :param reverse: if False (default), then we choose the &quot;first&quot; or &quot;best&quot; element in this priority order. For</span>
-<span class="sd">            example, if this is the ascending priority, we choose the lowest element. If True, then we</span>
-<span class="sd">            choose the &quot;last&quot; or &quot;worst&quot; element. This is used, for example, in :class:`RuleVeto`.</span>
-<span class="sd">        :return: the chosen element (or None). When ``x`` is empty, return None. When ``x`` has one element, return</span>
-<span class="sd">            this element.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : list, set, etc.</span>
+<span class="sd">            The list, set, etc where the element is to be chosen.</span>
+<span class="sd">        reverse : bool</span>
+<span class="sd">            If False (default), then we choose the &quot;first&quot; or &quot;best&quot; element in this priority order. For example, if</span>
+<span class="sd">            this is the ascending priority, we choose the lowest element. If True, then we choose the &quot;last&quot; or &quot;worst&quot;</span>
+<span class="sd">            element. This is used, for example, in :class:`RuleVeto`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The chosen element (or None). When ``x`` is empty, return None. When ``x`` has one element, return this</span>
+<span class="sd">            element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -254,11 +280,18 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sort a list, set, etc.</span>
 
-<span class="sd">        :param x: the list, set, etc.</span>
-<span class="sd">        :param reverse: if True, we use the reverse priority order.</span>
-<span class="sd">        :return: a sorted list (or None).</span>
-
 <span class="sd">        The original list ``x`` is not modified.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : list, set, etc.</span>
+<span class="sd">        reverse : bool</span>
+<span class="sd">            If True, we use the reverse priority order.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list or None</span>
+<span class="sd">            A sorted list (or None).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -276,14 +309,21 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sort a list, set, etc. of pairs of candidates (for Ranked Pairs).</span>
 
-<span class="sd">        :param x: the list, set, etc.</span>
-<span class="sd">        :param reverse: if True, we use the reverse priority order.</span>
-<span class="sd">        :return: a sorted list (or None).</span>
-
 <span class="sd">        By default, it is in the normal priority order for the first element of the pair, and in the reverse priority</span>
 <span class="sd">        order for the second element of the pair.</span>
 
 <span class="sd">        The original list ``x`` is not modified.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : list, set, etc.</span>
+<span class="sd">        reverse : bool</span>
+<span class="sd">            If True, we use the reverse priority order.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list or None</span>
+<span class="sd">            A sorted list (or None).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -309,18 +349,21 @@
 
 
 <div class="viewcode-block" id="PriorityUnambiguous"><a class="viewcode-back" href="../../../reference/priorities/priority_unambiguous.html#whalrus.PriorityUnambiguous">[docs]</a><span class="k">class</span> <span class="nc">PriorityUnambiguous</span><span class="p">(</span><span class="n">Priority</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;When there are two elements or more, raise a ValueError.</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When there are two elements or more, raise a ValueError.</span>
 
-<span class="sd">    &gt;&gt;&gt; try:</span>
-<span class="sd">    ...     Priority.UNAMBIGUOUS.choice({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    ... except ValueError:</span>
-<span class="sd">    ...     print(&#39;Cannot choose&#39;)</span>
-<span class="sd">    Cannot choose</span>
-<span class="sd">    &gt;&gt;&gt; try:</span>
-<span class="sd">    ...     Priority.UNAMBIGUOUS.sort({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    ... except ValueError:</span>
-<span class="sd">    ...     print(&#39;Cannot sort&#39;)</span>
-<span class="sd">    Cannot sort</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; try:</span>
+<span class="sd">        ...     Priority.UNAMBIGUOUS.choice({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        ... except ValueError:</span>
+<span class="sd">        ...     print(&#39;Cannot choose&#39;)</span>
+<span class="sd">        Cannot choose</span>
+<span class="sd">        &gt;&gt;&gt; try:</span>
+<span class="sd">        ...     Priority.UNAMBIGUOUS.sort({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        ... except ValueError:</span>
+<span class="sd">        ...     print(&#39;Cannot sort&#39;)</span>
+<span class="sd">        Cannot sort</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -349,10 +392,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    When there are two elements or more, return None.</span>
 
-<span class="sd">    &gt;&gt;&gt; print(Priority.ABSTAIN.choice({&#39;a&#39;, &#39;b&#39;}))</span>
-<span class="sd">    None</span>
-<span class="sd">    &gt;&gt;&gt; print(Priority.ABSTAIN.sort({&#39;a&#39;, &#39;b&#39;}))</span>
-<span class="sd">    None</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; print(Priority.ABSTAIN.choice({&#39;a&#39;, &#39;b&#39;}))</span>
+<span class="sd">        None</span>
+<span class="sd">        &gt;&gt;&gt; print(Priority.ABSTAIN.sort({&#39;a&#39;, &#39;b&#39;}))</span>
+<span class="sd">        None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -381,12 +426,14 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ascending order (lowest is favoured).</span>
 
-<span class="sd">    &gt;&gt;&gt; Priority.ASCENDING.choice({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &#39;a&#39;</span>
-<span class="sd">    &gt;&gt;&gt; Priority.ASCENDING.sort({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    [&#39;a&#39;, &#39;b&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; Priority.ASCENDING.sort_pairs_rp({(&#39;a&#39;, &#39;b&#39;), (&#39;b&#39;, &#39;a&#39;), (&#39;a&#39;, &#39;c&#39;)})</span>
-<span class="sd">    [(&#39;a&#39;, &#39;c&#39;), (&#39;a&#39;, &#39;b&#39;), (&#39;b&#39;, &#39;a&#39;)]</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; Priority.ASCENDING.choice({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; Priority.ASCENDING.sort({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        [&#39;a&#39;, &#39;b&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; Priority.ASCENDING.sort_pairs_rp({(&#39;a&#39;, &#39;b&#39;), (&#39;b&#39;, &#39;a&#39;), (&#39;a&#39;, &#39;c&#39;)})</span>
+<span class="sd">        [(&#39;a&#39;, &#39;c&#39;), (&#39;a&#39;, &#39;b&#39;), (&#39;b&#39;, &#39;a&#39;)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -416,12 +463,14 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Descending order (highest is favoured).</span>
 
-<span class="sd">    &gt;&gt;&gt; Priority.DESCENDING.choice({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &#39;b&#39;</span>
-<span class="sd">    &gt;&gt;&gt; Priority.DESCENDING.sort({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    [&#39;b&#39;, &#39;a&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; Priority.DESCENDING.sort_pairs_rp({(&#39;a&#39;, &#39;b&#39;), (&#39;b&#39;, &#39;a&#39;), (&#39;a&#39;, &#39;c&#39;)})</span>
-<span class="sd">    [(&#39;b&#39;, &#39;a&#39;), (&#39;a&#39;, &#39;b&#39;), (&#39;a&#39;, &#39;c&#39;)]</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; Priority.DESCENDING.choice({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &#39;b&#39;</span>
+<span class="sd">        &gt;&gt;&gt; Priority.DESCENDING.sort({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        [&#39;b&#39;, &#39;a&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; Priority.DESCENDING.sort_pairs_rp({(&#39;a&#39;, &#39;b&#39;), (&#39;b&#39;, &#39;a&#39;), (&#39;a&#39;, &#39;c&#39;)})</span>
+<span class="sd">        [(&#39;b&#39;, &#39;a&#39;), (&#39;a&#39;, &#39;b&#39;), (&#39;a&#39;, &#39;c&#39;)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -448,14 +497,17 @@
 
 
 <div class="viewcode-block" id="PriorityRandom"><a class="viewcode-back" href="../../../reference/priorities/priority_random.html#whalrus.PriorityRandom">[docs]</a><span class="k">class</span> <span class="nc">PriorityRandom</span><span class="p">(</span><span class="n">Priority</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Random order.</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Random order.</span>
 
-<span class="sd">    &gt;&gt;&gt; my_choice = Priority.RANDOM.choice({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; my_choice in {&#39;a&#39;, &#39;b&#39;}</span>
-<span class="sd">    True</span>
-<span class="sd">    &gt;&gt;&gt; my_order = Priority.RANDOM.sort({&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; my_order == [&#39;a&#39;, &#39;b&#39;] or my_order == [&#39;b&#39;, &#39;a&#39;]</span>
-<span class="sd">    True</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; my_choice = Priority.RANDOM.choice({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; my_choice in {&#39;a&#39;, &#39;b&#39;}</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; my_order = Priority.RANDOM.sort({&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; my_order == [&#39;a&#39;, &#39;b&#39;] or my_order == [&#39;b&#39;, &#39;a&#39;]</span>
+<span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

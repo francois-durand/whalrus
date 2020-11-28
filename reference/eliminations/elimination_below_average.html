@@ -217,13 +217,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>strict</strong> – if True (resp. False), then eliminate the candidates whose score is strictly lower than
-(resp. lower or equal to) the average.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>strict</strong> (<em>bool</em>) – If True (resp. False), then eliminate the candidates whose score is strictly lower than (resp. lower or equal
+to) the average.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePlurality</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">gross_scores_</span>
 <span class="go">{&#39;a&#39;: 35, &#39;b&#39;: 30, &#39;c&#39;: 25, &#39;d&#39;: 10}</span>
@@ -246,13 +247,13 @@ eliminated.</p>
 <dt id="whalrus.EliminationBelowAverage.eliminated_">
 <em class="property">property </em><code class="sig-name descname">eliminated_</code><a class="headerlink" href="#whalrus.EliminationBelowAverage.eliminated_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The eliminated candidates.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
-</dd>
-</dl>
 <p>This should always be non-empty. It may contain all the candidates (for example, it is always the case
 when there was only one candidate in the election).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -260,8 +261,8 @@ when there was only one candidate in the election).</p>
 <em class="property">property </em><code class="sig-name descname">qualified_</code><a class="headerlink" href="#whalrus.EliminationBelowAverage.qualified_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The candidates that are qualified (not eliminated).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code> of candidates.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>

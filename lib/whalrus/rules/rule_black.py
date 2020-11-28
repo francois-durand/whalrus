@@ -29,30 +29,38 @@ class RuleBlack(RuleSequentialTieBreak):
     """
     Black's rule.
 
-    :param `*args`: cf. parent class.
-    :param rule_condorcet: a Rule. Used as the main victory criterion. Default: :class:`RuleCondorcet`.
-    :param rule_borda: a Rule. Used as the secondary victory criterion. Default: :class:`RuleBorda`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    rule_condorcet : Rule
+        Used as the main victory criterion. Default: :class:`RuleCondorcet`.
+    rule_borda : Rule
+        Used as the secondary victory criterion. Default: :class:`RuleBorda`.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     As a main victory criterion, the Condorcet winner is elected (even if it does not have the highest Borda score):
 
-    >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a'], weights=[3, 2])
-    >>> rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_
-    array([[0, Fraction(3, 5), Fraction(3, 5)],
-           [Fraction(2, 5), 0, 1],
-           [Fraction(2, 5), 0, 0]], dtype=object)
-    >>> rule.order_
-    [{'a'}, {'b'}, {'c'}]
+        >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a'], weights=[3, 2])
+        >>> rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_
+        array([[0, Fraction(3, 5), Fraction(3, 5)],
+               [Fraction(2, 5), 0, 1],
+               [Fraction(2, 5), 0, 0]], dtype=object)
+        >>> rule.order_
+        [{'a'}, {'b'}, {'c'}]
 
     When there is no Condorcet winner, candidates are sorted according to their Borda scores:
 
-    >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a', 'c > a > b'], weights=[3, 2, 2])
-    >>> rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_
-    array([[0, Fraction(5, 7), Fraction(3, 7)],
-           [Fraction(2, 7), 0, Fraction(5, 7)],
-           [Fraction(4, 7), Fraction(2, 7), 0]], dtype=object)
-    >>> rule.order_
-    [{'a'}, {'b'}, {'c'}]
+        >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a', 'c > a > b'], weights=[3, 2, 2])
+        >>> rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_
+        array([[0, Fraction(5, 7), Fraction(3, 7)],
+               [Fraction(2, 7), 0, Fraction(5, 7)],
+               [Fraction(4, 7), Fraction(2, 7), 0]], dtype=object)
+        >>> rule.order_
+        [{'a'}, {'b'}, {'c'}]
     """
 
     def __init__(self, *args, rule_condorcet: Rule = None, rule_borda: Rule = None, **kwargs):
@@ -66,18 +74,12 @@ class RuleBlack(RuleSequentialTieBreak):
 
     @cached_property
     def rule_condorcet_(self):
-        """
-        The Condorcet rule.
-
-        :return: the Condorcet rule (once applied to the profile).
+        """Rule: The Condorcet rule (once applied to the profile).
         """
         return self.rules_[0]
 
     @cached_property
     def rule_borda_(self):
-        """
-        The Borda rule.
-
-        :return: the Borda rule (once applied to the profile).
+        """Rule: The Borda rule (once applied to the profile).
         """
         return self.rules_[1]

@@ -25,14 +25,21 @@ class RuleKApproval(RuleScorePositional):
     """
     K-Approval
 
-    :param `*args`: cf. parent class.
-    :param k: the number of approved candidates.
-    :param `**kwargs`: cf. parent class.
-
     The ``k`` top candidates in a ballot receive 1 point, and the other candidates receive 0 point.
 
-    >>> RuleKApproval(['a > b > c', 'b > c > a'], k=2).gross_scores_
-    {'a': 1, 'b': 2, 'c': 1}
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    k : int
+        The number of approved candidates.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> RuleKApproval(['a > b > c', 'b > c > a'], k=2).gross_scores_
+        {'a': 1, 'b': 2, 'c': 1}
     """
 
     def __init__(self, *args, k: int = 1, **kwargs):

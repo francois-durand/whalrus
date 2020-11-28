@@ -29,11 +29,16 @@ class RuleScoreNumRowSum(RuleScoreNum):
     """
     Rule where the winner is the candidate having the highest row sum in some matrix.
 
-    :param `*args`: cf. parent class.
-    :param matrix: a :class:`Matrix`. The matrix upon which the scores are based.
-    :param `**kwargs`: cf. parent class.
-
     The score of a candidate is the sum of the non-diagonal elements of its row in :attr:`matrix_`.
+
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    matrix : Matrix
+        The matrix upon which the scores are based.
+    kwargs
+        Cf. parent class.
     """
 
     def __init__(self, *args, matrix: Matrix = None, **kwargs):
@@ -42,10 +47,7 @@ class RuleScoreNumRowSum(RuleScoreNum):
 
     @cached_property
     def matrix_(self):
-        """
-        The matrix.
-
-        :return: the matrix (once computed with the given profile).
+        """Matrix: The matrix (once computed with the given profile).
         """
         return self.matrix(self.profile_converted_)
 

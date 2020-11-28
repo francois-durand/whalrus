@@ -27,23 +27,30 @@ class ScorerPlurality(Scorer):
     """
     A Plurality scorer for :class:`BallotPlurality`.
 
-    :param `*args`: cf. parent class.
-    :param count_abstention: if False (default), then an abstention grants no score at all. If True, then an
-        abstention gives 0 point to each candidate (cf. below).
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    count_abstention : bool
+        If False (default), then an abstention grants no score at all. If True, then an abstention gives 0 point to
+        each candidate (cf. below).
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     Typical usage:
 
-    >>> ScorerPlurality(BallotPlurality('a'), candidates={'a', 'b', 'c'}).scores_
-    {'a': 1, 'b': 0, 'c': 0}
+        >>> ScorerPlurality(BallotPlurality('a'), candidates={'a', 'b', 'c'}).scores_
+        {'a': 1, 'b': 0, 'c': 0}
 
     Using the option ``count_abstention``:
 
-    >>> ScorerPlurality(BallotPlurality(None), candidates={'a', 'b', 'c'}).scores_
-    {}
-    >>> ScorerPlurality(BallotPlurality(None), candidates={'a', 'b', 'c'},
-    ...                 count_abstention=True).scores_
-    {'a': 0, 'b': 0, 'c': 0}
+        >>> ScorerPlurality(BallotPlurality(None), candidates={'a', 'b', 'c'}).scores_
+        {}
+        >>> ScorerPlurality(BallotPlurality(None), candidates={'a', 'b', 'c'},
+        ...                 count_abstention=True).scores_
+        {'a': 0, 'b': 0, 'c': 0}
     """
 
     def __init__(self, *args, count_abstention: bool = False, **kwargs):

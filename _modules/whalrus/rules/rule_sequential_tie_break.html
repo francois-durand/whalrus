@@ -190,26 +190,32 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A rule by sequential tie-break.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param rules: a list of rules.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    rules : list of Rule</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    The winner is determined by the first rule. If there is a tie, it is broken by the second rule. Etc. There may</span>
 <span class="sd">    still be a tie at the end: in that case, it is broken by the tie-breaking rule of this object.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleSequentialTieBreak(</span>
-<span class="sd">    ...     [&#39;a &gt; d &gt; e &gt; b &gt; c&#39;, &#39;b &gt; d &gt; e &gt; a &gt; c&#39;, &#39;c &gt; d &gt; e &gt; a &gt; b&#39;,</span>
-<span class="sd">    ...      &#39;d &gt; e &gt; b &gt; a &gt; c&#39;, &#39;e &gt; d &gt; b &gt; a &gt; c&#39;],</span>
-<span class="sd">    ...     weights=[2, 2, 2, 1, 1],</span>
-<span class="sd">    ...     rules=[RulePlurality(), RuleBorda()], tie_break=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; rule.rules_[0].gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 2, &#39;c&#39;: 2, &#39;d&#39;: 1, &#39;e&#39;: 1}</span>
-<span class="sd">    &gt;&gt;&gt; rule.rules_[1].gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 14, &#39;b&#39;: 14, &#39;c&#39;: 8, &#39;d&#39;: 25, &#39;e&#39;: 19}</span>
-<span class="sd">    &gt;&gt;&gt; rule.order_</span>
-<span class="sd">    [{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}, {&#39;d&#39;}, {&#39;e&#39;}]</span>
-<span class="sd">    &gt;&gt;&gt; rule.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleSequentialTieBreak(</span>
+<span class="sd">        ...     [&#39;a &gt; d &gt; e &gt; b &gt; c&#39;, &#39;b &gt; d &gt; e &gt; a &gt; c&#39;, &#39;c &gt; d &gt; e &gt; a &gt; b&#39;,</span>
+<span class="sd">        ...      &#39;d &gt; e &gt; b &gt; a &gt; c&#39;, &#39;e &gt; d &gt; b &gt; a &gt; c&#39;],</span>
+<span class="sd">        ...     weights=[2, 2, 2, 1, 1],</span>
+<span class="sd">        ...     rules=[RulePlurality(), RuleBorda()], tie_break=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; rule.rules_[0].gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 2, &#39;c&#39;: 2, &#39;d&#39;: 1, &#39;e&#39;: 1}</span>
+<span class="sd">        &gt;&gt;&gt; rule.rules_[1].gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 14, &#39;b&#39;: 14, &#39;c&#39;: 8, &#39;d&#39;: 25, &#39;e&#39;: 19}</span>
+<span class="sd">        &gt;&gt;&gt; rule.order_</span>
+<span class="sd">        [{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}, {&#39;d&#39;}, {&#39;e&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; rule.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">rules</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -218,10 +224,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">rules_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The rules (once applied to the profile).</span>
-
-<span class="sd">        :return: a list of :class:`Rule` objects (once applied to the profile).</span>
+        <span class="sd">&quot;&quot;&quot;list: The rules (once applied to the profile).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">rule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_converted_</span><span class="p">)</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">]</span>
 

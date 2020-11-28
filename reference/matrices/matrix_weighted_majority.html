@@ -219,27 +219,28 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
-<li><p><strong>higher_vs_lower</strong> – number of points for candidate <cite>c</cite> when it is ordered higher than candidate <cite>d</cite>.</p></li>
-<li><p><strong>lower_vs_higher</strong> – number of points for candidate <cite>c</cite> when it is ordered lower than candidate <cite>d</cite>.</p></li>
-<li><p><strong>indifference</strong> – number of points for candidate <cite>c</cite> when it is ordered and tied with candidate <cite>d</cite>.</p></li>
-<li><p><strong>ordered_vs_unordered</strong> – number of points for candidate <cite>c</cite> when it is ordered and <cite>d</cite> is unordered.</p></li>
-<li><p><strong>unordered_vs_ordered</strong> – number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is ordered.</p></li>
-<li><p><strong>unordered_vs_unordered</strong> – number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is unordered.</p></li>
-<li><p><strong>ordered_vs_absent</strong> – number of points for candidate <cite>c</cite> when it is ordered and <cite>d</cite> is absent.</p></li>
-<li><p><strong>absent_vs_ordered</strong> – number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is ordered.</p></li>
-<li><p><strong>unordered_vs_absent</strong> – number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is absent.</p></li>
-<li><p><strong>absent_vs_unordered</strong> – number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is unordered.</p></li>
-<li><p><strong>absent_vs_absent</strong> – number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is absent.</p></li>
-<li><p><strong>diagonal_score</strong> – value of the diagonal coefficients.</p></li>
-<li><p><strong>default_score</strong> – default score in the matrix in case of division by 0 (except for the diagonal coefficients).</p></li>
-<li><p><strong>antisymmetric</strong> – if True, then an antisymmetric version of the matrix is computed (by subtracting the
-transposed matrix at the end of the computation).</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – Default: <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
+<li><p><strong>higher_vs_lower</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is ordered higher than candidate <cite>d</cite>.</p></li>
+<li><p><strong>lower_vs_higher</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is ordered lower than candidate <cite>d</cite>.</p></li>
+<li><p><strong>indifference</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is ordered and tied with candidate <cite>d</cite>.</p></li>
+<li><p><strong>ordered_vs_unordered</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is ordered and <cite>d</cite> is unordered.</p></li>
+<li><p><strong>unordered_vs_ordered</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is ordered.</p></li>
+<li><p><strong>unordered_vs_unordered</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is unordered.</p></li>
+<li><p><strong>ordered_vs_absent</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is ordered and <cite>d</cite> is absent.</p></li>
+<li><p><strong>absent_vs_ordered</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is ordered.</p></li>
+<li><p><strong>unordered_vs_absent</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is unordered and <cite>d</cite> is absent.</p></li>
+<li><p><strong>absent_vs_unordered</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is unordered.</p></li>
+<li><p><strong>absent_vs_absent</strong> (<em>Number</em><em> or </em><em>None</em>) – Number of points for candidate <cite>c</cite> when it is absent and <cite>d</cite> is absent.</p></li>
+<li><p><strong>diagonal_score</strong> (<em>Number</em>) – Value of the diagonal coefficients.</p></li>
+<li><p><strong>default_score</strong> (<em>Number</em>) – Default score in the matrix in case of division by 0 (except for the diagonal coefficients).</p></li>
+<li><p><strong>antisymmetric</strong> (<em>bool</em>) – If True, then an antisymmetric version of the matrix is computed (by subtracting the transposed matrix at the
+end of the computation).</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>In the most general syntax, firstly, you define the matrix computation algorithm:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span> <span class="o">=</span> <span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">diagonal_score</span><span class="o">=.</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
@@ -304,11 +305,11 @@ counted in the average at all):</p>
 <dl class="py method">
 <dt id="whalrus.MatrixWeightedMajority.as_array_">
 <em class="property">property </em><code class="sig-name descname">as_array_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.as_array_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix, as a numpy array.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a numpy array. Each row and each column corresponds to a candidate (in the order of
+<dd><p>The matrix, as a numpy array. Each row and each column corresponds to a candidate (in the order of
 <a class="reference internal" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="whalrus.MatrixWeightedMajority.candidates_as_list_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_as_list_</span></code></a>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -316,10 +317,10 @@ counted in the average at all):</p>
 <dl class="py method">
 <dt id="whalrus.MatrixWeightedMajority.as_array_of_floats_">
 <em class="property">property </em><code class="sig-name descname">as_array_of_floats_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.as_array_of_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix, as a numpy array.</p>
+<dd><p>The matrix, as a numpy array. It is the same as <a class="reference internal" href="#whalrus.MatrixWeightedMajority.as_array_" title="whalrus.MatrixWeightedMajority.as_array_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code></a>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#whalrus.MatrixWeightedMajority.as_array_" title="whalrus.MatrixWeightedMajority.as_array_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code></a>, converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -327,10 +328,10 @@ counted in the average at all):</p>
 <dl class="py method">
 <dt id="whalrus.MatrixWeightedMajority.candidates_as_list_">
 <em class="property">property </em><code class="sig-name descname">candidates_as_list_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The list of candidates.</p>
+<dd><p>The list of candidates. Candidates are sorted if possible.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list. Candidates are sorted if possible.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,10 +339,11 @@ counted in the average at all):</p>
 <dl class="py method">
 <dt id="whalrus.MatrixWeightedMajority.candidates_indexes_">
 <em class="property">property </em><code class="sig-name descname">candidates_indexes_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.candidates_indexes_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The candidates as a dictionary.</p>
+<dd><p>The candidates as a dictionary. To each candidate, it associates its index in
+<a class="reference internal" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="whalrus.MatrixWeightedMajority.candidates_as_list_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_as_list_</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a dictionary. To each candidate, it associates its index in <a class="reference internal" href="#whalrus.MatrixWeightedMajority.candidates_as_list_" title="whalrus.MatrixWeightedMajority.candidates_as_list_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_as_list_</span></code></a>.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -349,30 +351,27 @@ counted in the average at all):</p>
 <dl class="py method">
 <dt id="whalrus.MatrixWeightedMajority.gross_">
 <em class="property">property </em><code class="sig-name descname">gross_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.gross_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The “gross” matrix.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a NiceDict. Keys are pairs of candidates. Each coefficient is the weighted number of points (used as
-numerator in the average).</p>
-</dd>
-</dl>
+<dd><p>The “gross” matrix. Keys are pairs of candidates. Each coefficient is the weighted number of
+points (used as numerator in the average).</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whalrus</span> <span class="kn">import</span> <span class="n">MatrixWeightedMajority</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;a ~ b&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">gross_</span>
 <span class="go">{(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): Fraction(5, 2), (&#39;b&#39;, &#39;a&#39;): Fraction(1, 2), (&#39;b&#39;, &#39;b&#39;): 0}</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.MatrixWeightedMajority.weights_">
 <em class="property">property </em><code class="sig-name descname">weights_</code><a class="headerlink" href="#whalrus.MatrixWeightedMajority.weights_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix of weights.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a NiceDict. Keys are pairs of candidates. Each coefficient is the total weight (used as
+<dd><p>The matrix of weights. Keys are pairs of candidates. Each coefficient is the total weight (used as
 denominator in the average).</p>
-</dd>
-</dl>
+<p class="rubric">Examples</p>
 <p>In most usual cases, all non-diagonal coefficients are equal, and are equal to the total weight of all voters:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whalrus</span> <span class="kn">import</span> <span class="n">MatrixWeightedMajority</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">MatrixWeightedMajority</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="s1">&#39;a ~ b&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">weights_</span>
@@ -386,6 +385,11 @@ denominator in the average).</p>
 <span class="go">{(&#39;a&#39;, &#39;a&#39;): 0, (&#39;a&#39;, &#39;b&#39;): 2, (&#39;b&#39;, &#39;a&#39;): 2, (&#39;b&#39;, &#39;b&#39;): 0}</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

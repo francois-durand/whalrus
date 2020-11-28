@@ -189,16 +189,22 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A ballot in a mono-nominal context (typically plurality or veto).</span>
 
-<span class="sd">    :param b: the candidate, or None for an abstention.</span>
-<span class="sd">    :param candidates: the candidates that were available at the moment when the voter cast her ballot.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    b : candidate or None</span>
+<span class="sd">        None stands for abstention.</span>
+<span class="sd">    candidates : set</span>
+<span class="sd">        The candidates that were available at the moment when the voter cast her ballot.</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; print(ballot)</span>
-<span class="sd">    a</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; print(ballot)</span>
+<span class="sd">        a</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotOneName(None, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; print(ballot)</span>
-<span class="sd">    None</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotOneName(None, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; print(ballot)</span>
+<span class="sd">        None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Core features: ballot and candidates</span>
@@ -223,16 +229,16 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_in_b</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The candidate that is explicitly mentioned in the ballot.</span>
+        <span class="sd">&quot;&quot;&quot;NiceSet: The candidate that is explicitly mentioned in the ballot.</span>
 
-<span class="sd">        :return: a :class:`NiceSet` containing the only candidate contained in the ballot (or an empty set in case</span>
-<span class="sd">            of abstention).</span>
+<span class="sd">        This is a singleton with the only candidate contained in the ballot (or an empty set in case of abstention).</span>
 
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).candidates_in_b</span>
-<span class="sd">        {&#39;a&#39;}</span>
-<span class="sd">        &gt;&gt;&gt; BallotOneName(None, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).candidates_in_b</span>
-<span class="sd">        {}</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).candidates_in_b</span>
+<span class="sd">            {&#39;a&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(None, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).candidates_in_b</span>
+<span class="sd">            {}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NiceSet</span><span class="p">()</span>
@@ -241,13 +247,13 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_not_in_b</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.</span>
+        <span class="sd">&quot;&quot;&quot;NiceSet: The candidates that were available at the moment of the vote, but are not explicitly mentioned in</span>
+<span class="sd">        the ballot.</span>
 
-<span class="sd">        :return: a :class:`NiceSet` of candidates.</span>
-
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).candidates_not_in_b</span>
-<span class="sd">        {&#39;b&#39;, &#39;c&#39;}</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).candidates_not_in_b</span>
+<span class="sd">            {&#39;b&#39;, &#39;c&#39;}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">NiceSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span> <span class="o">-</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">candidate</span><span class="p">})</span>
 
@@ -276,17 +282,26 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restrict the ballot to less candidates.</span>
 
-<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
-<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
-<span class="sd">        :param kwargs:</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        candidates : set of candidates</span>
+<span class="sd">            It can be any set of candidates, not necessarily a subset of ``self.candidates``).</span>
+<span class="sd">            Default: ``self.candidates``.</span>
+<span class="sd">        kwargs</span>
 <span class="sd">            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
-<span class="sd">        :return: the same ballot, &quot;restricted&quot; to the candidates given.</span>
 
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).restrict(candidates={&#39;b&#39;})</span>
-<span class="sd">        BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;})</span>
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).restrict(candidates={&#39;b&#39;, &#39;c&#39;},</span>
-<span class="sd">        ...                                                         priority=Priority.ASCENDING)</span>
-<span class="sd">        BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        BallotOneName</span>
+<span class="sd">            The same ballot, &quot;restricted&quot; to the candidates given.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).restrict(candidates={&#39;b&#39;})</span>
+<span class="sd">            BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;})</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).restrict(candidates={&#39;b&#39;, &#39;c&#39;},</span>
+<span class="sd">            ...                                                         priority=Priority.ASCENDING)</span>
+<span class="sd">            BallotOneName(&#39;b&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyUnresolvedReferences</span>
         <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>
@@ -302,12 +317,19 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Auxiliary function of `restrict`.</span>
 
-<span class="sd">        :param restricted_candidates: a subset of `self.candidates`.</span>
-<span class="sd">        :param priority: a :class:`Priority`.</span>
-<span class="sd">        :return: the restricted ballot.</span>
-
 <span class="sd">        Here, it is assumed that `self.candidate` is not in `restricted_candidates`, hence there is really a decision</span>
 <span class="sd">        to make.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        restricted_candidates : NiceSet</span>
+<span class="sd">            A subset of `self.candidates`.</span>
+<span class="sd">        priority : Priority</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        BallotOneName</span>
+<span class="sd">            The restricted ballot.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">priority</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">restricted_candidates</span><span class="p">),</span> <span class="n">candidates</span><span class="o">=</span><span class="n">restricted_candidates</span><span class="p">)</span>
 
@@ -318,19 +340,27 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The first (= most liked) candidate.</span>
 
-<span class="sd">        :param candidates: a set of candidates.</span>
-<span class="sd">        :param kwargs:</span>
-<span class="sd">            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
-<span class="sd">        :return: the first (= most liked) candidate.</span>
-
 <span class="sd">        In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated</span>
 <span class="sd">        is the most liked.</span>
 
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first()</span>
-<span class="sd">        &#39;a&#39;</span>
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first(candidates={&#39;b&#39;, &#39;c&#39;},</span>
-<span class="sd">        ...                                                      priority=Priority.ASCENDING)</span>
-<span class="sd">        &#39;b&#39;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        candidates : set of candidates</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        candidate</span>
+<span class="sd">            The first (= most liked) candidate.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first()</span>
+<span class="sd">            &#39;a&#39;</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first(candidates={&#39;b&#39;, &#39;c&#39;},</span>
+<span class="sd">            ...                                                      priority=Priority.ASCENDING)</span>
+<span class="sd">            &#39;b&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyUnresolvedReferences</span>
         <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>
@@ -343,18 +373,26 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The last (= most disliked) candidate.</span>
 
-<span class="sd">        :param candidates: a set of candidates.</span>
-<span class="sd">        :param kwargs:</span>
-<span class="sd">            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
-<span class="sd">        :return: the last (= most disliked) candidate.</span>
-
 <span class="sd">        In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated</span>
 <span class="sd">        is the most liked.</span>
 
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).last()</span>
-<span class="sd">        &#39;b&#39;</span>
-<span class="sd">        &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last(priority=Priority.ASCENDING)</span>
-<span class="sd">        &#39;c&#39;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        candidates : set of candidates</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        candidate</span>
+<span class="sd">            The last (= most disliked) candidate.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).last()</span>
+<span class="sd">            &#39;b&#39;</span>
+<span class="sd">            &gt;&gt;&gt; BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last(priority=Priority.ASCENDING)</span>
+<span class="sd">            &#39;c&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyUnresolvedReferences</span>
         <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>

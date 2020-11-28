@@ -188,32 +188,37 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scale derived from a set.</span>
 
-<span class="sd">    :param levels: a set of comparable objects. It is recommended that they are also hashable.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    levels : set</span>
+<span class="sd">        A set of comparable objects. It is recommended that they are also hashable.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; scale = ScaleFromSet({-1, 0, 2})</span>
+<span class="sd">        &gt;&gt;&gt; scale = ScaleFromSet({-1, 0, 2})</span>
 
 <span class="sd">    A more complex example:</span>
 
-<span class="sd">    &gt;&gt;&gt; class Appreciation:</span>
-<span class="sd">    ...     VALUES = {&#39;Excellent&#39;: 2, &#39;Good&#39;: 1, &#39;Medium&#39;: 0}</span>
-<span class="sd">    ...     def __init__(self, x):</span>
-<span class="sd">    ...         self.x = x</span>
-<span class="sd">    ...     def __repr__(self):</span>
-<span class="sd">    ...         return &#39;Appreciation(%r)&#39; % self.x</span>
-<span class="sd">    ...     def __hash__(self):</span>
-<span class="sd">    ...         return hash(self.x)</span>
-<span class="sd">    ...     def __lt__(self, other):</span>
-<span class="sd">    ...         return Appreciation.VALUES[self.x] &lt; Appreciation.VALUES[other.x]</span>
-<span class="sd">    &gt;&gt;&gt; scale = ScaleFromSet({Appreciation(&#39;Excellent&#39;), Appreciation(&#39;Good&#39;),</span>
-<span class="sd">    ...                      Appreciation(&#39;Medium&#39;)})</span>
-<span class="sd">    &gt;&gt;&gt; scale.lt(Appreciation(&#39;Medium&#39;), Appreciation(&#39;Good&#39;))</span>
-<span class="sd">    True</span>
-<span class="sd">    &gt;&gt;&gt; scale.low</span>
-<span class="sd">    Appreciation(&#39;Medium&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; scale.high</span>
-<span class="sd">    Appreciation(&#39;Excellent&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; class Appreciation:</span>
+<span class="sd">        ...     VALUES = {&#39;Excellent&#39;: 2, &#39;Good&#39;: 1, &#39;Medium&#39;: 0}</span>
+<span class="sd">        ...     def __init__(self, x):</span>
+<span class="sd">        ...         self.x = x</span>
+<span class="sd">        ...     def __repr__(self):</span>
+<span class="sd">        ...         return &#39;Appreciation(%r)&#39; % self.x</span>
+<span class="sd">        ...     def __hash__(self):</span>
+<span class="sd">        ...         return hash(self.x)</span>
+<span class="sd">        ...     def __lt__(self, other):</span>
+<span class="sd">        ...         return Appreciation.VALUES[self.x] &lt; Appreciation.VALUES[other.x]</span>
+<span class="sd">        &gt;&gt;&gt; scale = ScaleFromSet({Appreciation(&#39;Excellent&#39;), Appreciation(&#39;Good&#39;),</span>
+<span class="sd">        ...                      Appreciation(&#39;Medium&#39;)})</span>
+<span class="sd">        &gt;&gt;&gt; scale.lt(Appreciation(&#39;Medium&#39;), Appreciation(&#39;Good&#39;))</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; scale.low</span>
+<span class="sd">        Appreciation(&#39;Medium&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; scale.high</span>
+<span class="sd">        Appreciation(&#39;Excellent&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="p">:</span> <span class="nb">set</span><span class="p">):</span>
@@ -222,9 +227,11 @@
     <span class="c1"># noinspection PyMethodMayBeStatic</span>
 <div class="viewcode-block" id="ScaleFromSet.lt"><a class="viewcode-back" href="../../../reference/scales/scale_from_set.html#whalrus.ScaleFromSet.lt">[docs]</a>    <span class="k">def</span> <span class="nf">lt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">another</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; scale = ScaleFromSet({-1, 0, 2})</span>
-<span class="sd">        &gt;&gt;&gt; scale.lt(0, 2)</span>
-<span class="sd">        True</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; scale = ScaleFromSet({-1, 0, 2})</span>
+<span class="sd">            &gt;&gt;&gt; scale.lt(0, 2)</span>
+<span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">one</span> <span class="o">&lt;</span> <span class="n">another</span></div>
 

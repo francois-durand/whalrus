@@ -191,69 +191,75 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A profile of ballots.</span>
 
-<span class="sd">    :param ballots: an iterable. Typically, it is a list, but it can also be a :class:`Profile`. Its elements must</span>
-<span class="sd">        be :class:`Ballot` objects or, more generally, inputs that can be interpreted by</span>
-<span class="sd">        :class:`ConverterBallotGeneral`.</span>
-<span class="sd">    :param weights: a list of numbers representing the weights of the ballots. Default: if :attr:`ballots` is a Profile,</span>
-<span class="sd">        then use the weights of this profile; otherwise, all weights are 1.</span>
-<span class="sd">    :param voters: a list representing the voters corresponding to the ballots. Default: if :attr:`ballots` is a</span>
-<span class="sd">        Profile, then use the voters of this profile; otherwise, all voters are None.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ballots : iterable</span>
+<span class="sd">        Typically, it is a list, but it can also be a :class:`Profile`. Its elements must be :class:`Ballot` objects</span>
+<span class="sd">        or, more generally, inputs that can be interpreted by :class:`ConverterBallotGeneral`.</span>
+<span class="sd">    weights : list</span>
+<span class="sd">        A list of numbers representing the weights of the ballots. Default: if :attr:`ballots` is a Profile, then use</span>
+<span class="sd">        the weights of this profile; otherwise, all weights are 1.</span>
+<span class="sd">    voters : list</span>
+<span class="sd">        A list representing the voters corresponding to the ballots. Default: if :attr:`ballots` is a Profile, then use</span>
+<span class="sd">        the voters of this profile; otherwise, all voters are None.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Most general syntax:</span>
 
-<span class="sd">    &gt;&gt;&gt; profile = Profile(</span>
-<span class="sd">    ...     ballots=[BallotOrder(&#39;a &gt; b ~ c&#39;), BallotOrder(&#39;a ~ b &gt; c&#39;)],</span>
-<span class="sd">    ...     weights=[2, 1],</span>
-<span class="sd">    ...     voters=[&#39;Alice&#39;, &#39;Bob&#39;]</span>
-<span class="sd">    ... )</span>
-<span class="sd">    &gt;&gt;&gt; print(profile)</span>
-<span class="sd">    Alice (2): a &gt; b ~ c</span>
-<span class="sd">    Bob (1): a ~ b &gt; c</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(</span>
+<span class="sd">        ...     ballots=[BallotOrder(&#39;a &gt; b ~ c&#39;), BallotOrder(&#39;a ~ b &gt; c&#39;)],</span>
+<span class="sd">        ...     weights=[2, 1],</span>
+<span class="sd">        ...     voters=[&#39;Alice&#39;, &#39;Bob&#39;]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        Alice (2): a &gt; b ~ c</span>
+<span class="sd">        Bob (1): a ~ b &gt; c</span>
 
 <span class="sd">    In the following example, each ballot illustrates a different syntax:</span>
 
-<span class="sd">    &gt;&gt;&gt; profile = Profile([</span>
-<span class="sd">    ...     [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;],</span>
-<span class="sd">    ...     (&#39;b&#39;, &#39;c&#39;, &#39;a&#39;),</span>
-<span class="sd">    ...     &#39;c &gt; a &gt; b&#39;,</span>
-<span class="sd">    ... ])</span>
-<span class="sd">    &gt;&gt;&gt; print(profile)</span>
-<span class="sd">    a &gt; b &gt; c</span>
-<span class="sd">    b &gt; c &gt; a</span>
-<span class="sd">    c &gt; a &gt; b</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile([</span>
+<span class="sd">        ...     [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;],</span>
+<span class="sd">        ...     (&#39;b&#39;, &#39;c&#39;, &#39;a&#39;),</span>
+<span class="sd">        ...     &#39;c &gt; a &gt; b&#39;,</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        a &gt; b &gt; c</span>
+<span class="sd">        b &gt; c &gt; a</span>
+<span class="sd">        c &gt; a &gt; b</span>
 
 <span class="sd">    Profiles have a list-like behavior in the sense that they implement ``__len__``, ``__getitem__``, ``__setitem__``</span>
 <span class="sd">    and ``__delitem__``:</span>
 
-<span class="sd">    &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;, &#39;a ~ b&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; len(profile)</span>
-<span class="sd">    3</span>
-<span class="sd">    &gt;&gt;&gt; profile[0]</span>
-<span class="sd">    BallotOrder([&#39;a&#39;, &#39;b&#39;], candidates={&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; profile[0] = &#39;a ~ b&#39;</span>
-<span class="sd">    &gt;&gt;&gt; print(profile)</span>
-<span class="sd">    a ~ b</span>
-<span class="sd">    b &gt; a</span>
-<span class="sd">    a ~ b</span>
-<span class="sd">    &gt;&gt;&gt; del profile[0]</span>
-<span class="sd">    &gt;&gt;&gt; print(profile)</span>
-<span class="sd">    b &gt; a</span>
-<span class="sd">    a ~ b</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;, &#39;a ~ b&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; len(profile)</span>
+<span class="sd">        3</span>
+<span class="sd">        &gt;&gt;&gt; profile[0]</span>
+<span class="sd">        BallotOrder([&#39;a&#39;, &#39;b&#39;], candidates={&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; profile[0] = &#39;a ~ b&#39;</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        a ~ b</span>
+<span class="sd">        b &gt; a</span>
+<span class="sd">        a ~ b</span>
+<span class="sd">        &gt;&gt;&gt; del profile[0]</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        b &gt; a</span>
+<span class="sd">        a ~ b</span>
 
 <span class="sd">    Profiles can be concatenated:</span>
 
-<span class="sd">    &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;]) + [&#39;a ~ b&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; print(profile)</span>
-<span class="sd">    a &gt; b</span>
-<span class="sd">    b &gt; a</span>
-<span class="sd">    a ~ b</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;]) + [&#39;a ~ b&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        a &gt; b</span>
+<span class="sd">        b &gt; a</span>
+<span class="sd">        a ~ b</span>
 
 <span class="sd">    Profiles can be multiplied by a scalar, which multiplies the weights:</span>
 
-<span class="sd">    &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;]) * 3</span>
-<span class="sd">    &gt;&gt;&gt; print(profile)</span>
-<span class="sd">    (3): a &gt; b</span>
-<span class="sd">    (3): b &gt; a</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;]) * 3</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        (3): a &gt; b</span>
+<span class="sd">        (3): b &gt; a</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ballots</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="s1">&#39;Profile&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">voters</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -277,66 +283,61 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ballots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The ballots.</span>
+        <span class="sd">&quot;&quot;&quot;list of Ballot: The ballots.</span>
 
-<span class="sd">        Returns: a list of :class:`Ballot` objects.</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.ballots</span>
-<span class="sd">        [BallotOrder([&#39;a&#39;, &#39;b&#39;], candidates={&#39;a&#39;, &#39;b&#39;}), BallotOrder([&#39;b&#39;, &#39;a&#39;], candidates={&#39;a&#39;, &#39;b&#39;})]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.ballots</span>
+<span class="sd">            [BallotOrder([&#39;a&#39;, &#39;b&#39;], candidates={&#39;a&#39;, &#39;b&#39;}), BallotOrder([&#39;b&#39;, &#39;a&#39;], candidates={&#39;a&#39;, &#39;b&#39;})]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ballots</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The weights.</span>
+        <span class="sd">&quot;&quot;&quot;list of Number: The weights.</span>
 
-<span class="sd">        Returns: a list of numbers.</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.weights</span>
-<span class="sd">        [1, 1]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.weights</span>
+<span class="sd">            [1, 1]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">voters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The voters.</span>
+        <span class="sd">&quot;&quot;&quot;list: The voters.</span>
 
-<span class="sd">        Returns: a list of voters.</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], voters=[&#39;Alice&#39;, &#39;Bob&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.voters</span>
-<span class="sd">        [&#39;Alice&#39;, &#39;Bob&#39;]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;], voters=[&#39;Alice&#39;, &#39;Bob&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.voters</span>
+<span class="sd">            [&#39;Alice&#39;, &#39;Bob&#39;]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voters</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">has_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Presence of non-trivial weights.</span>
+        <span class="sd">&quot;&quot;&quot;bool: Presence of non-trivial weights. True iff at least one weight is not 1.</span>
 
-<span class="sd">        :return: True iff at least one weight is not 1.</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.has_weights</span>
-<span class="sd">        False</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.has_weights</span>
+<span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">weight</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">weight</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">])</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">has_voters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Presence of explicit voters.</span>
+        <span class="sd">&quot;&quot;&quot;bool: Presence of explicit voters. True iff at least one voter is not None.</span>
 
-<span class="sd">        :return: True iff at least one voter is not None.</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.has_voters</span>
-<span class="sd">        False</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.has_voters</span>
+<span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">voter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">voter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voters</span><span class="p">])</span>
 
@@ -367,16 +368,22 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Append a ballot to the profile.</span>
 
-<span class="sd">        :param ballot: a ballot or, more generally, an input that can be interpreted by</span>
-<span class="sd">            :class:`ConverterBallotGeneral`.</span>
-<span class="sd">        :param weight: the weight of the ballot.</span>
-<span class="sd">        :param voter: the voter.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ballot : object</span>
+<span class="sd">            A ballot or, more generally, an input that can be interpreted by :class:`ConverterBallotGeneral`.</span>
+<span class="sd">        weight : Number</span>
+<span class="sd">            The weight of the ballot.</span>
+<span class="sd">        voter : object</span>
+<span class="sd">            The voter.</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.append(&#39;b &gt; a&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; print(profile)</span>
-<span class="sd">        a &gt; b</span>
-<span class="sd">        b &gt; a</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.append(&#39;b &gt; a&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(profile)</span>
+<span class="sd">            a &gt; b</span>
+<span class="sd">            b &gt; a</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ballots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ConverterBallotGeneral</span><span class="p">()(</span><span class="n">ballot</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">convert_number</span><span class="p">(</span><span class="n">weight</span><span class="p">))</span>
@@ -387,18 +394,23 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove a ballot from the profile.</span>
 
-<span class="sd">        :param ballot: the ballot or, more generally, an input that can be interpreted by</span>
-<span class="sd">            :class:`ConverterBallotGeneral`.</span>
-<span class="sd">        :param voter: the voter.</span>
-
 <span class="sd">        If only the ballot is specified, remove the first matching ballot in the profile.</span>
 <span class="sd">        If only the voter is specified, remove the first ballot whose voter matches the given voter.</span>
 <span class="sd">        If both are specified, remove the first ballot matching both descriptions.</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile.remove(&#39;b &gt; a&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; print(profile)</span>
-<span class="sd">        a &gt; b</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ballot : object</span>
+<span class="sd">            The ballot or, more generally, an input that can be interpreted by :class:`ConverterBallotGeneral`.</span>
+<span class="sd">        voter : object</span>
+<span class="sd">            The voter.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile.remove(&#39;b &gt; a&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(profile)</span>
+<span class="sd">            a &gt; b</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">ballot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">voters</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">voter</span><span class="p">)</span>
@@ -413,45 +425,54 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Length.</span>
+        <span class="sd">&quot;&quot;&quot;int: Length. The number of ballots in the profile.</span>
 
-<span class="sd">        :return: the number of ballots in the profile.</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; len(profile)</span>
-<span class="sd">        3</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; len(profile)</span>
+<span class="sd">            3</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ballots</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ballot</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get.</span>
+        <span class="sd">&quot;&quot;&quot;Get.</span>
 
-<span class="sd">        :param item: an integer.</span>
-<span class="sd">        :return: the corresponding ballot (this function does not return the weight or the voter).</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        item : int</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile[0]</span>
-<span class="sd">        BallotOrder([&#39;a&#39;, &#39;b&#39;], candidates={&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Ballot</span>
+<span class="sd">            The corresponding ballot (this function does not return the weight or the voter).</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile[0]</span>
+<span class="sd">            BallotOrder([&#39;a&#39;, &#39;b&#39;], candidates={&#39;a&#39;, &#39;b&#39;})</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ballots</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set.</span>
-
-<span class="sd">        :param key: an integer.</span>
-<span class="sd">        :param value: the new ballot or, more generally, an input that is understandable by a</span>
-<span class="sd">            :class:`ConverterBallotGeneral`.</span>
+        <span class="sd">&quot;&quot;&quot;Set.</span>
 
 <span class="sd">        Set the corresponding ballot (it does not change the weight or the voter).</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile[0] = &#39;a ~ b&#39;</span>
-<span class="sd">        &gt;&gt;&gt; print(profile)</span>
-<span class="sd">        a ~ b</span>
-<span class="sd">        b &gt; a</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : int</span>
+<span class="sd">        value : object</span>
+<span class="sd">            The new ballot or, more generally, an input that is understandable by a :class:`ConverterBallotGeneral`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile[0] = &#39;a ~ b&#39;</span>
+<span class="sd">            &gt;&gt;&gt; print(profile)</span>
+<span class="sd">            a ~ b</span>
+<span class="sd">            b &gt; a</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ballots</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ConverterBallotGeneral</span><span class="p">()(</span><span class="n">value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
@@ -460,14 +481,18 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete.</span>
 
-<span class="sd">        :param key: an integer.</span>
-
 <span class="sd">        Delete the corresponding ballot.</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; del profile[0]</span>
-<span class="sd">        &gt;&gt;&gt; print(profile)</span>
-<span class="sd">        b &gt; a</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : int</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; del profile[0]</span>
+<span class="sd">            &gt;&gt;&gt; print(profile)</span>
+<span class="sd">            b &gt; a</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ballots</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -479,13 +504,18 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Items of the profile.</span>
 
-<span class="sd">        Returns: a zip of triples (ballot, weight, voter).</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Iterator</span>
+<span class="sd">            A zip of triples (ballot, weight, voter).</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; for ballot, weight, voter in profile.items():</span>
-<span class="sd">        ...     print(&#39;Ballot %s, weight %s, voter %s.&#39; % (ballot, weight, voter))</span>
-<span class="sd">        Ballot a &gt; b, weight 1, voter None.</span>
-<span class="sd">        Ballot b &gt; a, weight 1, voter None.</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; for ballot, weight, voter in profile.items():</span>
+<span class="sd">            ...     print(&#39;Ballot %s, weight %s, voter %s.&#39; % (ballot, weight, voter))</span>
+<span class="sd">            Ballot a &gt; b, weight 1, voter None.</span>
+<span class="sd">            Ballot b &gt; a, weight 1, voter None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ballots</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">voters</span><span class="p">)</span></div>
 
@@ -496,15 +526,24 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Concatenate with another profile.</span>
 
-<span class="sd">        :param other: another Profile (or a list of ballots).</span>
-<span class="sd">        :return: this profile, followed by the other profile.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : Profile or list</span>
+<span class="sd">            Another Profile (or a list of ballots).</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; profile2 = Profile([&#39;a ~ b&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; print(profile + profile2)</span>
-<span class="sd">        a &gt; b</span>
-<span class="sd">        b &gt; a</span>
-<span class="sd">        a ~ b</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Profile</span>
+<span class="sd">            This profile, followed by the other profile.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; profile2 = Profile([&#39;a ~ b&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; print(profile + profile2)</span>
+<span class="sd">            a &gt; b</span>
+<span class="sd">            b &gt; a</span>
+<span class="sd">            a ~ b</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">other</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -515,13 +554,21 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Multiply the weights.</span>
 
-<span class="sd">        :param other: a number.</span>
-<span class="sd">        :return: this profile, with weights multiplied by the number.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : Number</span>
 
-<span class="sd">        &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; print(profile * 3)</span>
-<span class="sd">        (3): a &gt; b</span>
-<span class="sd">        (3): b &gt; a</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Profile</span>
+<span class="sd">            This profile, with weights multiplied by the number.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile([&#39;a &gt; b&#39;, &#39;b &gt; a&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; print(profile * 3)</span>
+<span class="sd">            (3): a &gt; b</span>
+<span class="sd">            (3): b &gt; a</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">other</span> <span class="o">=</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">ballots</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ballots</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="n">convert_number</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">other</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">],</span>

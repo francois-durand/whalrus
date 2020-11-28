@@ -233,10 +233,11 @@ what the ballot clearly indicated.</p>
 <dl class="py method">
 <dt id="whalrus.Ballot.candidates">
 <em class="property">property </em><code class="sig-name descname">candidates</code><a class="headerlink" href="#whalrus.Ballot.candidates" title="Permalink to this definition">¶</a></dt>
-<dd><p>The candidates that were available at the moment when the voter cast her ballot.</p>
+<dd><p>The candidates that were available at the moment when the voter cast her ballot. As a consequence,
+candidates must be hashable objects.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">NiceSet</span></code>. As a consequence, candidates must be hashable objects.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceSet" title="whalrus.utils.utils.NiceSet">NiceSet</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -245,68 +246,79 @@ what the ballot clearly indicated.</p>
 <dt id="whalrus.Ballot.first">
 <code class="sig-name descname">first</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">candidates</span><span class="p">:</span> <span class="n">set</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/ballots/ballot.html#Ballot.first"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Ballot.first" title="Permalink to this definition">¶</a></dt>
 <dd><p>The first (= most liked) candidate. Implementation is optional.</p>
+<p>In most subclasses, this method needs some options (<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>) to solve ambiguities in this conversion. In
+some other subclasses, this method may even stay unimplemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>candidates</strong> – a set of candidates (it can be any set of candidates, not necessarily a subset of
-<code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>). Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
-<li><p><strong>kwargs</strong> – some options (depending on the subclass).</p></li>
+<li><p><strong>candidates</strong> (<em>set of candidates</em>) – It can be any set of candidates, not necessarily a subset of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>).
+Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
+<li><p><strong>kwargs</strong> – Some options (depending on the subclass).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the first (= most liked) candidate, chosen in the intersection of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code> and the argument
+<dd class="field-even"><p>The first (= most liked) candidate, chosen in the intersection of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code> and the argument
 <code class="docutils literal notranslate"><span class="pre">candidates</span></code>. Can return None for an “abstention”.</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>candidate</p>
+</dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>Typical example: the ballot was cast in a context where candidates <cite>a</cite>, <cite>b</cite>, <cite>c</cite>, <cite>d</cite> were declared. Hence
 <code class="docutils literal notranslate"><span class="pre">self.candidates</span> <span class="pre">==</span> <span class="pre">{'a',</span> <span class="pre">'b',</span> <span class="pre">'c',</span> <span class="pre">'d'}</span></code>. Later, candidate <cite>a</cite> is removed from the election. Then we can
 use this method with the optional argument <code class="docutils literal notranslate"><span class="pre">candidates</span> <span class="pre">=</span> <span class="pre">{'b',</span> <span class="pre">'c',</span> <span class="pre">'d'}</span></code> to know who is the most liked
 candidate of the voter in this new context.</p>
-<p>In most subclasses, this method needs some options (<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>) to solve ambiguities in this conversion. In
-some other subclasses, this method may even stay unimplemented.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.Ballot.last">
 <code class="sig-name descname">last</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">candidates</span><span class="p">:</span> <span class="n">set</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/ballots/ballot.html#Ballot.last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Ballot.last" title="Permalink to this definition">¶</a></dt>
 <dd><p>The last (= most disliked) candidate. Implementation is optional.</p>
+<p>Cf. <a class="reference internal" href="#whalrus.Ballot.first" title="whalrus.Ballot.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">first()</span></code></a> for more information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>candidates</strong> – a set of candidates (it can be any set of candidates, not necessarily a subset of
-<code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>). Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
-<li><p><strong>kwargs</strong> – some options (depending on the subclass).</p></li>
+<li><p><strong>candidates</strong> (<em>set of candidates</em>) – It can be any set of candidates, not necessarily a subset of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>).
+Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
+<li><p><strong>kwargs</strong> – Some options (depending on the subclass).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the last (= most disliked) candidate, chosen in the intersection of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code> and the
+<dd class="field-even"><p>The last (= most disliked) candidate, chosen in the intersection of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code> and the
 argument <code class="docutils literal notranslate"><span class="pre">candidates</span></code>. Can return None for an “abstention”.</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>candidate</p>
+</dd>
 </dl>
-<p>Cf. <a class="reference internal" href="#whalrus.Ballot.first" title="whalrus.Ballot.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">first()</span></code></a> for more information.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.Ballot.restrict">
 <code class="sig-name descname">restrict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">candidates</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; whalrus.ballots.ballot.Ballot<a class="reference internal" href="../../_modules/whalrus/ballots/ballot.html#Ballot.restrict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Ballot.restrict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restrict the ballot to less candidates. Implementation is optional.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>candidates</strong> – a set of candidates (it can be any set of candidates, not necessarily a subset of
-<code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>). Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
-<li><p><strong>kwargs</strong> – some options (depending of the subclass).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the same ballot, “restricted” to the candidates given.</p>
-</dd>
-</dl>
+<dd><p>Restrict the ballot to less candidates.</p>
+<p>Implementation is optional.</p>
 <p>Additional candidates (that are in the argument <code class="docutils literal notranslate"><span class="pre">candidates</span></code> but not in <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>) are generally not
 taken into account in the restricted ballot. For example, in a election with candidates <cite>a</cite>, <cite>b</cite>, <cite>c</cite>, assume
 that the voter emits an ordered ballot <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;</span> <span class="pre">b</span> <span class="pre">&gt;</span> <span class="pre">c</span></code>. Later, candidate <cite>a</cite> is removed and candidate <cite>d</cite> is
 added. Then the “restricted” ballot to <code class="docutils literal notranslate"><span class="pre">{'b,</span> <span class="pre">'c',</span> <span class="pre">'d'}</span></code> is <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">&gt;</span> <span class="pre">c</span></code>. For more details, see for example
 <a class="reference internal" href="ballot_order.html#whalrus.BallotOrder.restrict" title="whalrus.BallotOrder.restrict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BallotOrder.restrict()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>candidates</strong> (<em>set of candidates</em>) – It can be any set of candidates, not necessarily a subset of <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>).
+Default: <code class="docutils literal notranslate"><span class="pre">self.candidates</span></code>.</p></li>
+<li><p><strong>kwargs</strong> – Some options (depending on the subclass).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The same ballot, “restricted” to the candidates given.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#whalrus.Ballot" title="whalrus.Ballot">Ballot</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

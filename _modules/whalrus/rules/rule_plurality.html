@@ -193,35 +193,43 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The plurality rule.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToPlurality`.</span>
-<span class="sd">    :param scorer: the default is :class:`ScorerPlurality`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToPlurality`.</span>
+<span class="sd">    scorer : Scorer</span>
+<span class="sd">        Default: :class:`ScorerPlurality`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    In the most general syntax, firstly, you define the rule:</span>
 
-<span class="sd">    &gt;&gt;&gt; plurality = RulePlurality(tie_break=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; plurality = RulePlurality(tie_break=Priority.ASCENDING)</span>
 
 <span class="sd">    Secondly, you use it as a callable to load a particular election (profile, candidates):</span>
 
-<span class="sd">    &gt;&gt;&gt; plurality(ballots=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], weights=[2, 2, 1], voters=[&#39;Alice&#39;, &#39;Bob&#39;, &#39;Cate&#39;],</span>
-<span class="sd">    ...           candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;})  # doctest:+ELLIPSIS</span>
-<span class="sd">    &lt;... object at ...&gt;</span>
+<span class="sd">        &gt;&gt;&gt; plurality(ballots=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], weights=[2, 2, 1], voters=[&#39;Alice&#39;, &#39;Bob&#39;, &#39;Cate&#39;],</span>
+<span class="sd">        ...           candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;})  # doctest:+ELLIPSIS</span>
+<span class="sd">        &lt;... object at ...&gt;</span>
 
 <span class="sd">    Finally, you can access the computed variables:</span>
 
-<span class="sd">    &gt;&gt;&gt; plurality.gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 2, &#39;c&#39;: 1, &#39;d&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; plurality.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; plurality.gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 2, &#39;c&#39;: 1, &#39;d&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; plurality.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 
 <span class="sd">    Later, if you wish, you can load another profile with the same voting rule, and so on.</span>
 
 <span class="sd">    Optionally, you can specify an election (profile and candidates) as soon as the :class:`Rule` object is initialized.</span>
 <span class="sd">    This allows for one-liners such as:</span>
 
-<span class="sd">    &gt;&gt;&gt; RulePlurality([&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]).winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; RulePlurality([&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]).winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 
 <span class="sd">    Cf. :class:`Rule` for more information about the arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

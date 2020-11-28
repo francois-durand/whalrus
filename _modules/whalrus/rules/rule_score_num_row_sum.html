@@ -190,11 +190,16 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rule where the winner is the candidate having the highest row sum in some matrix.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param matrix: a :class:`Matrix`. The matrix upon which the scores are based.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
-
 <span class="sd">    The score of a candidate is the sum of the non-diagonal elements of its row in :attr:`matrix_`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    matrix : Matrix</span>
+<span class="sd">        The matrix upon which the scores are based.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -203,10 +208,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">matrix_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The matrix.</span>
-
-<span class="sd">        :return: the matrix (once computed with the given profile).</span>
+        <span class="sd">&quot;&quot;&quot;Matrix: The matrix (once computed with the given profile).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_converted_</span><span class="p">)</span>
 

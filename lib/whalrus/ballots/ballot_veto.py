@@ -26,13 +26,15 @@ class BallotVeto(BallotOneName):
     """
     A veto (anti-plurality) ballot.
 
-    >>> ballot = BallotVeto('a', candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    a
+    Examples
+    --------
+        >>> ballot = BallotVeto('a', candidates={'a', 'b', 'c'})
+        >>> print(ballot)
+        a
 
-    >>> ballot = BallotVeto(None, candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    None
+        >>> ballot = BallotVeto(None, candidates={'a', 'b', 'c'})
+        >>> print(ballot)
+        None
     """
 
     # Restrict the ballot
@@ -40,10 +42,12 @@ class BallotVeto(BallotOneName):
 
     def _restrict(self, restricted_candidates: set, priority: Priority) -> 'BallotVeto':
         """
-        >>> BallotVeto('a', candidates={'a', 'b'}).restrict(candidates={'b'})
-        BallotVeto('b', candidates={'b'})
-        >>> BallotVeto('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'}, priority=Priority.ASCENDING)
-        BallotVeto('c', candidates={'b', 'c'})
+        Examples
+        --------
+            >>> BallotVeto('a', candidates={'a', 'b'}).restrict(candidates={'b'})
+            BallotVeto('b', candidates={'b'})
+            >>> BallotVeto('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'}, priority=Priority.ASCENDING)
+            BallotVeto('c', candidates={'b', 'c'})
         """
         return self.__class__(priority.choice(restricted_candidates, reverse=True), candidates=restricted_candidates)
 
@@ -52,10 +56,12 @@ class BallotVeto(BallotOneName):
 
     def first(self, candidates: set=None, **kwargs) -> object:
         """
-        >>> BallotVeto('a', candidates={'a', 'b'}).first()
-        'b'
-        >>> BallotVeto('a', candidates={'a', 'b', 'c'}).first(priority=Priority.ASCENDING)
-        'b'
+        Examples
+        --------
+            >>> BallotVeto('a', candidates={'a', 'b'}).first()
+            'b'
+            >>> BallotVeto('a', candidates={'a', 'b', 'c'}).first(priority=Priority.ASCENDING)
+            'b'
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
@@ -69,11 +75,13 @@ class BallotVeto(BallotOneName):
 
     def last(self, candidates: set=None, **kwargs) -> object:
         """
-        >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last()
-        'a'
-        >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last(candidates={'b', 'c'},
-        ...                                                  priority=Priority.ASCENDING)
-        'c'
+        Examples
+        --------
+            >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last()
+            'a'
+            >>> BallotVeto('a', candidates={'a', 'b', 'c'}).last(candidates={'b', 'c'},
+            ...                                                  priority=Priority.ASCENDING)
+            'c'
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)

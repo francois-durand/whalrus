@@ -203,10 +203,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceSet</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The candidates that were available at the moment when the voter cast her ballot.</span>
-
-<span class="sd">        :return: a :class:`NiceSet`. As a consequence, candidates must be hashable objects.</span>
+        <span class="sd">&quot;&quot;&quot;NiceSet: The candidates that were available at the moment when the voter cast her ballot. As a consequence,</span>
+<span class="sd">        candidates must be hashable objects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
@@ -214,19 +212,29 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The first (= most liked) candidate. Implementation is optional.</span>
 
-<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
-<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
-<span class="sd">        :param kwargs: some options (depending on the subclass).</span>
-<span class="sd">        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument</span>
+<span class="sd">        In most subclasses, this method needs some options (``kwargs``) to solve ambiguities in this conversion. In</span>
+<span class="sd">        some other subclasses, this method may even stay unimplemented.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        candidates : set of candidates</span>
+<span class="sd">            It can be any set of candidates, not necessarily a subset of ``self.candidates``).</span>
+<span class="sd">            Default: ``self.candidates``.</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            Some options (depending on the subclass).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        candidate</span>
+<span class="sd">            The first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument</span>
 <span class="sd">            ``candidates``. Can return None for an &quot;abstention&quot;.</span>
 
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
 <span class="sd">        Typical example: the ballot was cast in a context where candidates `a`, `b`, `c`, `d` were declared. Hence</span>
 <span class="sd">        ``self.candidates == {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;}``. Later, candidate `a` is removed from the election. Then we can</span>
 <span class="sd">        use this method with the optional argument ``candidates = {&#39;b&#39;, &#39;c&#39;, &#39;d&#39;}`` to know who is the most liked</span>
 <span class="sd">        candidate of the voter in this new context.</span>
-
-<span class="sd">        In most subclasses, this method needs some options (``kwargs``) to solve ambiguities in this conversion. In</span>
-<span class="sd">        some other subclasses, this method may even stay unimplemented.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
@@ -234,30 +242,48 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The last (= most disliked) candidate. Implementation is optional.</span>
 
-<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
-<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
-<span class="sd">        :param kwargs: some options (depending on the subclass).</span>
-<span class="sd">        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the</span>
-<span class="sd">            argument ``candidates``. Can return None for an &quot;abstention&quot;.</span>
-
 <span class="sd">        Cf. :meth:`first` for more information.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        candidates : set of candidates</span>
+<span class="sd">            It can be any set of candidates, not necessarily a subset of ``self.candidates``).</span>
+<span class="sd">            Default: ``self.candidates``.</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            Some options (depending on the subclass).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        candidate</span>
+<span class="sd">            The last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the</span>
+<span class="sd">            argument ``candidates``. Can return None for an &quot;abstention&quot;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="Ballot.restrict"><a class="viewcode-back" href="../../../reference/ballots/ballot.html#whalrus.Ballot.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Ballot&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Restrict the ballot to less candidates. Implementation is optional.</span>
+<span class="sd">        Restrict the ballot to less candidates.</span>
 
-<span class="sd">        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of</span>
-<span class="sd">            ``self.candidates``). Default: ``self.candidates``.</span>
-<span class="sd">        :param kwargs: some options (depending of the subclass).</span>
-<span class="sd">        :return: the same ballot, &quot;restricted&quot; to the candidates given.</span>
+<span class="sd">        Implementation is optional.</span>
 
 <span class="sd">        Additional candidates (that are in the argument ``candidates`` but not in ``self.candidates``) are generally not</span>
 <span class="sd">        taken into account in the restricted ballot. For example, in a election with candidates `a`, `b`, `c`, assume</span>
 <span class="sd">        that the voter emits an ordered ballot ``a &gt; b &gt; c``. Later, candidate `a` is removed and candidate `d` is</span>
 <span class="sd">        added. Then the &quot;restricted&quot; ballot to ``{&#39;b, &#39;c&#39;, &#39;d&#39;}`` is ``b &gt; c``. For more details, see for example</span>
 <span class="sd">        :meth:`BallotOrder.restrict`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        candidates : set of candidates</span>
+<span class="sd">            It can be any set of candidates, not necessarily a subset of ``self.candidates``).</span>
+<span class="sd">            Default: ``self.candidates``.</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            Some options (depending on the subclass).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Ballot</span>
+<span class="sd">            The same ballot, &quot;restricted&quot; to the candidates given.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 </pre></div>

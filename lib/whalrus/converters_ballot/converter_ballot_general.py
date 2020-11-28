@@ -34,49 +34,56 @@ class ConverterBallotGeneral(ConverterBallot):
     """
     General ballot converter.
 
-    :param plurality_priority: option passed to :meth:`BallotPlurality.restrict` when restricting the ballot if,
-        once converted, it is a :class:`BallotPlurality`.
-    :param veto_priority: option passed to :meth:`BallotVeto.restrict` when restricting the ballot if, once converted,
-        if is a :class:`BallotVeto`.
-    :param one_name_priority: option passed to :meth:`BallotOneName.restrict` when restricting the ballot if, once
-        converted, it is a :class:`BallotOneName` (but not a :class:`BallotPlurality` or :class:`BallotVeto`).
-
     This is a default general converter. It tries to infer the type of input and converts it to an object of the
     relevant subclass of :class:`Ballot`.
 
+    Parameters
+    ----------
+    plurality_priority : Priority
+        Option passed to :meth:`BallotPlurality.restrict` when restricting the ballot if, once converted, it is a
+        :class:`BallotPlurality`.
+    veto_priority : Priority
+        Option passed to :meth:`BallotVeto.restrict` when restricting the ballot if, once converted, if is a
+        :class:`BallotVeto`.
+    one_name_priority : Priority
+        Option passed to :meth:`BallotOneName.restrict` when restricting the ballot if, once converted, it is a
+        :class:`BallotOneName` (but not a :class:`BallotPlurality` or :class:`BallotVeto`).
+
+    Examples
+    --------
     Typical usage:
 
-    >>> converter = ConverterBallotGeneral()
-    >>> converter({'a': 10, 'b': 7, 'c': 0})
-    BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=Scale())
-    >>> converter([{'a', 'b'}, {'c'}])
-    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
-    >>> converter('a ~ b > c')
-    BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
-    >>> converter('Alice')
-    BallotOneName('Alice', candidates={'Alice'})
+        >>> converter = ConverterBallotGeneral()
+        >>> converter({'a': 10, 'b': 7, 'c': 0})
+        BallotLevels({'a': 10, 'b': 7, 'c': 0}, candidates={'a', 'b', 'c'}, scale=Scale())
+        >>> converter([{'a', 'b'}, {'c'}])
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+        >>> converter('a ~ b > c')
+        BallotOrder([{'a', 'b'}, 'c'], candidates={'a', 'b', 'c'})
+        >>> converter('Alice')
+        BallotOneName('Alice', candidates={'Alice'})
 
     It is also possible to "restrict" the set of candidates on-the-fly:
 
-    >>> converter = ConverterBallotGeneral()
-    >>> converter('a ~ b > c', candidates={'b', 'c'})
-    BallotOrder(['b', 'c'], candidates={'b', 'c'})
-    >>> converter({'a': 10, 'b': 7, 'c': 0}, candidates={'b', 'c'})
-    BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=Scale())
+        >>> converter = ConverterBallotGeneral()
+        >>> converter('a ~ b > c', candidates={'b', 'c'})
+        BallotOrder(['b', 'c'], candidates={'b', 'c'})
+        >>> converter({'a': 10, 'b': 7, 'c': 0}, candidates={'b', 'c'})
+        BallotLevels({'b': 7, 'c': 0}, candidates={'b', 'c'}, scale=Scale())
 
     Cf. :meth:`Ballot.restrict` for more information.
 
     Use options for the restrictions:
 
-    >>> converter = ConverterBallotGeneral(one_name_priority=Priority.ASCENDING,
-    ...                                    plurality_priority=Priority.ASCENDING,
-    ...                                    veto_priority=Priority.ASCENDING)
-    >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
-    BallotOneName('b', candidates={'b', 'c'})
-    >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
-    BallotPlurality('b', candidates={'b', 'c'})
-    >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
-    BallotVeto('c', candidates={'b', 'c'})
+        >>> converter = ConverterBallotGeneral(one_name_priority=Priority.ASCENDING,
+        ...                                    plurality_priority=Priority.ASCENDING,
+        ...                                    veto_priority=Priority.ASCENDING)
+        >>> converter(BallotOneName('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
+        BallotOneName('b', candidates={'b', 'c'})
+        >>> converter(BallotPlurality('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
+        BallotPlurality('b', candidates={'b', 'c'})
+        >>> converter(BallotVeto('a', candidates={'a', 'b', 'c'}), candidates={'b', 'c'})
+        BallotVeto('c', candidates={'b', 'c'})
     """
 
     def __init__(self,

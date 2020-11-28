@@ -186,14 +186,21 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    K-Approval</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param k: the number of approved candidates.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
-
 <span class="sd">    The ``k`` top candidates in a ballot receive 1 point, and the other candidates receive 0 point.</span>
 
-<span class="sd">    &gt;&gt;&gt; RuleKApproval([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;], k=2).gross_scores_</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 1}</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    k : int</span>
+<span class="sd">        The number of approved candidates.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; RuleKApproval([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;], k=2).gross_scores_</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 1}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

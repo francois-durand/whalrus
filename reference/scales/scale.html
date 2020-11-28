@@ -220,6 +220,7 @@
 methods <code class="docutils literal notranslate"><span class="pre">__lt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__le__</span></code>, etc.</p>
 <p>For a subclass, it is sufficient to override the method <a class="reference internal" href="#whalrus.Scale.lt" title="whalrus.Scale.lt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lt()</span></code></a> and the other comparison methods will be
 modified accordingly (assuming it describes a total order).</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 <span class="go">True</span>
@@ -232,14 +233,18 @@ modified accordingly (assuming it describes a total order).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>some_list</strong> – a list of levels.</p></li>
-<li><p><strong>reverse</strong> – if True, then argsort in decreasing order.</p></li>
+<li><p><strong>some_list</strong> (<em>list</em>) – A list of levels.</p></li>
+<li><p><strong>reverse</strong> (<em>bool</em>) – If True, then argsort in decreasing order.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a list of indexes.</p>
+<dd class="field-even"><p>A list of indexes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">argsort</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
 <span class="go">[0, 2, 1]</span>
 </pre></div>
@@ -253,15 +258,18 @@ modified accordingly (assuming it describes a total order).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a level.</p></li>
-<li><p><strong>another</strong> – a level.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A level.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A level.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number
-otherwise.</p>
+<dd class="field-even"><p>0 if they are equal, a positive number if <code class="docutils literal notranslate"><span class="pre">one</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">another</span></code>, a negative number otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
 <span class="go">-1</span>
 </pre></div>
@@ -289,10 +297,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.Scale.high">
 <em class="property">property </em><code class="sig-name descname">high</code><a class="headerlink" href="#whalrus.Scale.high" title="Permalink to this definition">¶</a></dt>
-<dd><p>The highest element of the scale.</p>
+<dd><p>The highest element of the scale (or None if the scale is unbounded above).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the highest element (or None if the scale is unbounded above).</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -306,10 +314,10 @@ otherwise.</p>
 <dl class="py method">
 <dt id="whalrus.Scale.low">
 <em class="property">property </em><code class="sig-name descname">low</code><a class="headerlink" href="#whalrus.Scale.low" title="Permalink to this definition">¶</a></dt>
-<dd><p>The lowest element of the scale.</p>
+<dd><p>The lowest element of the scale (or None if the scale is unbounded below).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the lowest element (or None if the scale is unbounded below).</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -318,18 +326,22 @@ otherwise.</p>
 <dt id="whalrus.Scale.lt">
 <code class="sig-name descname">lt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">another</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../../_modules/whalrus/scales/scale.html#Scale.lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Scale.lt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test “lower than”.</p>
+<p>Generally, only this method is overridden in the subclasses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>one</strong> – a level of the scale.</p></li>
-<li><p><strong>another</strong> – a level of the scale.</p></li>
+<li><p><strong>one</strong> (<em>object</em>) – A level of the scale.</p></li>
+<li><p><strong>another</strong> (<em>object</em>) – A level of the scale.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True iff <code class="xref py py-attr docutils literal notranslate"><span class="pre">one</span></code> is lower than <code class="xref py py-attr docutils literal notranslate"><span class="pre">another</span></code>.</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
 </dl>
-<p>Generally, only this method is overridden in the subclasses.</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
@@ -342,9 +354,10 @@ otherwise.</p>
 <dd><p>Maximum of some levels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> – an iterable of levels (list, set, etc).</p>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>Iterable</em>) – An iterable of levels (list, set, etc).</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">({</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">})</span>
 <span class="go">12</span>
 </pre></div>
@@ -357,9 +370,10 @@ otherwise.</p>
 <dd><p>Minimum of some levels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> – an iterable of levels (list, set, etc).</p>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>Iterable</em>) – An iterable of levels (list, set, etc).</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">})</span>
 <span class="go">&#39;a&#39;</span>
 </pre></div>
@@ -379,11 +393,12 @@ otherwise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>some_list</strong> – a list of levels.</p></li>
-<li><p><strong>reverse</strong> – if True, then sort in decreasing order.</p></li>
+<li><p><strong>some_list</strong> (<em>list</em>) – A list of levels.</p></li>
+<li><p><strong>reverse</strong> (<em>bool</em>) – If True, then sort in decreasing order.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Scale</span><span class="p">()</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">some_list</span>

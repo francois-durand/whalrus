@@ -193,19 +193,28 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Majority Judgment.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToLevels`, with ``scale=scorer.scale``.</span>
-<span class="sd">    :param scorer: the default is :class:`ScorerLevels`. Alternatively, you may provide an argument ``scale``. In that</span>
-<span class="sd">        case, the scorer will be ``ScorerLevels(scale)``.</span>
-<span class="sd">    :param default_median: the median level that a candidate has when it receives absolutely no evaluation whatsoever.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToLevels`, with ``scale=scorer.scale``.</span>
+<span class="sd">    scorer : Scorer</span>
+<span class="sd">        Default: :class:`ScorerLevels`. Alternatively, you may provide an argument ``scale``. In that case, the scorer</span>
+<span class="sd">        will be ``ScorerLevels(scale)``.</span>
+<span class="sd">    default_median : object</span>
+<span class="sd">        The median level that a candidate has when it receives absolutely no evaluation whatsoever.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleMajorityJudgment([{&#39;a&#39;: 1, &#39;b&#39;: 1}, {&#39;a&#39;: .5, &#39;b&#39;: .6},</span>
-<span class="sd">    ...                              {&#39;a&#39;: .5, &#39;b&#39;: .4}, {&#39;a&#39;: .3, &#39;b&#39;: .2}])</span>
-<span class="sd">    &gt;&gt;&gt; rule.scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: (0.5, -0.25, 0.25), &#39;b&#39;: (0.4, 0.5, -0.25)}</span>
-<span class="sd">    &gt;&gt;&gt; rule.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleMajorityJudgment([{&#39;a&#39;: 1, &#39;b&#39;: 1}, {&#39;a&#39;: .5, &#39;b&#39;: .6},</span>
+<span class="sd">        ...                              {&#39;a&#39;: .5, &#39;b&#39;: .4}, {&#39;a&#39;: .3, &#39;b&#39;: .2}])</span>
+<span class="sd">        &gt;&gt;&gt; rule.scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: (0.5, -0.25, 0.25), &#39;b&#39;: (0.4, 0.5, -0.25)}</span>
+<span class="sd">        &gt;&gt;&gt; rule.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 
 <span class="sd">    For each candidate, its median evaluation `m` is computed. When a candidate has two medians (like candidate `b`</span>
 <span class="sd">    in the above example, with .4 and .6), the lower value is considered. Let `p` (resp. `q`) denote the proportion of</span>
@@ -215,26 +224,26 @@
 <span class="sd">    For Majority Judgment, verbal evaluation are generally used. The following example is actually the same as</span>
 <span class="sd">    above, but with verbal evaluations instead of grades:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleMajorityJudgment([</span>
-<span class="sd">    ...     {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Excellent&#39;}, {&#39;a&#39;: &#39;Good&#39;, &#39;b&#39;: &#39;Very Good&#39;},</span>
-<span class="sd">    ...     {&#39;a&#39;: &#39;Good&#39;, &#39;b&#39;: &#39;Acceptable&#39;}, {&#39;a&#39;: &#39;Poor&#39;, &#39;b&#39;: &#39;To Reject&#39;}</span>
-<span class="sd">    ... ], scale=ScaleFromList([&#39;To Reject&#39;, &#39;Poor&#39;, &#39;Acceptable&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Excellent&#39;]))</span>
-<span class="sd">    &gt;&gt;&gt; rule.scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: (&#39;Good&#39;, -0.25, 0.25), &#39;b&#39;: (&#39;Acceptable&#39;, 0.5, -0.25)}</span>
-<span class="sd">    &gt;&gt;&gt; rule.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleMajorityJudgment([</span>
+<span class="sd">        ...     {&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Excellent&#39;}, {&#39;a&#39;: &#39;Good&#39;, &#39;b&#39;: &#39;Very Good&#39;},</span>
+<span class="sd">        ...     {&#39;a&#39;: &#39;Good&#39;, &#39;b&#39;: &#39;Acceptable&#39;}, {&#39;a&#39;: &#39;Poor&#39;, &#39;b&#39;: &#39;To Reject&#39;}</span>
+<span class="sd">        ... ], scale=ScaleFromList([&#39;To Reject&#39;, &#39;Poor&#39;, &#39;Acceptable&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Excellent&#39;]))</span>
+<span class="sd">        &gt;&gt;&gt; rule.scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: (&#39;Good&#39;, -0.25, 0.25), &#39;b&#39;: (&#39;Acceptable&#39;, 0.5, -0.25)}</span>
+<span class="sd">        &gt;&gt;&gt; rule.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 
 <span class="sd">    By changing the ``scorer``, you may define a very different rule. The following one rewards the candidate with</span>
 <span class="sd">    best median Borda score (with secondary criteria that are similar to Majority Judgment, i.e. the proportions of</span>
 <span class="sd">    voters who give a candidate more / less than its median Borda score):</span>
 
-<span class="sd">    &gt;&gt;&gt; from whalrus.scorers.scorer_borda import ScorerBorda</span>
-<span class="sd">    &gt;&gt;&gt; from whalrus.converters_ballot.converter_ballot_to_order import ConverterBallotToOrder</span>
-<span class="sd">    &gt;&gt;&gt; rule = RuleMajorityJudgment(scorer=ScorerBorda(), converter=ConverterBallotToOrder())</span>
-<span class="sd">    &gt;&gt;&gt; rule([&#39;a &gt; b ~ c &gt; d&#39;, &#39;c &gt; a &gt; b &gt; d&#39;]).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: (2.0, 0.5, 0.0), &#39;b&#39;: (1.0, 0.5, 0.0), &#39;c&#39;: (1.5, 0.5, 0.0), &#39;d&#39;: (0.0, 0.0, 0.0)}</span>
-<span class="sd">    &gt;&gt;&gt; rule.winner_</span>
-<span class="sd">    &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; from whalrus.scorers.scorer_borda import ScorerBorda</span>
+<span class="sd">        &gt;&gt;&gt; from whalrus.converters_ballot.converter_ballot_to_order import ConverterBallotToOrder</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleMajorityJudgment(scorer=ScorerBorda(), converter=ConverterBallotToOrder())</span>
+<span class="sd">        &gt;&gt;&gt; rule([&#39;a &gt; b ~ c &gt; d&#39;, &#39;c &gt; a &gt; b &gt; d&#39;]).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: (2.0, 0.5, 0.0), &#39;b&#39;: (1.0, 0.5, 0.0), &#39;c&#39;: (1.5, 0.5, 0.0), &#39;d&#39;: (0.0, 0.0, 0.0)}</span>
+<span class="sd">        &gt;&gt;&gt; rule.winner_</span>
+<span class="sd">        &#39;a&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scorer</span><span class="p">:</span> <span class="n">Scorer</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -251,10 +260,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The scores.</span>
-
-<span class="sd">        :return: a :class:`NiceDict` of triples.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The scores. A :class:`NiceDict` of triples.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">levels_</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">})</span>
         <span class="n">weights_</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">})</span>
@@ -298,9 +304,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_as_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        :return: :attr:`scores_`, converted to floats.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: Scores as floats. It is the same as :attr:`scores_`, but converted to floats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">my_float</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>

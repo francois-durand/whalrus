@@ -192,47 +192,55 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Range voting.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToGrades`.</span>
-<span class="sd">    :param scorer: the default is :class:`ScorerLevels`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToGrades`.</span>
+<span class="sd">    scorer : Scorer</span>
+<span class="sd">        Default: :class:`ScorerLevels`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([{&#39;a&#39;: 1, &#39;b&#39;: .8, &#39;c&#39;: .2}, {&#39;a&#39;: 0, &#39;b&#39;: .6, &#39;c&#39;: 1}]).scores_</span>
-<span class="sd">    {&#39;a&#39;: Fraction(1, 2), &#39;b&#39;: Fraction(7, 10), &#39;c&#39;: Fraction(3, 5)}</span>
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([{&#39;a&#39;: 10, &#39;b&#39;: 8, &#39;c&#39;: 2}, {&#39;a&#39;: 0, &#39;b&#39;: 6, &#39;c&#39;: 10}]).scores_</span>
-<span class="sd">    {&#39;a&#39;: 5, &#39;b&#39;: 7, &#39;c&#39;: 6}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([{&#39;a&#39;: 1, &#39;b&#39;: .8, &#39;c&#39;: .2}, {&#39;a&#39;: 0, &#39;b&#39;: .6, &#39;c&#39;: 1}]).scores_</span>
+<span class="sd">        {&#39;a&#39;: Fraction(1, 2), &#39;b&#39;: Fraction(7, 10), &#39;c&#39;: Fraction(3, 5)}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([{&#39;a&#39;: 10, &#39;b&#39;: 8, &#39;c&#39;: 2}, {&#39;a&#39;: 0, &#39;b&#39;: 6, &#39;c&#39;: 10}]).scores_</span>
+<span class="sd">        {&#39;a&#39;: 5, &#39;b&#39;: 7, &#39;c&#39;: 6}</span>
 
 <span class="sd">    The following examples use the ballot converter:</span>
 
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([&#39;a &gt; b &gt; c&#39;]).profile_converted_[0].as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 2), &#39;c&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting(</span>
-<span class="sd">    ...     [&#39;a &gt; b &gt; c&#39;], converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))</span>
-<span class="sd">    ... ).profile_converted_[0].as_dict</span>
-<span class="sd">    {&#39;a&#39;: 10, &#39;b&#39;: 5, &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([&#39;a &gt; b &gt; c&#39;]).profile_converted_[0].as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 2), &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting(</span>
+<span class="sd">        ...     [&#39;a &gt; b &gt; c&#39;], converter=ConverterBallotToGrades(scale=ScaleRange(0, 10))</span>
+<span class="sd">        ... ).profile_converted_[0].as_dict</span>
+<span class="sd">        {&#39;a&#39;: 10, &#39;b&#39;: 5, &#39;c&#39;: 0}</span>
 
 <span class="sd">    To examine the effect of the options, let us examine:</span>
 
-<span class="sd">    &gt;&gt;&gt; b1 = BallotLevels({&#39;a&#39;: 8, &#39;b&#39;: 10}, candidates={&#39;a&#39;, &#39;b&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; b2 = BallotLevels({&#39;a&#39;: 6, &#39;c&#39;: 10}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; b1 = BallotLevels({&#39;a&#39;: 8, &#39;b&#39;: 10}, candidates={&#39;a&#39;, &#39;b&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; b2 = BallotLevels({&#39;a&#39;: 6, &#39;c&#39;: 10}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
 
 <span class="sd">    In ballot ``b1``, candidate `c` is absent, which means that the candidate was not even available when the voter</span>
 <span class="sd">    cast her ballot. In ballot ``b2``, candidate `b` is ungraded: it was available, but the voter decided not to give</span>
 <span class="sd">    it a grade. By the way, we will also introduce a candidate `d` who receives no evaluation at all. Here are several</span>
 <span class="sd">    possible settings for the voting rule, along with their consequences:</span>
 
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;}).scores_</span>
-<span class="sd">    {&#39;a&#39;: 7, &#39;b&#39;: 10, &#39;c&#39;: 10, &#39;d&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;}, default_average=5).scores_</span>
-<span class="sd">    {&#39;a&#39;: 7, &#39;b&#39;: 10, &#39;c&#39;: 10, &#39;d&#39;: 5}</span>
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;},</span>
-<span class="sd">    ...     scorer=ScorerLevels(level_ungraded=0)).scores_</span>
-<span class="sd">    {&#39;a&#39;: 7, &#39;b&#39;: 5, &#39;c&#39;: 10, &#39;d&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;},</span>
-<span class="sd">    ...     scorer=ScorerLevels(level_ungraded=0, level_absent=0)).scores_</span>
-<span class="sd">    {&#39;a&#39;: 7, &#39;b&#39;: 5, &#39;c&#39;: 5, &#39;d&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;}).scores_</span>
+<span class="sd">        {&#39;a&#39;: 7, &#39;b&#39;: 10, &#39;c&#39;: 10, &#39;d&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;}, default_average=5).scores_</span>
+<span class="sd">        {&#39;a&#39;: 7, &#39;b&#39;: 10, &#39;c&#39;: 10, &#39;d&#39;: 5}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;},</span>
+<span class="sd">        ...     scorer=ScorerLevels(level_ungraded=0)).scores_</span>
+<span class="sd">        {&#39;a&#39;: 7, &#39;b&#39;: 5, &#39;c&#39;: 10, &#39;d&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting([b1, b2], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;},</span>
+<span class="sd">        ...     scorer=ScorerLevels(level_ungraded=0, level_absent=0)).scores_</span>
+<span class="sd">        {&#39;a&#39;: 7, &#39;b&#39;: 5, &#39;c&#39;: 5, &#39;d&#39;: 0}</span>
 
 <span class="sd">    For more information, cf. :class:`ScorerLevels`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

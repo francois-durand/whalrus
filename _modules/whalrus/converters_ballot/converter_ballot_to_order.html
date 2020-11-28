@@ -194,19 +194,21 @@
 <span class="sd">    This is a default converter to a :class:`BallotOrder`. It tries to infer the type of input and converts it to</span>
 <span class="sd">    an ordered ballot (possibly a ballot of a subclass, such as :class:`BallotLevels`).</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotToOrder()</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a &gt; b ~ c&#39;)</span>
-<span class="sd">    BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}])</span>
-<span class="sd">    BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0})</span>
-<span class="sd">    BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=Scale())</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}))</span>
-<span class="sd">    BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}))</span>
-<span class="sd">    BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}))</span>
-<span class="sd">    BallotOrder([{&#39;b&#39;, &#39;c&#39;}, &#39;a&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToOrder()</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a &gt; b ~ c&#39;)</span>
+<span class="sd">        BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}])</span>
+<span class="sd">        BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0})</span>
+<span class="sd">        BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=Scale())</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}))</span>
+<span class="sd">        BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}))</span>
+<span class="sd">        BallotOrder([&#39;a&#39;, {&#39;b&#39;, &#39;c&#39;}], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}))</span>
+<span class="sd">        BallotOrder([{&#39;b&#39;, &#39;c&#39;}, &#39;a&#39;], candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BallotOrder</span><span class="p">:</span>

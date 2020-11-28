@@ -219,14 +219,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>converter</strong> – the default is <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
-<li><p><strong>matrix_weighted_majority</strong> – a <a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>. Algorithm used to compute the weighted majority matrix <cite>W</cite>.
-Default: <a class="reference internal" href="matrix_weighted_majority.html#whalrus.MatrixWeightedMajority" title="whalrus.MatrixWeightedMajority"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code></a>.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>converter</strong> (<a class="reference internal" href="../converters_ballot/converter_ballot.html#whalrus.ConverterBallot" title="whalrus.ConverterBallot"><em>ConverterBallot</em></a>) – Default: <a class="reference internal" href="../converters_ballot/converter_ballot_to_order.html#whalrus.ConverterBallotToOrder" title="whalrus.ConverterBallotToOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConverterBallotToOrder</span></code></a>.</p></li>
+<li><p><strong>matrix_weighted_majority</strong> (<a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix"><em>Matrix</em></a>) – Algorithm used to compute the weighted majority matrix <cite>W</cite>. Default: <a class="reference internal" href="matrix_weighted_majority.html#whalrus.MatrixWeightedMajority" title="whalrus.MatrixWeightedMajority"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code></a>.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>First, we compute a matrix <cite>W</cite> with the algorithm given in the parameter <code class="docutils literal notranslate"><span class="pre">matrix_weighted_majority</span></code>.
 The Schulze matrix gives, for each pair of candidates <cite>(c, d)</cite>, the width of the widest path from <cite>c</cite> to <cite>d</cite>, where
 the width of a path is the minimum weight of its edges.</p>
@@ -240,10 +240,10 @@ the width of a path is the minimum weight of its edges.</p>
 <dl class="py method">
 <dt id="whalrus.MatrixSchulze.as_array_of_floats_">
 <em class="property">property </em><code class="sig-name descname">as_array_of_floats_</code><a class="headerlink" href="#whalrus.MatrixSchulze.as_array_of_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The matrix, as a numpy array.</p>
+<dd><p>The matrix, as a numpy array. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code>, but converted to floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">as_array_</span></code>, converted to floats.</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -251,10 +251,11 @@ the width of a path is the minimum weight of its edges.</p>
 <dl class="py method">
 <dt id="whalrus.MatrixSchulze.matrix_weighted_majority_">
 <em class="property">property </em><code class="sig-name descname">matrix_weighted_majority_</code><a class="headerlink" href="#whalrus.MatrixSchulze.matrix_weighted_majority_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The weighted majority matrix (upon which the computation of the Schulze is based).</p>
+<dd><p>The weighted majority matrix (upon which the computation of the Schulze is based), once computed
+with the given profile.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the weighted majority matrix (once computed with the given profile).</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="matrix.html#whalrus.Matrix" title="whalrus.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>

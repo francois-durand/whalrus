@@ -32,19 +32,28 @@ class RuleMajorityJudgment(RuleScore):
     """
     Majority Judgment.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToLevels`, with ``scale=scorer.scale``.
-    :param scorer: the default is :class:`ScorerLevels`. Alternatively, you may provide an argument ``scale``. In that
-        case, the scorer will be ``ScorerLevels(scale)``.
-    :param default_median: the median level that a candidate has when it receives absolutely no evaluation whatsoever.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToLevels`, with ``scale=scorer.scale``.
+    scorer : Scorer
+        Default: :class:`ScorerLevels`. Alternatively, you may provide an argument ``scale``. In that case, the scorer
+        will be ``ScorerLevels(scale)``.
+    default_median : object
+        The median level that a candidate has when it receives absolutely no evaluation whatsoever.
+    kwargs
+        Cf. parent class.
 
-    >>> rule = RuleMajorityJudgment([{'a': 1, 'b': 1}, {'a': .5, 'b': .6},
-    ...                              {'a': .5, 'b': .4}, {'a': .3, 'b': .2}])
-    >>> rule.scores_as_floats_
-    {'a': (0.5, -0.25, 0.25), 'b': (0.4, 0.5, -0.25)}
-    >>> rule.winner_
-    'a'
+    Examples
+    --------
+        >>> rule = RuleMajorityJudgment([{'a': 1, 'b': 1}, {'a': .5, 'b': .6},
+        ...                              {'a': .5, 'b': .4}, {'a': .3, 'b': .2}])
+        >>> rule.scores_as_floats_
+        {'a': (0.5, -0.25, 0.25), 'b': (0.4, 0.5, -0.25)}
+        >>> rule.winner_
+        'a'
 
     For each candidate, its median evaluation `m` is computed. When a candidate has two medians (like candidate `b`
     in the above example, with .4 and .6), the lower value is considered. Let `p` (resp. `q`) denote the proportion of
@@ -54,26 +63,26 @@ class RuleMajorityJudgment(RuleScore):
     For Majority Judgment, verbal evaluation are generally used. The following example is actually the same as
     above, but with verbal evaluations instead of grades:
 
-    >>> rule = RuleMajorityJudgment([
-    ...     {'a': 'Excellent', 'b': 'Excellent'}, {'a': 'Good', 'b': 'Very Good'},
-    ...     {'a': 'Good', 'b': 'Acceptable'}, {'a': 'Poor', 'b': 'To Reject'}
-    ... ], scale=ScaleFromList(['To Reject', 'Poor', 'Acceptable', 'Good', 'Very Good', 'Excellent']))
-    >>> rule.scores_as_floats_
-    {'a': ('Good', -0.25, 0.25), 'b': ('Acceptable', 0.5, -0.25)}
-    >>> rule.winner_
-    'a'
+        >>> rule = RuleMajorityJudgment([
+        ...     {'a': 'Excellent', 'b': 'Excellent'}, {'a': 'Good', 'b': 'Very Good'},
+        ...     {'a': 'Good', 'b': 'Acceptable'}, {'a': 'Poor', 'b': 'To Reject'}
+        ... ], scale=ScaleFromList(['To Reject', 'Poor', 'Acceptable', 'Good', 'Very Good', 'Excellent']))
+        >>> rule.scores_as_floats_
+        {'a': ('Good', -0.25, 0.25), 'b': ('Acceptable', 0.5, -0.25)}
+        >>> rule.winner_
+        'a'
 
     By changing the ``scorer``, you may define a very different rule. The following one rewards the candidate with
     best median Borda score (with secondary criteria that are similar to Majority Judgment, i.e. the proportions of
     voters who give a candidate more / less than its median Borda score):
 
-    >>> from whalrus.scorers.scorer_borda import ScorerBorda
-    >>> from whalrus.converters_ballot.converter_ballot_to_order import ConverterBallotToOrder
-    >>> rule = RuleMajorityJudgment(scorer=ScorerBorda(), converter=ConverterBallotToOrder())
-    >>> rule(['a > b ~ c > d', 'c > a > b > d']).scores_as_floats_
-    {'a': (2.0, 0.5, 0.0), 'b': (1.0, 0.5, 0.0), 'c': (1.5, 0.5, 0.0), 'd': (0.0, 0.0, 0.0)}
-    >>> rule.winner_
-    'a'
+        >>> from whalrus.scorers.scorer_borda import ScorerBorda
+        >>> from whalrus.converters_ballot.converter_ballot_to_order import ConverterBallotToOrder
+        >>> rule = RuleMajorityJudgment(scorer=ScorerBorda(), converter=ConverterBallotToOrder())
+        >>> rule(['a > b ~ c > d', 'c > a > b > d']).scores_as_floats_
+        {'a': (2.0, 0.5, 0.0), 'b': (1.0, 0.5, 0.0), 'c': (1.5, 0.5, 0.0), 'd': (0.0, 0.0, 0.0)}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, scorer: Scorer = None,
@@ -90,10 +99,7 @@ class RuleMajorityJudgment(RuleScore):
 
     @cached_property
     def scores_(self) -> NiceDict:
-        """
-        The scores.
-
-        :return: a :class:`NiceDict` of triples.
+        """NiceDict: The scores. A :class:`NiceDict` of triples.
         """
         levels_ = NiceDict({c: [] for c in self.candidates_})
         weights_ = NiceDict({c: [] for c in self.candidates_})
@@ -137,9 +143,7 @@ class RuleMajorityJudgment(RuleScore):
 
     @cached_property
     def scores_as_floats_(self) -> NiceDict:
-        """
-
-        :return: :attr:`scores_`, converted to floats.
+        """NiceDict: Scores as floats. It is the same as :attr:`scores_`, but converted to floats.
         """
         def my_float(x):
             try:

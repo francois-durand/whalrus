@@ -28,16 +28,22 @@ class BallotOneName(Ballot):
     """
     A ballot in a mono-nominal context (typically plurality or veto).
 
-    :param b: the candidate, or None for an abstention.
-    :param candidates: the candidates that were available at the moment when the voter cast her ballot.
+    Parameters
+    ----------
+    b : candidate or None
+        None stands for abstention.
+    candidates : set
+        The candidates that were available at the moment when the voter cast her ballot.
 
-    >>> ballot = BallotOneName('a', candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    a
+    Examples
+    --------
+        >>> ballot = BallotOneName('a', candidates={'a', 'b', 'c'})
+        >>> print(ballot)
+        a
 
-    >>> ballot = BallotOneName(None, candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    None
+        >>> ballot = BallotOneName(None, candidates={'a', 'b', 'c'})
+        >>> print(ballot)
+        None
     """
 
     # Core features: ballot and candidates
@@ -62,16 +68,16 @@ class BallotOneName(Ballot):
 
     @cached_property
     def candidates_in_b(self) -> NiceSet:
-        """
-        The candidate that is explicitly mentioned in the ballot.
+        """NiceSet: The candidate that is explicitly mentioned in the ballot.
 
-        :return: a :class:`NiceSet` containing the only candidate contained in the ballot (or an empty set in case
-            of abstention).
+        This is a singleton with the only candidate contained in the ballot (or an empty set in case of abstention).
 
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_in_b
-        {'a'}
-        >>> BallotOneName(None, candidates={'a', 'b', 'c'}).candidates_in_b
-        {}
+        Examples
+        --------
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_in_b
+            {'a'}
+            >>> BallotOneName(None, candidates={'a', 'b', 'c'}).candidates_in_b
+            {}
         """
         if self.candidate is None:
             return NiceSet()
@@ -80,13 +86,13 @@ class BallotOneName(Ballot):
 
     @cached_property
     def candidates_not_in_b(self) -> NiceSet:
-        """
-        The candidates that were available at the moment of the vote, but are not explicitly mentioned in the ballot.
+        """NiceSet: The candidates that were available at the moment of the vote, but are not explicitly mentioned in
+        the ballot.
 
-        :return: a :class:`NiceSet` of candidates.
-
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_not_in_b
-        {'b', 'c'}
+        Examples
+        --------
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}).candidates_not_in_b
+            {'b', 'c'}
         """
         return NiceSet(self.candidates - {self.candidate})
 
@@ -115,17 +121,26 @@ class BallotOneName(Ballot):
         """
         Restrict the ballot to less candidates.
 
-        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            ``self.candidates``). Default: ``self.candidates``.
-        :param kwargs:
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``).
+            Default: ``self.candidates``.
+        kwargs
             * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
-        :return: the same ballot, "restricted" to the candidates given.
 
-        >>> BallotOneName('a', candidates={'a', 'b'}).restrict(candidates={'b'})
-        BallotOneName('b', candidates={'b'})
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'},
-        ...                                                         priority=Priority.ASCENDING)
-        BallotOneName('b', candidates={'b', 'c'})
+        Returns
+        -------
+        BallotOneName
+            The same ballot, "restricted" to the candidates given.
+
+        Examples
+        --------
+            >>> BallotOneName('a', candidates={'a', 'b'}).restrict(candidates={'b'})
+            BallotOneName('b', candidates={'b'})
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}).restrict(candidates={'b', 'c'},
+            ...                                                         priority=Priority.ASCENDING)
+            BallotOneName('b', candidates={'b', 'c'})
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
@@ -141,12 +156,19 @@ class BallotOneName(Ballot):
         """
         Auxiliary function of `restrict`.
 
-        :param restricted_candidates: a subset of `self.candidates`.
-        :param priority: a :class:`Priority`.
-        :return: the restricted ballot.
-
         Here, it is assumed that `self.candidate` is not in `restricted_candidates`, hence there is really a decision
         to make.
+
+        Parameters
+        ----------
+        restricted_candidates : NiceSet
+            A subset of `self.candidates`.
+        priority : Priority
+
+        Returns
+        -------
+        BallotOneName
+            The restricted ballot.
         """
         return self.__class__(priority.choice(restricted_candidates), candidates=restricted_candidates)
 
@@ -157,19 +179,27 @@ class BallotOneName(Ballot):
         """
         The first (= most liked) candidate.
 
-        :param candidates: a set of candidates.
-        :param kwargs:
-            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
-        :return: the first (= most liked) candidate.
-
         In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
         is the most liked.
 
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first()
-        'a'
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first(candidates={'b', 'c'},
-        ...                                                      priority=Priority.ASCENDING)
-        'b'
+        Parameters
+        ----------
+        candidates : set of candidates
+        kwargs
+            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
+
+        Returns
+        -------
+        candidate
+            The first (= most liked) candidate.
+
+        Examples
+        --------
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first()
+            'a'
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}).first(candidates={'b', 'c'},
+            ...                                                      priority=Priority.ASCENDING)
+            'b'
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
@@ -182,18 +212,26 @@ class BallotOneName(Ballot):
         """
         The last (= most disliked) candidate.
 
-        :param candidates: a set of candidates.
-        :param kwargs:
-            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
-        :return: the last (= most disliked) candidate.
-
         In this parent class, by default, the ballot is considered as a plurality ballot, i.e. the candidate indicated
         is the most liked.
 
-        >>> BallotOneName('a', candidates={'a', 'b'}).last()
-        'b'
-        >>> BallotOneName('a', candidates={'a', 'b', 'c'}).last(priority=Priority.ASCENDING)
-        'c'
+        Parameters
+        ----------
+        candidates : set of candidates
+        kwargs
+            * `priority`: a :class:`Priority`. Default: :attr:`Priority.UNAMBIGUOUS`.
+
+        Returns
+        -------
+        candidate
+            The last (= most disliked) candidate.
+
+        Examples
+        --------
+            >>> BallotOneName('a', candidates={'a', 'b'}).last()
+            'b'
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}).last(priority=Priority.ASCENDING)
+            'c'
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)

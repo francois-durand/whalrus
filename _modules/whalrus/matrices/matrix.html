@@ -192,25 +192,37 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A way to compute a matrix from a profile.</span>
 
-<span class="sd">    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
-<span class="sd">    :param converter: the converter that is used to convert input ballots in order to compute</span>
-<span class="sd">        :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.</span>
-<span class="sd">    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
-
 <span class="sd">    A :class:`Matrix` object is a callable whose inputs are ballots and optionally weights, voters and candidates. When</span>
 <span class="sd">    it is called, it loads the profile. The output of the call is the :class:`Matrix` object itself.</span>
 <span class="sd">    But after the call, you can access to the computed variables (ending with an underscore), such as</span>
 <span class="sd">    :attr:`as_dict_` or :attr:`as_array_`.</span>
 
-<span class="sd">    Cf. :class:`MatrixWeightedMajority` for some examples.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        If present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        The converter that is used to convert input ballots in order to compute :attr:`profile_converted_`.</span>
+<span class="sd">        Default: :class:`ConverterBallotGeneral`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        If present, these parameters will be passed to ``__call__`` immediately after initialization.</span>
 
-<span class="sd">    :ivar profile_original\_: the profile as it is entered by the user. This uses the constructor of :class:`Profile`.</span>
-<span class="sd">        Hence indirectly, it uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like</span>
-<span class="sd">        ``&#39;a &gt; b &gt; c&#39;`` are converted to :class:``Ballot`` objects.</span>
-<span class="sd">    :ivar profile_converted\_: the profile, with ballots that are adequate for the voting rule. For example,</span>
-<span class="sd">        in :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects. This uses the parameter</span>
-<span class="sd">        ``converter`` of the object.</span>
-<span class="sd">    :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    profile_original_ : Profile</span>
+<span class="sd">        The profile as it is entered by the user. This uses the constructor of :class:`Profile`. Hence indirectly, it</span>
+<span class="sd">        uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like ``&#39;a &gt; b &gt; c&#39;`` are converted to</span>
+<span class="sd">        :class:``Ballot`` objects.</span>
+<span class="sd">    profile_converted_: Profile</span>
+<span class="sd">        The profile, with ballots that are adequate for the voting rule. For example, in</span>
+<span class="sd">        :class:`MatrixWeightedMajority`, it will be :class:`BallotOrder` objects. This uses the parameter ``converter``</span>
+<span class="sd">        of the object.</span>
+<span class="sd">    candidates_ : NiceSet</span>
+<span class="sd">        The candidates of the election, as entered in the ``__call__``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Cf. :class:`MatrixWeightedMajority` for some examples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -247,47 +259,34 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">as_dict_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The matrix, as a :class:`NiceDict`.</span>
-
-<span class="sd">        :return: a :class:`NiceDict`. Keys are pairs of candidates, and values are the coefficients of the matrix.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The matrix, as a :class:`NiceDict`. Keys are pairs of candidates, and values are the coefficients</span>
+<span class="sd">        of the matrix.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_as_list_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The list of candidates.</span>
-
-<span class="sd">        :return: a list. Candidates are sorted if possible.</span>
+        <span class="sd">&quot;&quot;&quot;list: The list of candidates. Candidates are sorted if possible.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">set_to_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_indexes_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The candidates as a dictionary.</span>
-
-<span class="sd">        :return: a dictionary. To each candidate, it associates its index in :attr:`candidates_as_list_`.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: The candidates as a dictionary. To each candidate, it associates its index in</span>
+<span class="sd">        :attr:`candidates_as_list_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_as_list_</span><span class="p">)})</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">as_array_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The matrix, as a numpy array.</span>
-
-<span class="sd">        :return: a numpy array. Each row and each column corresponds to a candidate (in the order of</span>
-<span class="sd">            :attr:`candidates_as_list_`).</span>
+        <span class="sd">&quot;&quot;&quot;Array : The matrix, as a numpy array. Each row and each column corresponds to a candidate (in the order of</span>
+<span class="sd">        :attr:`candidates_as_list_`).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">as_dict_</span><span class="p">[(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_as_list_</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_as_list_</span><span class="p">])</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">as_array_of_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The matrix, as a numpy array.</span>
-
-<span class="sd">        :return: :attr:`as_array_`, converted to floats.</span>
+        <span class="sd">&quot;&quot;&quot;Array : The matrix, as a numpy array. It is the same as :attr:`as_array_`, but converted to floats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_array_</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span></div>
 </pre></div>

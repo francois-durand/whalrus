@@ -193,31 +193,37 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ballot with an evaluation of the candidates.</span>
 
-<span class="sd">    :param b: a dictionary whose keys are candidates and whose values represent some form of evaluation. The keys and</span>
-<span class="sd">        the values must be hashable.</span>
-<span class="sd">    :param candidates: the candidates that were available at the moment when the voter cast her ballot. Default:</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    b : dict</span>
+<span class="sd">        Keys: candidates. Values represent some form of evaluation. The keys and the values must be hashable.</span>
+<span class="sd">    candidates : set</span>
+<span class="sd">        The candidates that were available at the moment when the voter cast her ballot. Default:</span>
 <span class="sd">        candidates that are explicitly mentioned in the ballot :attr:`b`.</span>
-<span class="sd">    :param scale: the authorized scale of evaluations at the moment when the voter cast her ballot.</span>
+<span class="sd">    scale : Scale</span>
+<span class="sd">        The authorized scale of evaluations at the moment when the voter cast her ballot.</span>
 <span class="sd">        Default: ``Scale()`` (meaning in this case &quot;unknown&quot;).</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Most general syntax:</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3},</span>
-<span class="sd">    ...                       candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;},</span>
-<span class="sd">    ...                       scale=ScaleRange(low=0, high=10))</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3},</span>
+<span class="sd">        ...                       candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;},</span>
+<span class="sd">        ...                       scale=ScaleRange(low=0, high=10))</span>
 
 <span class="sd">    Other examples of syntax:</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3})</span>
-<span class="sd">    &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: &#39;Good&#39;, &#39;b&#39;: &#39;Bad&#39;, &#39;c&#39;: &#39;Bad&#39;},</span>
-<span class="sd">    ...                       scale=ScaleFromList([&#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;]))</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3})</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: &#39;Good&#39;, &#39;b&#39;: &#39;Bad&#39;, &#39;c&#39;: &#39;Bad&#39;},</span>
+<span class="sd">        ...                       scale=ScaleFromList([&#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;]))</span>
 
 <span class="sd">    In addition to the set-like and list-like behaviors defined in parent class :class:`BallotOrder`, it also has</span>
 <span class="sd">    a dictionary-like behavior in the sense that it implements ``__getitem__``:</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3})</span>
-<span class="sd">    &gt;&gt;&gt; ballot[&#39;a&#39;]</span>
-<span class="sd">    10</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3})</span>
+<span class="sd">        &gt;&gt;&gt; ballot[&#39;a&#39;]</span>
+<span class="sd">        10</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Core features: ballot and candidates</span>
@@ -234,19 +240,20 @@
 <span class="sd">        For this subclass, the internal representation is of the form {&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, meaning</span>
 <span class="sd">        that a has evaluation 10; b, 7; and c, 3.</span>
 
-<span class="sd">        :param b: a dictionary.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        b : dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span> <span class="o">=</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Dictionary format.</span>
+        <span class="sd">&quot;&quot;&quot;NiceDict: keys are candidates and values are levels of evaluation.</span>
 
-<span class="sd">        :return: a :class:`NiceDict`, whose keys are candidates and values are levels of evaluation.</span>
-
-<span class="sd">        &gt;&gt;&gt; BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}).as_dict</span>
-<span class="sd">        {&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}).as_dict</span>
+<span class="sd">            {&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_representation</span>
 
@@ -292,12 +299,20 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an evaluation.</span>
 
-<span class="sd">        :param item: a candidate.</span>
-<span class="sd">        :return: the evaluation for this candidate.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        item : candidate</span>
 
-<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3})</span>
-<span class="sd">        &gt;&gt;&gt; ballot[&#39;a&#39;]</span>
-<span class="sd">        10</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The evaluation for this candidate.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3})</span>
+<span class="sd">            &gt;&gt;&gt; ballot[&#39;a&#39;]</span>
+<span class="sd">            10</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
 
@@ -305,11 +320,16 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Keys of the ballot.</span>
 
-<span class="sd">        :return: This is a shortcut for ``self.as_dict.keys()``.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        KeysView</span>
+<span class="sd">            This is a shortcut for ``self.as_dict.keys()``.</span>
 
-<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
-<span class="sd">        &gt;&gt;&gt; sorted(ballot.keys())</span>
-<span class="sd">        [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">            &gt;&gt;&gt; sorted(ballot.keys())</span>
+<span class="sd">            [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
 
@@ -317,11 +337,16 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Values of the ballot.</span>
 
-<span class="sd">        :return: This is a shortcut for ``self.as_dict.values()``.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ValuesView</span>
+<span class="sd">            This is a shortcut for ``self.as_dict.values()``.</span>
 
-<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
-<span class="sd">        &gt;&gt;&gt; sorted(ballot.values())</span>
-<span class="sd">        [3, 7, 10]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">            &gt;&gt;&gt; sorted(ballot.values())</span>
+<span class="sd">            [3, 7, 10]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
 
@@ -329,11 +354,16 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Items of the ballot.</span>
 
-<span class="sd">        :return: this is a shortcut for ``self.as_dict.items()``.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ItemsView</span>
+<span class="sd">            This is a shortcut for ``self.as_dict.items()``.</span>
 
-<span class="sd">        &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
-<span class="sd">        &gt;&gt;&gt; sorted(ballot.items())</span>
-<span class="sd">        [(&#39;a&#39;, 10), (&#39;b&#39;, 7), (&#39;c&#39;, 3)]</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; ballot = BallotLevels({&#39;a&#39;: 10, &#39;b&#39;: 7, &#39;c&#39;: 3}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">            &gt;&gt;&gt; sorted(ballot.items())</span>
+<span class="sd">            [(&#39;a&#39;, 10), (&#39;b&#39;, 7), (&#39;c&#39;, 3)]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div></div>
 </pre></div>

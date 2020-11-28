@@ -30,20 +30,28 @@ class RuleSchulze(Rule):
     """
     Schulze's Rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_schulze: the Schulze matrix. Default: :class:`MatrixSchulze`.
-    :param `**kwargs`: cf. parent class.
-
     A candidate is a Schulze winner if it has no defeat in the Schulze matrix.
 
-    >>> rule = RuleSchulze(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
-    >>> rule.matrix_schulze_.as_array_
-    array([[0, Fraction(2, 3), Fraction(2, 3)],
-           [Fraction(5, 9), 0, Fraction(7, 9)],
-           [Fraction(5, 9), Fraction(5, 9), 0]], dtype=object)
-    >>> rule.winner_
-    'a'
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_schulze : Matrix
+        The Schulze matrix. Default: :class:`MatrixSchulze`.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleSchulze(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
+        >>> rule.matrix_schulze_.as_array_
+        array([[0, Fraction(2, 3), Fraction(2, 3)],
+               [Fraction(5, 9), 0, Fraction(7, 9)],
+               [Fraction(5, 9), Fraction(5, 9), 0]], dtype=object)
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_schulze: Matrix = None, **kwargs):
@@ -56,10 +64,7 @@ class RuleSchulze(Rule):
 
     @cached_property
     def matrix_schulze_(self):
-        """
-        The Schulze matrix.
-
-        :return: the Schulze matrix (once computed with the given profile).
+        """Matrix: The Schulze matrix (once computed with the given profile).
         """
         return self.matrix_schulze(self.profile_converted_)
 

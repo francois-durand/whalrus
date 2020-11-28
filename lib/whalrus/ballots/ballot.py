@@ -42,10 +42,8 @@ class Ballot:
 
     @property
     def candidates(self) -> NiceSet:
-        """
-        The candidates that were available at the moment when the voter cast her ballot.
-
-        :return: a :class:`NiceSet`. As a consequence, candidates must be hashable objects.
+        """NiceSet: The candidates that were available at the moment when the voter cast her ballot. As a consequence,
+        candidates must be hashable objects.
         """
         raise NotImplementedError
 
@@ -53,19 +51,29 @@ class Ballot:
         """
         The first (= most liked) candidate. Implementation is optional.
 
-        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            ``self.candidates``). Default: ``self.candidates``.
-        :param kwargs: some options (depending on the subclass).
-        :return: the first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
+        In most subclasses, this method needs some options (``kwargs``) to solve ambiguities in this conversion. In
+        some other subclasses, this method may even stay unimplemented.
+
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``).
+            Default: ``self.candidates``.
+        kwargs
+            Some options (depending on the subclass).
+
+        Returns
+        -------
+        candidate
+            The first (= most liked) candidate, chosen in the intersection of ``self.candidates`` and the argument
             ``candidates``. Can return None for an "abstention".
 
+        Examples
+        --------
         Typical example: the ballot was cast in a context where candidates `a`, `b`, `c`, `d` were declared. Hence
         ``self.candidates == {'a', 'b', 'c', 'd'}``. Later, candidate `a` is removed from the election. Then we can
         use this method with the optional argument ``candidates = {'b', 'c', 'd'}`` to know who is the most liked
         candidate of the voter in this new context.
-
-        In most subclasses, this method needs some options (``kwargs``) to solve ambiguities in this conversion. In
-        some other subclasses, this method may even stay unimplemented.
         """
         raise NotImplementedError
 
@@ -73,29 +81,47 @@ class Ballot:
         """
         The last (= most disliked) candidate. Implementation is optional.
 
-        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            ``self.candidates``). Default: ``self.candidates``.
-        :param kwargs: some options (depending on the subclass).
-        :return: the last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the
-            argument ``candidates``. Can return None for an "abstention".
-
         Cf. :meth:`first` for more information.
+
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``).
+            Default: ``self.candidates``.
+        kwargs
+            Some options (depending on the subclass).
+
+        Returns
+        -------
+        candidate
+            The last (= most disliked) candidate, chosen in the intersection of ``self.candidates`` and the
+            argument ``candidates``. Can return None for an "abstention".
         """
         raise NotImplementedError
 
     def restrict(self, candidates=None, **kwargs) -> 'Ballot':
         """
-        Restrict the ballot to less candidates. Implementation is optional.
+        Restrict the ballot to less candidates.
 
-        :param candidates: a set of candidates (it can be any set of candidates, not necessarily a subset of
-            ``self.candidates``). Default: ``self.candidates``.
-        :param kwargs: some options (depending of the subclass).
-        :return: the same ballot, "restricted" to the candidates given.
+        Implementation is optional.
 
         Additional candidates (that are in the argument ``candidates`` but not in ``self.candidates``) are generally not
         taken into account in the restricted ballot. For example, in a election with candidates `a`, `b`, `c`, assume
         that the voter emits an ordered ballot ``a > b > c``. Later, candidate `a` is removed and candidate `d` is
         added. Then the "restricted" ballot to ``{'b, 'c', 'd'}`` is ``b > c``. For more details, see for example
         :meth:`BallotOrder.restrict`.
+
+        Parameters
+        ----------
+        candidates : set of candidates
+            It can be any set of candidates, not necessarily a subset of ``self.candidates``).
+            Default: ``self.candidates``.
+        kwargs
+            Some options (depending on the subclass).
+
+        Returns
+        -------
+        Ballot
+            The same ballot, "restricted" to the candidates given.
         """
         raise NotImplementedError

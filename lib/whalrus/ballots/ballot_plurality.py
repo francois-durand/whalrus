@@ -25,13 +25,15 @@ class BallotPlurality(BallotOneName):
     """
     A plurality ballot.
 
-    >>> ballot = BallotPlurality('a', candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    a
+    Examples
+    --------
+        >>> ballot = BallotPlurality('a', candidates={'a', 'b', 'c'})
+        >>> print(ballot)
+        a
 
-    >>> ballot = BallotPlurality(None, candidates={'a', 'b', 'c'})
-    >>> print(ballot)
-    None
+        >>> ballot = BallotPlurality(None, candidates={'a', 'b', 'c'})
+        >>> print(ballot)
+        None
     """
 
     # Remark: this only difference with a member of the mother class BallotOneName is precisely that here, the object

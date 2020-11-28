@@ -190,30 +190,38 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Black&#39;s rule.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param rule_condorcet: a Rule. Used as the main victory criterion. Default: :class:`RuleCondorcet`.</span>
-<span class="sd">    :param rule_borda: a Rule. Used as the secondary victory criterion. Default: :class:`RuleBorda`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    rule_condorcet : Rule</span>
+<span class="sd">        Used as the main victory criterion. Default: :class:`RuleCondorcet`.</span>
+<span class="sd">    rule_borda : Rule</span>
+<span class="sd">        Used as the secondary victory criterion. Default: :class:`RuleBorda`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    As a main victory criterion, the Condorcet winner is elected (even if it does not have the highest Borda score):</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleBlack(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;], weights=[3, 2])</span>
-<span class="sd">    &gt;&gt;&gt; rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_</span>
-<span class="sd">    array([[0, Fraction(3, 5), Fraction(3, 5)],</span>
-<span class="sd">           [Fraction(2, 5), 0, 1],</span>
-<span class="sd">           [Fraction(2, 5), 0, 0]], dtype=object)</span>
-<span class="sd">    &gt;&gt;&gt; rule.order_</span>
-<span class="sd">    [{&#39;a&#39;}, {&#39;b&#39;}, {&#39;c&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBlack(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;], weights=[3, 2])</span>
+<span class="sd">        &gt;&gt;&gt; rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_</span>
+<span class="sd">        array([[0, Fraction(3, 5), Fraction(3, 5)],</span>
+<span class="sd">               [Fraction(2, 5), 0, 1],</span>
+<span class="sd">               [Fraction(2, 5), 0, 0]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; rule.order_</span>
+<span class="sd">        [{&#39;a&#39;}, {&#39;b&#39;}, {&#39;c&#39;}]</span>
 
 <span class="sd">    When there is no Condorcet winner, candidates are sorted according to their Borda scores:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleBlack(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;], weights=[3, 2, 2])</span>
-<span class="sd">    &gt;&gt;&gt; rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_</span>
-<span class="sd">    array([[0, Fraction(5, 7), Fraction(3, 7)],</span>
-<span class="sd">           [Fraction(2, 7), 0, Fraction(5, 7)],</span>
-<span class="sd">           [Fraction(4, 7), Fraction(2, 7), 0]], dtype=object)</span>
-<span class="sd">    &gt;&gt;&gt; rule.order_</span>
-<span class="sd">    [{&#39;a&#39;}, {&#39;b&#39;}, {&#39;c&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBlack(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;], weights=[3, 2, 2])</span>
+<span class="sd">        &gt;&gt;&gt; rule.rule_condorcet_.matrix_majority_.matrix_weighted_majority_.as_array_</span>
+<span class="sd">        array([[0, Fraction(5, 7), Fraction(3, 7)],</span>
+<span class="sd">               [Fraction(2, 7), 0, Fraction(5, 7)],</span>
+<span class="sd">               [Fraction(4, 7), Fraction(2, 7), 0]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; rule.order_</span>
+<span class="sd">        [{&#39;a&#39;}, {&#39;b&#39;}, {&#39;c&#39;}]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">rule_condorcet</span><span class="p">:</span> <span class="n">Rule</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rule_borda</span><span class="p">:</span> <span class="n">Rule</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -227,19 +235,13 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">rule_condorcet_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The Condorcet rule.</span>
-
-<span class="sd">        :return: the Condorcet rule (once applied to the profile).</span>
+        <span class="sd">&quot;&quot;&quot;Rule: The Condorcet rule (once applied to the profile).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">rule_borda_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The Borda rule.</span>
-
-<span class="sd">        :return: the Borda rule (once applied to the profile).</span>
+        <span class="sd">&quot;&quot;&quot;Rule: The Borda rule (once applied to the profile).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 </pre></div>

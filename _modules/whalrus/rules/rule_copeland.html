@@ -191,20 +191,28 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Copeland&#39;s rule.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToOrder`.</span>
-<span class="sd">    :param matrix: the default is :class:`MatrixMajority`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToOrder`.</span>
+<span class="sd">    matrix : Matrix</span>
+<span class="sd">        Default: :class:`MatrixMajority`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    The score of a candidate is the number of victories in the majority matrix.</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleCopeland(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; rule.matrix_.as_array_</span>
-<span class="sd">    array([[Fraction(1, 2), 1, 1],</span>
-<span class="sd">           [0, Fraction(1, 2), 1],</span>
-<span class="sd">           [0, 0, Fraction(1, 2)]], dtype=object)</span>
-<span class="sd">    &gt;&gt;&gt; rule.scores_</span>
-<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 1, &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleCopeland(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; rule.matrix_.as_array_</span>
+<span class="sd">        array([[Fraction(1, 2), 1, 1],</span>
+<span class="sd">               [0, Fraction(1, 2), 1],</span>
+<span class="sd">               [0, 0, Fraction(1, 2)]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; rule.scores_</span>
+<span class="sd">        {&#39;a&#39;: 2, &#39;b&#39;: 1, &#39;c&#39;: 0}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -216,10 +224,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">matrix_majority_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The majority matrix.</span>
-
-<span class="sd">        :return: alias for :attr:`matrix_`.</span>
+        <span class="sd">&quot;&quot;&quot;Matrix: The majority matrix. This is an alias for :attr:`matrix_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_</span></div>
 </pre></div>

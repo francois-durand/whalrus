@@ -10,8 +10,15 @@ def _cache(f):
     """
     Auxiliary decorator used by ``cached_property``.
 
-    :param f: a method with no argument (except ``self``).
-    :return: the same function, but with a `caching' behavior.
+    Parameters
+    ----------
+    f : callable
+        A method with no argument (except ``self``).
+
+    Returns
+    -------
+    callable
+        The same function, but with a `caching' behavior.
     """
     name = f.__name__
 
@@ -51,21 +58,23 @@ class DeleteCacheMixin:
 
     Cf. decorator :meth:`cached_property`.
 
-    >>> class Example(DeleteCacheMixin):
-    ...     @cached_property
-    ...     def x(self):
-    ...         print('Big computation...')
-    ...         return 6 * 7
-    >>> a = Example()
-    >>> a.x
-    Big computation...
-    42
-    >>> a.x
-    42
-    >>> a.delete_cache()
-    >>> a.x
-    Big computation...
-    42
+    Examples
+    --------
+        >>> class Example(DeleteCacheMixin):
+        ...     @cached_property
+        ...     def x(self):
+        ...         print('Big computation...')
+        ...         return 6 * 7
+        >>> a = Example()
+        >>> a.x
+        Big computation...
+        42
+        >>> a.x
+        42
+        >>> a.delete_cache()
+        >>> a.x
+        Big computation...
+        42
     """
 
     # noinspection PyAttributeOutsideInit
@@ -77,13 +86,21 @@ def parse_weak_order(s: str) -> list:
     """
     Convert a string representing a weak order to a list of sets.
 
-    :param s: a string.
-    :return: a list of sets, where each set is an indifference class. The first set of the list contains the top
-        (= most liked) candidates, while the last set of the list contains the bottom (= most disliked) candidates.
+    Parameters
+    ----------
+    s : str
 
-    >>> s = 'Alice ~ Bob ~ Catherine32 > me > you ~ us > them'
-    >>> parse_weak_order(s) == [{'Alice', 'Bob', 'Catherine32'}, {'me'}, {'you', 'us'}, {'them'}]
-    True
+    Returns
+    -------
+    list
+        A list of sets, where each set is an indifference class. The first set of the list contains the top (= most
+        liked) candidates, while the last set of the list contains the bottom (= most disliked) candidates.
+
+    Examples
+    --------
+        >>> s = 'Alice ~ Bob ~ Catherine32 > me > you ~ us > them'
+        >>> parse_weak_order(s) == [{'Alice', 'Bob', 'Catherine32'}, {'me'}, {'you', 'us'}, {'them'}]
+        True
     """
 
     # Build the parser
@@ -107,12 +124,19 @@ def set_to_list(s: set) -> list:
     """
     Convert a set to a list.
 
-    :param s: a set.
-    :return: a list. The result is similar to list(s), but if the elements of the set are comparable, they appear in
-        ascending order.
+    Parameters
+    ----------
+    s : set
 
-    >>> set_to_list({2, 42, 12})
-    [2, 12, 42]
+    Returns
+    -------
+    list
+        The result is similar to list(s), but if the elements of the set are comparable, they appear in ascending order.
+
+    Examples
+    --------
+        >>> set_to_list({2, 42, 12})
+        [2, 12, 42]
     """
     try:
         return sorted(s)
@@ -124,12 +148,19 @@ def set_to_str(s: set) -> str:
     """
     Convert a set to a string.
 
-    :param s: a set.
-    :return: a string. The result is similar to str(s), but if the elements of the set are comparable, they appear in
-        ascending order.
+    Parameters
+    ----------
+    s : set
 
-    >>> set_to_str({2, 42, 12})
-    '{2, 12, 42}'
+    Returns
+    -------
+    str
+        The result is similar to str(s), but if the elements of the set are comparable, they appear in ascending order.
+
+    Examples
+    --------
+        >>> set_to_str({2, 42, 12})
+        '{2, 12, 42}'
     """
     try:
         return '{' + str(sorted(s))[1:-1] + '}'
@@ -141,9 +172,11 @@ class NiceSet(set):
     """
     A set that prints in order (when the elements are comparable).
 
-    >>> my_set = NiceSet({'b', 'a', 'c'})
-    >>> my_set
-    {'a', 'b', 'c'}
+    Examples
+    --------
+        >>> my_set = NiceSet({'b', 'a', 'c'})
+        >>> my_set
+        {'a', 'b', 'c'}
     """
 
     def __repr__(self):
@@ -157,12 +190,19 @@ def dict_to_items(d: dict) -> list:
     """
     Convert a dict to a list of pairs (key, value).
 
-    :param d: a dictionary.
-    :return: a list of pairs. The result is similar to d.items(), but if the keys are comparable, they appear in
-        ascending order.
+    Parameters
+    ----------
+    d : dict
 
-    >>> dict_to_items({'b': 2, 'c': 0, 'a': 1})
-    [('a', 1), ('b', 2), ('c', 0)]
+    Returns
+    -------
+    list of pairs
+        The result is similar to d.items(), but if the keys are comparable, they appear in ascending order.
+
+    Examples
+    --------
+        >>> dict_to_items({'b': 2, 'c': 0, 'a': 1})
+        [('a', 1), ('b', 2), ('c', 0)]
     """
     try:
         return [(k, d[k]) for k in sorted(d.keys())]
@@ -174,11 +214,19 @@ def dict_to_str(d: dict) -> str:
     """
     Convert dict to string.
 
-    :param d: a dictionary.
-    :return: a string. The result is similar to str(d), but if the keys are comparable, they appear in ascending order.
+    Parameters
+    ----------
+    d : dict
 
-    >>> dict_to_str({'b': 2, 'c': 0, 'a': 1})
-    "{'a': 1, 'b': 2, 'c': 0}"
+    Returns
+    -------
+    str
+        The result is similar to str(d), but if the keys are comparable, they appear in ascending order.
+
+    Examples
+    --------
+        >>> dict_to_str({'b': 2, 'c': 0, 'a': 1})
+        "{'a': 1, 'b': 2, 'c': 0}"
     """
     try:
         return '{' + ', '.join(['%r: %r' % (k, d[k]) for k in sorted(d.keys())]) + '}'
@@ -190,9 +238,11 @@ class NiceDict(dict):
     """
     A dict that prints in the order of the keys (when they are comparable).
 
-    >>> my_dict = NiceDict({'b': 51, 'a': 42, 'c': 12})
-    >>> my_dict
-    {'a': 42, 'b': 51, 'c': 12}
+    Examples
+    --------
+        >>> my_dict = NiceDict({'b': 51, 'a': 42, 'c': 12})
+        >>> my_dict
+        {'a': 42, 'b': 51, 'c': 12}
     """
 
     def __repr__(self) -> str:
@@ -203,15 +253,24 @@ def take_closest(my_list, my_number):
     """
     In a list, take the closest element to a given number.
 
-    :param my_list: a list sorted in ascending order.
-    :param my_number: a number.
-    :return: the element of ``my_list`` that is closest to ``my_number``. If two numbers are equally close, return the
+    From https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value .
+
+    Parameters
+    ----------
+    my_list : list
+        A list sorted in ascending order.
+    my_number : Number
+
+    Returns
+    -------
+    Number
+        The element of ``my_list`` that is closest to ``my_number``. If two numbers are equally close, return the
         smallest number.
 
-    >>> take_closest([0, 5, 10], 3)
-    5
-
-    From https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value .
+    Examples
+    --------
+        >>> take_closest([0, 5, 10], 3)
+        5
     """
     pos = bisect_left(my_list, my_number)
     if pos == 0:
@@ -230,13 +289,21 @@ def convert_number(x: Number):
     """
     Try to convert a number to a fraction (or an integer).
 
-    :param x: a number.
-    :return: ``x``, trying to convert it into a fraction (or an integer).
+    Parameters
+    ----------
+    x : Number
 
-    >>> convert_number(2.5)
-    Fraction(5, 2)
-    >>> convert_number(2.0)
-    2
+    Returns
+    -------
+    Number
+        ``x``, trying to convert it into a fraction (or an integer).
+
+    Examples
+    --------
+        >>> convert_number(2.5)
+        Fraction(5, 2)
+        >>> convert_number(2.0)
+        2
     """
     if isinstance(x, float):
         x = str(x)
@@ -254,33 +321,41 @@ def my_division(x: Number, y: Number, divide_by_zero: Number = None):
     """
     Division of two numbers, trying to be exact if it is reasonable.
 
-    :param x: a number.
-    :param y: a number.
-    :param divide_by_zero: the value to be returned in case of division by zero. If None (default), then it raises
-        a ZeroDivisionError.
-    :return: the division of `x` by `y`.
+    Parameters
+    ----------
+    x : Number
+    y : Number
+    divide_by_zero : Number
+        The value to be returned in case of division by zero. If None (default), then it raises a ZeroDivisionError.
 
-    >>> my_division(5, 2)
-    Fraction(5, 2)
+    Returns
+    -------
+    Number
+        The division of `x` by `y`.
+
+    Examples
+    --------
+        >>> my_division(5, 2)
+        Fraction(5, 2)
 
     If `x` or `y` is a float, then the result is a float:
 
-    >>> my_division(Fraction(5, 2), 0.1)
-    25.0
-    >>> my_division(0.1, Fraction(5, 2))
-    0.04
+        >>> my_division(Fraction(5, 2), 0.1)
+        25.0
+        >>> my_division(0.1, Fraction(5, 2))
+        0.04
 
     If `x` and `y` are integers, decimals or fractions, then the result is a fraction:
 
-    >>> my_division(2, Fraction(5, 2))
-    Fraction(4, 5)
-    >>> my_division(Decimal('0.1'), Fraction(5, 2))
-    Fraction(1, 25)
+        >>> my_division(2, Fraction(5, 2))
+        Fraction(4, 5)
+        >>> my_division(Decimal('0.1'), Fraction(5, 2))
+        Fraction(1, 25)
 
     You can specify a particular return value in case of division by zero:
 
-    >>> my_division(1, 0, divide_by_zero=42)
-    42
+        >>> my_division(1, 0, divide_by_zero=42)
+        42
     """
     if y == 0:
         if divide_by_zero is None:

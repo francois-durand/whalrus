@@ -221,13 +221,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – cf. parent class.</p></li>
-<li><p><strong>level_ungraded</strong> – the level of the scale used for ungraded candidates, or None.</p></li>
-<li><p><strong>level_absent</strong> – the level of the scale used for absent candidates, or None.</p></li>
-<li><p><strong>**kwargs</strong> – cf. parent class.</p></li>
+<li><p><strong>args</strong> – Cf. parent class.</p></li>
+<li><p><strong>level_ungraded</strong> (<em>object</em>) – The level of the scale used for ungraded candidates, or None.</p></li>
+<li><p><strong>level_absent</strong> (<em>object</em>) – The level of the scale used for absent candidates, or None.</p></li>
+<li><p><strong>kwargs</strong> – Cf. parent class.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
 <p>In the most general syntax, firstly, you define the scorer:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scorer</span> <span class="o">=</span> <span class="n">ScorerLevels</span><span class="p">(</span><span class="n">level_absent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
@@ -269,18 +270,18 @@ scorer provide different ways to take these special cases into account:</p>
 <dl class="py method">
 <dt id="whalrus.ScorerLevels.scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">scores_as_floats_</code><a class="headerlink" href="#whalrus.ScorerLevels.scores_as_floats_" title="Permalink to this definition">¶</a></dt>
-<dd><p>The scores, given as floats.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, converted to floats.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – if the scores cannot be converted to floats.</p>
-</dd>
-</dl>
+<dd><p>The scores, given as floats. It is the same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, but converted to floats.</p>
 <p>Like all conversions to floats, it is advised to use this attribute for display purposes only. For computation,
 you should always use <code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code>, which usually manipulates fractions and therefore allows for exact
 computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the scores cannot be converted to floats.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../utils/index.html#whalrus.utils.utils.NiceDict" title="whalrus.utils.utils.NiceDict">NiceDict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

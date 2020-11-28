@@ -219,9 +219,40 @@
 <dd><p>A priority setting, i.e. a policy to break ties and indifference classes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>name</strong> – the name of this priority setting.</p>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of this priority setting.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt id="whalrus.Priority.UNAMBIGUOUS">
+<code class="sig-name descname">UNAMBIGUOUS</code><a class="headerlink" href="#whalrus.Priority.UNAMBIGUOUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="priority_unambiguous.html#whalrus.PriorityUnambiguous" title="whalrus.PriorityUnambiguous"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityUnambiguous</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Priority.ABSTAIN">
+<code class="sig-name descname">ABSTAIN</code><a class="headerlink" href="#whalrus.Priority.ABSTAIN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="priority_abstain.html#whalrus.PriorityAbstain" title="whalrus.PriorityAbstain"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityAbstain</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Priority.ASCENDING">
+<code class="sig-name descname">ASCENDING</code><a class="headerlink" href="#whalrus.Priority.ASCENDING" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="priority_ascending.html#whalrus.PriorityAscending" title="whalrus.PriorityAscending"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityAscending</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Priority.DESCENDING">
+<code class="sig-name descname">DESCENDING</code><a class="headerlink" href="#whalrus.Priority.DESCENDING" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="priority_descending.html#whalrus.PriorityDescending" title="whalrus.PriorityDescending"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityDescending</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="whalrus.Priority.RANDOM">
+<code class="sig-name descname">RANDOM</code><a class="headerlink" href="#whalrus.Priority.RANDOM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="priority_random.html#whalrus.PriorityRandom" title="whalrus.PriorityRandom"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityRandom</span></code></a>.</p>
+</dd></dl>
+
+<p class="rubric">Examples</p>
 <p>Typical usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">priority</span> <span class="o">=</span> <span class="n">Priority</span><span class="o">.</span><span class="n">ASCENDING</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">priority</span><span class="o">.</span><span class="n">choice</span><span class="p">({</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">})</span>
@@ -230,17 +261,6 @@
 <span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>UNAMBIGUOUS</strong> – shortcut for <a class="reference internal" href="priority_unambiguous.html#whalrus.PriorityUnambiguous" title="whalrus.PriorityUnambiguous"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityUnambiguous</span></code></a>.</p></li>
-<li><p><strong>ABSTAIN</strong> – shortcut for <a class="reference internal" href="priority_abstain.html#whalrus.PriorityAbstain" title="whalrus.PriorityAbstain"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityAbstain</span></code></a>.</p></li>
-<li><p><strong>ASCENDING</strong> – shortcut for <a class="reference internal" href="priority_ascending.html#whalrus.PriorityAscending" title="whalrus.PriorityAscending"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityAscending</span></code></a>.</p></li>
-<li><p><strong>DESCENDING</strong> – shortcut for <a class="reference internal" href="priority_descending.html#whalrus.PriorityDescending" title="whalrus.PriorityDescending"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityDescending</span></code></a>.</p></li>
-<li><p><strong>RANDOM</strong> – shortcut for <a class="reference internal" href="priority_random.html#whalrus.PriorityRandom" title="whalrus.PriorityRandom"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityRandom</span></code></a>.</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt id="whalrus.Priority.choice">
 <code class="sig-name descname">choice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>set<span class="p">, </span>list<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; object<a class="reference internal" href="../../_modules/whalrus/priorities/priority.html#Priority.choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Priority.choice" title="Permalink to this definition">¶</a></dt>
@@ -248,15 +268,18 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – the list, set, etc where the element is to be chosen.</p></li>
-<li><p><strong>reverse</strong> – if False (default), then we choose the “first” or “best” element in this priority order. For
-example, if this is the ascending priority, we choose the lowest element. If True, then we
-choose the “last” or “worst” element. This is used, for example, in <a class="reference internal" href="../rules_in_particular/rule_veto.html#whalrus.RuleVeto" title="whalrus.RuleVeto"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleVeto</span></code></a>.</p></li>
+<li><p><strong>x</strong> (<em>list</em><em>, </em><em>set</em><em>, </em><em>etc.</em>) – The list, set, etc where the element is to be chosen.</p></li>
+<li><p><strong>reverse</strong> (<em>bool</em>) – If False (default), then we choose the “first” or “best” element in this priority order. For example, if
+this is the ascending priority, we choose the lowest element. If True, then we choose the “last” or “worst”
+element. This is used, for example, in <a class="reference internal" href="../rules_in_particular/rule_veto.html#whalrus.RuleVeto" title="whalrus.RuleVeto"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleVeto</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the chosen element (or None). When <code class="docutils literal notranslate"><span class="pre">x</span></code> is empty, return None. When <code class="docutils literal notranslate"><span class="pre">x</span></code> has one element, return
-this element.</p>
+<dd class="field-even"><p>The chosen element (or None). When <code class="docutils literal notranslate"><span class="pre">x</span></code> is empty, return None. When <code class="docutils literal notranslate"><span class="pre">x</span></code> has one element, return this
+element.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,12 +291,15 @@ this element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>c</strong> – a candidate.</p></li>
-<li><p><strong>d</strong> – another candidate.</p></li>
+<li><p><strong>c</strong> (<em>candidate</em>) – </p></li>
+<li><p><strong>d</strong> (<em>candidate.</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>0 if <cite>c = d</cite>, -1 if the tie is broken in favor of <cite>c</cite> over <cite>d</cite>, 1 otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -282,38 +308,44 @@ this element.</p>
 <dt id="whalrus.Priority.sort">
 <code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>set<span class="p">, </span>list<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>list<span class="p">]</span><a class="reference internal" href="../../_modules/whalrus/priorities/priority.html#Priority.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Priority.sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort a list, set, etc.</p>
+<p>The original list <code class="docutils literal notranslate"><span class="pre">x</span></code> is not modified.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – the list, set, etc.</p></li>
-<li><p><strong>reverse</strong> – if True, we use the reverse priority order.</p></li>
+<li><p><strong>x</strong> (<em>list</em><em>, </em><em>set</em><em>, </em><em>etc.</em>) – </p></li>
+<li><p><strong>reverse</strong> (<em>bool</em>) – If True, we use the reverse priority order.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a sorted list (or None).</p>
+<dd class="field-even"><p>A sorted list (or None).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list or None</p>
 </dd>
 </dl>
-<p>The original list <code class="docutils literal notranslate"><span class="pre">x</span></code> is not modified.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="whalrus.Priority.sort_pairs_rp">
 <code class="sig-name descname">sort_pairs_rp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>set<span class="p">, </span>list<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">reverse</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>list<span class="p">]</span><a class="reference internal" href="../../_modules/whalrus/priorities/priority.html#Priority.sort_pairs_rp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#whalrus.Priority.sort_pairs_rp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort a list, set, etc. of pairs of candidates (for Ranked Pairs).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – the list, set, etc.</p></li>
-<li><p><strong>reverse</strong> – if True, we use the reverse priority order.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a sorted list (or None).</p>
-</dd>
-</dl>
 <p>By default, it is in the normal priority order for the first element of the pair, and in the reverse priority
 order for the second element of the pair.</p>
 <p>The original list <code class="docutils literal notranslate"><span class="pre">x</span></code> is not modified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>list</em><em>, </em><em>set</em><em>, </em><em>etc.</em>) – </p></li>
+<li><p><strong>reverse</strong> (<em>bool</em>) – If True, we use the reverse priority order.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A sorted list (or None).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list or None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

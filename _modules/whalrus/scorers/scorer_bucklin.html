@@ -189,39 +189,48 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scorer for Bucklin&#39;s rule.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param k: the number of points to distribute. Intuitively: the ``k`` candidates at the highest ranks will receive</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    k : int</span>
+<span class="sd">        The number of points to distribute. Intuitively: the ``k`` candidates at the highest ranks will receive</span>
 <span class="sd">        1 point each. In case of tie, some points may be divided between the tied candidates (see below).</span>
-<span class="sd">    :param unordered_receive_points: bool or None. Whether unordered candidates should receive points (see below).</span>
-<span class="sd">    :param absent_receive_points: bool or None. Whether absent candidates should receive points (see below).</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    unordered_receive_points : bool or None.</span>
+<span class="sd">        Whether unordered candidates should receive points (see below).</span>
+<span class="sd">    absent_receive_points : bool or None.</span>
+<span class="sd">        Whether absent candidates should receive points (see below).</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; ScorerBucklin(BallotOrder(&#39;a &gt; b &gt; c &gt; d &gt; e&#39;),</span>
-<span class="sd">    ...               candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}, k=2).scores_</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 0, &#39;d&#39;: 0, &#39;e&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBucklin(BallotOrder(&#39;a &gt; b &gt; c &gt; d &gt; e&#39;),</span>
+<span class="sd">        ...               candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}, k=2).scores_</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 0, &#39;d&#39;: 0, &#39;e&#39;: 0}</span>
 
 <span class="sd">    In the example below, candidates `a`, `b` and `c` are &quot;ordered&quot;, `d` and `e` are &quot;unordered&quot;,</span>
 <span class="sd">    and `f` and `g` are &quot;absent&quot; in the ballot, meaning that they were not even available when the voter cast</span>
 <span class="sd">    her ballot. By default, we count as if the unordered candidates were below the ordered candidates,</span>
 <span class="sd">    and the absent candidates even lower:</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotOrder(&#39;a &gt; b ~ c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; candidates_election = {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=2).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 1.0, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5, &#39;d&#39;: 0.0, &#39;e&#39;: 0.0, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=4).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 1.0, &#39;b&#39;: 1.0, &#39;c&#39;: 1.0, &#39;d&#39;: 0.5, &#39;e&#39;: 0.5, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
-<span class="sd">    &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=6).scores_as_floats_</span>
-<span class="sd">    {&#39;a&#39;: 1.0, &#39;b&#39;: 1.0, &#39;c&#39;: 1.0, &#39;d&#39;: 1.0, &#39;e&#39;: 1.0, &#39;f&#39;: 0.5, &#39;g&#39;: 0.5}</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotOrder(&#39;a &gt; b ~ c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; candidates_election = {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=2).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 1.0, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5, &#39;d&#39;: 0.0, &#39;e&#39;: 0.0, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=4).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 1.0, &#39;b&#39;: 1.0, &#39;c&#39;: 1.0, &#39;d&#39;: 0.5, &#39;e&#39;: 0.5, &#39;f&#39;: 0.0, &#39;g&#39;: 0.0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=6).scores_as_floats_</span>
+<span class="sd">        {&#39;a&#39;: 1.0, &#39;b&#39;: 1.0, &#39;c&#39;: 1.0, &#39;d&#39;: 1.0, &#39;e&#39;: 1.0, &#39;f&#39;: 0.5, &#39;g&#39;: 0.5}</span>
 
 <span class="sd">    Using the options, unordered and/or absent candidates can always receive 0 point, or even not be mentioned in the</span>
 <span class="sd">    score dictionary at all:</span>
 
-<span class="sd">    &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=6,</span>
-<span class="sd">    ...     unordered_receive_points=False, absent_receive_points=None).scores_</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 1, &#39;d&#39;: 0, &#39;e&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; ScorerBucklin(ballot, candidates=candidates_election, k=6,</span>
+<span class="sd">        ...     unordered_receive_points=False, absent_receive_points=None).scores_</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 1, &#39;d&#39;: 0, &#39;e&#39;: 0}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">unordered_receive_points</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>

@@ -187,13 +187,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A veto (anti-plurality) ballot.</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; print(ballot)</span>
-<span class="sd">    a</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; print(ballot)</span>
+<span class="sd">        a</span>
 
-<span class="sd">    &gt;&gt;&gt; ballot = BallotVeto(None, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; print(ballot)</span>
-<span class="sd">    None</span>
+<span class="sd">        &gt;&gt;&gt; ballot = BallotVeto(None, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; print(ballot)</span>
+<span class="sd">        None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Restrict the ballot</span>
@@ -201,10 +203,12 @@
 
     <span class="k">def</span> <span class="nf">_restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">restricted_candidates</span><span class="p">:</span> <span class="nb">set</span><span class="p">,</span> <span class="n">priority</span><span class="p">:</span> <span class="n">Priority</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;BallotVeto&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).restrict(candidates={&#39;b&#39;})</span>
-<span class="sd">        BallotVeto(&#39;b&#39;, candidates={&#39;b&#39;})</span>
-<span class="sd">        &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).restrict(candidates={&#39;b&#39;, &#39;c&#39;}, priority=Priority.ASCENDING)</span>
-<span class="sd">        BallotVeto(&#39;c&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).restrict(candidates={&#39;b&#39;})</span>
+<span class="sd">            BallotVeto(&#39;b&#39;, candidates={&#39;b&#39;})</span>
+<span class="sd">            &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).restrict(candidates={&#39;b&#39;, &#39;c&#39;}, priority=Priority.ASCENDING)</span>
+<span class="sd">            BallotVeto(&#39;c&#39;, candidates={&#39;b&#39;, &#39;c&#39;})</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">priority</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">restricted_candidates</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">candidates</span><span class="o">=</span><span class="n">restricted_candidates</span><span class="p">)</span>
 
@@ -213,10 +217,12 @@
 
 <div class="viewcode-block" id="BallotVeto.first"><a class="viewcode-back" href="../../../reference/ballots/ballot_veto.html#whalrus.BallotVeto.first">[docs]</a>    <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).first()</span>
-<span class="sd">        &#39;b&#39;</span>
-<span class="sd">        &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first(priority=Priority.ASCENDING)</span>
-<span class="sd">        &#39;b&#39;</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;}).first()</span>
+<span class="sd">            &#39;b&#39;</span>
+<span class="sd">            &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).first(priority=Priority.ASCENDING)</span>
+<span class="sd">            &#39;b&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyUnresolvedReferences</span>
         <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>
@@ -230,11 +236,13 @@
 
 <div class="viewcode-block" id="BallotVeto.last"><a class="viewcode-back" href="../../../reference/ballots/ballot_veto.html#whalrus.BallotVeto.last">[docs]</a>    <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last()</span>
-<span class="sd">        &#39;a&#39;</span>
-<span class="sd">        &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last(candidates={&#39;b&#39;, &#39;c&#39;},</span>
-<span class="sd">        ...                                                  priority=Priority.ASCENDING)</span>
-<span class="sd">        &#39;c&#39;</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last()</span>
+<span class="sd">            &#39;a&#39;</span>
+<span class="sd">            &gt;&gt;&gt; BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}).last(candidates={&#39;b&#39;, &#39;c&#39;},</span>
+<span class="sd">            ...                                                  priority=Priority.ASCENDING)</span>
+<span class="sd">            &#39;c&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyUnresolvedReferences</span>
         <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">Priority</span><span class="o">.</span><span class="n">UNAMBIGUOUS</span><span class="p">)</span>

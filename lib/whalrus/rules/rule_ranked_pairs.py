@@ -30,20 +30,28 @@ class RuleRankedPairs(RuleScoreNumRowSum):
     """
     Ranked Pairs rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix: the default is ``MatrixRankedPairs(tie_break=tie_break)``.
-    :param `**kwargs`: cf. parent class.
-
     The score of a candidate is the number of victories in the ranked pairs matrix.
 
-    >>> rule = RuleRankedPairs(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
-    >>> rule.matrix_.as_array_
-    array([[0, 1, 1],
-           [0, 0, 1],
-           [0, 0, 0]], dtype=object)
-    >>> rule.scores_
-    {'a': 2, 'b': 1, 'c': 0}
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix : Matrix
+        Default: ``MatrixRankedPairs(tie_break=tie_break)``.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleRankedPairs(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
+        >>> rule.matrix_.as_array_
+        array([[0, 1, 1],
+               [0, 0, 1],
+               [0, 0, 0]], dtype=object)
+        >>> rule.scores_
+        {'a': 2, 'b': 1, 'c': 0}
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix: Matrix = None, **kwargs):
@@ -59,9 +67,6 @@ class RuleRankedPairs(RuleScoreNumRowSum):
 
     @cached_property
     def matrix_ranked_pairs_(self):
-        """
-        The ranked pairs matrix.
-
-        :return: alias for :attr:`matrix_`.
+        """Matrix: The ranked pairs matrix. Alias for :attr:`matrix_`.
         """
         return self.matrix_

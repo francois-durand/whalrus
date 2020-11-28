@@ -30,20 +30,28 @@ class RuleCopeland(RuleScoreNumRowSum):
     """
     Copeland's rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix: the default is :class:`MatrixMajority`.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix : Matrix
+        Default: :class:`MatrixMajority`.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     The score of a candidate is the number of victories in the majority matrix.
 
-    >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
-    >>> rule.matrix_.as_array_
-    array([[Fraction(1, 2), 1, 1],
-           [0, Fraction(1, 2), 1],
-           [0, 0, Fraction(1, 2)]], dtype=object)
-    >>> rule.scores_
-    {'a': 2, 'b': 1, 'c': 0}
+        >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
+        >>> rule.matrix_.as_array_
+        array([[Fraction(1, 2), 1, 1],
+               [0, Fraction(1, 2), 1],
+               [0, 0, Fraction(1, 2)]], dtype=object)
+        >>> rule.scores_
+        {'a': 2, 'b': 1, 'c': 0}
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix: Matrix = None, **kwargs):
@@ -55,9 +63,6 @@ class RuleCopeland(RuleScoreNumRowSum):
 
     @cached_property
     def matrix_majority_(self):
-        """
-        The majority matrix.
-
-        :return: alias for :attr:`matrix_`.
+        """Matrix: The majority matrix. This is an alias for :attr:`matrix_`.
         """
         return self.matrix_

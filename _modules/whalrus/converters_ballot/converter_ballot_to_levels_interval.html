@@ -197,46 +197,51 @@
 
 
 <div class="viewcode-block" id="ConverterBallotToLevelsInterval"><a class="viewcode-back" href="../../../reference/converters_ballot/converter_ballot_to_levels_interval.html#whalrus.ConverterBallotToLevelsInterval">[docs]</a><span class="k">class</span> <span class="nc">ConverterBallotToLevelsInterval</span><span class="p">(</span><span class="n">ConverterBallot</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;0</span>
 <span class="sd">    Default converter to a :class:`BallotLevels` using a :class:`ScaleInterval` (interval of real numbers).</span>
 
-<span class="sd">    :param scale: a :class:`ScaleInterval`.</span>
-<span class="sd">    :param borda_unordered_give_points: when converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we</span>
-<span class="sd">        use Borda scores (normalized to the interval [``scale.low``, ``scale.high``]. This parameter decides whether</span>
-<span class="sd">        the unordered candidates of the ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scale : ScaleInterval</span>
+<span class="sd">    borda_unordered_give_points : bool</span>
+<span class="sd">        When converting a :class:`BallotOrder` that is not a :class:`BallotLevels`, we use Borda scores (normalized to</span>
+<span class="sd">        the interval [``scale.low``, ``scale.high``]. This parameter decides whether the unordered candidates of the</span>
+<span class="sd">        ballot give points to the ordered candidates. Cf. :class:`ScorerBorda`.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Typical usages:</span>
 
-<span class="sd">    &gt;&gt;&gt; converter = ConverterBallotToLevelsInterval()</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 1, &#39;b&#39;: .5}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleInterval(-1, 1))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(3, 4)}</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 5, &#39;b&#39;: 4}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleRange(0, 5))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(4, 5)}</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 3, &#39;b&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleFromSet({-1, 0, 3}))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 4)}</span>
-<span class="sd">    &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;},</span>
-<span class="sd">    ...                  scale=ScaleFromList([&#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Excellent&#39;]))</span>
-<span class="sd">    &gt;&gt;&gt; converter(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(3, 4)}</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 0, &#39;c&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 0, &#39;c&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 0, &#39;b&#39;: 1, &#39;c&#39;: 1}</span>
-<span class="sd">    &gt;&gt;&gt; converter(&#39;a &gt; b &gt; c&#39;).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 2), &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToLevelsInterval()</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 1, &#39;b&#39;: .5}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleInterval(-1, 1))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(3, 4)}</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 5, &#39;b&#39;: 4}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleRange(0, 5))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(4, 5)}</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: 3, &#39;b&#39;: 0}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}, scale=ScaleFromSet({-1, 0, 3}))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 4)}</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotLevels({&#39;a&#39;: &#39;Excellent&#39;, &#39;b&#39;: &#39;Very Good&#39;}, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;},</span>
+<span class="sd">        ...                  scale=ScaleFromList([&#39;Bad&#39;, &#39;Medium&#39;, &#39;Good&#39;, &#39;Very Good&#39;, &#39;Excellent&#39;]))</span>
+<span class="sd">        &gt;&gt;&gt; converter(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(3, 4)}</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotOneName(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 0, &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: 0, &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; converter(BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 0, &#39;b&#39;: 1, &#39;c&#39;: 1}</span>
+<span class="sd">        &gt;&gt;&gt; converter(&#39;a &gt; b &gt; c&#39;).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 2), &#39;c&#39;: 0}</span>
 
 <span class="sd">    Options for converting ordered ballots:</span>
 
-<span class="sd">    &gt;&gt;&gt; b = BallotOrder(&#39;a &gt; b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
-<span class="sd">    &gt;&gt;&gt; ConverterBallotToLevelsInterval(borda_unordered_give_points=False)(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 2), &#39;c&#39;: 0}</span>
-<span class="sd">    &gt;&gt;&gt; ConverterBallotToLevelsInterval(borda_unordered_give_points=True)(b).as_dict</span>
-<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: Fraction(3, 4), &#39;c&#39;: Fraction(1, 2)}</span>
+<span class="sd">        &gt;&gt;&gt; b = BallotOrder(&#39;a &gt; b &gt; c&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; ConverterBallotToLevelsInterval(borda_unordered_give_points=False)(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(1, 2), &#39;c&#39;: 0}</span>
+<span class="sd">        &gt;&gt;&gt; ConverterBallotToLevelsInterval(borda_unordered_give_points=True)(b).as_dict</span>
+<span class="sd">        {&#39;a&#39;: 1, &#39;b&#39;: Fraction(3, 4), &#39;c&#39;: Fraction(1, 2)}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Scale</span> <span class="o">=</span> <span class="n">ScaleInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">borda_unordered_give_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>

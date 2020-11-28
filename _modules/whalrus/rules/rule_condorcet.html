@@ -191,31 +191,39 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Condorcet Rule.</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param converter: the default is :class:`ConverterBallotToOrder`.</span>
-<span class="sd">    :param matrix_majority: the majority matrix. Default: :class:`MatrixMajority`.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    converter : ConverterBallot</span>
+<span class="sd">        Default: :class:`ConverterBallotToOrder`.</span>
+<span class="sd">    matrix_majority : Matrix</span>
+<span class="sd">        The majority matrix. Default: :class:`MatrixMajority`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    If there is a Condorcet winner, then it it the winner and all other candidates are tied. If there is no Condorcet</span>
 <span class="sd">    winner, then all candidates are tied.</span>
 
-<span class="sd">    &gt;&gt;&gt; RuleCondorcet(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;]).order_</span>
-<span class="sd">    [{&#39;a&#39;}, {&#39;b&#39;, &#39;c&#39;}]</span>
-<span class="sd">    &gt;&gt;&gt; RuleCondorcet(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;]).order_</span>
-<span class="sd">    [{&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; RuleCondorcet(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;]).order_</span>
+<span class="sd">        [{&#39;a&#39;}, {&#39;b&#39;, &#39;c&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; RuleCondorcet(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;]).order_</span>
+<span class="sd">        [{&#39;a&#39;, &#39;b&#39;, &#39;c&#39;}]</span>
 
 <span class="sd">    More precisely, and in all generality, a candidate is considered a `Condorcet winner` if all the non-diagonal</span>
 <span class="sd">    coefficients on its raw of :attr:`matrix_majority_` are equal to 1. With the default setting of ``matrix_majority =</span>
 <span class="sd">    MatrixMajority()``, the Condorcet winner is necessarily unique when it exists, but that might not be the case</span>
 <span class="sd">    with some more exotic settings:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RuleCondorcet(ballots=[&#39;a ~ b &gt; c&#39;], matrix_majority=MatrixMajority(equal=1))</span>
-<span class="sd">    &gt;&gt;&gt; rule.matrix_majority_.as_array_</span>
-<span class="sd">    array([[Fraction(1, 2), 1, 1],</span>
-<span class="sd">           [1, Fraction(1, 2), 1],</span>
-<span class="sd">           [0, 0, Fraction(1, 2)]], dtype=object)</span>
-<span class="sd">    &gt;&gt;&gt; rule.order_</span>
-<span class="sd">    [{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleCondorcet(ballots=[&#39;a ~ b &gt; c&#39;], matrix_majority=MatrixMajority(equal=1))</span>
+<span class="sd">        &gt;&gt;&gt; rule.matrix_majority_.as_array_</span>
+<span class="sd">        array([[Fraction(1, 2), 1, 1],</span>
+<span class="sd">               [1, Fraction(1, 2), 1],</span>
+<span class="sd">               [0, 0, Fraction(1, 2)]], dtype=object)</span>
+<span class="sd">        &gt;&gt;&gt; rule.order_</span>
+<span class="sd">        [{&#39;a&#39;, &#39;b&#39;}, {&#39;c&#39;}]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">converter</span><span class="p">:</span> <span class="n">ConverterBallot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">matrix_majority</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -228,10 +236,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">matrix_majority_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The majority matrix.</span>
-
-<span class="sd">        :return: the majority matrix (once computed with the given profile).</span>
+        <span class="sd">&quot;&quot;&quot;Matrix: The majority matrix (once computed with the given profile).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_majority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_converted_</span><span class="p">)</span>
 

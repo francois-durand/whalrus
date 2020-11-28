@@ -189,63 +189,70 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Elimination of the last candidates (with a fixed number of candidates to eliminate, or to qualify).</span>
 
-<span class="sd">    :param `*args`: cf. parent class.</span>
-<span class="sd">    :param k: an nonzero integer. The number of eliminated candidates. If this number is negative, then</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args</span>
+<span class="sd">        Cf. parent class.</span>
+<span class="sd">    k : int</span>
+<span class="sd">        A nonzero integer. The number of eliminated candidates. If this number is negative, then</span>
 <span class="sd">        ``len(rule.candidates_) - abs(k)`` candidates are eliminated, i.e. ``abs(k)`` candidates are qualified.</span>
-<span class="sd">    :param `**kwargs`: cf. parent class.</span>
+<span class="sd">    kwargs`</span>
+<span class="sd">        Cf. parent class.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    In the most general syntax, firstly, you define the elimination method:</span>
 
-<span class="sd">    &gt;&gt;&gt; elimination = EliminationLast(k=1)</span>
+<span class="sd">        &gt;&gt;&gt; elimination = EliminationLast(k=1)</span>
 
 <span class="sd">    Secondly, you use it as a callable to load a particular election (rule, profile, candidates):</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; elimination(rule)  # doctest:+ELLIPSIS</span>
-<span class="sd">    &lt;... object at ...&gt;</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; elimination(rule)  # doctest:+ELLIPSIS</span>
+<span class="sd">        &lt;... object at ...&gt;</span>
 
 <span class="sd">    Finally, you can access the computed variables:</span>
 
-<span class="sd">    &gt;&gt;&gt; elimination.eliminated_</span>
-<span class="sd">    {&#39;c&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; elimination.eliminated_</span>
+<span class="sd">        {&#39;c&#39;}</span>
 
 <span class="sd">    Later, if you wish, you can load another election with the same elimination method, and so on.</span>
 
 <span class="sd">    Optionally, you can specify an election (rule, profile, candidates) as soon as the :class:`Elimination` object is</span>
 <span class="sd">    initialized. This allows for one-liners such as:</span>
 
-<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;]), k=1).eliminated_</span>
-<span class="sd">    {&#39;c&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; EliminationLast(rule=RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;]), k=1).eliminated_</span>
+<span class="sd">        {&#39;c&#39;}</span>
 
 <span class="sd">    Typical usage with ``k = 1`` (e.g. for :class:`RuleIRV`):</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
-<span class="sd">    ...                      tie_break=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=1).eliminated_</span>
-<span class="sd">    {&#39;e&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
+<span class="sd">        ...                      tie_break=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; EliminationLast(rule=rule, k=1).eliminated_</span>
+<span class="sd">        {&#39;e&#39;}</span>
 
 <span class="sd">    Typical usage with ``k = -2`` (e.g. for :class:`RuleTwoRound`):</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
-<span class="sd">    ...                      tie_break=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).qualified_</span>
-<span class="sd">    {&#39;a&#39;, &#39;b&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
+<span class="sd">        ...                      tie_break=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).qualified_</span>
+<span class="sd">        {&#39;a&#39;, &#39;b&#39;}</span>
 
 <span class="sd">    Order of elimination:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
-<span class="sd">    ...                      tie_break=Priority.ASCENDING)</span>
-<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).eliminated_order_</span>
-<span class="sd">    [{&#39;c&#39;}, {&#39;d&#39;, &#39;e&#39;}]</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;],</span>
+<span class="sd">        ...                      tie_break=Priority.ASCENDING)</span>
+<span class="sd">        &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).eliminated_order_</span>
+<span class="sd">        [{&#39;c&#39;}, {&#39;d&#39;, &#39;e&#39;}]</span>
 
 <span class="sd">    There must always be at least one eliminated candidate. If it is not possible to eliminate (case ``k`` &gt; 0)  or keep</span>
 <span class="sd">    (case ``k`` &lt; 0) as many candidates as required, then everybody is eliminated:</span>
 
-<span class="sd">    &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=1).eliminated_</span>
-<span class="sd">    {&#39;a&#39;}</span>
-<span class="sd">    &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).eliminated_</span>
-<span class="sd">    {&#39;a&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePlurality(ballots=[&#39;a&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; EliminationLast(rule=rule, k=1).eliminated_</span>
+<span class="sd">        {&#39;a&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; EliminationLast(rule=rule, k=-2).eliminated_</span>
+<span class="sd">        {&#39;a&#39;}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

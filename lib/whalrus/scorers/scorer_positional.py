@@ -29,45 +29,55 @@ class ScorerPositional(Scorer):
     """
     A positional scorer for strict order ballots.
 
-    :param `*args`: cf. parent class.
-    :param points_scheme: the list of points to be attributed to the (first) candidates of a ballot.
-    :param points_fill: points for ordered candidates that have a rank beyond the ``points_scheme``.
-    :param points_unordered: points for the unordered candidates.
-    :param points_absent: points for the absent candidates.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    points_scheme : list
+        The list of points to be attributed to the (first) candidates of a ballot.
+    points_fill : Number or None
+        Points for ordered candidates that have a rank beyond the ``points_scheme``.
+    points_unordered : Number or None
+        Points for the unordered candidates.
+    points_absent : Number or None
+        Points for the absent candidates.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     The top candidate in the ballot receives ``points_scheme[0]`` points, the second one receives ``points_scheme[1]``
     points, etc:
 
-    >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[10, 5, 3]).scores_
-    {'a': 10, 'b': 5, 'c': 3}
+        >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[10, 5, 3]).scores_
+        {'a': 10, 'b': 5, 'c': 3}
 
     The points scheme does not need to have the same length as the ballot:
 
-    >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[3, 2, 1, .5]).scores_
-    {'a': 3, 'b': 2, 'c': 1}
-    >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[3, 2]).scores_
-    {'a': 3, 'b': 2, 'c': 0}
+        >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[3, 2, 1, .5]).scores_
+        {'a': 3, 'b': 2, 'c': 1}
+        >>> ScorerPositional(ballot=BallotOrder('a > b > c'), points_scheme=[3, 2]).scores_
+        {'a': 3, 'b': 2, 'c': 0}
 
     A typical usage of this is k-Approval voting:
 
-    >>> ScorerPositional(ballot=BallotOrder('a > b > c > d > e'), points_scheme=[1, 1]).scores_
-    {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
+        >>> ScorerPositional(ballot=BallotOrder('a > b > c > d > e'), points_scheme=[1, 1]).scores_
+        {'a': 1, 'b': 1, 'c': 0, 'd': 0, 'e': 0}
 
     In the example below, candidates `a`, `b` and `c` are "ordered", `d` is "unordered", and `e` is "absent"
     in the ballot, meaning that `e` was not even available when the voter cast her ballot. The options of the
     scorer provide different ways to take these special cases into account:
 
-    >>> ballot=BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd'})
-    >>> candidates_election = {'a', 'b', 'c', 'd', 'e'}
-    >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2]).scores_
-    {'a': 3, 'b': 2, 'c': 0, 'd': 0}
-    >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2],
-    ...     points_fill=-1, points_unordered=-2, points_absent=-3).scores_
-    {'a': 3, 'b': 2, 'c': -1, 'd': -2, 'e': -3}
-    >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2],
-    ...     points_fill=None, points_unordered=None, points_absent=None).scores_
-    {'a': 3, 'b': 2}
+        >>> ballot=BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd'})
+        >>> candidates_election = {'a', 'b', 'c', 'd', 'e'}
+        >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2]).scores_
+        {'a': 3, 'b': 2, 'c': 0, 'd': 0}
+        >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2],
+        ...     points_fill=-1, points_unordered=-2, points_absent=-3).scores_
+        {'a': 3, 'b': 2, 'c': -1, 'd': -2, 'e': -3}
+        >>> ScorerPositional(ballot, candidates=candidates_election, points_scheme=[3, 2],
+        ...     points_fill=None, points_unordered=None, points_absent=None).scores_
+        {'a': 3, 'b': 2}
     """
 
     def __init__(self, *args,

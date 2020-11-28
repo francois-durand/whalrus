@@ -30,25 +30,32 @@ class RuleSimplifiedDodgson(RuleScoreNum):
     """
     Simplified Dodgson rule.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Default: :class:`MatrixWeightedMajority` with
-        ``antisymmetric=True``.
-    :param `**kwargs`: cf. parent class.
-
     The score of a candidate is the sum of the negative non-diagonal coefficient on its raw of
     :attr:`matrix_weighted_majority_`.
 
-    >>> rule = RuleSimplifiedDodgson(ballots=['a > b > c', 'b > a > c', 'c > a > b'],
-    ...                              weights=[3, 3, 2])
-    >>> rule.matrix_weighted_majority_.as_array_
-    array([[0, Fraction(1, 4), Fraction(1, 2)],
-           [Fraction(-1, 4), 0, Fraction(1, 2)],
-           [Fraction(-1, 2), Fraction(-1, 2), 0]], dtype=object)
-    >>> rule.scores_
-    {'a': 0, 'b': Fraction(-1, 4), 'c': -1}
-    >>> rule.winner_
-    'a'
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_weighted_majority : Matrix
+        Default: :class:`MatrixWeightedMajority` with ``antisymmetric=True``.
+    kwargs
+        Cf. parent class.
+
+    Examples
+    --------
+        >>> rule = RuleSimplifiedDodgson(ballots=['a > b > c', 'b > a > c', 'c > a > b'],
+        ...                              weights=[3, 3, 2])
+        >>> rule.matrix_weighted_majority_.as_array_
+        array([[0, Fraction(1, 4), Fraction(1, 2)],
+               [Fraction(-1, 4), 0, Fraction(1, 2)],
+               [Fraction(-1, 2), Fraction(-1, 2), 0]], dtype=object)
+        >>> rule.scores_
+        {'a': 0, 'b': Fraction(-1, 4), 'c': -1}
+        >>> rule.winner_
+        'a'
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None, **kwargs):
@@ -61,10 +68,7 @@ class RuleSimplifiedDodgson(RuleScoreNum):
 
     @cached_property
     def matrix_weighted_majority_(self):
-        """
-        The weighted majority matrix.
-
-        :return: the weighted majority matrix (once computed with the given profile).
+        """Matrix: The weighted majority matrix (once computed with the given profile).
         """
         return self.matrix_weighted_majority(self.profile_converted_)
 

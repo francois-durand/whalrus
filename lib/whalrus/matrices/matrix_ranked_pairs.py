@@ -32,26 +32,34 @@ class MatrixRankedPairs(Matrix):
     """
     The ranked pairs matrix.
 
-    :param `*args`: cf. parent class.
-    :param converter: the default is :class:`ConverterBallotToOrder`.
-    :param matrix_weighted_majority: a :class:`Matrix`. Algorithm used to compute the weighted majority matrix `W`.
-        Default: :class:`MatrixWeightedMajority`.
-    :param tie_break: a :class:`Priority`. The tie-break used when two duels have the same score.
-    :param `**kwargs`: cf. parent class.
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    converter : ConverterBallot
+        Default: :class:`ConverterBallotToOrder`.
+    matrix_weighted_majority : Matrix
+        Algorithm used to compute the weighted majority matrix `W`. Default: :class:`MatrixWeightedMajority`.
+    tie_break : Priority
+        The tie-break used when two duels have the same score.
+    kwargs
+        Cf. parent class.
 
+    Examples
+    --------
     First, we compute a matrix `W` with the algorithm given in the parameter ``matrix_weighted_majority``.
     The ranked pair matrix represents a graph whose vertices are the candidates. In order to build it, we consider
     all duels between two distinct candidates `(c, d)`, by decreasing order of the value `W(c, d)`. We add an edge
     `(c, d)` in the ranked pairs matrix, except if it creates a cycle in the graph, and we consider the transitive
     closure.
 
-    >>> m = MatrixRankedPairs(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
-    >>> m.edges_order_
-    [('b', 'c'), ('a', 'b'), ('c', 'a')]
-    >>> m.as_array_
-    array([[0, 1, 1],
-           [0, 0, 1],
-           [0, 0, 0]], dtype=object)
+        >>> m = MatrixRankedPairs(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
+        >>> m.edges_order_
+        [('b', 'c'), ('a', 'b'), ('c', 'a')]
+        >>> m.as_array_
+        array([[0, 1, 1],
+               [0, 0, 1],
+               [0, 0, 0]], dtype=object)
 
     In the example example above, the edge `(b, c)` is added. Then it is the edge `(a, b)` which, by transitive closure,
     also adds the edge `(a, c)`. Finally the edge `(c, a)` (representing the victory of `c` over `a` in the weighted
@@ -61,8 +69,8 @@ class MatrixRankedPairs(Matrix):
     victory `(a, ...)` before a victory `(b, ...)`; and we add a victory `(a, c)` before a victory `(a, b)` (because
     `b` is favored over `c`). A very simple but illustrative example:
 
-    >>> MatrixRankedPairs(['a > b > c'], tie_break=Priority.ASCENDING).edges_order_
-    [('a', 'c'), ('a', 'b'), ('b', 'c')]
+        >>> MatrixRankedPairs(['a > b > c'], tie_break=Priority.ASCENDING).edges_order_
+        [('a', 'c'), ('a', 'b'), ('b', 'c')]
     """
 
     def __init__(self, *args, converter: ConverterBallot = None, matrix_weighted_majority: Matrix = None,
@@ -77,10 +85,8 @@ class MatrixRankedPairs(Matrix):
 
     @cached_property
     def matrix_weighted_majority_(self):
-        """
-        The weighted majority matrix (upon which the computation of the Ranked Pairs matrix is based).
-
-        :return: the weighted majority matrix (once computed with the given profile).
+        """Matrix: The weighted majority matrix (upon which the computation of the Ranked Pairs matrix is based), once
+        computed with the given profile).
         """
         return self.matrix_weighted_majority(self.profile_converted_)
 
@@ -94,11 +100,8 @@ class MatrixRankedPairs(Matrix):
 
     @cached_property
     def edges_order_(self) -> list:
-        """
-        The order in which edges should be added (if possible).
-
-        :return: a list of pairs of candidates. E.g. ``[('b', 'c'), ('c', 'a'), ('a', 'b')]``, where ('b', 'c') is the
-            first edge to add.
+        """list: The order in which edges should be added (if possible). It is a list of pairs of candidates.
+        E.g. ``[('b', 'c'), ('c', 'a'), ('a', 'b')]``, where ('b', 'c') is the first edge to add.
         """
         m = self.matrix_weighted_majority_
         return list(chain(*[
