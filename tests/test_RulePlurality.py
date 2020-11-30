@@ -1,6 +1,6 @@
-from whalrus.rules.rule_plurality import RulePlurality
-from whalrus.ballots.ballot_one_name import BallotOneName
-from whalrus.priorities.priority import Priority
+from math import isclose
+from fractions import Fraction
+from whalrus import RulePlurality, BallotOneName, Priority, ScorerVeto, BallotVeto, ScorerPlurality
 
 
 def test():
@@ -15,7 +15,18 @@ def test():
         {'A': 10, 'B': 7, 'C': 0},
         'B > A ~ C > D'
     ]
-    assert plurality(profile).gross_scores_ == {'A': 4, 'B': 2, 'C': 1, 'D': 0}
+    plurality(profile)
+    assert plurality.gross_scores_ == {'A': 4, 'B': 2, 'C': 1, 'D': 0}
+    assert plurality.scores_ == {'A': Fraction(4, 7), 'B': Fraction(2, 7), 'C': Fraction(1, 7), 'D': 0}
+    assert plurality.best_score_ == Fraction(4, 7)
+    assert plurality.worst_score_ == 0
+    assert plurality.average_score_ == Fraction(1, 4)
+    assert plurality.gross_scores_as_floats_ == {'A': 4., 'B': 2., 'C': 1., 'D': 0.}
+    assert plurality.weights_as_floats_ == {'A': 7., 'B': 7., 'C': 7., 'D': 7.}
+    assert isclose(plurality.best_score_as_float_, 4/7)
+    assert plurality.worst_score_as_float_ == 0.
+    assert isclose(plurality.average_score_as_float_, 1/4)
+    assert plurality.order_ == [{'A'}, {'B'}, {'C'}, {'D'}]
     assert plurality(profile, candidates={'A', 'B', 'D'}).gross_scores_ == {'A': 4, 'B': 3, 'D': 0}
 
     profile = [None, None, 'b', 42]
@@ -45,6 +56,15 @@ def test_order_and_trailers():
     assert plurality.trailer_ == 'e'
 
 
+def test_trailer_one_candidate():
+    """
+        >>> plurality = RulePlurality(['a'])
+        >>> plurality.trailer_
+        'a'
+    """
+    pass
+
+
 def test_exact_precision():
     plurality = RulePlurality(ballots=['a', 'b', 'c', 'd'], weights=[35, 30, 25, 10])
     assert sum(plurality.scores_.values()) == 1
@@ -54,6 +74,38 @@ def test_random_tie_break():
     for i in range(5):
         rule = RulePlurality(['a', 'b'], tie_break=Priority.RANDOM)
         assert rule.winner_ == rule.strict_order_[0]
+        assert rule.trailer_ == rule.strict_order_[-1]
+
+
+def test_scorer_not_plurality():
+    """
+    A strange voting rule where the candidate with most vetos wins!
+
+        >>> rule = RulePlurality(scorer=ScorerVeto())
+        >>> rule([BallotVeto('a', candidates={'a', 'b'})]).winner_
+        'a'
+    """
+    pass
+
+
+def test_count_abstention():
+    """
+        >>> rule = RulePlurality(scorer=ScorerPlurality(count_abstention=True))
+        >>> rule(['a', 'a', 'b', None]).scores_
+        {'a': Fraction(1, 2), 'b': Fraction(1, 4)}
+    """
+    pass
+
+
+def test_compare():
+    """
+        >>> rule = RulePlurality()
+        >>> rule.compare_scores(42, 42)
+        0
+        >>> rule.compare_scores(51, 42)
+        1
+    """
+    pass
 
 
 def test_old_plurality_unweighted_winner():

@@ -64,5 +64,13 @@ class RuleCopeland(RuleScoreNumRowSum):
     @cached_property
     def matrix_majority_(self):
         """Matrix: The majority matrix. This is an alias for :attr:`matrix_`.
+
+        Examples
+        --------
+            >>> rule = RuleCopeland(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
+            >>> rule.matrix_majority_.as_array_
+            array([[Fraction(1, 2), 1, 1],
+                   [0, Fraction(1, 2), 1],
+                   [0, 0, Fraction(1, 2)]], dtype=object)
         """
         return self.matrix_
