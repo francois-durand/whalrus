@@ -19,7 +19,7 @@ This file is part of Whalrus.
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import pytest
-from whalrus import BallotOneName
+from whalrus import BallotOneName, Priority
 
 
 def test():
@@ -43,3 +43,13 @@ def test_empty_ballot():
     assert ballot.candidates_not_in_b == {'a', 'b', 'c'}
     assert ballot.first() is None
     assert ballot.last() is None
+
+
+def test_type_error():
+    ballot = BallotOneName('a', candidates={'a', 'b', 'c'})
+    with pytest.raises(TypeError):
+        ballot.restrict(candidates={'a', 'b'}, priority=Priority.ASCENDING, unexpected_argument=42)
+    with pytest.raises(TypeError):
+        ballot.first(candidates={'a', 'b'}, priority=Priority.ASCENDING, unexpected_argument=42)
+    with pytest.raises(TypeError):
+        ballot.last(candidates={'a', 'b'}, priority=Priority.ASCENDING, unexpected_argument=42)

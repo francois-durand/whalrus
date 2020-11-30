@@ -99,3 +99,20 @@ def test_ballot_mixed_types():
     assert not ballot.is_strict
     with pytest.raises(ValueError):
         _ = ballot.as_strict_order
+
+
+def test_type_error():
+    ballot = BallotOrder('a > b > c')
+    with pytest.raises(TypeError):
+        ballot.restrict(candidates={'a', 'b'}, unexpected_argument=42)
+    with pytest.raises(TypeError):
+        ballot.first(candidates={'a', 'b'}, priority=Priority.ASCENDING, include_unordered=True,
+                     unexpected_argument=42)
+    with pytest.raises(TypeError):
+        ballot.last(candidates={'a', 'b'}, priority=Priority.ASCENDING, include_unordered=True,
+                    unexpected_argument=42)
+
+
+def last_of_empty_ballot():
+    ballot = BallotOrder('a > b > c')
+    assert ballot.last(candidates={'d', 'e'}) is None

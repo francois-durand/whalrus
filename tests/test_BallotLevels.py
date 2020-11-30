@@ -18,8 +18,8 @@ This file is part of Whalrus.
     You should have received a copy of the GNU General Public License
     along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus import BallotLevels
-from whalrus import ScaleFromList
+import pytest
+from whalrus import BallotLevels, ScaleFromList, Priority
 
 
 def test():
@@ -52,3 +52,9 @@ def test_empty_ballot():
     ballot = BallotLevels({}, candidates={'a', 'b', 'c'})
     assert ballot.as_dict == {}
     assert repr(ballot.scale) == 'Scale()'
+
+
+def test_type_error():
+    ballot = BallotLevels({'a': 10, 'b': 7, 'c': 0})
+    with pytest.raises(TypeError):
+        ballot.restrict(candidates={'a', 'b'}, unexpected_argument=42)

@@ -39,3 +39,11 @@ def test_empty_ballot():
     ballot = BallotVeto(None, candidates={'a', 'b', 'c'})
     assert ballot.first() is None
     assert ballot.last() is None
+
+
+def test_type_error():
+    ballot = BallotVeto('a', candidates={'a', 'b', 'c'})
+    with pytest.raises(TypeError):
+        ballot.first(candidates={'a', 'b'}, priority=Priority.ASCENDING, unexpected_argument=42)
+    with pytest.raises(TypeError):
+        ballot.last(candidates={'a', 'b'}, priority=Priority.ASCENDING, unexpected_argument=42)
