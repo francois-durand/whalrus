@@ -19,3 +19,13 @@ def test():
 
     assert Scale().ge(1, 1)
     assert not Scale().ge(1, 2)
+
+
+def test_low_high():
+    """
+        >>> print(Scale().low)
+        None
+        >>> print(Scale().high)
+        None
+    """
+    pass

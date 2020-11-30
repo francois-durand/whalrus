@@ -69,6 +69,13 @@ class ScaleRange(Scale):
         return True
 
     def __repr__(self):
+        """
+        Examples
+        --------
+            >>> scale = ScaleRange(low=0, high=5)
+            >>> repr(scale)
+            'ScaleRange(low=0, high=5)'
+        """
         return 'ScaleRange(low=%s, high=%s)' % (self.low, self.high)
 
     # Min, max and sort
