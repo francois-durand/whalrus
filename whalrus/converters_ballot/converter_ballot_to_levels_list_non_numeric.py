@@ -83,6 +83,7 @@ class ConverterBallotToLevelsListNonNumeric(ConverterBallot):
             if all([level in self.scale.levels for level in x.values()]):
                 return BallotLevels(x.as_dict, scale=self.scale)
             else:
+                # Cf. test_ConverterBallotToLevelsListNonNumeric for an explanation of this edge case.
                 logging.warning('Not all levels of ballot ``%s`` are in the scale.' % x)
         x = ConverterBallotToLevelsRange(
             scale=ScaleRange(low=0, high=len(self.scale.levels) - 1),
