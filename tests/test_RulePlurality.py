@@ -71,10 +71,29 @@ def test_exact_precision():
 
 
 def test_random_tie_break():
-    for i in range(5):
-        rule = RulePlurality(['a', 'b'], tie_break=Priority.RANDOM)
-        assert rule.winner_ == rule.strict_order_[0]
-        assert rule.trailer_ == rule.strict_order_[-1]
+    """
+        >>> class PriorityPseudoRandom(Priority):
+        ...     def __init__(self):
+        ...         super().__init__(name='Pseudo-random')
+        ...     def _sort(self, x, reverse):
+        ...         return ['a', 'b', 'c', 'd']
+        ...     def _choice(self, x, reverse):
+        ...         if reverse:
+        ...             return 'c'
+        ...         else:
+        ...             return 'b'
+        >>> rule = RulePlurality(['a', 'b', 'c', 'd'], tie_break=PriorityPseudoRandom())
+        >>> rule.winner_
+        'b'
+        >>> rule.trailer_
+        'c'
+
+    The strict_order_ given by the random tie-break is corrected in order to be consistent with winner_ and trailer_:
+
+        >>> rule.strict_order_
+        ['b', 'a', 'd', 'c']
+    """
+    pass
 
 
 def test_scorer_not_plurality():
