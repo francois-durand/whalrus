@@ -45,6 +45,7 @@ def test_two_elements_or_more():
 
     priority = Priority.RANDOM
     assert repr(priority) == 'Priority.RANDOM'
+    assert priority.compare('a', 'a') == 0
     assert priority.compare('a', 'b') in {-1, 1}
     assert priority.choice(my_set) in my_set
     assert priority.choice(my_set, reverse=True) in my_set
