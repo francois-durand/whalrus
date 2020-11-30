@@ -111,8 +111,3 @@ def test_type_error():
     with pytest.raises(TypeError):
         ballot.last(candidates={'a', 'b'}, priority=Priority.ASCENDING, include_unordered=True,
                     unexpected_argument=42)
-
-
-def last_of_empty_ballot():
-    ballot = BallotOrder('a > b > c')
-    assert ballot.last(candidates={'d', 'e'}) is None

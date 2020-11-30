@@ -371,6 +371,9 @@ class BallotOrder(Ballot):
             c
             >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).last(include_unordered=False))
             b
+            >>> ballot = BallotOrder('a > b', candidates={'a', 'b', 'c', 'd'})
+            >>> print(ballot.last(candidates={'c', 'd'}, include_unordered=False))
+            None
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)
