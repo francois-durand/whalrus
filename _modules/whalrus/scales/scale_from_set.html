@@ -236,6 +236,13 @@
         <span class="k">return</span> <span class="n">one</span> <span class="o">&lt;</span> <span class="n">another</span></div>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; scale = ScaleFromSet({-1, 0, 2})</span>
+<span class="sd">            &gt;&gt;&gt; repr(scale)</span>
+<span class="sd">            &#39;ScaleFromSet(levels={-1, 0, 2})&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;ScaleFromSet(levels=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">set_to_str</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">levels</span><span class="p">))</span></div>
 </pre></div>
 

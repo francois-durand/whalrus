@@ -225,6 +225,14 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">matrix_majority_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Matrix: The majority matrix. This is an alias for :attr:`matrix_`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCopeland(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; rule.matrix_majority_.as_array_</span>
+<span class="sd">            array([[Fraction(1, 2), 1, 1],</span>
+<span class="sd">                   [0, Fraction(1, 2), 1],</span>
+<span class="sd">                   [0, 0, Fraction(1, 2)]], dtype=object)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_</span></div>
 </pre></div>

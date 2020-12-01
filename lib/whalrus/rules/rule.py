@@ -142,7 +142,7 @@ class Rule(DeleteCacheMixin):
             # Caution, the winner is in ``self.cotrailers_``...
             if self.n_candidates_ == 1:
                 # If there is only one candidate, you have no choice.
-                return self.candidates_[0]
+                return list(self.candidates_)[0]
             else:
                 # In other cases, you must be careful not to output the winner (especially for random tie-breaking).
                 return self.tie_break.choice(

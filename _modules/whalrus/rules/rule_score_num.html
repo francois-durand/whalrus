@@ -232,23 +232,23 @@
         <span class="k">return</span> <span class="n">NiceDict</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">best_score_as_float_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Number: The best score as a float. It is the same as :attr:`RuleScore.best_score_`, but converted to a float.</span>
+    <span class="k">def</span> <span class="nf">best_score_as_float_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;float: The best score as a float. It is the same as :attr:`RuleScore.best_score_`, but converted to a float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyTypeChecker</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">worst_score_as_float_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Number: The worst score as a float. It is the same as :attr:`RuleScore.worst_score_`, but converted to a</span>
+    <span class="k">def</span> <span class="nf">worst_score_as_float_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;float: The worst score as a float. It is the same as :attr:`RuleScore.worst_score_`, but converted to a</span>
 <span class="sd">        float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyTypeChecker</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">worst_score_</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">average_score_as_float_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Number: The average score as a float. It is the same as :attr:`average_score_`, but converted to a float.</span>
+    <span class="k">def</span> <span class="nf">average_score_as_float_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;float: The average score as a float. It is the same as :attr:`average_score_`, but converted to a float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyTypeChecker</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">average_score_</span><span class="p">)</span></div>

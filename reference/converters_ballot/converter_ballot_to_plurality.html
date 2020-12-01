@@ -256,6 +256,13 @@
 <span class="go">BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
 </pre></div>
 </div>
+<p>Misc:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ballot</span> <span class="o">=</span> <span class="n">BallotVeto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span> <span class="o">=</span> <span class="n">ConverterBallotToPlurality</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">(</span><span class="n">ballot</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">})</span>
+<span class="go">BallotPlurality(&#39;b&#39;, candidates={&#39;a&#39;, &#39;b&#39;})</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

@@ -446,6 +446,9 @@ argument <code class="docutils literal notranslate"><span class="pre">candidates
 <span class="go">c</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">BallotOrder</span><span class="p">(</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">last</span><span class="p">(</span><span class="n">include_unordered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 <span class="go">b</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ballot</span> <span class="o">=</span> <span class="n">BallotOrder</span><span class="p">(</span><span class="s1">&#39;a &gt; b&#39;</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ballot</span><span class="o">.</span><span class="n">last</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">},</span> <span class="n">include_unordered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="go">None</span>
 </pre></div>
 </div>
 </dd></dl>

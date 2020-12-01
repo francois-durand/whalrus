@@ -228,6 +228,13 @@
 <span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)</span>
 <span class="sd">        &gt;&gt;&gt; converter(&#39;a ~ b &gt; c&#39;)</span>
 <span class="sd">        BallotPlurality(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+
+<span class="sd">    Misc:</span>
+
+<span class="sd">        &gt;&gt;&gt; ballot = BallotVeto(&#39;a&#39;, candidates={&#39;a&#39;, &#39;b&#39;, &#39;c&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; converter = ConverterBallotToPlurality()</span>
+<span class="sd">        &gt;&gt;&gt; converter(ballot, candidates={&#39;a&#39;, &#39;b&#39;, &#39;d&#39;})</span>
+<span class="sd">        BallotPlurality(&#39;b&#39;, candidates={&#39;a&#39;, &#39;b&#39;})</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>

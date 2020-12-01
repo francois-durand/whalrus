@@ -302,6 +302,12 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_as_floats_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NiceDict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;NiceDict: Scores as floats. It is the same as :attr:`scores_`, but converted to floats.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBucklinInstant(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; a &gt; c&#39;, &#39;c &gt; a &gt; b&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; rule.scores_as_floats_</span>
+<span class="sd">            {&#39;a&#39;: (1.0, 3.0), &#39;b&#39;: (1.0, 2.0), &#39;c&#39;: (0.0, 3.0)}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">my_float</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>

@@ -236,12 +236,26 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">rule_condorcet_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Rule: The Condorcet rule (once applied to the profile).</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBlack(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;], weights=[3, 2])</span>
+<span class="sd">            &gt;&gt;&gt; rule.rule_condorcet_.matrix_majority_.as_array_</span>
+<span class="sd">            array([[Fraction(1, 2), 1, 1],</span>
+<span class="sd">                   [0, Fraction(1, 2), 1],</span>
+<span class="sd">                   [0, 0, Fraction(1, 2)]], dtype=object)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">rule_borda_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Rule: The Borda rule (once applied to the profile).</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBlack(ballots=[&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;], weights=[3, 2])</span>
+<span class="sd">            &gt;&gt;&gt; rule.rule_borda_.scores_</span>
+<span class="sd">            {&#39;a&#39;: Fraction(6, 5), &#39;b&#39;: Fraction(7, 5), &#39;c&#39;: Fraction(2, 5)}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 </pre></div>

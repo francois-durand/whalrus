@@ -71,23 +71,23 @@ class RuleScoreNum(RuleScore):
         return NiceDict({c: float(v) for c, v in self.scores_.items()})
 
     @cached_property
-    def best_score_as_float_(self) -> Number:
-        """Number: The best score as a float. It is the same as :attr:`RuleScore.best_score_`, but converted to a float.
+    def best_score_as_float_(self) -> float:
+        """float: The best score as a float. It is the same as :attr:`RuleScore.best_score_`, but converted to a float.
         """
         # noinspection PyTypeChecker
         return float(self.best_score_)
 
     @cached_property
-    def worst_score_as_float_(self) -> Number:
-        """Number: The worst score as a float. It is the same as :attr:`RuleScore.worst_score_`, but converted to a
+    def worst_score_as_float_(self) -> float:
+        """float: The worst score as a float. It is the same as :attr:`RuleScore.worst_score_`, but converted to a
         float.
         """
         # noinspection PyTypeChecker
         return float(self.worst_score_)
 
     @cached_property
-    def average_score_as_float_(self) -> Number:
-        """Number: The average score as a float. It is the same as :attr:`average_score_`, but converted to a float.
+    def average_score_as_float_(self) -> float:
+        """float: The average score as a float. It is the same as :attr:`average_score_`, but converted to a float.
         """
         # noinspection PyTypeChecker
         return float(self.average_score_)

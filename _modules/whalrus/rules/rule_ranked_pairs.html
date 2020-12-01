@@ -229,6 +229,14 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">matrix_ranked_pairs_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Matrix: The ranked pairs matrix. Alias for :attr:`matrix_`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleRankedPairs([&#39;a &gt; b &gt; c&#39;, &#39;b &gt; c &gt; a&#39;, &#39;c &gt; a &gt; b&#39;], weights=[4, 3, 2])</span>
+<span class="sd">            &gt;&gt;&gt; rule.matrix_ranked_pairs_.as_array_</span>
+<span class="sd">            array([[0, 1, 1],</span>
+<span class="sd">                   [0, 0, 1],</span>
+<span class="sd">                   [0, 0, 0]], dtype=object)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_</span></div>
 </pre></div>

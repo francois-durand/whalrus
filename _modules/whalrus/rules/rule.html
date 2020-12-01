@@ -303,7 +303,7 @@
             <span class="c1"># Caution, the winner is in ``self.cotrailers_``...</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_candidates_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># If there is only one candidate, you have no choice.</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># In other cases, you must be careful not to output the winner (especially for random tie-breaking).</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tie_break</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>

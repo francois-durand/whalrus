@@ -114,5 +114,14 @@ class RuleBucklinByRounds(RuleScoreNum):
     @cached_property
     def detailed_scores_as_floats_(self) -> list:
         """list: Detailed scores, as floats. It is the same as :attr:`detailed_scores_`, but converted to floats.
+
+        Examples
+        --------
+        >>> rule = RuleBucklinByRounds(['a > b > c > d', 'b > a > c > d',
+        ...                             'c > a > b > d', 'd > a > b > c'])
+        >>> rule.detailed_scores_as_floats_[0]
+        {'a': 0.25, 'b': 0.25, 'c': 0.25, 'd': 0.25}
+        >>> rule.detailed_scores_as_floats_[1]
+        {'a': 1.0, 'b': 0.5, 'c': 0.25, 'd': 0.25}
         """
         return [NiceDict({c: float(v) for c, v in counting_round.items()}) for counting_round in self.detailed_scores_]

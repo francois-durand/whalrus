@@ -526,7 +526,7 @@
         <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">convert_number</span><span class="p">(</span><span class="n">Fraction</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">Fraction</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 </pre></div>
 

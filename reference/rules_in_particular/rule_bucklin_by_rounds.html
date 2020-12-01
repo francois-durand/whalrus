@@ -279,7 +279,7 @@ round, its score is the proportion of voters who rank it first or second. Etc. M
 <dd><p>The average score as a float. It is the same as <a class="reference internal" href="#whalrus.RuleBucklinByRounds.average_score_" title="whalrus.RuleBucklinByRounds.average_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">average_score_</span></code></a>, but converted to a float.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Number</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -290,7 +290,7 @@ round, its score is the proportion of voters who rank it first or second. Etc. M
 <dd><p>The best score as a float. It is the same as <a class="reference internal" href="../rules_in_general/rule_score.html#whalrus.RuleScore.best_score_" title="whalrus.RuleScore.best_score_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleScore.best_score_</span></code></a>, but converted to a float.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Number</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -353,6 +353,15 @@ etc.</p>
 <dt id="whalrus.RuleBucklinByRounds.detailed_scores_as_floats_">
 <em class="property">property </em><code class="sig-name descname">detailed_scores_as_floats_</code><a class="headerlink" href="#whalrus.RuleBucklinByRounds.detailed_scores_as_floats_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detailed scores, as floats. It is the same as <a class="reference internal" href="#whalrus.RuleBucklinByRounds.detailed_scores_" title="whalrus.RuleBucklinByRounds.detailed_scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">detailed_scores_</span></code></a>, but converted to floats.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleBucklinByRounds</span><span class="p">([</span><span class="s1">&#39;a &gt; b &gt; c &gt; d&#39;</span><span class="p">,</span> <span class="s1">&#39;b &gt; a &gt; c &gt; d&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                            <span class="s1">&#39;c &gt; a &gt; b &gt; d&#39;</span><span class="p">,</span> <span class="s1">&#39;d &gt; a &gt; b &gt; c&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">detailed_scores_as_floats_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">{&#39;a&#39;: 0.25, &#39;b&#39;: 0.25, &#39;c&#39;: 0.25, &#39;d&#39;: 0.25}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">detailed_scores_as_floats_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">{&#39;a&#39;: 1.0, &#39;b&#39;: 0.5, &#39;c&#39;: 0.25, &#39;d&#39;: 0.25}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list</p>
@@ -448,7 +457,7 @@ choice of the tie-breaking rule in <a class="reference internal" href="#whalrus.
 float.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Number</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
