@@ -141,6 +141,12 @@ class RuleBucklinInstant(RuleScore):
     @cached_property
     def scores_as_floats_(self) -> NiceDict:
         """NiceDict: Scores as floats. It is the same as :attr:`scores_`, but converted to floats.
+
+        Examples
+        --------
+            >>> rule = RuleBucklinInstant(ballots=['a > b > c', 'b > a > c', 'c > a > b'])
+            >>> rule.scores_as_floats_
+            {'a': (1.0, 3.0), 'b': (1.0, 2.0), 'c': (0.0, 3.0)}
         """
         def my_float(x):
             try:

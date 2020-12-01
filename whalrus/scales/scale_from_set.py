@@ -75,4 +75,11 @@ class ScaleFromSet(ScaleFromList):
         return one < another
 
     def __repr__(self):
+        """
+        Examples
+        --------
+            >>> scale = ScaleFromSet({-1, 0, 2})
+            >>> repr(scale)
+            'ScaleFromSet(levels={-1, 0, 2})'
+        """
         return 'ScaleFromSet(levels=%s)' % set_to_str(set(self.levels))

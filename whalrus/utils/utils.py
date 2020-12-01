@@ -365,5 +365,5 @@ def my_division(x: Number, y: Number, divide_by_zero: Number = None):
         return x / y
     try:
         return convert_number(Fraction(x) / Fraction(y))
-    except TypeError:
+    except ValueError:
         raise NotImplementedError

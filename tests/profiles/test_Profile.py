@@ -68,3 +68,14 @@ def test():
     assert str(profile) == 'Alice (2): a > b ~ c\nNone (1): b > c > a\nNone (1): c > a > b'
     profile *= 3
     assert str(profile) == 'Alice (6): a > b ~ c\nNone (3): b > c > a\nNone (3): c > a > b'
+
+
+def test_remove():
+    """
+        >>> profile = Profile(['a > b', 'b > a', 'b > a'], voters=['Alice', 'Bob', 'Cate'])
+        >>> profile.remove(ballot='b > a', voter='Cate')
+        >>> print(profile)
+        Alice: a > b
+        Bob: b > a
+    """
+    pass

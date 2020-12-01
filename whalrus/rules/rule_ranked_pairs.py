@@ -68,5 +68,13 @@ class RuleRankedPairs(RuleScoreNumRowSum):
     @cached_property
     def matrix_ranked_pairs_(self):
         """Matrix: The ranked pairs matrix. Alias for :attr:`matrix_`.
+
+        Examples
+        --------
+            >>> rule = RuleRankedPairs(['a > b > c', 'b > c > a', 'c > a > b'], weights=[4, 3, 2])
+            >>> rule.matrix_ranked_pairs_.as_array_
+            array([[0, 1, 1],
+                   [0, 0, 1],
+                   [0, 0, 0]], dtype=object)
         """
         return self.matrix_

@@ -198,13 +198,29 @@ class BallotOrder(Ballot):
         return item in self.candidates_in_b
 
     def __eq__(self, other: object) -> bool:
+        """Equality test.
+
+        Parameters
+        ----------
+        other : object
+
+        Returns
+        -------
+        bool
+            True if the two objects are equal. In particular, they must have the same type.
+
+        Examples
+        --------
+            >>> ballot = BallotOrder('a > b > c')
+            >>> ballot == 'a > b > c'
+            False
+            >>> ballot == BallotOrder('a > b > c', candidates={'a', 'b', 'c', 'd'})
+            False
+        """
         if type(self) != type(other):
             return False
         # noinspection PyProtectedMember,PyUnresolvedReferences
         return self.candidates == other.candidates and self._internal_representation == other._internal_representation
-
-    def __hash__(self) -> int:
-        return hash((self.candidates, self._internal_representation))
 
     # Representation
     # ==============
@@ -355,6 +371,9 @@ class BallotOrder(Ballot):
             c
             >>> print(BallotOrder('a > b', candidates={'a', 'b', 'c'}).last(include_unordered=False))
             b
+            >>> ballot = BallotOrder('a > b', candidates={'a', 'b', 'c', 'd'})
+            >>> print(ballot.last(candidates={'c', 'd'}, include_unordered=False))
+            None
         """
         # noinspection PyUnresolvedReferences
         priority = kwargs.pop('priority', Priority.UNAMBIGUOUS)

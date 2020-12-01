@@ -67,6 +67,13 @@ class ConverterBallotToPlurality(ConverterBallot):
         >>> converter = ConverterBallotToPlurality(priority=Priority.ASCENDING)
         >>> converter('a ~ b > c')
         BallotPlurality('a', candidates={'a', 'b', 'c'})
+
+    Misc:
+
+        >>> ballot = BallotVeto('a', candidates={'a', 'b', 'c'})
+        >>> converter = ConverterBallotToPlurality()
+        >>> converter(ballot, candidates={'a', 'b', 'd'})
+        BallotPlurality('b', candidates={'a', 'b'})
     """
 
     def __init__(self,

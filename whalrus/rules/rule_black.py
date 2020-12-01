@@ -75,11 +75,25 @@ class RuleBlack(RuleSequentialTieBreak):
     @cached_property
     def rule_condorcet_(self):
         """Rule: The Condorcet rule (once applied to the profile).
+
+        Examples
+        --------
+            >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a'], weights=[3, 2])
+            >>> rule.rule_condorcet_.matrix_majority_.as_array_
+            array([[Fraction(1, 2), 1, 1],
+                   [0, Fraction(1, 2), 1],
+                   [0, 0, Fraction(1, 2)]], dtype=object)
         """
         return self.rules_[0]
 
     @cached_property
     def rule_borda_(self):
         """Rule: The Borda rule (once applied to the profile).
+
+        Examples
+        --------
+            >>> rule = RuleBlack(ballots=['a > b > c', 'b > c > a'], weights=[3, 2])
+            >>> rule.rule_borda_.scores_
+            {'a': Fraction(6, 5), 'b': Fraction(7, 5), 'c': Fraction(2, 5)}
         """
         return self.rules_[1]

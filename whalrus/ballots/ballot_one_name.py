@@ -97,13 +97,32 @@ class BallotOneName(Ballot):
         return NiceSet(self.candidates - {self.candidate})
 
     def __eq__(self, other: object) -> bool:
+        """Equality test.
+
+        Parameters
+        ----------
+        other : object
+
+        Returns
+        -------
+        bool
+            True iff this ballot is equal to `other`. In particular, they must have the same type.
+
+        Examples
+        --------
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}) == 'a'
+            False
+
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}) == BallotOneName('a', candidates={'a', 'b'})
+            False
+
+            >>> BallotOneName('a', candidates={'a', 'b', 'c'}) == BallotOneName('b', candidates={'a', 'b', 'c'})
+            False
+        """
         if type(self) != type(other):
             return False
         # noinspection PyUnresolvedReferences
         return self.candidates == other.candidates and self.candidate == other.candidate
-
-    def __hash__(self) -> int:
-        return hash((self.candidates, self.candidate))
 
     # Representation
     # ==============

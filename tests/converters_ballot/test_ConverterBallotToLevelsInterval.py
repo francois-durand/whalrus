@@ -1,6 +1,4 @@
-from whalrus.converters_ballot.converter_ballot_to_levels_interval import ConverterBallotToLevelsInterval
-from whalrus.ballots.ballot_levels import BallotLevels
-from whalrus.scales.scale_interval import ScaleInterval
+from whalrus import ConverterBallotToLevelsInterval, BallotLevels, ScaleInterval, BallotOneName, BallotVeto
 from fractions import Fraction
 
 
@@ -14,3 +12,16 @@ def test():
         {'a': 1, 'b': Fraction(1, 2), 'c': 0}, scale=ScaleInterval(low=0, high=1))
     assert converter({'a': 'A', 'b': 'B', 'c': 'C'}) == BallotLevels(
         {'a': 0, 'b': Fraction(1, 2), 'c': 1}, scale=ScaleInterval(low=0, high=1))
+
+
+def test_ballot_one_name_abstention():
+    """
+        >>> converter = ConverterBallotToLevelsInterval()
+        >>> ballot = BallotOneName(None, candidates={'a', 'b', 'c'})
+        >>> converter(ballot)
+        BallotLevels({}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0, high=1))
+        >>> ballot = BallotVeto(None, candidates={'a', 'b', 'c'})
+        >>> converter(ballot)
+        BallotLevels({}, candidates={'a', 'b', 'c'}, scale=ScaleInterval(low=0, high=1))
+    """
+    pass

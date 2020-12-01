@@ -61,6 +61,12 @@ class Priority:
         self.name = name
 
     def __str__(self) -> str:
+        """
+        Examples
+        --------
+            >>> str(Priority.ASCENDING)
+            'Ascending'
+        """
         return self.name
 
     def compare(self, c, d) -> int:
@@ -246,7 +252,7 @@ class PriorityAbstain(Priority):
         return 'Priority.ABSTAIN'
 
     def compare(self, c, d) -> int:
-        raise None
+        return None
 
     def _choice(self, x: Union[set, list], reverse: bool) -> object:
         return None
