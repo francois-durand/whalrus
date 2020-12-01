@@ -2,6 +2,18 @@
 History
 =======
 
+-----------------------------------------
+0.4.6 (2020-12-01): Improve test coverage
+-----------------------------------------
+
+* Reach 100% of test coverage. Cf. https://codecov.io/gh/francois-durand/whalrus.
+* Convert documentation to Numpy style. The documentation is not changed much in html format, but is more readable in
+  plain text.
+* Remove hash function for ``BallotOneName`` and ``BallotOrder``. It had a bug, and fixing it would have implied to
+  change all sets of candidates to frozen sets. Since this function is non-essential, we decided to remove it instead.
+* Fix bug in ``MatrixWeightedMajority`` when using the option ``ordered_vs_absent`` or ``absent_vs_ordered``.
+* Fix bug in ``Rule.trailer_`` when there is only one candidate in the election.
+
 ---------------------------------------------------
 0.4.5 (2020-11-26): Fix Missing Files in Deployment
 ---------------------------------------------------
