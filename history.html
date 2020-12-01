@@ -96,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#improve-test-coverage">0.4.6 (2020-12-01): Improve test coverage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-missing-files-in-deployment">0.4.5 (2020-11-26): Fix Missing Files in Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-pypi-deployment">0.4.4 (2020-11-26): Fix PyPI deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#github-actions">0.4.3 (2020-11-26): GitHub Actions</a></li>
@@ -199,6 +200,18 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="improve-test-coverage">
+<h2>0.4.6 (2020-12-01): Improve test coverage<a class="headerlink" href="#improve-test-coverage" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Reach 100% of test coverage. Cf. <a class="reference external" href="https://codecov.io/gh/francois-durand/whalrus">https://codecov.io/gh/francois-durand/whalrus</a>.</p></li>
+<li><p>Convert documentation to Numpy style. The documentation is not changed much in html format, but is more readable in
+plain text.</p></li>
+<li><p>Remove hash function for <code class="docutils literal notranslate"><span class="pre">BallotOneName</span></code> and <code class="docutils literal notranslate"><span class="pre">BallotOrder</span></code>. It had a bug, and fixing it would have implied to
+change all sets of candidates to frozen sets. Since this function is non-essential, we decided to remove it instead.</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">MatrixWeightedMajority</span></code> when using the option <code class="docutils literal notranslate"><span class="pre">ordered_vs_absent</span></code> or <code class="docutils literal notranslate"><span class="pre">absent_vs_ordered</span></code>.</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">Rule.trailer_</span></code> when there is only one candidate in the election.</p></li>
+</ul>
+</div>
 <div class="section" id="fix-missing-files-in-deployment">
 <h2>0.4.5 (2020-11-26): Fix Missing Files in Deployment<a class="headerlink" href="#fix-missing-files-in-deployment" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
