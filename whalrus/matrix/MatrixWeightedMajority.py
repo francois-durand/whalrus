@@ -180,10 +180,10 @@ class MatrixWeightedMajority(Matrix):
                     if self.ordered_vs_absent is not None or self.absent_vs_ordered is not None:
                         for d in absent:
                             if self.ordered_vs_absent is not None:
-                                gross[(c, d)] += weight + self.ordered_vs_absent
+                                gross[(c, d)] += weight * self.ordered_vs_absent
                                 weights[(c, d)] += weight
                             if self.absent_vs_ordered is not None:
-                                gross[(d, c)] += weight + self.absent_vs_ordered
+                                gross[(d, c)] += weight * self.absent_vs_ordered
                                 weights[(d, c)] += weight
             if (self.unordered_vs_unordered is not None
                     or self.unordered_vs_absent is not None

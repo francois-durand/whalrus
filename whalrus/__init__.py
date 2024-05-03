@@ -112,8 +112,14 @@ from .rule.RuleVeto import RuleVeto
 
 # Voting Rules 3: Multi-winner (committee) voting rules
 from .rule_committee.RuleCommittee import RuleCommittee
+from .rule_committee.RuleCommitteeScoring import RuleCommitteeScoring
 from .rule_committee.RuleKBest import RuleKBest
-from .rule_committee.RuleChamberlinCourant import RuleChamberlainCourant
+from .rule_committee.RuleKBestBorda import RuleKBestBorda
+from .rule_committee.RuleKBestApproval import RuleKBestApproval
+from .rule_committee.RuleChamberlinCourant import RuleChamberlinCourant
+from .rule_committee.RuleBloc import RuleBloc
+from .rule_committee.RuleSNTV import RuleSNTV
+from .rule_committee.RulePAV import RulePAV
 
 # Examples of documentation
 from .SubPackage1.MyClass1 import MyClass1
