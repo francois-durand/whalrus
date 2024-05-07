@@ -39,7 +39,7 @@ class PriorityLifted(Priority):
     def compare(self, c, d) -> int:
         return self.base_priority.compare(c, d)
 
-    def choose_committee(self, x: Union[set, list], reverse: bool = False) -> object:
+    def choose(self, x: Union[set, list], reverse: bool = False) -> object:
         return self.base_priority.choice(x, reverse)
 
     def sort(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:

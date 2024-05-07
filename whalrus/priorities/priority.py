@@ -69,6 +69,16 @@ class Priority:
         """
         return self.name
 
+    def compare_committees(self, s, t) -> int:
+        """
+        Compare two committees.
+
+        :param s: a committee.
+        :param t: a committee.
+        :return: 0 if `s == t`, -1 if the tie is broken in favor of `s` over `t`, 1 otherwise.
+        """
+        raise NotImplementedError
+
     def compare(self, c, d) -> int:
         """
         Compare two candidates.
@@ -83,7 +93,56 @@ class Priority:
         int
             0 if `c = d`, -1 if the tie is broken in favor of `c` over `d`, 1 otherwise.
         """
-        raise NotImplementedError
+        raise self.compare_committees({c},{d})
+
+    def sort_committees(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:
+        """
+        Sort a list, set, etc. of committees.
+
+        :param x: the list, set, etc.
+        :param reverse: if True, we use the reverse priority order.
+        :return: a sorted list (or None).
+
+        The original list ``x`` is not modified.
+        """
+        if len(x) <= 1:
+            return list(x)
+        return self._sort_committees(x, reverse=reverse)
+
+    def _sort_committees(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        """
+        Auxiliary function for :meth:`sort`.
+
+        Here, ``x`` is assumed to have at least 2 elements.
+        """
+        return sorted(x, key=cmp_to_key(self.compare_committees), reverse=reverse)
+
+    def choose_committee(self, x: Union[set, list], reverse: bool = False) -> Union[set, None]:
+        """
+        Choose an element from a list, set, etc. of committees.
+
+        :param x: the list, set, etc where the committee is to be chosen.
+        :param reverse: if False (default), then we choose the "first" or "best" committee in this priority order. If
+            True, then we choose the "last" or "worst" committee.
+        :return: the chosen committee (or None). When ``x`` is empty, return None. When ``x`` has one element, return
+            this element.
+        """
+        if len(x) == 0:
+            return None
+        if len(x) == 1:
+            return list(x)[0]
+        return self._choose_committee(x, reverse=reverse)
+
+    def _choose_committee(self, x: Union[set, list], reverse: bool) -> set:
+        """
+        Auxiliary function for :meth:`choose`.
+
+        Here, ``x`` is assumed to have at least 2 elements.
+        """
+        if reverse:
+            return max(x, key=cmp_to_key(self.compare_committees))
+        else:
+            return min(x, key=cmp_to_key(self.compare_committees))
 
     def choice(self, x: Union[set, list], reverse: bool = False) -> object:
         """
@@ -266,80 +325,6 @@ class PriorityAbstain(Priority):
 
 Priority.ABSTAIN = PriorityAbstain()
 
-
-class PriorityAscending(Priority):
-    """
-    Ascending order (lowest is favoured).
-
-    Examples
-    --------
-        >>> Priority.ASCENDING.choice({'a', 'b'})
-        'a'
-        >>> Priority.ASCENDING.sort({'a', 'b'})
-        ['a', 'b']
-        >>> Priority.ASCENDING.sort_pairs_rp({('a', 'b'), ('b', 'a'), ('a', 'c')})
-        [('a', 'c'), ('a', 'b'), ('b', 'a')]
-    """
-
-    def __init__(self):
-        super().__init__(name='Ascending')
-
-    def __repr__(self):
-        return 'Priority.ASCENDING'
-
-    def compare(self, c, d) -> int:
-        if c == d:
-            return 0
-        return -1 if c < d else 1
-
-    def _choice(self, x: Union[set, list], reverse: bool) -> object:
-        if reverse:
-            return max(x)
-        return min(x)
-
-    def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
-        return sorted(x, reverse=reverse)
-
-
-Priority.ASCENDING = PriorityAscending()
-
-
-class PriorityDescending(Priority):
-    """
-    Descending order (highest is favoured).
-
-    Examples
-    --------
-        >>> Priority.DESCENDING.choice({'a', 'b'})
-        'b'
-        >>> Priority.DESCENDING.sort({'a', 'b'})
-        ['b', 'a']
-        >>> Priority.DESCENDING.sort_pairs_rp({('a', 'b'), ('b', 'a'), ('a', 'c')})
-        [('b', 'a'), ('a', 'b'), ('a', 'c')]
-    """
-
-    def __init__(self):
-        super().__init__(name='Descending')
-
-    def __repr__(self):
-        return 'Priority.DESCENDING'
-
-    def compare(self, c, d) -> int:
-        if c == d:
-            return 0
-        return 1 if c < d else -1
-
-    def _choice(self, x: Union[set, list], reverse: bool) -> object:
-        if reverse:
-            return min(x)
-        return max(x)
-
-    def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
-        return sorted(x, reverse=not reverse)
-
-
-Priority.DESCENDING = PriorityDescending()
-
 class PriorityCandidate(Priority):
     """
     A priority setting designed only to break ties between candidates, not between committees.
@@ -367,6 +352,74 @@ class PriorityCandidate(Priority):
             return self.compare(list(s)[0], list(t)[0])
         else:
             raise ValueError("%s cannot compare %r and %r." % (self, s, t))
+
+class PriorityAscending(PriorityCandidate):
+    """
+    Ascending order on candidates (lowest is favoured).
+
+    >>> Priority.ASCENDING.choose({'a', 'b'})
+    'a'
+    >>> Priority.ASCENDING.sort({'a', 'b'})
+    ['a', 'b']
+    >>> Priority.ASCENDING.sort_pairs_rp({('a', 'b'), ('b', 'a'), ('a', 'c')})
+    [('a', 'c'), ('a', 'b'), ('b', 'a')]
+    """
+
+    def __init__(self):
+        super().__init__(name='Ascending')
+
+    def __repr__(self):
+        return 'Priority.ASCENDING'
+
+    def compare(self, c, d) -> int:
+        if c == d:
+            return 0
+        return -1 if c < d else 1
+
+    def _choose(self, x: Union[set, list], reverse: bool) -> object:
+        if reverse:
+            return max(x)
+        return min(x)
+
+    def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        return sorted(x, reverse=reverse)
+
+
+Priority.ASCENDING = PriorityAscending()
+
+
+class PriorityDescending(Priority):
+    """
+    Descending order on candidates (highest is favoured).
+
+    >>> Priority.DESCENDING.choose({'a', 'b'})
+    'b'
+    >>> Priority.DESCENDING.sort({'a', 'b'})
+    ['b', 'a']
+    >>> Priority.DESCENDING.sort_pairs_rp({('a', 'b'), ('b', 'a'), ('a', 'c')})
+    [('b', 'a'), ('a', 'b'), ('a', 'c')]
+    """
+
+    def __init__(self):
+        super().__init__(name='Descending')
+
+    def __repr__(self):
+        return 'Priority.DESCENDING'
+
+    def compare(self, c, d) -> int:
+        if c == d:
+            return 0
+        return 1 if c < d else -1
+
+    def _choose(self, x: Union[set, list], reverse: bool) -> object:
+        if reverse:
+            return min(x)
+        return max(x)
+
+    def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
+        return sorted(x, reverse=not reverse)
+
+Priority.DESCENDING = PriorityDescending()
 
 class PriorityRandom(Priority):
     """
