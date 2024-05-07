@@ -24,6 +24,10 @@ from .priorities.priority import PriorityAbstain
 from .priorities.priority import PriorityAscending
 from .priorities.priority import PriorityDescending
 from .priorities.priority import PriorityRandom
+from .priorities.priority import PriorityCandidate
+from .priorities.priority_lifted import PriorityLifted
+from .priorities.priority_lifted_leximax import PriorityLiftedLeximax
+from .priorities.priority_lifted_leximin import PriorityLiftedLeximin
 
 # Ballots
 from .ballots.ballot import Ballot
@@ -105,3 +109,14 @@ from .rules.rule_schulze import RuleSchulze
 from .rules.rule_simplified_dodgson import RuleSimplifiedDodgson
 from .rules.rule_two_round import RuleTwoRound
 from .rules.rule_veto import RuleVeto
+
+# Voting Rules 3: Multi-winner (committee) voting rules
+from .rules_committee.rule_committee import RuleCommittee
+from .rules_committee.rule_committee_scoring import RuleCommitteeScoring
+from .rules_committee.rule_k_best import RuleKBest
+from .rules_committee.rule_k_best_borda import RuleKBestBorda
+from .rules_committee.rule_k_best_approval import RuleKBestApproval
+from .rules_committee.rule_chamberlin_courant import RuleChamberlinCourant
+from .rules_committee.rule_bloc import RuleBloc
+from .rules_committee.rule_sntv import RuleSNTV
+from .rules_committee.rule_pav import RulePAV

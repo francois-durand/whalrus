@@ -340,6 +340,33 @@ class PriorityDescending(Priority):
 
 Priority.DESCENDING = PriorityDescending()
 
+class PriorityCandidate(Priority):
+    """
+    A priority setting designed only to break ties between candidates, not between committees.
+
+    For examples, cf. :class:`PriorityAscending` and :class:`PriorityDescending`.
+    """
+    # Main difference between :class`Priority` and :class:`PriorityCandidate`:
+    #
+    #   * In :class:`Priority`, you have to implement `compare_committees`, and `compare` is deduced from it.
+    #   * In :class:`PriorityCandidate`, you have to implement `compare`, and `compare_committees` is deduced from it
+    #     (only for committees of size 1).
+
+    def compare(self, c, d):
+        raise NotImplementedError
+
+    def compare_committees(self, s, t) -> int:
+        """
+        Compare two committees.
+
+        :param s: a committee.
+        :param t: a committee.
+        :return: 0 if `s == t`, -1 if the tie is broken in favor of `s` over `t`, 1 otherwise.
+        """
+        if len(s) == len(t) == 1:
+            return self.compare(list(s)[0], list(t)[0])
+        else:
+            raise ValueError("%s cannot compare %r and %r." % (self, s, t))
 
 class PriorityRandom(Priority):
     """

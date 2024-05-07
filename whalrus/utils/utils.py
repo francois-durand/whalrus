@@ -4,7 +4,7 @@ from bisect import bisect_left
 from fractions import Fraction
 from decimal import Decimal
 from numbers import Number
-
+from functools import total_ordering
 
 def _cache(f):
     """
@@ -185,6 +185,38 @@ class NiceSet(set):
         except TypeError:
             return str(set(self))
 
+def _lexicographic_cmp(s1, s2):
+    """
+    Compare two sets by lexicographic order.
+
+    :param s1: A set.
+    :param s2: A set.
+    :return: -1, 0 or 1 depending on the comparison.
+    """
+    for a, b in zip(sorted(s1), sorted(s2)):
+        if a != b:
+            return -1 if a < b else 1
+    return len(s1) - len(s2)
+
+@total_ordering
+class NiceFrozenSet(frozenset):
+    """
+    An immutable set that prints in order (when the elements are comparable).
+
+    >>> my_set = NiceFrozenSet({'b', 'a', 'c'})
+    >>> my_set
+    {'a', 'b', 'c'}
+    """
+
+    def __repr__(self):
+        try:
+            return '{' + str(sorted(self))[1:-1] + '}'
+        except TypeError:
+            return str(set(self))
+
+    def __lt__(self, other):
+        return True if _lexicographic_cmp(self, other) < 0 else False
+
 
 def dict_to_items(d: dict) -> list:
     """
@@ -247,6 +279,8 @@ class NiceDict(dict):
 
     def __repr__(self) -> str:
         return dict_to_str(self)
+
+
 
 
 def take_closest(my_list, my_number):
