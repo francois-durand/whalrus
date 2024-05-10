@@ -1,5 +1,6 @@
 from whalrus import RuleKBestBorda, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
+import profile_Examples
 
 
 
@@ -38,6 +39,9 @@ def test():
     # {{'b', 'd'}, {'c', 'd'}}
     # >>> cc.trailing_committee_
     # {'c', 'd'}
+
+    rule = RuleKBestBorda(profile_Examples.p1, committee_size = profile_Examples.k1)
+    assert rule.cowinning_committees_ == {frozenset({'b','c'}), frozenset({'b', 'd'})}
 
 if __name__ == '__main__':
     test()

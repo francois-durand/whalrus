@@ -1,6 +1,6 @@
 from whalrus import RuleChamberlinCourant, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
-
+import profile_Examples
 
 
 def test():
@@ -31,6 +31,9 @@ def test():
 #     {{'b', 'd'}, {'c', 'd'}}
 #     >>> cc.trailing_committee_
 #     {'c', 'd'}
+
+    rule = RuleChamberlinCourant(profile_Examples.p1, committee_size = profile_Examples.k1)
+    assert rule.cowinning_committees_ == {frozenset({'a','f'}), frozenset({'b','f'})}
 
 if __name__ == '__main__':
     test()
