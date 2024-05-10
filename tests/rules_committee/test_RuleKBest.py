@@ -16,7 +16,6 @@ def test():
     
     assert rule.winning_committee_ == {'a', 'b'}
     assert rule.cowinning_committees_ == {frozenset({'a', 'b'}), frozenset({'a', 'c'}), frozenset({'a', 'd'})}
-    print(rule.trailing_committee_)
     assert rule.trailing_committee_ == {'d', 'e'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'e'}), frozenset({'c', 'e'}), frozenset({'d', 'e'})}
 

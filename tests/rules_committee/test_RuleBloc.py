@@ -1,5 +1,6 @@
 from whalrus import RuleBloc, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
+import profile_Examples
 
 
 
@@ -26,6 +27,10 @@ def test():
     # {{'b', 'd'}, {'c', 'd'}}
     # >>> cc.trailing_committee_
     # {'c', 'd'}
+
+    rule = RuleBloc(profile_Examples.p1, committee_size = profile_Examples.k1)
+    print(rule.cowinning_committees_)
+    assert rule.cowinning_committees_ == {frozenset({'b','e'}),frozenset({'b','f'})}
 
 if __name__ == '__main__':
     test()

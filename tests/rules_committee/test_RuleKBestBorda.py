@@ -17,7 +17,7 @@ def test():
     assert rule.cowinning_committees_ == {frozenset({'a', 'b'}), frozenset({'a', 'c'})}
     assert rule.trailing_committee_ == {'c', 'd'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
-    print(rule.scores_)
+
     #  >>> cc = RuleKBestBorda(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
     # >>> cc.scores_
     # {{'a', 'b'}: 13, {'a', 'c'}: 9, {'a', 'd'}: 10, {'b', 'c'}: 8, {'b', 'd'}: 9, {'c', 'd'}: 5}
