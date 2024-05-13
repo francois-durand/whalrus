@@ -27,8 +27,11 @@ from whalrus.rules.rule_plurality import RulePlurality
 from whalrus.scorers.scorer_plurality import ScorerPlurality
 from whalrus.priorities.priority import Priority 
 from whalrus.rules.rule import Rule
-from whalrus.utils.utils import cached_property
+from whalrus.utils.utils import cached_property, NiceSet
+from whalrus.profiles.profile import Profile
 import numpy as np
+import random
+import copy
 
 class RuleSTV(RuleCommitteeScoring):
 
@@ -41,21 +44,62 @@ class RuleSTV(RuleCommitteeScoring):
         self.propagate_tie_break = propagate_tie_break
         super().__init__(*args, **kwargs)
 
+    def transfert_(self):
+        pass
+
     #@cached_property
     def rounds_(self) -> list:
 
         elected = []
-        quota = np.ceil(len(self.candidates_)/self.committee_size)
+        l_eliminated = []
+        quota = np.ceil(len(self.profile_converted_.voters)/self.committee_size)
 
+        new_profile = copy.deepcopy(self.profile_converted_)
         plurality = RulePlurality(tie_break=Priority.ASCENDING)
-        plurality(self.profile_converted_)
+        plurality(new_profile)
         
-        if plurality.gross_scores_[plurality.winner_] >= quota:
-            elected.append(plurality.winner_)
+        while len(elected) < self.committee_size:
+      
+            
+            score_p = plurality.gross_scores_
+            if score_p[plurality.winner_] >= quota:
+               
+                elected.append(plurality.winner_)
+                
+                new_set = plurality.candidates_ - NiceSet(plurality.winner_)
+                ballots = []
+                for i in range(int(quota), score_p[plurality.winner_] + 1):
+                    rand_ballot = random.choice(new_profile)
+                    ballots.append(rand_ballot.restrict(new_set))
+                    new_profile.remove(rand_ballot)
+                    
+                for ballot in new_profile:
+                    if ballot.first() == plurality.winner_:
+                        new_profile.remove(ballot)
 
-          
-     
-        
+                for ballot in new_profile:
+                    ballots.append(ballot.restrict(new_set))
+            
+            else:
+                elimination = EliminationLast(rule=plurality, k=1)
+                new_set = elimination.qualified_
+                ballots = []
+               
+                for ballot in new_profile:
+            
+                    ballots.append(ballot.restrict(new_set))
+                    
+                
+            new_profile = Profile(ballots)
+            plurality = RulePlurality(tie_break=Priority.ASCENDING)
+            plurality(new_profile)
+
+            if len(plurality.candidates_) + len(elected) == self.committee_size:
+                return plurality.candidates_
+
+        return elected
+
+
     def _cc_score(self, committee):
         converter = ConverterBallotToPlurality()
         scorer = ScorerPlurality()
@@ -69,6 +113,12 @@ class RuleSTV(RuleCommitteeScoring):
         )
     
         
-rule = RuleSTV(['a > b > c', 'a > c > b', 'b > a > c'], committee_size = 2)
+#rule = RuleSTV(['c > b > a', 'b> c > a', 'b > c > a'], committee_size = 1)
+rule = RuleSTV(['f > e > d > b > c > a', 'f > e > d > b > c > a',
+      'f > e > d > b > c > a' ,'f > e > d > b > c > a',
+       'a > b > c > d > e > f','a > b > c > d > e > f',
+       'a > b > c > d > e > f',
+       'b > c > a > e > d > f', 'b > c > a > e > d > f'
+       , 'd > c > a > b > e > f'], committee_size = 2)
 
 print(rule.rounds_())
