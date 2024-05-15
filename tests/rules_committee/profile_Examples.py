@@ -11,3 +11,16 @@ p1 = Profile(['f > e > d > b > c > a', 'f > e > d > b > c > a',
 w1 = [4,3,2,1]
 k1 = 2
 
+
+candidates = ['Oranges','Pears', 'Strawberries', 'Cake', 'Chocolate', 'Hamburgers', 'Chicken']
+p2 = Profile(['Oranges > Pears','Oranges > Pears','Oranges > Pears',
+      'Pears > Strawberries > Cake','Pears > Strawberries > Cake','Pears > Strawberries > Cake',
+      'Pears > Strawberries > Cake','Pears > Strawberries > Cake','Pears > Strawberries > Cake',
+      'Pears > Strawberries > Cake','Pears > Strawberries > Cake',
+      'Strawberries > Oranges > Pears',
+      'Cake > Chocolate', 'Cake > Chocolate', 'Cake > Chocolate', 
+      'Chocolate > Cake > Hamburgers',
+      'Hamburgers > Chicken','Hamburgers > Chicken','Hamburgers > Chicken',
+      'Hamburgers > Chicken',
+      'Chicken > Chocolate > Hamburgers','Chicken > Chocolate > Hamburgers','Chicken > Chocolate > Hamburgers'],
+      candidates = candidates)

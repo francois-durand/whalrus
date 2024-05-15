@@ -22,3 +22,4 @@ def test():
     ], weights=[1, 1, 3, 4])
     assert irv.order_ == [{'b'}, {'c'}, {'a'}, {'d'}]
     assert irv.winner_ == 'b'
+
