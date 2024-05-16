@@ -51,7 +51,7 @@ class RuleTwoRound(RuleSequentialElimination):
     With its default settings, this class implements the classic two-round system, using plurality at both rounds:
 
         >>> rule = RuleTwoRound(['a > b > c > d > e', 'b > a > c > d > e', 'c > a > b > d > e'],
-        ...                     weights=[2, 2, 1])
+        ...                     =[2, 2, 1])
         >>> rule.first_round_.rule_.gross_scores_
         {'a': 2, 'b': 2, 'c': 1, 'd': 0, 'e': 0}
         >>> rule.second_round_.gross_scores_

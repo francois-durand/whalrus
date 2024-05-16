@@ -81,7 +81,7 @@ class RuleChamberlinCourant(RuleCommitteeScoring):
     def _cc_score(self, committee):
         return sum((
             self.scorer(ballot=ballot, candidates=self.candidates_).scores_[
-                ballot.restrict(committee).first(priority=self.base_rule_tie_break)]
+                ballot.restrict(committee).first(priority=self.base_rule_tie_break)]*weight
             if ballot.restrict(committee).first(priority=self.base_rule_tie_break) is not None
             else 0)
-                   for ballot in self.profile_converted_)
+                   for ballot, weight, _ in self.profile_converted_.items())

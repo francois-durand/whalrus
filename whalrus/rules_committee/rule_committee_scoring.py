@@ -18,10 +18,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.utils.utils import cached_property, NiceSet, NiceFrozenSet, NiceDict
+from whalrus.utils.utils import cached_property, NiceSet, NiceFrozenSet, NiceDict, my_division
 from whalrus.priorities.priority import Priority
 from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from whalrus.rules_committee.rule_committee import RuleCommittee
+from whalrus.scorers.scorer import Scorer
 from itertools import combinations
 
 
@@ -71,8 +72,11 @@ class RuleCommitteeScoring(RuleCommittee):
         :return: a :class:`NiceDict` that, to each committee, associates its score.
         """
         return NiceDict({committee: self._cc_score(committee) for committee in self._all_committees()})
-
+    
+ 
     @cached_property
     def order_on_committees_(self) -> list:
         return [NiceSet(committee for committee in self.scores_.keys() if self.scores_[committee] == v)
                 for v in sorted(set(self.scores_.values()), reverse=True)]
+
+    

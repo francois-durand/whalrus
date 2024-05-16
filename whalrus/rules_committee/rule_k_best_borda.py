@@ -69,8 +69,8 @@ class RuleKBestBorda(RuleCommitteeScoring):
 
         return sum(
             sum(
-                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]
+                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]*weight
                 for candidate in committee
             )
-            for ballot in self.profile_converted_
+            for ballot, weight, _ in self.profile_converted_.items()
         )

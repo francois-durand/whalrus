@@ -73,9 +73,9 @@ class RulePAV(RuleCommitteeScoring):
         scorer = ScorerLevels()
 
         return sum(
-            RulePAV._pav_score(
-                sum(scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]
-                    for candidate in committee)
+            sum(
+                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]*weight
+                for candidate in committee
             )
-            for ballot in self.profile_converted_
+            for ballot, weight, _ in self.profile_converted_.items()
         )

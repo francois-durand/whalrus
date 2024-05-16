@@ -93,6 +93,6 @@ class RuleScoreNumAverage(RuleScoreNum):
 
     @cached_property
     def weights_as_floats_(self) -> NiceDict:
-        """NiceDict: Weights as floats. It is the same as :attr:`weights_`, but converted to floats.
+        """NiceDict:  as floats. It is the same as :attr:`weights_`, but converted to floats.
         """
         return NiceDict({c: float(v) for c, v in self.weights_.items()})
