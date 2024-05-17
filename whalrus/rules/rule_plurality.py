@@ -101,8 +101,12 @@ class RulePlurality(RuleScoreNumAverage):
         weights = NiceDict({c: total_weight for c in self.candidates_})
         return {'gross_scores': gross_scores, 'weights': weights}
 
+    
+
     @cached_property
-    def gross_scores_(self) -> NiceDict:
+    def gross_scores_(self, add = None) -> NiceDict:
+        if add is not None:
+            return NiceDict({k: self._gross_scores_and_weights_quicker_['gross_scores'].get(k, 0) + add.get(k, 0) for k in set(self._gross_scores_and_weights_quicker_['gross_scores']) & set(add)})
         return self._gross_scores_and_weights_quicker_['gross_scores']
 
     @cached_property

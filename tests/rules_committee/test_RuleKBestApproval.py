@@ -1,5 +1,6 @@
 from whalrus import RuleKBestApproval, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
+import profile_Examples
 
 
 def test():
@@ -17,8 +18,8 @@ def test():
     assert rule.trailing_committee_ == {'c', 'd'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
 
-   
-
+    rule = RuleKBestApproval(profile_Examples.p_a2, committee_size=2)
+    print(rule.scores_)
 if __name__ == '__main__': 
     test()  
 

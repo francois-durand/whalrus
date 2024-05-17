@@ -6,7 +6,7 @@ import profile_Examples
 
 def test():
 
-    rule = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
+    rule = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > c > d'], committee_size=2)
 
     
     assert rule.winning_committee_ == {'a', 'b'}
