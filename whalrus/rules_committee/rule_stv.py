@@ -46,11 +46,11 @@ class RuleSTV(RuleCommitteeScoring):
 
     
     def stv_(self) -> list:
-
+        converter = ConverterBallotToPlurality(Priority.ASCENDING)
         elected = []
         quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1)) + 1
         new_profile = copy.deepcopy(self.profile_converted_)
-        plurality = RulePlurality(tie_break=Priority.ASCENDING)
+        plurality = RulePlurality(tie_break=Priority.ASCENDING,converter = converter)
         plurality(new_profile)
         
        
@@ -68,14 +68,15 @@ class RuleSTV(RuleCommitteeScoring):
                 cpt = 0 
                 for i in range(len(new_profile)):
                     if cpt < over_count and new_profile[i].first() == plurality.winner_:
-                        ballots.append(new_profile[i].restrict(new_set))
-                        if new_profile.weights[i] >= over_count:
-                            w.append(over_count)
-                            cpt += over_count
-                        else:
-                            cpt += new_profile.weights[i]
-                            w.append(new_profile.weights[i])
-                    elif new_profile[i].first() != plurality.winner_:
+                        if new_profile[i].restrict(new_set).first() is not None:
+                            ballots.append(new_profile[i].restrict(new_set))
+                            if new_profile.weights[i] >= over_count:
+                                w.append(over_count)
+                                cpt += over_count
+                            else:
+                                cpt += new_profile.weights[i]
+                                w.append(new_profile.weights[i])
+                    elif new_profile[i].first() != plurality.winner_ and new_profile[i].restrict(new_set).first() is not None:
                         ballots.append(new_profile[i].restrict(new_set))
                         w.append(new_profile.weights[i])
                     else:
@@ -85,16 +86,18 @@ class RuleSTV(RuleCommitteeScoring):
             else:
                 elimination = EliminationLast(rule=plurality, k=1)
                 new_set = elimination.qualified_
-               
                 for i in range(len(new_profile)):
-            
-                    ballots.append(new_profile[i].restrict(new_set))
-                    w.append(new_profile.weights[i])
+                    print(len(new_profile[i]))
+                    if new_profile[i].restrict(new_set).first() is not None:
+                        ballots.append(new_profile[i].restrict(new_set))
+                        w.append(new_profile.weights[i])
       
             new_profile = Profile(ballots, weights = w)
-          
+            print(new_profile, new_profile.weights)
+            plurality = RulePlurality(tie_break=Priority.ASCENDING)
             plurality(new_profile)
-
+            
+            
             if len(plurality.candidates_) + len(elected) == self.committee_size and len(elected) != self.committee_size:
                  
                 return NiceFrozenSet(set(elected).union(plurality.candidates_))
@@ -119,6 +122,6 @@ w = [3,8,1,3,1,4,3]
 
 p2 = Profile(ballots = [b1,b2,b3,b4,b5, b6,b7], weights = w)
 
-rule = RuleSTV(p2, committee_size = 3)
+rule = RuleSTV(p2, committee_size = 2)
 
 print(rule.stv_()) 
