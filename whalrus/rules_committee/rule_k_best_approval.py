@@ -21,6 +21,8 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
 from whalrus.scales.scale_range import ScaleRange
 from whalrus.converters_ballot.converter_ballot_to_grades import ConverterBallotToGrades
+from whalrus.profiles.profile import Profile
+from whalrus.ballots.ballot_levels import BallotLevels
 from whalrus.scorers.scorer_levels import ScorerLevels
 from whalrus.utils.utils import cached_property, NiceDict, my_division
 from numbers import Number
@@ -117,7 +119,17 @@ class RuleKBestApproval(RuleCommitteeScoring):
         scorer = ScorerLevels()
 
         score = self.scores
-
         return sum(
                 score[candidate] for candidate in committee
         )
+
+candidates2 = ['a','b','c','d']
+p_a2 = Profile(ballots=[
+    BallotLevels({'a':1, 'b':1,'c':0,'d':0}, candidates = candidates2),
+    BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
+    BallotLevels({'a':0, 'b':0,'c':0,'d':1}, candidates = candidates2)], weights = [5,17,8])
+
+rule = RuleKBestApproval(p_a2, committee_size = 2)
+# rule = RulePAV([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
+#                              committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
+print(rule.scores_)

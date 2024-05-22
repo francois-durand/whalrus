@@ -31,3 +31,17 @@ p_a2 = Profile(ballots=[
     BallotLevels({'a':0, 'b':1,'c':0,'d':0}, candidates = candidates2),
     BallotLevels({'a':0, 'b':1,'c':1,'d':1}, candidates = candidates2),
     BallotLevels({'a':1, 'b':0,'c':0}, candidates = candidates2)])
+
+candidates = {'Oranges','Pears', 'Strawberries', 'Cake', 'Chocolate', 'Hamburgers', 'Chicken'}
+b1 = BallotOrder(['Oranges', 'Pears'], candidates = candidates)
+b2 = BallotOrder(['Pears','Strawberries', 'Cake'], candidates = candidates)
+b3 = BallotOrder(['Strawberries', 'Oranges',' Pears'], candidates = candidates)
+b4 = BallotOrder(['Cake','Chocolate'], candidates = candidates)
+b5 = BallotOrder(['Chocolate','Cake', 'Hamburgers'], candidates = candidates)
+b6 = BallotOrder(['Hamburgers','Chicken'], candidates = candidates)
+b7 = BallotOrder(['Chicken','Chocolate', 'Hamburgers'], candidates = candidates)
+
+w = [3,8,1,3,1,4,3]
+
+
+profile_wiki = Profile(ballots=[b1,b2,b3,b4,b5,b6,b7], weights = w)

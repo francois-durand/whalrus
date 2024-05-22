@@ -120,3 +120,4 @@ from .rules_committee.rule_chamberlin_courant import RuleChamberlinCourant
 from .rules_committee.rule_bloc import RuleBloc
 from .rules_committee.rule_sntv import RuleSNTV
 from .rules_committee.rule_pav import RulePAV
+from .rules_committee.rule_stv import RuleSTV

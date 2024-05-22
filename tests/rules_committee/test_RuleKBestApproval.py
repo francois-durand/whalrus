@@ -18,7 +18,7 @@ def test():
     assert rule.trailing_committee_ == {'c', 'd'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
 
-    rule = RuleKBestApproval(profile_Examples.p_a2, committee_size=2)
+    rule = RuleKBestApproval(profile_Examples.p2, committee_size=2)
     print(rule.scores_)
 if __name__ == '__main__': 
     test()  

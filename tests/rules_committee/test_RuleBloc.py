@@ -6,7 +6,7 @@ import profile_Examples
 
 def test():
 
-    rule = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > c > d'], committee_size=2)
+    rule = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > c > b > d'], committee_size=2)
 
     
     assert rule.winning_committee_ == {'a', 'b'}
@@ -31,7 +31,7 @@ def test():
     # {'c', 'd'}
 
     rule = RuleBloc(profile_Examples.p1, committee_size = profile_Examples.k1)
-    print(rule.scores_)
+    
     assert rule.cowinning_committees_ == {frozenset({'b','e'}),frozenset({'b','f'})}
 
 if __name__ == '__main__':
