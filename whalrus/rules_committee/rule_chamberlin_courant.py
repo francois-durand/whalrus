@@ -22,7 +22,9 @@ from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
 from whalrus.scorers.scorer import Scorer
 from whalrus.scorers.scorer_borda import ScorerBorda
 from whalrus.priorities.priority import Priority
-
+from whalrus.utils.utils import cached_property, NiceDict, my_division
+from numbers import Number
+from whalrus.profiles.profile import Profile
 
 class RuleChamberlinCourant(RuleCommitteeScoring):
     # noinspection PyUnresolvedReferences
@@ -79,9 +81,11 @@ class RuleChamberlinCourant(RuleCommitteeScoring):
         super().__init__(*args, **kwargs)
 
     def _cc_score(self, committee):
+
         return sum((
             self.scorer(ballot=ballot, candidates=self.candidates_).scores_[
                 ballot.restrict(committee).first(priority=self.base_rule_tie_break)]*weight
             if ballot.restrict(committee).first(priority=self.base_rule_tie_break) is not None
             else 0)
                    for ballot, weight, _ in self.profile_converted_.items())
+    

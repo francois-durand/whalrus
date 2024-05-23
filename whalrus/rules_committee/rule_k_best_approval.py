@@ -113,7 +113,7 @@ class RuleKBestApproval(RuleCommitteeScoring):
         return NiceDict({c: my_division(score, self.weights_[c], divide_by_zero=self.default_average)
                          for c, score in self.gross_scores_.items()})
     
-    def _cc_score(self, committee):
+    def _cc_score (self, committee):
         self.scorer = ScorerLevels()
         converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
         scorer = ScorerLevels()
@@ -122,14 +122,3 @@ class RuleKBestApproval(RuleCommitteeScoring):
         return sum(
                 score[candidate] for candidate in committee
         )
-
-candidates2 = ['a','b','c','d']
-p_a2 = Profile(ballots=[
-    BallotLevels({'a':1, 'b':1,'c':0,'d':0}, candidates = candidates2),
-    BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
-    BallotLevels({'a':0, 'b':0,'c':0,'d':1}, candidates = candidates2)], weights = [5,17,8])
-
-rule = RuleKBestApproval(p_a2, committee_size = 2)
-# rule = RulePAV([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
-#                              committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-print(rule.scores_)

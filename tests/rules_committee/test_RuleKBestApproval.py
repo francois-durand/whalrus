@@ -19,7 +19,7 @@ def test():
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
 
     rule = RuleKBestApproval(profile_Examples.p2, committee_size=2)
-    print(rule.scores_)
+ 
 if __name__ == '__main__': 
     test()  
 

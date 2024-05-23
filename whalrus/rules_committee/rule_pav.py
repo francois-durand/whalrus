@@ -113,25 +113,24 @@ class RulePAV(RuleCommitteeScoring):
         scorer = ScorerLevels()
 
 
-        score = self.scores
-        print(score)
-        # return sum(
-        #     RulePAV._pav_score(
-        #         sum(scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]
-        #             for candidate in committee)
-        #     )*weight
-        #     for ballot, weight, _ in self.profile_converted_.items()
-        # )
+        return sum(
+            RulePAV._pav_score(
+                sum(scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate] if candidate in scorer(ballot=converter(ballot), candidates=self.candidates_).scores_.keys() else 0
+                    for candidate in committee)
+            )*weight
+            for ballot, weight, _ in self.profile_converted_.items()
+        )
 
-#voir pour les bulletins absents (sur PAV mais aussi toutes les règles) avec le poidss
+      
 
-candidates2 = ['a','b','c','d']
-p_a2 = Profile(ballots=[
-    BallotLevels({'a':1, 'b':1,'c':0,'d':0}, candidates = candidates2),
-    BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
-    BallotLevels({'a':0, 'b':0,'c':0,'d':1}, candidates = candidates2)], weights = [5,17,8])
+if __name__ == '__main__':
+    candidates2 = ['a','b','c','d']
+    p_a2 = Profile(ballots=[
+        BallotLevels({'a':1, 'b':1,'c':0,'d':0}, candidates = candidates2),
+        BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
+        BallotLevels({'a':0,'c':0,'d':1}, candidates = candidates2)], weights = [5,17,8])
 
-rule = RulePAV(p_a2, committee_size = 2)
-# rule = RulePAV([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
-#                              committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-print(rule.scores_)
+    rule = RulePAV(p_a2, committee_size = 2)
+    # rule = RulePAV([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
+    #                              committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
+    print(rule.scores_)
