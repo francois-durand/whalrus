@@ -23,6 +23,8 @@ BallotLevels({'a':1,'b':1,'c':0,'d':1,'e':1,'f':1,'g':0,'h':1,'i':0,'j':0,'k':1}
 BallotLevels({'a':1,'b':1,'c':1,'d':1,'e':1,'f':1,'g':0,'h':0,'i':0,'j':0,'k':1}, candidates = candidates),
 BallotLevels({'a':0,'b':1,'c':0,'d':1,'e':1,'f':1,'g':0,'h':0,'i':1,'j':1,'k':1}, candidates = candidates),
 BallotLevels({'a':1,'b':1,'c':1,'d':0,'e':0,'f':1,'g':1,'h':1,'i':0,'j':0,'k':1}, candidates = candidates)], weights= [2,1,1,1,1,1,1,1,1,1 ])
+
+
 candidates2 = ['a','b','c','d']
 p_a2 = Profile(ballots=[
     BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
@@ -45,3 +47,6 @@ w = [3,8,1,3,1,4,3]
 
 
 profile_wiki = Profile(ballots=[b1,b2,b3,b4,b5,b6,b7], weights = w)
+
+profile_stv = Profile(['a > b > c','a > c > b ', 'b > a > c'], weights=[4,3,2])
+

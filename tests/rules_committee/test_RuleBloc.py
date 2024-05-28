@@ -6,8 +6,9 @@ import profile_Examples
 
 def test():
 
-    rule = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > c > b > d'], committee_size=2)
+    rule = RuleBloc(['a > b > c > d', 'd > a > c', 'a > c > b > d'], committee_size=2)
 
+    
     
     assert rule.winning_committee_ == {'a', 'b'}
     #assert rule.cowinning_committees_ == {frozenset({'a', 'b'}), frozenset({'a','c'})}
