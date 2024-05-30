@@ -75,3 +75,5 @@ class RuleIRV(RuleIteratedElimination):
         if elimination is None:
             elimination = EliminationLast(k=1)
         super().__init__(*args, base_rule=base_rule, elimination=elimination, **kwargs)
+
+

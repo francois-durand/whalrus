@@ -1,12 +1,12 @@
 from whalrus import RuleBloc, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
-import profile_Examples
+import profile_Examples_c
 
 
 
 def test():
 
-    rule = RuleBloc(['a > b > c > d', 'd > a > c', 'a > c > b > d'], committee_size=2)
+    rule = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > c > b > d'], committee_size=2)
 
     
     
@@ -22,18 +22,7 @@ def test():
     assert rule.trailing_committee_ == {'c', 'd'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
 
-    # cc.cowinning_committees_
-    # {{'a', 'b'}, {'a', 'c'}}
-    # >>> cc.winning_committee_
-    # {'a', 'b'}
-    # >>> cc.cotrailing_committees_
-    # {{'b', 'd'}, {'c', 'd'}}
-    # >>> cc.trailing_committee_
-    # {'c', 'd'}
 
-    rule = RuleBloc(profile_Examples.p1, committee_size = profile_Examples.k1)
+    rule = RuleBloc(profile_Examples_c.p1, committee_size = profile_Examples_c.k1)
     
     assert rule.cowinning_committees_ == {frozenset({'b','e'}),frozenset({'b','f'})}
-
-if __name__ == '__main__':
-    test()

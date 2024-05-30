@@ -109,7 +109,7 @@ class RuleTransfert(DeleteCacheMixin):
     
 
     @cached_property 
-    def trailing_committee_(self) -> NiceSet:
+    def eliminated_committee_(self) -> NiceSet:
         """
         Return the whole set of the eliminated candidates
         """

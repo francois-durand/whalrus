@@ -18,6 +18,3 @@ def test():
     assert rule.cowinning_committees_ == {frozenset({'a', 'b'}), frozenset({'a', 'c'}), frozenset({'a', 'd'})}
     assert rule.trailing_committee_ == {'d', 'e'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'e'}), frozenset({'c', 'e'}), frozenset({'d', 'e'})}
-
-if __name__ == '__main__': 
-    test()  

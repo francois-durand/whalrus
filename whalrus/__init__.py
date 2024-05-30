@@ -113,6 +113,7 @@ from .rules.rule_veto import RuleVeto
 # Voting Rules 3: Multi-winner (committee) voting rules
 from .rules_committee.rule_committee import RuleCommittee
 from .rules_committee.rule_committee_scoring import RuleCommitteeScoring
+from .rules_committee.rule_transfert import RuleTransfert
 from .rules_committee.rule_k_best import RuleKBest
 from .rules_committee.rule_k_best_borda import RuleKBestBorda
 from .rules_committee.rule_k_best_approval import RuleKBestApproval

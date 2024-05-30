@@ -64,14 +64,14 @@ class RuleSTV(RuleTransfert):
             rule = RulePlurality(tie_break = Priority.ASCENDING,converter = ConverterBallotToPlurality(Priority.ASCENDING))
         self.rule = rule
         self.propagate_tie_break = propagate_tie_break
-        super().__init__(*args, **kwargs)
-        self.quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
+        super().__init__(*args, ** kwargs)
+        #self.quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
+        self.quota = np.floor(sum(self.profile_converted_.weights)/self.committee_size)
 
     @cached_property
     def transfert_(self) -> list:
         elected = dict()
         eliminated = {}
-        quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
         rule = copy.deepcopy(self.rule)
         new_profile = copy.deepcopy(self.profile_converted_)
         rule(new_profile)
@@ -87,7 +87,7 @@ class RuleSTV(RuleTransfert):
                 
                 elected[rule.winner_] = score_p[rule.winner_]
                 new_set = rule.candidates_ - NiceSet({rule.winner_})
-                over_count = score_p[rule.winner_] - quota
+                over_count = score_p[rule.winner_] - self.quota
                 ratio = Fraction(int(over_count),score_p[rule.winner_])
                 for ballot, weight, _  in new_profile.items():
         
@@ -102,6 +102,7 @@ class RuleSTV(RuleTransfert):
                 elimination = EliminationLast(rule=rule, k=1)
                 new_set = elimination.qualified_
                 e = next(iter(elimination.eliminated_))
+                print(e)
                 eliminated[e] = score_p[e]
 
                 for ballot, weight, _  in new_profile.items():
@@ -124,4 +125,4 @@ class RuleSTV(RuleTransfert):
                 return rounds
         return rounds
 
-    
+

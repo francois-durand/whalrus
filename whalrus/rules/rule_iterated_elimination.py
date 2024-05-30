@@ -108,12 +108,13 @@ class RuleIteratedElimination(Rule):
         ['a', 'c', 'b', 'd', 'e']
     """
 
-    def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None,
+    def __init__(self, *args, base_rule: Rule = None, elimination: Elimination = None,propagate_tie_break = True,
                  **kwargs):
         if elimination is None:
             elimination = EliminationLast(k=1)
         self.base_rule = base_rule
         self.elimination = elimination
+        self.propagate_tie_break = propagate_tie_break
         super().__init__(*args, **kwargs)
 
     def _check_profile(self, candidates: set) -> None:

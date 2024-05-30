@@ -66,20 +66,7 @@ class RuleKBestApproval(RuleCommitteeScoring):
     >>> cc.winning_committee_
     {('a', 'Female'), ('b', 'Male')}
     """
-
-
-    def _c_score(self, committee):
-        converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
-        scorer = ScorerLevels()
-
-        return sum(
-            sum(
-                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]*weight
-                for candidate in committee
-            )
-            for ballot, weight, _ in self.profile_converted_.items()
-        )
-
+    
     @cached_property
     def _gross_scores_and_weights_(self) -> dict:
         gross_scores = NiceDict({c: 0 for c in self.candidates_})

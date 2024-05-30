@@ -27,13 +27,13 @@ BallotLevels({'a':1,'b':1,'c':1,'d':0,'e':0,'f':1,'g':1,'h':1,'i':0,'j':0,'k':1}
 
 candidates2 = ['a','b','c','d']
 p_a2 = Profile(ballots=[
-    BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
-    BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
+    BallotLevels({'a':1, 'b':0,'c':1}, candidates = candidates2),
+    BallotLevels({'a':1, 'b':0,'c':1}, candidates = candidates2),
     BallotLevels({'a':0, 'b':1,'c':0,'d':1}, candidates = candidates2),
     BallotLevels({'a':0, 'b':1,'c':0,'d':0}, candidates = candidates2),
     BallotLevels({'a':0, 'b':1,'c':1,'d':1}, candidates = candidates2),
     BallotLevels({'a':1, 'b':0,'c':0}, candidates = candidates2)])
-
+ 
 candidates = {'Oranges','Pears', 'Strawberries', 'Cake', 'Chocolate', 'Hamburgers', 'Chicken'}
 b1 = BallotOrder(['Oranges', 'Pears'], candidates = candidates)
 b2 = BallotOrder(['Pears','Strawberries', 'Cake'], candidates = candidates)

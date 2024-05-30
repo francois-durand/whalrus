@@ -1,6 +1,6 @@
 from whalrus import RulePAV, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
-import profile_Examples
+import profile_Examples_c
 
 
 def test():
@@ -18,10 +18,4 @@ def test():
     assert rule.trailing_committee_ == {'c', 'd'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
 
-    rule = RulePAV(profile_Examples.p2, committee_size=2)
-    print(rule.winning_committee_)
-
-if __name__ == '__main__': 
-    test()  
-
-
+    rule = RulePAV(profile_Examples_c.p_a2, committee_size=2)

@@ -1,6 +1,6 @@
 from whalrus import RuleSNTV, RulePlurality
 from whalrus import Priority, PriorityLiftedLeximax
-import profile_Examples
+import profile_Examples_c
 
 def test():
 
@@ -20,9 +20,7 @@ def test():
 
 
 
-    rule = RuleSNTV(profile_Examples.p1, committee_size = profile_Examples.k1)
+    rule = RuleSNTV(profile_Examples_c.p1, committee_size = profile_Examples_c.k1)
 
     assert rule.winning_committee_ == {'a', 'f'}
 
-if __name__ == '__main__':
-    test()

@@ -30,7 +30,7 @@ class BallotOneName(Ballot):
 
     Parameters
     ----------
-    b : candidate or None
+    b : or None
         None stands for abstention.
     candidates : set
         The candidates that were available at the moment when the voter cast her ballot.
