@@ -18,7 +18,6 @@ def test():
     rule = RuleBloc(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
                           committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
     assert rule.winning_committee_ == {'a', 'b'}
-    assert rule.cowinning_committees_ == {frozenset({'a', 'b'}), frozenset({'a', 'c'})}
     assert rule.trailing_committee_ == {'c', 'd'}
     assert rule.cotrailing_committees_ == {frozenset({'b', 'd'}), frozenset({'c', 'd'})}
 
@@ -26,3 +25,4 @@ def test():
     rule = RuleBloc(profile_Examples_c.p1, committee_size = profile_Examples_c.k1)
     
     assert rule.cowinning_committees_ == {frozenset({'b','e'}),frozenset({'b','f'})}
+

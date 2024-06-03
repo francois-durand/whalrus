@@ -18,10 +18,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
+from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
 from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
 from whalrus.converters_ballot.converter_ballot_to_plurality import ConverterBallotToPlurality
 from whalrus.scorers.scorer_plurality import ScorerPlurality
-
+from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
+from whalrus.priorities.priority import Priority
 
 class RuleSNTV(RuleCommitteeScoring):
     # noinspection PyUnresolvedReferences
@@ -32,7 +34,7 @@ class RuleSNTV(RuleCommitteeScoring):
     highest score is elected.
 
     >>> cc = RuleSNTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-    >>> cc.scores_
+    >>> cc.gross_scores
     {{'a', 'b'}: 2, {'a', 'c'}: 2, {'a', 'd'}: 3, {'b', 'c'}: 0, {'b', 'd'}: 1, {'c', 'd'}: 1}
     >>> cc.winning_committee_
     {'a', 'd'}
@@ -41,7 +43,7 @@ class RuleSNTV(RuleCommitteeScoring):
 
     >>> cc = RuleSNTV(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.scores_
+    >>> cc.gross_scores
     {{'a', 'b'}: 4, {'a', 'c'}: 4, {'a', 'd'}: 4, {'b', 'c'}: 0, {'b', 'd'}: 0, {'c', 'd'}: 0}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}, {'a', 'd'}}
@@ -60,7 +62,13 @@ class RuleSNTV(RuleCommitteeScoring):
     ...                             committee_legality_function=gender_balance)
     >>> cc.cowinning_committees_
     {{('a', 'Female'), ('b', 'Male')}, {('a', 'Female'), ('c', 'Male')}}
-    """
+   """
+
+    # def __init__(self, *args, committee_size : int,  **kwargs):
+        
+    #     self.converter = ConverterBallotToPlurality()
+    #     self.scorer = ScorerPlurality()
+    #     super().__init__(*args,committee_size = committee_size, **kwargs)
 
     def _cc_score(self, committee):
         converter = ConverterBallotToPlurality()
@@ -68,8 +76,8 @@ class RuleSNTV(RuleCommitteeScoring):
 
         return sum(
             sum(
-                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]*weight
+                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]
                 for candidate in committee
             )
-            for ballot, weight, _ in self.profile_converted_.items()
+            for ballot in self.profile_converted_
         )

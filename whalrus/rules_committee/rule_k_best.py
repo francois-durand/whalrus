@@ -23,6 +23,8 @@ from whalrus.priorities.priority import Priority
 from whalrus.rules_committee.rule_committee import RuleCommittee
 from whalrus.rules.rule import Rule
 from itertools import combinations
+from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
+from whalrus.priorities.priority import Priority
 
 
 class RuleKBest(RuleCommittee):

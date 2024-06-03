@@ -24,6 +24,7 @@ from whalrus.scorers.scorer_borda import ScorerBorda
 from whalrus.priorities.priority import Priority
 from whalrus.utils.utils import cached_property, NiceDict, my_division
 from numbers import Number
+from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from whalrus.profiles.profile import Profile
 
 class RuleChamberlinCourant(RuleCommitteeScoring):
@@ -89,3 +90,4 @@ class RuleChamberlinCourant(RuleCommitteeScoring):
             else 0)
                    for ballot, weight, _ in self.profile_converted_.items())
     
+

@@ -357,7 +357,7 @@ class PriorityAscending(PriorityCandidate):
     """
     Ascending order on candidates (lowest is favoured).
 
-    >>> Priority.ASCENDING.choose({'a', 'b'})
+    >>> Priority.ASCENDING.choice({'a', 'b'})
     'a'
     >>> Priority.ASCENDING.sort({'a', 'b'})
     ['a', 'b']
@@ -392,7 +392,7 @@ class PriorityDescending(Priority):
     """
     Descending order on candidates (highest is favoured).
 
-    >>> Priority.DESCENDING.choose({'a', 'b'})
+    >>> Priority.DESCENDING.choice({'a', 'b'})
     'b'
     >>> Priority.DESCENDING.sort({'a', 'b'})
     ['b', 'a']
@@ -450,10 +450,10 @@ class PriorityRandom(Priority):
         return random.choice(list(x))
 
     def _sort(self, x: Union[set, list], reverse: bool) -> Union[list, None]:
-        return random.sample(x, len(x))
+        return random.sample(list(x), len(x))
 
     def _sort_pairs_rp(self, x: Union[set, list], reverse: bool):
-        return random.sample(x, len(x))
+        return random.sample(list(x), len(x))
 
 
 Priority.RANDOM = PriorityRandom()

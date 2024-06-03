@@ -18,12 +18,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
+from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
 from whalrus.converters_ballot.converter_ballot_to_strict_order import ConverterBallotToStrictOrder
 from whalrus.scorers.scorer_borda import ScorerBorda
+from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
+from whalrus.priorities.priority import Priority
 
-
-class RuleKBestBorda(RuleCommitteeScoring):
+class RuleKBestBorda(RuleCommitteeAverage):
     # noinspection PyUnresolvedReferences
     """
     A multi-winner rule that select the best committee according to Best-k Borda voting rule.
@@ -33,7 +34,7 @@ class RuleKBestBorda(RuleCommitteeScoring):
     highest score is elected.
 
     >>> cc = RuleKBestBorda(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-    >>> cc.scores_
+    >>> cc.gross_scores
     {{'a', 'b'}: 13, {'a', 'c'}: 9, {'a', 'd'}: 10, {'b', 'c'}: 8, {'b', 'd'}: 9, {'c', 'd'}: 5}
     >>> cc.winning_committee_
     {'a', 'b'}
@@ -42,7 +43,7 @@ class RuleKBestBorda(RuleCommitteeScoring):
 
     >>> cc = RuleKBestBorda(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.scores_
+    >>> cc.gross_scores
     {{'a', 'b'}: 18, {'a', 'c'}: 18, {'a', 'd'}: 12, {'b', 'c'}: 12, {'b', 'd'}: 6, {'c', 'd'}: 6}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}}
@@ -63,14 +64,8 @@ class RuleKBestBorda(RuleCommitteeScoring):
     {('a', 'Female'), ('b', 'Male')}
     """
 
-    def _cc_score(self, committee):
+    def __init__(self, *args, committee_size : int,  **kwargs):
+        
         converter = ConverterBallotToStrictOrder()
-        scorer = ScorerBorda()
-
-        return sum(
-            sum(
-                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]*weight
-                for candidate in committee
-            )
-            for ballot, weight, _ in self.profile_converted_.items()
-        )
+        self.scorer = ScorerBorda()
+        super().__init__(*args,committee_size = committee_size, **kwargs)
