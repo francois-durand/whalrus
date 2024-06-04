@@ -25,7 +25,7 @@ from whalrus.scorers.scorer_plurality import ScorerPlurality
 from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from whalrus.priorities.priority import Priority
 
-class RuleSNTV(RuleCommitteeScoring):
+class RuleSNTV(RuleCommitteeAverage):
     # noinspection PyUnresolvedReferences
     """
     A multi-winner rule that select the best committee according to Bloc voting rule.
@@ -64,20 +64,14 @@ class RuleSNTV(RuleCommitteeScoring):
     {{('a', 'Female'), ('b', 'Male')}, {('a', 'Female'), ('c', 'Male')}}
    """
 
-    # def __init__(self, *args, committee_size : int,  **kwargs):
+    def __init__(self, *args, committee_size : int,  **kwargs):
         
-    #     self.converter = ConverterBallotToPlurality()
-    #     self.scorer = ScorerPlurality()
-    #     super().__init__(*args,committee_size = committee_size, **kwargs)
+        
+        super().__init__(*args,committee_size = committee_size, **kwargs)
+        self.converter = ConverterBallotToPlurality()
+        self.scorer = ScorerPlurality()
+    
+if __name__ == '__main__':
+    cc = RuleSNTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
 
-    def _cc_score(self, committee):
-        converter = ConverterBallotToPlurality()
-        scorer = ScorerPlurality()
-
-        return sum(
-            sum(
-                scorer(ballot=converter(ballot), candidates=self.candidates_).scores_[candidate]
-                for candidate in committee
-            )
-            for ballot in self.profile_converted_
-        )
+    print(cc.winning_committee_)

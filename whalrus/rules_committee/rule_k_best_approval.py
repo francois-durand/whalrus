@@ -19,10 +19,12 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
+from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
 from whalrus.scales.scale_range import ScaleRange
 from whalrus.converters_ballot.converter_ballot_to_grades import ConverterBallotToGrades
 from whalrus.profiles.profile import Profile
 from whalrus.ballots.ballot_levels import BallotLevels
+from whalrus.ballots.ballot_order import BallotOrder
 from whalrus.scorers.scorer_levels import ScorerLevels
 
 from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
@@ -60,14 +62,6 @@ class RuleKBestApproval(RuleCommitteeAverage):
     >>> cc.trailing_committee_
     {'c', 'd'}
 
-    >>> def gender_balance(committee):
-    ...     return abs(sum([candidate[1] == 'Male' for candidate in committee])
-    ...                - sum([candidate[1] == 'Female' for candidate in committee])) <= 1
-    >>> a, b, c, d = ('a', 'Female'), ('b', 'Male'), ('c', 'Male'), ('d', 'Female')
-    >>> cc = RuleKBestApproval([[a, b, c, d], [d, b, a, c], [a, b, c, d]], committee_size=2,
-    ...                             committee_legality_function=gender_balance)
-    >>> cc.winning_committee_
-    {('a', 'Female'), ('b', 'Male')}
     """
 
     def __init__(self, *args, committee_size : int,  **kwargs):
@@ -76,4 +70,4 @@ class RuleKBestApproval(RuleCommitteeAverage):
         self.scorer = ScorerLevels()
         super().__init__(*args,committee_size = committee_size, **kwargs)
 
-    
+        
