@@ -34,7 +34,7 @@ class RuleKBestBorda(RuleCommitteeAverage):
     highest score is elected.
 
     >>> cc = RuleKBestBorda(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 13, {'a', 'c'}: 9, {'a', 'd'}: 10, {'b', 'c'}: 8, {'b', 'd'}: 9, {'c', 'd'}: 5}
     >>> cc.winning_committee_
     {'a', 'b'}
@@ -43,7 +43,7 @@ class RuleKBestBorda(RuleCommitteeAverage):
 
     >>> cc = RuleKBestBorda(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 18, {'a', 'c'}: 18, {'a', 'd'}: 12, {'b', 'c'}: 12, {'b', 'd'}: 6, {'c', 'd'}: 6}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}}

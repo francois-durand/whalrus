@@ -34,7 +34,7 @@ class RuleSNTV(RuleCommitteeAverage):
     highest score is elected.
 
     >>> cc = RuleSNTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 2, {'a', 'c'}: 2, {'a', 'd'}: 3, {'b', 'c'}: 0, {'b', 'd'}: 1, {'c', 'd'}: 1}
     >>> cc.winning_committee_
     {'a', 'd'}
@@ -43,7 +43,7 @@ class RuleSNTV(RuleCommitteeAverage):
 
     >>> cc = RuleSNTV(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 4, {'a', 'c'}: 4, {'a', 'd'}: 4, {'b', 'c'}: 0, {'b', 'd'}: 0, {'c', 'd'}: 0}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}, {'a', 'd'}}

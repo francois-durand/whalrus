@@ -52,7 +52,7 @@ class RuleCommitteeAverage(RuleCommitteeScoring):
         return self._gross_scores_and_weights_['weights']
     
     @cached_property
-    def gross_scores_(self) -> NiceDict:
+    def gross_scores(self) -> NiceDict:
         """NiceDict: The gross scores of the candidates. For each candidate, this dictionary gives the sum of its
         scores, multiplied by the weights of the corresponding voters. This is the numerator in the candidate's average
         score.
@@ -63,7 +63,7 @@ class RuleCommitteeAverage(RuleCommitteeScoring):
     def scores(self) -> NiceDict:
         self.default_average = 0
         return NiceDict({c: my_division(score, self.weights_[c], divide_by_zero=self.default_average)
-                         for c, score in self.gross_scores_.items()})
+                         for c, score in self.gross_scores.items()})
 
     def _cc_score(self, committee):
         return sum(
@@ -72,5 +72,5 @@ class RuleCommitteeAverage(RuleCommitteeScoring):
 
     def _cc_gross_scores(self, committee):
         return sum(
-                self.gross_scores_[candidate] for candidate in committee
+                self.gross_scores[candidate] for candidate in committee
         )

@@ -42,7 +42,7 @@ class RuleKBestApproval(RuleCommitteeAverage):
     highest score is elected.
 
     >>> cc = RuleKBestApproval([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'d': 1, 'b': 1, 'a': 1, 'c': 0}, {'a': 1, 'b': 0, 'c': 0, 'd': 0}], committee_size=2)
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 5, {'a', 'c'}: 3, {'a', 'd'}: 4, {'b', 'c'}: 2, {'b', 'd'}: 3, {'c', 'd'}: 1}
     >>> cc.winning_committee_
     {'a', 'b'}
@@ -51,7 +51,7 @@ class RuleKBestApproval(RuleCommitteeAverage):
 
     >>> cc = RuleKBestApproval([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 6, {'a', 'c'}: 6, {'a', 'd'}: 4, {'b', 'c'}: 4, {'b', 'd'}: 2, {'c', 'd'}: 2}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}}

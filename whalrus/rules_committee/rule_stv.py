@@ -56,7 +56,7 @@ class RuleSTV(RuleTransfert):
     
     """
 
-    def __init__(self, *args, committee_size: int, base_rule: Rule = None, rule: Rule = None, propagate_tie_break=True,
+    def __init__(self, *args, committee_size: int, base_rule: Rule = None, rule: Rule = None, propagate_tie_break=True, quota = False,
                  **kwargs):
         self.base_rule = base_rule
         self.committee_size = committee_size
@@ -65,8 +65,10 @@ class RuleSTV(RuleTransfert):
         self.rule = rule
         self.propagate_tie_break = propagate_tie_break
         super().__init__(*args, ** kwargs)
-        #self.quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
-        self.quota = np.floor(sum(self.profile_converted_.weights)/self.committee_size)
+        if quota:
+            self.quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
+        else:
+            self.quota = np.floor(sum(self.profile_converted_.weights)/self.committee_size)
 
     @cached_property
     def transfert_(self) -> list:
@@ -74,6 +76,7 @@ class RuleSTV(RuleTransfert):
         eliminated = {}
         rule = copy.deepcopy(self.rule)
         new_profile = copy.deepcopy(self.profile_converted_)
+        new_set = self.candidates_
         rule(new_profile)
         rounds = [(rule,elected.copy(),eliminated.copy())]
     
@@ -83,42 +86,39 @@ class RuleSTV(RuleTransfert):
             weights = []
 
             score_p = rule.gross_scores_
+  
             if score_p[rule.winner_] >= self.quota:
                 
                 elected[rule.winner_] = score_p[rule.winner_]
-                new_set = rule.candidates_ - NiceSet({rule.winner_})
+                new_set_ = new_set - NiceSet({rule.winner_})
                 over_count = score_p[rule.winner_] - self.quota
                 ratio = Fraction(int(over_count),score_p[rule.winner_])
                 for ballot, weight, _  in new_profile.items():
-        
-                    if len(ballot) >= 1 and ballot.first() != rule.winner_:
-                        ballots.append(ballot.restrict(new_set))
-                        weights.append(weight)
-                    elif len(ballot) > 1 and ratio > 0:
-                        ballots.append(ballot.restrict(new_set))
-                        weights.append(weight*ratio)
+               
+                    ballot = ballot.restrict(new_set)
 
+                    if len(ballot) >= 1 and ballot.first() != rule.winner_:
+                        ballots.append(ballot.restrict(new_set_))
+                        weights.append(weight)
+                         
+                    elif len(ballot) > 1 and ratio > 0:
+                        ballots.append(ballot.restrict(new_set_))
+                        weights.append(weight*ratio)
+            
+                new_profile = Profile(ballots, weights = weights)
+                new_set = new_set_
             else:
                 elimination = EliminationLast(rule=rule, k=1)
                 new_set = elimination.qualified_
+                
                 e = next(iter(elimination.eliminated_))
-                print(e)
+   
                 eliminated[e] = score_p[e]
+            rule(new_profile, candidates=new_set)
 
-                for ballot, weight, _  in new_profile.items():
-                    try:
-                        ballots.append(ballot.restrict(new_set))
-                        weights.append(weight) 
-                    except:
-                        pass
-       
-                    
-            new_profile = Profile(ballots, weights = weights)
-            rule = copy.deepcopy(self.rule)
-            rule(new_profile)
             rounds.append((rule, elected.copy(), eliminated.copy()))
          
-            if len(rule.candidates_) + len(elected) == self.committee_size and len(elected) != self.committee_size:
+            if len(rule.candidates_) + len(elected) == self.committee_size:
                 for candidate in rule.candidates_:
                     elected[candidate] = score_p[candidate]
                 rounds[-1] = (rule, elected, eliminated)

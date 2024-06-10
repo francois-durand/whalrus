@@ -74,7 +74,7 @@ class RuleCommitteeScoring(RuleCommittee):
         return NiceDict({committee: self._cc_score(committee) for committee in self._all_committees()})
     
     @cached_property
-    def gross_scores(self) -> NiceDict:
+    def gross_scores_(self) -> NiceDict:
         """
         The scores of all committees.
 

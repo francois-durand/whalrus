@@ -36,7 +36,7 @@ class RuleBloc(RuleCommitteeAverage):
     highest score is elected.
 
     >>> cc = RuleBloc(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 5, {'a', 'c'}: 2, {'a', 'd'}: 3, {'b', 'c'}: 3, {'b', 'd'}: 4, {'c', 'd'}: 1}
     >>> cc.winning_committee_
     {'a', 'b'}
@@ -45,7 +45,7 @@ class RuleBloc(RuleCommitteeAverage):
 
     >>> cc = RuleBloc(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.gross_scores
+    >>> cc.gross_scores_
     {{'a', 'b'}: 6, {'a', 'c'}: 6, {'a', 'd'}: 4, {'b', 'c'}: 4, {'b', 'd'}: 2, {'c', 'd'}: 2}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}}
