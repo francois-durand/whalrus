@@ -32,45 +32,48 @@ class RuleCommitteeAverage(RuleCommitteeScoring):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)    
     
-    @cached_property
-    def _gross_scores_and_weights_(self) -> dict:
-        gross_scores = NiceDict({c: 0 for c in self.candidates_})
-        weights = NiceDict({c: 0 for c in self.candidates_})
-        for ballot, weight, voter in self.profile_converted_.items():
+    # @cached_property
+    # def _gross_scores_and_weights_(self) -> dict:
+    #     gross_scores = NiceDict({c: 0 for c in self.candidates_})
+    #     weights = NiceDict({c: 0 for c in self.candidates_})
+    #     for ballot, weight, voter in self.profile_converted_.items():
             
-            for c, value in self.scorer(ballot=self.converter(ballot), voter=voter, candidates=self.candidates_).scores_.items():
-                gross_scores[c] += weight * value
-                weights[c] += weight
-        return {'gross_scores': gross_scores, 'weights': weights}
+    #         for c, value in self.scorer(ballot=self.converter(ballot), voter=voter, candidates=self.candidates_).scores_.items():
+    #             gross_scores[c] += weight * value
+    #             weights[c] += weight
+    #     return {'gross_scores': gross_scores, 'weights': weights}
 
-    @cached_property
-    def weights_(self) -> NiceDict:
-        """NiceDict: The weights used for the candidates. For each candidate, this dictionary gives the total weight
-        for this candidate, i.e. the total weight of all voters who assign a score to this candidate. This is the
-        denominator in the candidate's average score.
-        """
-        return self._gross_scores_and_weights_['weights']
+    # @cached_property
+    # def weights_(self) -> NiceDict:
+    #     """NiceDict: The weights used for the candidates. For each candidate, this dictionary gives the total weight
+    #     for this candidate, i.e. the total weight of all voters who assign a score to this candidate. This is the
+    #     denominator in the candidate's average score.
+    #     """
+    #     return self._gross_scores_and_weights_['weights']
     
-    @cached_property
-    def gross_scores(self) -> NiceDict:
-        """NiceDict: The gross scores of the candidates. For each candidate, this dictionary gives the sum of its
-        scores, multiplied by the weights of the corresponding voters. This is the numerator in the candidate's average
-        score.
-        """
-        return self._gross_scores_and_weights_['gross_scores']
+    # @cached_property
+    # def gross_scores(self) -> NiceDict:
+    #     """NiceDict: The gross scores of the candidates. For each candidate, this dictionary gives the sum of its
+    #     scores, multiplied by the weights of the corresponding voters. This is the numerator in the candidate's average
+    #     score.
+    #     """
+    #     return self._gross_scores_and_weights_['gross_scores']
 
-    @cached_property
-    def scores(self) -> NiceDict:
-        self.default_average = 0
-        return NiceDict({c: my_division(score, self.weights_[c], divide_by_zero=self.default_average)
-                         for c, score in self.gross_scores.items()})
+    # @cached_property
+    # def scores(self) -> NiceDict:
+    #     self.default_average = 0
+    #     return NiceDict({c: my_division(score, self.weights_[c], divide_by_zero=self.default_average)
+    #                      for c, score in self.gross_scores.items()})
 
     def _cc_score(self, committee):
+        self.base_rule(ballots = self.profile_converted_)
         return sum(
-                self.scores[candidate] for candidate in committee
+                self.base_rule.scores_[candidate] for candidate in committee
         )
 
+
     def _cc_gross_scores(self, committee):
+        self.base_rule(ballots = self.profile_converted_)
         return sum(
-                self.gross_scores[candidate] for candidate in committee
+                self.base_rule.gross_scores_[candidate] for candidate in committee
         )

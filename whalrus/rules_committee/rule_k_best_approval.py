@@ -21,6 +21,8 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
 from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
 from whalrus.scales.scale_range import ScaleRange
+from whalrus.rules.rule import Rule
+from whalrus.rules.rule_approval import RuleApproval
 from whalrus.converters_ballot.converter_ballot_to_grades import ConverterBallotToGrades
 from whalrus.profiles.profile import Profile
 from whalrus.ballots.ballot_levels import BallotLevels
@@ -64,10 +66,16 @@ class RuleKBestApproval(RuleCommitteeAverage):
 
     """
 
-    def __init__(self, *args, committee_size : int,  **kwargs):
+    def __init__(self, *args, committee_size : int, base_rule : RuleApproval = None ,scorer = None,  **kwargs):
         
         self.converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
-        self.scorer = ScorerLevels()
+        if scorer is None:
+            scorer = ScorerLevels()
+        self.scorer = scorer
+        if base_rule is None:
+            base_rule = RuleApproval(scorer = self.scorer, converter = self.converter)
+        self.base_rule = base_rule
+        
         super().__init__(*args,committee_size = committee_size, **kwargs)
 
         

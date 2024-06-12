@@ -127,7 +127,7 @@ class RuleIteratedElimination(Rule):
         round, etc.
         """
         self.elimination.delete_cache()
-        self.base_rule.delete_cache()
+        self.delete_cache()
         eliminations = []
         candidates = self.candidates_
         while candidates:

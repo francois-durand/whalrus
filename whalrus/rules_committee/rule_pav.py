@@ -74,7 +74,6 @@ class RulePAV(RuleCommitteeScoring):
         return sum(1 / k for k in range(1, number + 1))
 
     def _cc_score(self, committee):
-        self.scorer = ScorerLevels()
         converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
         scorer = ScorerLevels()
 
@@ -87,16 +86,3 @@ class RulePAV(RuleCommitteeScoring):
             for ballot, weight, _ in self.profile_converted_.items()
         )
 
-      
-
-if __name__ == '__main__':
-    candidates2 = ['a','b','c','d']
-    p_a2 = Profile(ballots=[
-        BallotLevels({'a':1, 'b':1,'c':0,'d':0}, candidates = candidates2),
-        BallotLevels({'a':1, 'b':0,'c':1,'d':0}, candidates = candidates2),
-        BallotLevels({'a':0,'c':0,'d':1}, candidates = candidates2)], weights = [5,17,8])
-
-    rule = RulePAV(p_a2, committee_size = 2)
-    # rule = RulePAV([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
-    #                              committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    print(rule.scores_)

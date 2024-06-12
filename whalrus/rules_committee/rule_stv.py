@@ -98,7 +98,7 @@ class RuleSTV(RuleTransfert):
                     ballot = ballot.restrict(new_set)
 
                     if len(ballot) >= 1 and ballot.first() != rule.winner_:
-                        ballots.append(ballot.restrict(new_set_))
+                        ballots.append(ballot.restrict(new_set_))  #tester sans restrict 
                         weights.append(weight)
                          
                     elif len(ballot) > 1 and ratio > 0:
@@ -107,6 +107,7 @@ class RuleSTV(RuleTransfert):
             
                 new_profile = Profile(ballots, weights = weights)
                 new_set = new_set_
+
             else:
                 elimination = EliminationLast(rule=rule, k=1)
                 new_set = elimination.qualified_

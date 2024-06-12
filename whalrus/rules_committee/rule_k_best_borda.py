@@ -21,6 +21,8 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
 from whalrus.converters_ballot.converter_ballot_to_strict_order import ConverterBallotToStrictOrder
 from whalrus.scorers.scorer_borda import ScorerBorda
+from whalrus.rules.rule import Rule
+from whalrus.rules.rule_borda import RuleBorda
 from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from whalrus.priorities.priority import Priority
 
@@ -64,8 +66,14 @@ class RuleKBestBorda(RuleCommitteeAverage):
     {('a', 'Female'), ('b', 'Male')}
     """
 
-    def __init__(self, *args, committee_size : int,  **kwargs):
+    def __init__(self, *args, committee_size : int, base_rule : Rule = None, scorer = None,  **kwargs):
         
-        converter = ConverterBallotToStrictOrder()
-        self.scorer = ScorerBorda()
+        self.converter = ConverterBallotToStrictOrder()
+        
+        if scorer is None:
+            scorer = ScorerBorda()
+        self.scorer = scorer
+        if base_rule is None:
+            base_rule = RuleBorda(scorer=self.scorer, converter = self.converter)
+        self.base_rule = base_rule
         super().__init__(*args,committee_size = committee_size, **kwargs)

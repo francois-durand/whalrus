@@ -21,6 +21,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
 from whalrus.rules_committee.rule_committee_scoring import RuleCommitteeScoring
 from whalrus.converters_ballot.converter_ballot_to_plurality import ConverterBallotToPlurality
+from whalrus.rules.rule_plurality import RulePlurality
 from whalrus.scorers.scorer_plurality import ScorerPlurality
 from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from whalrus.priorities.priority import Priority
@@ -64,14 +65,14 @@ class RuleSNTV(RuleCommitteeAverage):
     {{('a', 'Female'), ('b', 'Male')}, {('a', 'Female'), ('c', 'Male')}}
    """
 
-    def __init__(self, *args, committee_size : int,  **kwargs):
+    def __init__(self, *args, committee_size : int,base_rule : RulePlurality = None,scorer = None,  **kwargs):
         
         
         super().__init__(*args,committee_size = committee_size, **kwargs)
         self.converter = ConverterBallotToPlurality()
-        self.scorer = ScorerPlurality()
-    
-if __name__ == '__main__':
-    cc = RuleSNTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-
-    print(cc.winning_committee_)
+        if scorer is None:
+            scorer = ScorerPlurality()
+        self.scorer = scorer
+        if base_rule is None:
+            base_rule = RulePlurality(scorer = self.scorer, converter = self.converter)
+        self.base_rule = base_rule

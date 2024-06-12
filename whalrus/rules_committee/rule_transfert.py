@@ -122,8 +122,3 @@ class RuleTransfert(DeleteCacheMixin):
     @cached_property
     def scores_last_rounds(self):
         return self.scores_rounds_[-1]
-    
-    @cached_property
-    def order_on_committees_(self):
-        #a voir 
-        pass

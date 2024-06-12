@@ -66,6 +66,10 @@ from .eliminations.elimination import Elimination
 from .eliminations.elimination_last import EliminationLast
 from .eliminations.elimination_below_average import EliminationBelowAverage
 
+# Selection algorithms
+from .selections.selection import Selection
+from .selections.selection_first import SelectionFirst
+
 # Scorers
 from .scorers.scorer import Scorer
 from .scorers.scorer_borda import ScorerBorda

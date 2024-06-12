@@ -21,11 +21,13 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.rules_committee.rule_committee_average import RuleCommitteeAverage
 from whalrus.converters_ballot.converter_ballot_to_strict_order import ConverterBallotToStrictOrder
 from whalrus.scorers.scorer_positional import ScorerPositional
+from whalrus.rules.rule import Rule
+from whalrus.rules.rule_plurality import RulePlurality
 from whalrus.utils.utils import cached_property, NiceDict, my_division
 from whalrus.priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from whalrus.priorities.priority import Priority
 from numbers import Number
-
+from whalrus.profiles.profile import Profile
 
 class RuleBloc(RuleCommitteeAverage):
     # noinspection PyUnresolvedReferences
@@ -66,9 +68,14 @@ class RuleBloc(RuleCommitteeAverage):
     {('a', 'Female'), ('b', 'Male')}
     """
     
-    def __init__(self, *args, committee_size : int,  **kwargs):
+    def __init__(self, *args, committee_size : int, base_rule : Rule = None , scorer : ScorerPositional = None,  **kwargs):
         
         self.converter = ConverterBallotToStrictOrder()
-        self.scorer = ScorerPositional(points_scheme=[1] * committee_size)
+        if scorer is None:
+            scorer = ScorerPositional(points_scheme=[1] * committee_size)
+        self.scorer = scorer
+        if base_rule is None :
+            base_rule = RulePlurality(scorer=self.scorer, converter = self.converter)
+        self.base_rule = base_rule  
         super().__init__(*args,committee_size = committee_size, **kwargs)
 

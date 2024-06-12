@@ -22,31 +22,8 @@ from whalrus.utils.utils import cached_property, DeleteCacheMixin, NiceSet
 from whalrus.rules.rule import Rule
 
 
-class Elimination(DeleteCacheMixin):
-    """
-    An elimination method.
-
-    An :class:`Elimination` object is a callable whose input is a :class:`Rule` (which has already loaded a profile).
-    When the :class:`Elimination` object is called, it loads the rule. The output of the call is the
-    :class:`Elimination` object itself. But after the call, you can access to the computed variables (ending with an
-    underscore), such as :attr:`eliminated_order_`, :attr:`eliminated_` or :attr:`qualified_`.
-
-    Parameters
-    ----------
-    args
-        If present, these parameters will be passed to ``__call__`` immediately after initialization.
-    kwargs
-        If present, these parameters will be passed to ``__call__`` immediately after initialization.
-
-    Attributes
-    ----------
-    rule_ : Rule
-        This attribute stores the rule given in argument of the ``__call__``.
-
-    Examples
-    --------
-    Cf. :class:`EliminationLast` for some examples.
-    """
+class Selection(DeleteCacheMixin):
+  
 
     def __init__(self, *args, **kwargs):
         """
@@ -64,8 +41,8 @@ class Elimination(DeleteCacheMixin):
         return self
 
     @cached_property
-    def eliminated_order_(self) -> list:
-        """list: The order on the eliminated candidates.
+    def selected_order_(self) -> list:
+        """list: The order on the selected candidates.
 
         It is a list where each element is a :class:`NiceSet`. Each set represents a class of tied candidates. The
         first set in the list represents the "best" eliminated candidates, whereas the last set represent the "worst"
@@ -74,14 +51,16 @@ class Elimination(DeleteCacheMixin):
         raise NotImplementedError
 
     @cached_property
-    def eliminated_(self) -> NiceSet:
-        """NiceSet: The eliminated candidates.
+    def selected_(self) -> NiceSet:
+        """NiceSet: The selected candidates.
 
         This should always be non-empty. It may contain all the candidates (for example, it is always the case
         when there was only one candidate in the election).
         """
-        return NiceSet(c for tie_class in self.eliminated_order_ for c in tie_class)
+        return NiceSet(c for tie_class in self.selected_order_ for c in tie_class)
 
     @cached_property
-    def qualified_(self) -> NiceSet:
-        return NiceSet(self.rule_.candidates_ - self.eliminated_)
+    def remaining_(self) -> NiceSet:
+        """NiceSet: The candidates that remain after selection.
+        """
+        return NiceSet(self.rule_.candidates_ - self.selected_)
