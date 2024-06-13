@@ -86,15 +86,17 @@ class RuleSTV(RuleTransfert):
             weights = []
 
             score_p = rule.gross_scores_
-  
+            
+    
             if score_p[rule.winner_] >= self.quota:
                 
                 elected[rule.winner_] = score_p[rule.winner_]
                 new_set_ = new_set - NiceSet({rule.winner_})
                 over_count = score_p[rule.winner_] - self.quota
                 ratio = Fraction(int(over_count),score_p[rule.winner_])
+                
                 for ballot, weight, _  in new_profile.items():
-               
+             
                     ballot = ballot.restrict(new_set)
 
                     if len(ballot) >= 1 and ballot.first() != rule.winner_:
@@ -126,4 +128,16 @@ class RuleSTV(RuleTransfert):
                 return rounds
         return rounds
 
+if __name__ == '__main__':
 
+
+    w1 = [4,3,2,1]
+    k1 = 2
+
+    p1 = Profile(['f > e > d > b > c > a', 
+        'a > b > c > d > e > f',
+        'b > c > a > e > d > f',
+            'd > c > a > b > e > f'], weights=w1)
+    rule = RuleSTV(p1, committee_size = 2, quota = False)
+
+    print(rule.transfert_)

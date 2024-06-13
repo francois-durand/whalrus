@@ -20,7 +20,9 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.utils.utils import cached_property, DeleteCacheMixin, NiceSet
 from whalrus.rules.rule import Rule
+from whalrus.utils.utils import my_division
 
+from whalrus.rules.rule_plurality import RulePlurality
 
 class Selection(DeleteCacheMixin):
   
@@ -41,6 +43,35 @@ class Selection(DeleteCacheMixin):
         return self
 
     @cached_property
+    def new_profile_(self):
+        
+
+        if len(self.selected_) != 0:
+            ballots, weights = [], []
+            new_set = self.remaining_
+            print(self.rule_.profile_converted_)
+            for ballot, weight, _ in self.rule_.profile_converted_.items():
+                print(ballot)
+                if len(ballot) >= 1 and ballot.first() not in self.selected_:
+                    ballots.append(ballot.restrict(new_set))
+                    weights.append(weight)
+                
+                elif len(ballot) > 1:
+                    over_count = self.rule_.gross_scores_[ballot.first()] - self.quota
+                    ratio = my_division(over_count, self.rule_.gross_scores_[ballot.first()])
+
+                    if ratio > 0:
+                        ballots.append(ballot.restrict(new_set))
+                        weights.append(weight*ratio)
+            
+            return Profile(ballots, weights = weights)
+
+        return self.rule_.profile_converted_
+
+
+            
+    
+    @cached_property
     def selected_order_(self) -> list:
         """list: The order on the selected candidates.
 
@@ -53,9 +84,6 @@ class Selection(DeleteCacheMixin):
     @cached_property
     def selected_(self) -> NiceSet:
         """NiceSet: The selected candidates.
-
-        This should always be non-empty. It may contain all the candidates (for example, it is always the case
-        when there was only one candidate in the election).
         """
         return NiceSet(c for tie_class in self.selected_order_ for c in tie_class)
 
@@ -64,3 +92,4 @@ class Selection(DeleteCacheMixin):
         """NiceSet: The candidates that remain after selection.
         """
         return NiceSet(self.rule_.candidates_ - self.selected_)
+

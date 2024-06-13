@@ -69,6 +69,7 @@ from .eliminations.elimination_below_average import EliminationBelowAverage
 # Selection algorithms
 from .selections.selection import Selection
 from .selections.selection_first import SelectionFirst
+from .selections.selection_above import SelectionAbove
 
 # Scorers
 from .scorers.scorer import Scorer
