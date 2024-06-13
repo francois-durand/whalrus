@@ -28,34 +28,7 @@ from typing import Union
 
 
 class RuleTransfert(DeleteCacheMixin):
-    """
-    A voting rule, a priori designed to elect a committee (set of candidates).
-
-    :param `*args`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-    :param tie_break: a tie-break rule.
-    :param converter: the converter that is used to convert input ballots in order to compute
-        :attr:`profile_converted_`. Default: :class:`ConverterBallotGeneral`.
-    :param `**kwargs`: if present, these parameters will be passed to ``__call__`` immediately after initialization.
-
-    A :class:`RuleCommittee` object is a callable whose inputs are ballots and optionally weights, voters and
-    candidates. When the rule is called, it loads the profile. The output of the call is the rule itself. But
-    after the call, you can access to the computed variables (ending with an underscore), such as
-    :attr:`cowinning_committees_`.
-
-    At the initialization of a :class:`RuleCommittee` object, some options can be given, such as a tie-break rule or a
-    converter. In some subclasses, there can also be an option about the way to count abstentions, etc.
-
-    Cf. :class:`RulePlurality` for some examples.
-
-    :ivar profile_original\_: the profile as it is entered by the user. Since it uses the constructor of
-        :class:`Profile`, it indirectly uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
-        ``'a > b > c'`` are converted to :class:`Ballot` objects.
-    :ivar profile_converted\_: the profile, with ballots that are adapted to the voting rule. For example,
-        in :class:`RulePlurality`, it will be :class:`BallotPlurality` objects, even if the original ballots are
-        :class:`BallotOrder` objects. This uses the parameter ``converter`` of the rule.
-    :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
-    """
-
+   
     def __init__(self, *args, tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None, **kwargs):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
@@ -105,7 +78,7 @@ class RuleTransfert(DeleteCacheMixin):
     @cached_property
     def winning_committee_(self) -> NiceSet:
         
-        return NiceSet(self.scores_last_rounds[0].keys())
+        return NiceSet(list(self.scores_last_rounds[0].keys())[:self.committee_size])
     
 
     @cached_property 

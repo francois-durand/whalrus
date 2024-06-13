@@ -20,7 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.utils.utils import cached_property, DeleteCacheMixin, NiceSet
 from whalrus.rules.rule import Rule
-from whalrus.utils.utils import my_division
+from whalrus.utils.utils import my_division, NiceDict
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_plurality import RulePlurality
 
@@ -41,6 +41,11 @@ class Selection(DeleteCacheMixin):
         self.rule_ = rule
         self.delete_cache()
         return self
+    
+    @cached_property
+    def get_winner_ratio_(self):
+        return NiceDict({candidate:my_division(self.rule_.gross_scores_[candidate] - self.threshold, 
+                    self.rule_.gross_scores_[candidate]) for candidate in self.selected_})
 
     @cached_property
     def new_profile_(self):
@@ -59,21 +64,15 @@ class Selection(DeleteCacheMixin):
                     ballots.append(ballot.restrict(new_set))
                     weights.append(weight)
                 
-                elif len(ballot) > 1:
-                    over_count = self.rule_.gross_scores_[ballot.first()] - self.threshold
-                    ratio = my_division(over_count, self.rule_.gross_scores_[ballot.first()])
-
-                    if ratio > 0:
-                        ballots.append(ballot.restrict(new_set))
-                        weights.append(weight*ratio)
+                elif len(ballot) > 1 and self.get_winner_ratio_[ballot.first()] > 0:
+                    
+                    ballots.append(ballot.restrict(new_set))
+                    weights.append(weight*self.get_winner_ratio_[ballot.first()])
             
             return Profile(ballots, weights = weights)
 
         return self.rule_.profile_original_
 
-
-            
-    
     @cached_property
     def selected_order_(self) -> list:
         """list: The order on the selected candidates.
@@ -82,7 +81,7 @@ class Selection(DeleteCacheMixin):
         first set in the list represents the "best" eliminated candidates, whereas the last set represent the "worst"
         candidates.
         """
-        raise NotImplementedError
+        raise  
 
     @cached_property
     def selected_(self) -> NiceSet:
