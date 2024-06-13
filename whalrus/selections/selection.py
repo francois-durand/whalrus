@@ -21,7 +21,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 from whalrus.utils.utils import cached_property, DeleteCacheMixin, NiceSet
 from whalrus.rules.rule import Rule
 from whalrus.utils.utils import my_division
-
+from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_plurality import RulePlurality
 
 class Selection(DeleteCacheMixin):
@@ -49,15 +49,18 @@ class Selection(DeleteCacheMixin):
         if len(self.selected_) != 0:
             ballots, weights = [], []
             new_set = self.remaining_
-            print(self.rule_.profile_converted_)
-            for ballot, weight, _ in self.rule_.profile_converted_.items():
-                print(ballot)
+            new_set_ = self.rule_.candidates_
+ 
+            for ballot, weight, _ in self.rule_.profile_original_.items():
+              
+                ballot = ballot.restrict(new_set_)
+                
                 if len(ballot) >= 1 and ballot.first() not in self.selected_:
                     ballots.append(ballot.restrict(new_set))
                     weights.append(weight)
                 
                 elif len(ballot) > 1:
-                    over_count = self.rule_.gross_scores_[ballot.first()] - self.quota
+                    over_count = self.rule_.gross_scores_[ballot.first()] - self.threshold
                     ratio = my_division(over_count, self.rule_.gross_scores_[ballot.first()])
 
                     if ratio > 0:
@@ -66,7 +69,7 @@ class Selection(DeleteCacheMixin):
             
             return Profile(ballots, weights = weights)
 
-        return self.rule_.profile_converted_
+        return self.rule_.profile_original_
 
 
             

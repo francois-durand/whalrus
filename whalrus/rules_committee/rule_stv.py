@@ -30,6 +30,7 @@ from whalrus.priorities.priority import Priority
 from whalrus.rules.rule import Rule
 from whalrus.utils.utils import cached_property, NiceSet, NiceFrozenSet, NiceDict
 from whalrus.profiles.profile import Profile
+from whalrus.selections.selection_above import SelectionAbove
 import numpy as np
 import random
 import copy
@@ -71,73 +72,39 @@ class RuleSTV(RuleTransfert):
             self.quota = np.floor(sum(self.profile_converted_.weights)/self.committee_size)
 
     @cached_property
-    def transfert_(self) -> list:
+    def get_rounds_(self):
         elected = dict()
         eliminated = {}
-        rule = copy.deepcopy(self.rule)
         new_profile = copy.deepcopy(self.profile_converted_)
+        rule = copy.deepcopy(self.rule)
         new_set = self.candidates_
         rule(new_profile)
-        rounds = [(rule,elected.copy(),eliminated.copy())]
-    
+        rounds = []
+
         while len(elected) < self.committee_size:
-        
-            ballots = []
-            weights = []
 
-            score_p = rule.gross_scores_
+            selection = SelectionAbove(rule = rule, threshold=self.quota)
+
+            for candidate in selection.selected_:
+                elected[candidate] = rule.gross_scores_[candidate]
             
-    
-            if score_p[rule.winner_] >= self.quota:
-                
-                elected[rule.winner_] = score_p[rule.winner_]
-                new_set_ = new_set - NiceSet({rule.winner_})
-                over_count = score_p[rule.winner_] - self.quota
-                ratio = Fraction(int(over_count),score_p[rule.winner_])
-                
-                for ballot, weight, _  in new_profile.items():
-             
-                    ballot = ballot.restrict(new_set)
+            if len(selection.selected_) == 0:
 
-                    if len(ballot) >= 1 and ballot.first() != rule.winner_:
-                        ballots.append(ballot.restrict(new_set_))  #tester sans restrict 
-                        weights.append(weight)
-                         
-                    elif len(ballot) > 1 and ratio > 0:
-                        ballots.append(ballot.restrict(new_set_))
-                        weights.append(weight*ratio)
-            
-                new_profile = Profile(ballots, weights = weights)
-                new_set = new_set_
-
-            else:
                 elimination = EliminationLast(rule=rule, k=1)
                 new_set = elimination.qualified_
-                
                 e = next(iter(elimination.eliminated_))
-   
-                eliminated[e] = score_p[e]
-            rule(new_profile, candidates=new_set)
+                eliminated[e] = rule.gross_scores_[e]
+                selection = copy.deepcopy(elimination)
+            else:
+                new_profile = selection.new_profile_
+                new_set = selection.remaining_
 
-            rounds.append((rule, elected.copy(), eliminated.copy()))
-         
+            rule(new_profile, candidates=new_set)
+            
+            rounds.append((selection, elected.copy(), eliminated.copy()))
             if len(rule.candidates_) + len(elected) == self.committee_size:
                 for candidate in rule.candidates_:
-                    elected[candidate] = score_p[candidate]
+                    elected[candidate] = rule.gross_scores_[candidate]
                 rounds[-1] = (rule, elected, eliminated)
                 return rounds
         return rounds
-
-if __name__ == '__main__':
-
-
-    w1 = [4,3,2,1]
-    k1 = 2
-
-    p1 = Profile(['f > e > d > b > c > a', 
-        'a > b > c > d > e > f',
-        'b > c > a > e > d > f',
-            'd > c > a > b > e > f'], weights=w1)
-    rule = RuleSTV(p1, committee_size = 2, quota = False)
-
-    print(rule.transfert_)

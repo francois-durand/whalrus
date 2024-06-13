@@ -23,8 +23,9 @@ from whalrus.selections.selection import Selection
 from whalrus.rules.rule_plurality import RulePlurality
 from whalrus.priorities.priority import Priority
 from whalrus.rules.rule_score_num import RuleScoreNum
-
-
+from whalrus.profiles.profile import Profile
+from whalrus.converters_ballot.converter_ballot_to_plurality import ConverterBallotToPlurality
+from whalrus.converters_ballot.converter_ballot_to_order import ConverterBallotToOrder
 
 class SelectionAbove(Selection):
     """

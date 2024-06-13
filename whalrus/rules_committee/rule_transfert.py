@@ -99,7 +99,7 @@ class RuleTransfert(DeleteCacheMixin):
         return len(self.candidates_)
 
     @cached_property
-    def transfert_(self) -> list:
+    def get_rounds_(self) -> list:
         raise NotImplementedError
 
     @cached_property
@@ -117,7 +117,7 @@ class RuleTransfert(DeleteCacheMixin):
 
     @cached_property
     def scores_rounds_(self) -> list:
-        return [(scores_elected, scores_eliminated) for _,scores_elected, scores_eliminated in self.transfert_[1:]]
+        return [(scores_elected, scores_eliminated) for _,scores_elected, scores_eliminated in self.get_rounds_[1:]]
 
     @cached_property
     def scores_last_rounds(self):
