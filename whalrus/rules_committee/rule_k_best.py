@@ -62,6 +62,14 @@ class RuleKBest(RuleCommittee):
         return self.base_rule(ballots=self.profile_converted_, candidates=self.candidates_)
 
     @cached_property
+    def scores_(self):
+        return self.base_rule_.scores_
+
+    @cached_property
+    def gross_scores_(self):
+        return self.base_rule_.gross_scores_
+
+    @cached_property
     def winning_committee_(self) -> NiceSet:
         if self.use_base_rule_tie_break:
             return NiceSet(self.base_rule_.strict_order_[:self.committee_size])
@@ -108,3 +116,4 @@ class RuleKBest(RuleCommittee):
     @cached_property
     def order_on_committees_(self) -> list:
         raise NotImplementedError
+

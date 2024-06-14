@@ -35,7 +35,7 @@ from whalrus.priorities.priority import Priority
 from whalrus.utils.utils import cached_property, NiceDict, my_division
 from numbers import Number
 
-class RuleKBestApproval(RuleCommitteeAverage):
+class RuleKBestApprovalk(RuleKBest):
     # noinspection PyUnresolvedReferences
     """
     A multi-winner rule that select the best committee according to Best-k Approval voting rule.
@@ -44,18 +44,14 @@ class RuleKBestApproval(RuleCommitteeAverage):
     equal to her score (in the sense of the scorer) for her most liked candidate in the committee. The committee with
     highest score is elected.
 
-    >>> cc = RuleKBestApproval([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'d': 1, 'b': 1, 'a': 1, 'c': 0}, {'a': 1, 'b': 0, 'c': 0, 'd': 0}], committee_size=2)
-    >>> cc.gross_scores_
-    {{'a', 'b'}: 5, {'a', 'c'}: 3, {'a', 'd'}: 4, {'b', 'c'}: 2, {'b', 'd'}: 3, {'c', 'd'}: 1}
+    >>> cc = RuleKBestApprovalk([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'d': 1, 'b': 1, 'a': 1, 'c': 0}, {'a': 1, 'b': 0, 'c': 0, 'd': 0}], committee_size=2)
     >>> cc.winning_committee_
     {'a', 'b'}
     >>> cc.trailing_committee_
     {'c', 'd'}
 
-    >>> cc = RuleKBestApproval([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
-    ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.gross_scores_
-    {{'a', 'b'}: 6, {'a', 'c'}: 6, {'a', 'd'}: 4, {'b', 'c'}: 4, {'b', 'd'}: 2, {'c', 'd'}: 2}
+    >>> cc = RuleKBestApprovalk([{'a': 1, 'b': 1, 'c': 0, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 0, 'c': 1, 'd': 0}, {'a': 1, 'b': 1, 'c': 0, 'd': 0}],
+    ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING), use_base_rule_tie_break = False)
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}}
     >>> cc.winning_committee_
@@ -74,7 +70,7 @@ class RuleKBestApproval(RuleCommitteeAverage):
             scorer = ScorerLevels()
         self.scorer = scorer
         if base_rule is None:
-            base_rule = RuleApproval(scorer = self.scorer, converter = self.converter)
+            base_rule = RuleApproval(scorer = self.scorer, converter = self.converter, tie_break=Priority.ASCENDING)
         
         super().__init__(*args,base_rule = base_rule,committee_size = committee_size, **kwargs)
 

@@ -72,6 +72,7 @@ class RuleCommittee(DeleteCacheMixin):
         # Optional: load a profile at initialization
         if args or kwargs:
             self(*args, **kwargs)
+        
 
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None):
@@ -97,6 +98,8 @@ class RuleCommittee(DeleteCacheMixin):
         :return: the number of candidates.
         """
         return len(self.candidates_)
+
+    
 
     @cached_property
     def cowinning_committees_(self) -> NiceSet:

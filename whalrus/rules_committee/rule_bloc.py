@@ -75,7 +75,6 @@ class RuleBloc(RuleCommitteeAverage):
             scorer = ScorerPositional(points_scheme=[1] * committee_size)
         self.scorer = scorer
         if base_rule is None :
-            base_rule = RulePlurality(scorer=self.scorer, converter = self.converter)
-        self.base_rule = base_rule  
-        super().__init__(*args,committee_size = committee_size, **kwargs)
+            base_rule = RulePlurality(scorer=self.scorer, converter = self.converter) 
+        super().__init__(*args,base_rule = base_rule,committee_size = committee_size, **kwargs)
 

@@ -50,28 +50,28 @@ class Selection(DeleteCacheMixin):
     @cached_property
     def new_profile_(self):
         
+        if len(self.selected_) == 0:
+            return self.rule_.profile_original_
 
-        if len(self.selected_) != 0:
-            ballots, weights = [], []
-            new_set = self.remaining_
-            new_set_ = self.rule_.candidates_
- 
-            for ballot, weight, _ in self.rule_.profile_original_.items():
-              
-                ballot = ballot.restrict(new_set_)
-                
-                if len(ballot) >= 1 and ballot.first() not in self.selected_:
-                    ballots.append(ballot.restrict(new_set))
-                    weights.append(weight)
-                
-                elif len(ballot) > 1 and self.get_winner_ratio_[ballot.first()] > 0:
-                    
-                    ballots.append(ballot.restrict(new_set))
-                    weights.append(weight*self.get_winner_ratio_[ballot.first()])
+        ballots, weights = [], []
+        new_set = self.remaining_
+        new_set_ = self.rule_.candidates_
+
+        for ballot, weight, _ in self.rule_.profile_original_.items():
             
-            return Profile(ballots, weights = weights)
+            ballot = ballot.restrict(new_set_)
+            
+            if len(ballot) >= 1 and ballot.first() not in self.selected_:
+                ballots.append(ballot.restrict(new_set))
+                weights.append(weight)
+            
+            elif len(ballot) > 1 and self.get_winner_ratio_[ballot.first()] > 0:
+                
+                ballots.append(ballot.restrict(new_set))
+                weights.append(weight*self.get_winner_ratio_[ballot.first()])
+        
+        return Profile(ballots, weights = weights)
 
-        return self.rule_.profile_original_
 
     @cached_property
     def selected_order_(self) -> list:
@@ -81,7 +81,7 @@ class Selection(DeleteCacheMixin):
         first set in the list represents the "best" eliminated candidates, whereas the last set represent the "worst"
         candidates.
         """
-        raise  
+        raise NotImplementedError
 
     @cached_property
     def selected_(self) -> NiceSet:

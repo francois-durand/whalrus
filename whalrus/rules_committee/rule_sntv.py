@@ -67,12 +67,11 @@ class RuleSNTV(RuleCommitteeAverage):
 
     def __init__(self, *args, committee_size : int,base_rule : RulePlurality = None,scorer = None,  **kwargs):
         
-        
-        super().__init__(*args,committee_size = committee_size, **kwargs)
         self.converter = ConverterBallotToPlurality()
         if scorer is None:
             scorer = ScorerPlurality()
         self.scorer = scorer
         if base_rule is None:
             base_rule = RulePlurality(scorer = self.scorer, converter = self.converter)
-        self.base_rule = base_rule
+        
+        super().__init__(*args,base_rule = base_rule,committee_size = committee_size, **kwargs)
