@@ -98,6 +98,9 @@ class SelectionFirst(Selection):
         self.k = k
         super().__init__(*args, **kwargs)
 
+    def __call__(self, rule, threshold = 0):
+        return super().__call__(rule=rule, threshold = threshold)
+
     @cached_property
     def selected_order_(self):
         if self.k > 0:
@@ -119,5 +122,10 @@ class SelectionFirst(Selection):
                 break
         return best_first[::-1]
 
+    @cached_property
+    def is_above_(self):
+        if self.rule_.gross_scores_[list(self.selected_)[0]] >= self.threshold:
+            return True
+        return False
 
 

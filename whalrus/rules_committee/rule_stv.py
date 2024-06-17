@@ -30,6 +30,8 @@ from whalrus.priorities.priority import Priority
 from whalrus.rules.rule import Rule
 from whalrus.utils.utils import cached_property, NiceSet, NiceFrozenSet, NiceDict
 from whalrus.profiles.profile import Profile
+from whalrus.selections.selection_first import SelectionFirst
+from whalrus.selections.selection import Selection
 from whalrus.selections.selection_above import SelectionAbove
 import numpy as np
 import random
@@ -58,7 +60,7 @@ class RuleSTV(RuleTransfert):
     """
 
     def __init__(self, *args, committee_size: int, base_rule: Rule = None, rule: Rule = None, propagate_tie_break=True, quota = False,
-                 **kwargs):
+                 selection : Selection = None,**kwargs):
         self.base_rule = base_rule
         self.committee_size = committee_size
         if rule is None:
@@ -70,6 +72,9 @@ class RuleSTV(RuleTransfert):
             self.quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
         else:
             self.quota = np.floor(sum(self.profile_converted_.weights)/self.committee_size)
+        if selection is None:
+            selection = SelectionAbove()
+        self.selection = selection
 
     @cached_property
     def get_rounds_(self):
@@ -82,13 +87,13 @@ class RuleSTV(RuleTransfert):
         rounds = []
 
         while len(elected) < self.committee_size:
-
-            selection = SelectionAbove(rule = rule, threshold=self.quota)
+            selection = copy.deepcopy(self.selection)
+            selection(rule=rule, threshold = self.quota)
 
             for candidate in selection.selected_:
                 elected[candidate] = rule.gross_scores_[candidate]
             
-            if len(selection.selected_) == 0:
+            if not selection.is_above_:
 
                 elimination = EliminationLast(rule=rule, k=1)
                 new_set = elimination.qualified_
@@ -108,3 +113,23 @@ class RuleSTV(RuleTransfert):
                 rounds[-1] = (rule, elected, eliminated)
                 return rounds
         return rounds
+
+if __name__ == '__main__':
+
+    candidates = {'Oranges','Pears', 'Strawberries', 'Cake', 'Chocolate', 'Hamburgers', 'Chicken'}
+    b1 = BallotOrder(['Oranges', 'Pears'], candidates = candidates)
+    b2 = BallotOrder(['Pears','Strawberries', 'Cake'], candidates = candidates)
+    b3 = BallotOrder(['Strawberries', 'Oranges',' Pears'], candidates = candidates)
+    b4 = BallotOrder(['Cake','Chocolate'], candidates = candidates)
+    b5 = BallotOrder(['Chocolate','Cake', 'Hamburgers'], candidates = candidates)
+    b6 = BallotOrder(['Hamburgers','Chicken'], candidates = candidates)
+    b7 = BallotOrder(['Chicken','Chocolate', 'Hamburgers'], candidates = candidates)
+
+    w = [3,8,1,3,1,4,3]
+
+
+    profile_wiki = Profile(ballots=[b1,b2,b3,b4,b5,b6,b7], weights = w)
+
+    rule = RuleSTV(profile_wiki, committee_size = 3, quota = True)
+
+    print(rule.get_rounds_)

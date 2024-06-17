@@ -53,14 +53,13 @@ class SelectionAbove(Selection):
         {'a', 'b', 'c'}
     """
 
-    def __init__(self, *args,threshold = 0, strict=False, transfert = False, **kwargs):
+    def __init__(self, *args, strict=False, transfert = False, **kwargs):
         self.strict = strict
-        self.threshold = threshold 
         self.transfert = transfert
         super().__init__(*args, **kwargs)
 
-    def __call__(self, rule):
-        return super().__call__(rule=rule)
+    def __call__(self, rule, threshold = 0):
+        return super().__call__(rule=rule, threshold = threshold)
 
     @cached_property
     def selected_order_(self):
@@ -69,7 +68,12 @@ class SelectionAbove(Selection):
             some_candidate = list(tie_class)[0]
             score = self.rule_.gross_scores_[some_candidate]
             if score > self.threshold or (not self.strict and score == self.threshold):
-                best_first.append(tie_class)
+                best_first.append(NiceSet(self.rule_.tie_break.sort(tie_class)))
             else:
                 break
         return best_first[::-1]
+
+
+    @cached_property
+    def is_above_(self):
+        return True if len(self.selected_) > 0 else False

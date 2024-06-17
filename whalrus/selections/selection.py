@@ -33,12 +33,14 @@ class Selection(DeleteCacheMixin):
         """
         # Computed variables
         self.rule_ = None
+        self.threshold = None
         # Optional: load a rule at initialization
         if args or kwargs:
             self(*args, **kwargs)
 
-    def __call__(self, rule: Rule):
+    def __call__(self, rule: Rule, threshold = 0):
         self.rule_ = rule
+        self.threshold = threshold
         self.delete_cache()
         return self
     
@@ -56,7 +58,7 @@ class Selection(DeleteCacheMixin):
         ballots, weights = [], []
         new_set = self.remaining_
         new_set_ = self.rule_.candidates_
-
+        
         for ballot, weight, _ in self.rule_.profile_original_.items():
             
             ballot = ballot.restrict(new_set_)
@@ -95,3 +97,6 @@ class Selection(DeleteCacheMixin):
         """
         return NiceSet(self.rule_.candidates_ - self.selected_)
 
+    @cached_property
+    def is_above_(self):
+        raise NotImplementedError
