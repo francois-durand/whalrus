@@ -50,3 +50,8 @@ profile_wiki = Profile(ballots=[b1,b2,b3,b4,b5,b6,b7], weights = w)
 
 profile_stv = Profile(['a > b > c','a > c > b ', 'b > a > c'], weights=[4,3,2])
 
+profile_stv2 = Profile(['a > b > c > d', 'b > a > c > d', 'a > d > c > d',
+            'c > d > a > b', 'd > b > a > c'], weights = [3,5,3,2,2])
+
+profile_stv3 = Profile(['a > d > c > b', 'b > a > c > d', 'a > d > b > c',
+            'c > d > a > b', 'd > b > a > c'], weights = [3,5,3,2,2])
