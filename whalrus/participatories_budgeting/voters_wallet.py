@@ -26,24 +26,19 @@ from whalrus.profiles.profile import Profile
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
 
-class VoterWallet(DeleteCacheMixin)
+class VotersWallet(DeleteCacheMixin):
 
-    def __init__(self,*args, project_cost : dict(), budget : float, **kwargs):
+    def __init__(self,profile : Profile, voter_budget : dict(), project_cost : dict(), budget : float):
 
+        self.profile = profile
+        self.voter_budget = voter_budget
         self.project_cost = project_cost
-        self.budget = budget
-        if *args or **kwargs:
-            self(*args, **kwargs)
+     
 
-    def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
-                 candidates: set = None):
-        self.profile_original_ = Profile(ballots, weights=weights, voters=voters)
-        self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_original_],
-                                          weights=self.profile_original_.weights, voters=self.profile_original_.voters)
-        if candidates is None:
-            candidates = NiceSet(set().union(*[b.candidates for b in self.profile_converted_]))
-        self.candidates_ = candidates
-        self._check_profile(candidates)
-        self.delete_cache()
-        return self
+    def is_affordable(self, project):
+        pass
+       
+
         
+    
+     
