@@ -20,7 +20,7 @@ along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
-from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceSet
+from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceSet, NiceDict
 from whalrus.priorities.priority import Priority
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
 from whalrus.profiles.profile import Profile
@@ -39,20 +39,27 @@ class EqualShares(ParticipatoryBudgeting):
 
     @cached_property
     def shares_(self):
-        
         winners = []
-        remaining = copy.deepcopy(self.initial_vote_counts)
+        remaining = {}
+
+        for c in self.project_cost.keys():
+            if self.initial_vote_counts[c] > 0:
+                remaining[c] = self.initial_vote_counts[c]
         budget_voter = copy.deepcopy(self.intial_voters_budget)
      
         supporters = self.supporters
         while True:
             best_eff_vote_count = 0
+            best = None
             remaining_sorted = sorted(remaining, key=lambda c: remaining[c], reverse=True)
+          
+        
             for c in remaining_sorted:
                 p_eff_vote_count = remaining[c]
                 if p_eff_vote_count < best_eff_vote_count:
                     break
                 approver_amount = sum(budget_voter[voter] for voter in supporters[c])
+              
                 if approver_amount < self.project_cost[c]:
                     del remaining[c]
                     continue
@@ -60,6 +67,7 @@ class EqualShares(ParticipatoryBudgeting):
                 supporters[c].sort(key = lambda i : budget_voter[i])
                 amount_so_far = 0
                 d = remaining[c]
+     
                 for voter in supporters[c]:
                     payment_factor = (self.project_cost[c] - amount_so_far)/d
                     eff_vote_count = self.project_cost[c] / payment_factor
@@ -68,6 +76,7 @@ class EqualShares(ParticipatoryBudgeting):
                         d -= self.voters_utilities[voter][c]
                     else:
                         remaining[c] = eff_vote_count
+                       
                         if eff_vote_count >= best_eff_vote_count:
                             best_eff_vote_count = eff_vote_count
                             best = c
@@ -77,9 +86,14 @@ class EqualShares(ParticipatoryBudgeting):
             if not best:
                 break
             winners.append(best)
+     
             del remaining[best]
             best_max_payment = self.project_cost[best] / best_eff_vote_count
-            for voter in supporters[c]:
+    
+            for voter in supporters[best]:
+
                 budget_voter[voter] = max(0, budget_voter[voter] - best_max_payment)
+
+          
 
         return winners
