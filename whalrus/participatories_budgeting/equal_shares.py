@@ -64,7 +64,7 @@ class EqualShares(ParticipatoryBudgeting):
                     del remaining[c]
                     continue
 
-                supporters[c].sort(key = lambda i : budget_voter[i])
+                supporters[c].sort(key = lambda i : budget_voter[i]/self.voters_utilities[i][c])
                 amount_so_far = 0
                 d = remaining[c]
      
@@ -77,7 +77,7 @@ class EqualShares(ParticipatoryBudgeting):
                     else:
                         remaining[c] = eff_vote_count
                        
-                        if eff_vote_count >= best_eff_vote_count:
+                        if eff_vote_count > best_eff_vote_count:
                             best_eff_vote_count = eff_vote_count
                             best = c
                         
@@ -91,8 +91,8 @@ class EqualShares(ParticipatoryBudgeting):
             best_max_payment = self.project_cost[best] / best_eff_vote_count
     
             for voter in supporters[best]:
-
-                budget_voter[voter] = max(0, budget_voter[voter] - best_max_payment)
+                payment = best_max_payment*self.voters_utilities[voter][best]
+                budget_voter[voter] = max(0, budget_voter[voter] - payment)
 
           
 

@@ -4,13 +4,9 @@ from whalrus.rules.rule_borda import RuleBorda
 from whalrus.participatories_budgeting.equal_shares import EqualShares
 import copy
 
-def test():
+def test_approval():
 
-     
-     p = Profile(['p1 > p2 > p3','p1 > p2 > p3','p3 > p2 > p1'])
 
-     pb = EqualShares(p, base_rule = RuleBorda(), project_cost = {"p1": 100, "p2": 50, "p3": 50}, budget = 150)
-     print(pb.shares_)
      p = Profile([{"A":1,"B":1,"C":0,"D":0,"E":0},
                     {"A":1,"B":1,"C":1,"D":0,"E":0},
                     {"A":1,"B":1,"C":0,"D":0,"E":0},
@@ -46,3 +42,10 @@ def test():
           project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
 
      assert pb.shares_ == ['B','C','D']
+
+def test_utility():
+
+     p = Profile(['p1 > p2 > p3','p1 > p2 > p3','p3 > p2 > p1'])
+
+     pb = EqualShares(p, base_rule = RuleBorda(), project_cost = {"p1": 100, "p2": 50, "p3": 50}, budget = 150)
+     assert pb.shares_ == ['p1','p3']
