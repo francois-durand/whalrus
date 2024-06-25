@@ -28,6 +28,10 @@ from .priorities.priority import PriorityCandidate
 from .priorities.priority_lifted import PriorityLifted
 from .priorities.priority_lifted_leximax import PriorityLiftedLeximax
 from .priorities.priority_lifted_leximin import PriorityLiftedLeximin
+from .priorities.priority_budgeting import PriorityBudgeting
+from .priorities.priority_budgeting import PriorityBudgetingAscendingCount
+from .priorities.priority_budgeting import PriorityBudgetingAscendingCost
+from .priorities.priority_budgeting import PriorityBudgetingDescendingCost
 
 # Ballots
 from .ballots.ballot import Ballot

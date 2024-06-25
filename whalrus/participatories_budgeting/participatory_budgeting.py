@@ -85,7 +85,11 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
 
     @cached_property
     def initial_vote_counts(self):
-        return self.base_rule_.gross_scores_
+        initial_vote_counts = {}
+        for c in self.project_cost.keys():
+            if self.base_rule_.gross_scores_[c] > 0:
+                initial_vote_counts[c] = self.base_rule_.gross_scores_[c]
+        return initial_vote_counts
 
     @cached_property
     def voters_utilities(self):

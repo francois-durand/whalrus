@@ -40,11 +40,7 @@ class EqualShares(ParticipatoryBudgeting):
     @cached_property
     def shares_(self):
         winners = []
-        remaining = {}
-
-        for c in self.project_cost.keys():
-            if self.initial_vote_counts[c] > 0:
-                remaining[c] = self.initial_vote_counts[c]
+        remaining = copy.deepcopy(self.initial_vote_counts)
         budget_voter = copy.deepcopy(self.intial_voters_budget)
      
         supporters = self.supporters
