@@ -18,53 +18,74 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
-from whalrus.priorities.priority import Priority
+from whalrus.priorities.priority import Priority,PriorityAscending
 from operator import itemgetter
 from typing import Union
 
-type project_cost = tuple[str, float]
-type project_cost_count = tuple[str, float, float]
+project_cost = tuple[str, float]
+project_cost_count = tuple[str, float, float]
 
-class PriorityBudgeting(Priority):
+class PriorityBudgeting():
     
-    def __init__(self, name : str = None, count : bool = False, cost : bool = False):
-        self.count = count
-        self.cost = cost
-        super().__init__(name = name)
+    def __init__(self, name : str = None, count : bool = False, cost : bool = False, base_priority = None):
+        self.name = name
+        if base_priority is None:
+            base_priority = PriorityAscending()
+        self.base_priority = base_priority
 
     def _choose(self, x: list[project_cost]):
         raise NotImplementedError
 
 class PriorityBudgetingAscendingCount(PriorityBudgeting):
 
-    def __init__(self, count = True, cost = False):
-        super().__init__(name = 'AscendingCount', cost = cost, count = count)
+    def __init__(self, cost = False, high = False, base_priority = None):
+        self.cost = cost
+        if high:
+            self.next_priority = PriorityBudgetingAscendingCost()
+        else:
+            self.next_priority = PriorityBudgetingDescendingCost()
+        super().__init__(name = 'AscendingCount', cost = cost, base_priority = base_priority)
 
     def _choose(self, x: Union[list[project_cost], list[project_cost_count]]):
         best_count = max(x, key = itemgetter(1))[1]
         remaining = [x_ for x_ in x if x_[1] == best_count]
         if not self.cost:
-            return remaining[0][0]
+            remaining = [x_[0] for x_ in remaining]
+        else:
+            remaining = [self.next_priority._choose(remaining)]
+        return self.base_priority.choice(remaining)
+
+
         
 
 class PriorityBudgetingAscendingCost(PriorityBudgeting):
     
-    def __init__(self, count = False, cost = True):
-        super().__init__(name = 'AscendingCost', cost = cost, count = count)
+    def __init__(self, count = False, base_priority = None):
+        self.count = count
+        super().__init__(name = 'AscendingCost', count = count,  base_priority = base_priority)
 
     def _choose(self, x: list[project_cost_count]):
         best_cost = max(x, key = itemgetter(2))[2]
         remaining = [x_ for x_ in x if x_[2] == best_cost]
         if not self.count:
-            return remaining[0][0]
+            remaining = [x_[0] for x_ in remaining]
+        else:
+            next_priority = PriorityBudgetingAscendingCount()
+            remaining = [next_priority._choose(remaining)]
+        return self.base_priority.choice(remaining)
 
 class PriorityBudgetingDescendingCost(PriorityBudgeting):
     
-    def __init__(self, count = False, cost = True):
-        super().__init__(name = 'DescendingCost', cost = cost, count = count)
+    def __init__(self, count = False, base_priority = None) :
+        self.count = count
+        super().__init__(name = 'DescendingCost', count = count, base_priority = base_priority)
 
     def _choose(self, x: list[project_cost_count]):
         best_cost = min(x, key = itemgetter(2))[2]
         remaining = [x_ for x_ in x if x_[2] == best_cost]
         if not self.count:
-            return remaining[0][0]
+            remaining = [x_[0] for x_ in remaining]
+        else:
+            next_priority = PriorityBudgetingAscendingCount()
+            remaining = [next_priority._choose(remaining)]
+        return self.base_priority.choice(remaining)
