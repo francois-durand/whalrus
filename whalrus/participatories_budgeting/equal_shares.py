@@ -26,70 +26,56 @@ from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGe
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_approval import RuleApproval
 from whalrus.rules.rule import Rule
+from whalrus.participatories_budgeting.voters_wallet import VotersWallet
 from whalrus.participatories_budgeting.participatory_budgeting import ParticipatoryBudgeting
+from whalrus.priorities.priority_budgeting import PriorityBudgetingAscendingCount
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
 import copy
 
 class EqualShares(ParticipatoryBudgeting):
 
-    def __init__(self,*args ,  **kwargs) -> None:
-        super().__init__(*args,  **kwargs)    
+    def __init__(self,*args , tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
+        super().__init__(*args, tie_break=tie_break, **kwargs)    
+
+    @cached_property
+    def check(self):
+
+        for w in self.shares_[1]:
+            print('r',w.remaining_)
+            print('e',w.eliminated)
+            print('w',w.winners, 'b',w.voter_budget)
 
 
     @cached_property
+    def winners_(self):
+        return self.shares_[0]
+
+    @cached_property
     def shares_(self):
+        steps = []
         winners = []
         remaining = copy.deepcopy(self.initial_vote_counts)
         budget_voter = copy.deepcopy(self.intial_voters_budget)
-     
-        supporters = self.supporters
+        wallet = VotersWallet(self.project_cost, self.voters_utilities,self.supporters)
+
         while True:
-            best_eff_vote_count = 0
-            best = None
-            remaining_sorted = sorted(remaining, key=lambda c: remaining[c], reverse=True)
-          
-        
-            for c in remaining_sorted:
-                p_eff_vote_count = remaining[c]
-                if p_eff_vote_count < best_eff_vote_count:
-                    break
-                approver_amount = sum(budget_voter[voter] for voter in supporters[c])
-              
-                if approver_amount < self.project_cost[c]:
-                    del remaining[c]
-                    continue
 
-                supporters[c].sort(key = lambda i : budget_voter[i]/self.voters_utilities[i][c])
-                amount_so_far = 0
-                d = remaining[c]
-     
-                for voter in supporters[c]:
-                    payment_factor = (self.project_cost[c] - amount_so_far)/d
-                    eff_vote_count = self.project_cost[c] / payment_factor
-                    if payment_factor*self.voters_utilities[voter][c] > budget_voter[voter]:
-                        amount_so_far += budget_voter[voter]
-                        d -= self.voters_utilities[voter][c]
-                    else:
-                        remaining[c] = eff_vote_count
-                       
-                        if eff_vote_count > best_eff_vote_count:
-                            best_eff_vote_count = eff_vote_count
-                            best = c
-                        
-                        break
-
+           
+            wallet(remaining, budget_voter)
+            best = wallet.best_shares_
+            steps.append(copy.deepcopy(wallet))
             if not best:
                 break
+            best = self.tie_break._choose(best) 
             winners.append(best)
-     
-            del remaining[best]
-            best_max_payment = self.project_cost[best] / best_eff_vote_count
-    
-            for voter in supporters[best]:
-                payment = best_max_payment*self.voters_utilities[voter][best]
-                budget_voter[voter] = max(0, budget_voter[voter] - payment)
-
-          
-
-        return winners
+        
+            del wallet.remaining[best]
+            remaining = wallet.remaining
+      
+            
+            budget_voter = wallet.updated_budget_(best)
+            
+        steps.append(copy.deepcopy(wallet))
+        
+        return winners, steps
