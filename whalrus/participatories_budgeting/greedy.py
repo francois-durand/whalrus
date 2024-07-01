@@ -26,66 +26,45 @@ from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGe
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_approval import RuleApproval
 from whalrus.rules.rule import Rule
-from whalrus.participatories_budgeting.voters_wallet_equal_shares import VotersWalletEqualShares
+from whalrus.participatories_budgeting.voters_wallet import VotersWallet
 from whalrus.participatories_budgeting.participatory_budgeting import ParticipatoryBudgeting
 from whalrus.priorities.priority_budgeting import PriorityBudgetingAscendingCount
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
 import copy
 
-class EqualShares(ParticipatoryBudgeting):
 
+class Greedy(ParticipatoryBudgeting):
+
+    
     def __init__(self,*args , tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
         super().__init__(*args, tie_break=tie_break, **kwargs)    
 
     @cached_property
-    def vote_counts(self):
-        return [step.remaining_ for step in self.shares_]
-
-    @cached_property
-    def eliminated_(self):
-        return NiceSet([eliminated for eliminated in self.eliminated_order_with_count.keys()])
-
-    @cached_property
-    def eliminated_order_with_count(self):
-        return self.shares_[-1].eliminated
-
-    @cached_property
-    def get_budget_round(self):
-        return [step.voter_budget for step in self.shares_]
-
-    @cached_property
     def winners_(self):
+
+        return NiceSet(self.greedy_method[-1].winners)
+
+    @cached_property
+    def greedy_method(self):
         
-        return NiceSet([winner for step in self.winners_order for winner in step])
-
-    @cached_property
-    def winners_order(self):
-        return self.shares_[-1].winners
-
-    @cached_property
-    def shares_(self):
         steps = []
         remaining = copy.deepcopy(self.initial_vote_counts)
         budget_voter = copy.deepcopy(self.intial_voters_budget)
-        wallet = VotersWalletEqualShares(self.project_cost, self.voters_utilities,self.supporters)
+        wallet = VotersWallet(self.project_cost, self.voters_utilities,self.supporters)
+        wallet(remaining,budget_voter)
 
-        while True:
 
-            wallet(remaining, budget_voter)
-            best = wallet.best_shares_
+
+        for c in wallet.remaining_sorted_:
+            if not wallet.not_affordable(c):
+                wallet.winners.append(c)
+                budget_voter = wallet.updated_budget_(c)
             steps.append(copy.deepcopy(wallet))
-            if not best:
-                break
-            best = self.tie_break._choose(best) 
+            remaining = wallet.remaining
+            wallet(remaining,budget_voter)
+
+        return steps
+
 
         
-            del wallet.remaining[best]
-            remaining = wallet.remaining
-      
-            
-            budget_voter = wallet.updated_budget_(best)
-            
-        steps.append(copy.deepcopy(wallet))
-        
-        return steps

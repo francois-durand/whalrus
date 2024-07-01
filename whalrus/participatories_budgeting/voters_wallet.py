@@ -38,16 +38,15 @@ class VotersWallet(DeleteCacheMixin):
         
 
     def __call__(self, remaining, voter_budget):
-        self.best_eff_vote_count = 0
+        self.best_eff_vote_count = 1
         self.best = []
-        self.vote_count = {}
         self.remaining = remaining
         
         self.voter_budget = voter_budget
         self.delete_cache()
         return self
      
-    def affordable(self, c):
+    def not_affordable(self, c):
         approver_amount = sum(self.voter_budget[voter] for voter in self.supporters[c])
               
         if approver_amount < self.project_cost[c]:
@@ -67,28 +66,6 @@ class VotersWallet(DeleteCacheMixin):
             updated_budget[voter] = max(0, self.voter_budget[voter] - payment)
 
         return updated_budget
-
-    def get_share_count(self, c):
-        amount_so_far = 0
-        d = self.remaining[c]
-        for voter in self.sorted_supporters(c):
-            payment_factor = (self.project_cost[c] - amount_so_far)/d
-            eff_vote_count = self.project_cost[c] / payment_factor
-            
-            if payment_factor*self.total_utility[voter][c] > self.voter_budget[voter]:
-                amount_so_far += self.voter_budget[voter]
-                d -= self.total_utility[voter][c]
-            else:
-                self.remaining[c] = eff_vote_count
-                
-                if eff_vote_count > self.best_eff_vote_count:
-                    self.best_eff_vote_count = eff_vote_count
-                    self.best = [(c, eff_vote_count, self.project_cost[c])]
-                elif eff_vote_count == self.best_eff_vote_count:
-                    self.best.append((c, eff_vote_count, self.project_cost[c]))
-                break
-      
-        return self.best_eff_vote_count
  
 
     @cached_property
@@ -96,57 +73,7 @@ class VotersWallet(DeleteCacheMixin):
         return sorted(self.remaining, key=lambda c: self.remaining[c], reverse=True)
           
    
-    @cached_property
-    def best_shares_(self):
-        
-        for c in self.remaining_sorted_:
-            p_eff_vote_count = self.remaining[c] 
-            if p_eff_vote_count < self.best_eff_vote_count:
-                break
-
-            if self.affordable(c):
-                continue
-
-            self.best_eff_vote_count = self.get_share_count(c)
-        self.remaining_ = copy.copy(self.remaining)
-        self.winners.append([best[0] for best in self.best])
-        return self.best
-            
-
-    
-       
+   
 
 
 
-# for c in remaining_sorted:
-            #     p_eff_vote_count = remaining[c]
-            #     if p_eff_vote_count < best_eff_vote_count:
-            #         break
-            #     approver_amount = sum(budget_voter[voter] for voter in supporters[c])
-              
-            #     if approver_amount < self.project_cost[c]:
-            #         del remaining[c]
-            #         continue
-
-            #     supporters[c].sort(key = lambda i : budget_voter[i]/self.voters_utilities[i][c])
-            #     amount_so_far = 0
-            #     d = remaining[c]
-     
-            #     for voter in supporters[c]:
-            #         payment_factor = (self.project_cost[c] - amount_so_far)/d
-            #         eff_vote_count = self.project_cost[c] / payment_factor
-            #         if payment_factor*self.voters_utilities[voter][c] > budget_voter[voter]:
-            #             amount_so_far += budget_voter[voter]
-            #             d -= self.voters_utilities[voter][c]
-            #         else:
-            #             remaining[c] = eff_vote_count
-                       
-            #             if eff_vote_count > best_eff_vote_count:
-            #                 best_eff_vote_count = eff_vote_count
-            #                 best = [(c, eff_vote_count, self.project_cost[c])]
-            #             elif eff_vote_count == best_eff_vote_count:
-            #                 best.append((c, eff_vote_count, self.project_cost[c]))
-            #             break
-        
-    
-     
