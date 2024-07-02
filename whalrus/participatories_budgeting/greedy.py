@@ -39,32 +39,52 @@ class Greedy(ParticipatoryBudgeting):
     
     def __init__(self,*args , tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
         super().__init__(*args, tie_break=tie_break, **kwargs)    
+        self.winners = []
+        self.tied = []
+
+    def __call__(self,ballots: list | Profile = None, weights: list = None, voters: list = None, candidates: set = None):
+        return super().__call__(ballots, weights, voters, candidates)
+        
+    def prepriority(self, cowinners):
+        
+        return [(c, 0, self.project_cost[c]) for c in cowinners]
 
     @cached_property
     def winners_(self):
 
-        return NiceSet(self.greedy_method[-1].winners)
+        return NiceSet(self.greedy_method_[-1].winners)
+    
+    @cached_property
+    def eliminated_(self):
+        return NiceSet(self.eliminated)
 
     @cached_property
-    def greedy_method(self):
-        
+    def get_tied_selection_(self):
+
+        return [step.tied for step in self.greedy_method_]
+
+    @cached_property
+    def greedy_method_(self):
         steps = []
-        remaining = copy.deepcopy(self.initial_vote_counts)
-        budget_voter = copy.deepcopy(self.intial_voters_budget)
-        wallet = VotersWallet(self.project_cost, self.voters_utilities,self.supporters)
-        wallet(remaining,budget_voter)
 
+        while True:
 
-
-        for c in wallet.remaining_sorted_:
-            if not wallet.not_affordable(c):
-                wallet.winners.append(c)
-                budget_voter = wallet.updated_budget_(c)
-            steps.append(copy.deepcopy(wallet))
-            remaining = wallet.remaining
-            wallet(remaining,budget_voter)
+            best = self.base_rule_.cowinners_
+            self.tied.append(best)
+            best = self.tie_break._choose(self.prepriority(best))
+            candidates = self.candidates_ - set(best)
+            if self.project_cost[best] <= self.budget:
+                self.winners.append(best)
+                self.budget -= self.project_cost[best]
+            else:
+                self.eliminated.append(best) 
+            steps.append(copy.deepcopy(self))
+            if len(candidates) == 0:
+                break
+            self( self.profile_converted_, candidates = candidates)
+            
 
         return steps
 
-
         
+ 

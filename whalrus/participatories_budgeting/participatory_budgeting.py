@@ -40,7 +40,8 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
         self.base_rule = base_rule
         self.project_cost = project_cost
         self.budget = budget
-        self.tie_break = tie_break
+        self.tie_break= tie_break
+        self.eliminated = []
         if converter is None:
             converter = ConverterBallotGeneral()
         self.converter = converter

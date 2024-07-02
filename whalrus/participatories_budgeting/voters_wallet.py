@@ -37,19 +37,17 @@ class VotersWallet(DeleteCacheMixin):
         self.winners = []
         
 
-    def __call__(self, remaining, voter_budget):
-        self.best_eff_vote_count = 1
+    def __call__(self, remaining, budget):
         self.best = []
         self.remaining = remaining
         
-        self.voter_budget = voter_budget
+        self.budget = budget
         self.delete_cache()
         return self
      
     def not_affordable(self, c):
-        approver_amount = sum(self.voter_budget[voter] for voter in self.supporters[c])
-              
-        if approver_amount < self.project_cost[c]:
+       
+        if self.budget < self.project_cost[c]:
             self.eliminated[c] = copy.copy(self.remaining[c])
             del self.remaining[c]
             return True
@@ -58,15 +56,9 @@ class VotersWallet(DeleteCacheMixin):
     def sorted_supporters(self, c):
         return sorted(self.supporters[c],key = lambda i : self.voter_budget[i]/self.total_utility[i][c] )
     
-    def updated_budget_(self, best):
-        best_max_payment = self.project_cost[best] / self.best_eff_vote_count
-        updated_budget = copy.copy(self.voter_budget)
-        for voter in self.supporters[best]:
-            payment = best_max_payment*self.total_utility[voter][best]
-            updated_budget[voter] = max(0, self.voter_budget[voter] - payment)
+    def updated_budget_(self, c):
+        return self.budget - self.project_cost[c]
 
-        return updated_budget
- 
 
     @cached_property
     def remaining_sorted_(self):

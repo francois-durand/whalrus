@@ -83,7 +83,6 @@ class EqualShares(ParticipatoryBudgeting):
             del wallet.remaining[best]
             remaining = wallet.remaining
       
-            
             budget_voter = wallet.updated_budget_(best)
             
         steps.append(copy.deepcopy(wallet))
