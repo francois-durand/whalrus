@@ -81,7 +81,7 @@ class Greedy(ParticipatoryBudgeting):
             steps.append(copy.deepcopy(self))
             if len(candidates) == 0:
                 break
-            self( self.profile_converted_, candidates = candidates)
+            self(self.profile_converted_, candidates = candidates)
             
 
         return steps

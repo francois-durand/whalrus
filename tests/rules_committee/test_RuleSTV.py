@@ -22,3 +22,11 @@ def test_multi_quotas():
 
     rule = RuleSTV(profile_Examples_c.profile_stv3, committee_size = 3, quota = True, selection = SelectionFirst())
     assert rule.winning_committee_ == {'a','b','d'}
+
+def test_pathological():
+
+    rule = RuleSTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2, selection = SelectionFirst())
+    assert rule.winning_committee_ == {'a','b'}
+
+    rule = RuleSTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
+    assert rule.winning_committee_ == {'a', 'd'}

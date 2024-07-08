@@ -108,7 +108,8 @@ class RuleSTV(RuleTransfert):
             if len(rule.candidates_) + len(elected) == self.committee_size:
                 for candidate in rule.candidates_:
                     elected[candidate] = rule.gross_scores_[candidate]
-                rounds[-1] = (rule, elected, eliminated)
+                rounds[-1] = (selection, elected, eliminated)
+
                 return rounds
         return rounds
 

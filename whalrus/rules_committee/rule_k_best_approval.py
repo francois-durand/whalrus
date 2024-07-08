@@ -71,7 +71,7 @@ class RuleKBestApproval(RuleCommitteeAverage):
         
         self.converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
         if scorer is None:
-            scorer = ScorerLevels()
+            scorer = ScorerLevels(level_absent=0)
         self.scorer = scorer
         if base_rule is None:
             base_rule = RuleApproval(scorer = self.scorer, converter = self.converter)

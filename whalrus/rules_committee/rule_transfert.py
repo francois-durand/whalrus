@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 import logging
-from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceSet
+from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceSet, NiceFrozenSet
 from whalrus.priorities.priority import Priority
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
 from whalrus.profiles.profile import Profile
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
-
+from itertools import combinations
 
 class RuleTransfert(DeleteCacheMixin):
    
@@ -78,20 +78,33 @@ class RuleTransfert(DeleteCacheMixin):
     @cached_property
     def winning_committee_(self) -> NiceSet:
         
-        return NiceSet(list(self.scores_last_rounds[0].keys())[:self.committee_size])
+        return NiceFrozenSet(list(self.scores_last_rounds[0].keys())[:self.committee_size])
     
+    @cached_property
+    def order_on_committees_(self) -> list:
+        
+        return [NiceSet({self.winning_committee_}), NiceSet(NiceFrozenSet(set(i)) 
+                for i in combinations(self.candidates_, self.committee_size) if set(i) not in NiceSet({self.winning_committee_}))]
 
+    @cached_property
+    def strict_order_on_committees_(self) -> list:
+
+        L = [NiceFrozenSet(i)
+                for i in combinations(self.candidates_, self.committee_size) if set(i) not in NiceSet({self.winning_committee_})]
+        return [self.winning_committee_] + L
     @cached_property 
-    def eliminated_committee_(self) -> NiceSet:
+    def eliminated_committee_(self) -> set:
         """
         Return the whole set of the eliminated candidates
         """
-        return NiceSet(self.scores_last_rounds[1].keys())
+        return NiceFrozenSet(self.scores_last_rounds[1].keys())
 
     @cached_property
     def scores_rounds_(self) -> list:
-        return [(scores_elected, scores_eliminated) for _,scores_elected, scores_eliminated in self.get_rounds_[1:]]
+        return [(scores_elected, scores_eliminated) for _,scores_elected, scores_eliminated in self.get_rounds_]
 
     @cached_property
     def scores_last_rounds(self):
         return self.scores_rounds_[-1]
+
+    
