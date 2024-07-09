@@ -103,6 +103,9 @@ class SelectionFirst(Selection):
 
     @cached_property
     def selected_order_(self):
+        """
+        :returns: order of the selected candidates.
+        """
         if self.k > 0:
             n_wanted = self.k
         else:
@@ -124,6 +127,9 @@ class SelectionFirst(Selection):
 
     @cached_property
     def is_above_(self):
+        """
+        Check if the winner is above the specified threhold.
+        """
         if self.rule_.gross_scores_[list(self.selected_)[0]] >= self.threshold:
             return True
         return False

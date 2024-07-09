@@ -81,7 +81,7 @@ class RuleChamberlinCourant(RuleCommitteeScoring):
         self.base_rule_tie_break = base_rule_tie_break
         super().__init__(*args, **kwargs)
 
-    def _cc_score(self, committee):
+    def _cc_gross_scores(self, committee):
 
         return sum((
             self.scorer(ballot=ballot, candidates=self.candidates_).scores_[

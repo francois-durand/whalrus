@@ -28,15 +28,16 @@ from itertools import combinations
     
     
 class RuleCommitteeAverage(RuleCommitteeScoring):
+    """
+    Based on RuleCommitteeScoring, with the possibility to also have
+    normalized scores (useful in the case of incomplete ballots).
+    
+    """
 
     def __init__(self, *args,base_rule = None, **kwargs):
         self.base_rule = base_rule
         super().__init__(*args, **kwargs)    
     
-    @cached_property
-    def base_rule_(self):
-        return self.base_rule(ballots = self.profile_converted_, candidates = self.candidates_)
-
     def _cc_score(self, committee):
         return sum(
                 self.base_rule_.scores_[candidate] for candidate in committee
@@ -46,3 +47,16 @@ class RuleCommitteeAverage(RuleCommitteeScoring):
         return sum(
                 self.base_rule_.gross_scores_[candidate] for candidate in committee
         )
+
+    @cached_property
+    def base_rule_(self):
+        return self.base_rule(ballots = self.profile_converted_, candidates = self.candidates_)
+
+    @cached_property
+    def normalized_scores_(self) -> NiceDict:
+        """
+        The normalized scores of all committees.
+
+        :return: a :class:`NiceDict` that, to each committee, associates its score.
+        """
+        return NiceDict({committee: self._cc_score(committee) for committee in self._all_committees()})

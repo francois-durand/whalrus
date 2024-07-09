@@ -63,6 +63,9 @@ class SelectionAbove(Selection):
 
     @cached_property
     def selected_order_(self):
+        """
+        :returns: order of the selected candidates
+        """
         best_first = []
         for tie_class in self.rule_.order_:
             some_candidate = list(tie_class)[0]
@@ -76,4 +79,7 @@ class SelectionAbove(Selection):
 
     @cached_property
     def is_above_(self):
+        """
+        :returns: True if at least one element is find.
+        """
         return True if len(self.selected_) > 0 else False

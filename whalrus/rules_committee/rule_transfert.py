@@ -28,7 +28,10 @@ from typing import Union
 from itertools import combinations
 
 class RuleTransfert(DeleteCacheMixin):
-   
+    """
+    A multi-winner rule that selects the best candidates using transfert of ballots
+    """
+
     def __init__(self, *args, tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None, **kwargs):
         """
         Remark: this `__init__` must always be called at the end of the subclasses' `__init__`.
@@ -77,34 +80,48 @@ class RuleTransfert(DeleteCacheMixin):
 
     @cached_property
     def winning_committee_(self) -> NiceSet:
-        
+        """
+        Select the k best elected by the designed method.
+        """
         return NiceFrozenSet(list(self.scores_last_rounds[0].keys())[:self.committee_size])
     
     @cached_property
     def order_on_committees_(self) -> list:
-        
+        """
+        Construct a list of two set including the winning committee on left 
+        and all others possibilities on right. 
+        """
         return [NiceSet({self.winning_committee_}), NiceSet(NiceFrozenSet(set(i)) 
                 for i in combinations(self.candidates_, self.committee_size) if set(i) not in NiceSet({self.winning_committee_}))]
 
     @cached_property
     def strict_order_on_committees_(self) -> list:
-
+        """
+        Construct a list with the winning committee as first
+        and followed by all others possibilities.  
+        """
         L = [NiceFrozenSet(i)
                 for i in combinations(self.candidates_, self.committee_size) if set(i) not in NiceSet({self.winning_committee_})]
         return [self.winning_committee_] + L
     @cached_property 
     def eliminated_committee_(self) -> set:
         """
-        Return the whole set of the eliminated candidates
+        Return the whole set of the eliminated candidates.
         """
         return NiceFrozenSet(self.scores_last_rounds[1].keys())
 
     @cached_property
     def scores_rounds_(self) -> list:
+        """
+        Give the scores of both selected and eliminated candidates at each round.
+        """
         return [(scores_elected, scores_eliminated) for _,scores_elected, scores_eliminated in self.get_rounds_]
 
     @cached_property
     def scores_last_rounds(self):
+        """
+        Give the scores of both selected and eliminated candidates at the last round.
+        """
         return self.scores_rounds_[-1]
 
     

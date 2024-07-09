@@ -26,7 +26,17 @@ project_cost = tuple[str, float]
 project_cost_count = tuple[str, float, float]
 
 class PriorityBudgeting():
-    
+    """
+    A priority setting, i.e. a policy to break ties and indifference classes.
+
+    Parameters
+    ----------
+    name : str
+        The name of this priority setting.
+    base_priority : Priority
+        How we break remaining ties after all other priorities
+    """
+
     def __init__(self, name : str = None, count : bool = False, cost : bool = False, base_priority = None):
         self.name = name
         if base_priority is None:
@@ -37,6 +47,17 @@ class PriorityBudgeting():
         raise NotImplementedError
 
 class PriorityBudgetingAscendingCount(PriorityBudgeting):
+    """
+    Sort a list regarding the hightest vote count
+
+    Parameters
+    -----------
+
+    :param x: Tuple containing the name of candidates, the vote count and the price
+    :param cost: True if we want to break remaining ties using the project cost
+    :param high: True or False if to use ascending or descending cost
+    """
+
 
     def __init__(self, cost = False, high = False, base_priority = None):
         self.cost = cost
@@ -59,6 +80,16 @@ class PriorityBudgetingAscendingCount(PriorityBudgeting):
         
 
 class PriorityBudgetingAscendingCost(PriorityBudgeting):
+
+    """
+    Sort a list regarding the hightest project cost
+
+    Parameters
+    -----------
+
+    :param x: Tuple containing the name of candidates, the vote count and the price
+    :param count: True if we want to break remaining ties using the vote count
+    """
     
     def __init__(self, count = False, base_priority = None):
         self.count = count
@@ -75,6 +106,16 @@ class PriorityBudgetingAscendingCost(PriorityBudgeting):
         return self.base_priority.choice(remaining)
 
 class PriorityBudgetingDescendingCost(PriorityBudgeting):
+
+    """
+    Sort a list regarding the lowest project cost 
+
+    Parameters
+    -----------
+
+    :param x: Tuple containing the name of candidates, the vote count and the price
+    :param count: True if we want to break remaining ties using the vote count
+    """
     
     def __init__(self, count = False, base_priority = None) :
         self.count = count

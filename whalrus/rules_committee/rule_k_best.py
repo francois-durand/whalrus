@@ -66,8 +66,8 @@ class RuleKBest(RuleCommittee):
         return self.base_rule_.scores_
 
     @cached_property
-    def gross_scores_(self):
-        return self.base_rule_.gross_scores_
+    def scores_(self):
+        return self.base_rule_.scores_
 
     @cached_property
     def winning_committee_(self) -> NiceSet:

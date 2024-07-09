@@ -57,6 +57,13 @@ class RuleSTV(RuleTransfert):
         We eliminate the lowest plurality candidate.
     We perform rounds until the remaining candidates (included thoses elected) reaches the size of the committee
     
+    Parameters
+    -----------
+
+    :param committee_size: the number of candidates that will be elected in the committee.
+    :param quota: type of quota we want to use for the election
+    :param selection: Selection
+        Default : :class:'SelectionAbove'
     """
 
     def __init__(self, *args, committee_size: int, base_rule: Rule = None, rule: Rule = None, propagate_tie_break=True, quota = False,
@@ -78,6 +85,13 @@ class RuleSTV(RuleTransfert):
 
     @cached_property
     def get_rounds_(self):
+
+        """
+        Compute the result of the election.
+
+        :return: :list: including the selected and eliminated 
+        at each round.
+        """
         elected = dict()
         eliminated = {}
         new_profile = copy.deepcopy(self.profile_converted_)

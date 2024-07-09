@@ -67,21 +67,12 @@ class RuleCommitteeScoring(RuleCommittee):
     @cached_property
     def scores_(self) -> NiceDict:
         """
-        The scores of all committees.
-
-        :return: a :class:`NiceDict` that, to each committee, associates its score.
-        """
-        return NiceDict({committee: self._cc_score(committee) for committee in self._all_committees()})
-    
-    @cached_property
-    def gross_scores_(self) -> NiceDict:
-        """
-        The scores of all committees.
+        The gross scores of all committees.
 
         :return: a :class:`NiceDict` that, to each committee, associates its score.
         """
         return NiceDict({committee: self._cc_gross_scores(committee) for committee in self._all_committees()})
-
+    
     @cached_property
     def order_on_committees_(self) -> list:
         return [NiceSet(committee for committee in self.scores_.keys() if self.scores_[committee] == v)

@@ -73,7 +73,7 @@ class RulePAV(RuleCommitteeScoring):
     def _pav_score(number):
         return sum(1 / k for k in range(1, number + 1))
 
-    def _cc_score(self, committee):
+    def _cc_gross_scores(self, committee):
         converter = ConverterBallotToGrades(scale=ScaleRange(0, 1))
         scorer = ScorerLevels()
 
