@@ -138,5 +138,4 @@ from .rules_committee.rule_stv import RuleSTV
 from .participatories_budgeting.participatory_budgeting import ParticipatoryBudgeting
 from .participatories_budgeting.equal_shares import EqualShares
 from .participatories_budgeting.greedy import Greedy
-from .participatories_budgeting.voters_wallet import VotersWallet
 from .participatories_budgeting.voters_wallet_equal_shares import VotersWalletEqualShares

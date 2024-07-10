@@ -24,7 +24,6 @@ from whalrus.priorities.priority import Priority
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule import Rule
-from whalrus.participatories_budgeting.voters_wallet import VotersWallet
 from whalrus.rules.rule_borda import RuleBorda
 from whalrus.utils.utils import cached_property, my_division, NiceDict, DeleteCacheMixin, NiceSet
 from whalrus.priorities.priority_budgeting import PriorityBudgeting
@@ -35,11 +34,9 @@ import numpy as np
 
 class ParticipatoryBudgeting(DeleteCacheMixin):
 
-    def __init__(self,*args,base_rule : Rule, project_cost : dict(), budget : int, converter = None,tie_break = PriorityBudgeting(), **kwargs):
+    def __init__(self,*args,base_rule : Rule,converter = None,tie_break = PriorityBudgeting(), **kwargs):
 
         self.base_rule = base_rule
-        self.project_cost = project_cost
-        self.budget = budget
         self.tie_break= tie_break
         self.eliminated = []
         if converter is None:

@@ -42,7 +42,7 @@ class RuleChamberlinCourant(RuleCommitteeScoring):
     highest score is elected.
 
     >>> cc = RuleChamberlinCourant(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
-    >>> cc.scores_
+    >>> cc.gross_scores_
     {{'a', 'b'}: 8, {'a', 'c'}: 7, {'a', 'd'}: 9, {'b', 'c'}: 6, {'b', 'd'}: 7, {'c', 'd'}: 5}
     >>> cc.winning_committee_
     {'a', 'd'}
@@ -51,7 +51,7 @@ class RuleChamberlinCourant(RuleCommitteeScoring):
 
     >>> cc = RuleChamberlinCourant(['a > b > c > d', 'a > c > b > d', 'a > c > b > d', 'a > b > c > d'],
     ...                             committee_size=2, tie_break=PriorityLiftedLeximax(Priority.ASCENDING))
-    >>> cc.scores_
+    >>> cc.gross_scores_
     {{'a', 'b'}: 12, {'a', 'c'}: 12, {'a', 'd'}: 12, {'b', 'c'}: 8, {'b', 'd'}: 6, {'c', 'd'}: 6}
     >>> cc.cowinning_committees_
     {{'a', 'b'}, {'a', 'c'}, {'a', 'd'}}

@@ -118,36 +118,3 @@ class VotersWalletEqualShares(DeleteCacheMixin):
        
 
 
-
-# for c in remaining_sorted:
-            #     p_eff_vote_count = remaining[c]
-            #     if p_eff_vote_count < best_eff_vote_count:
-            #         break
-            #     approver_amount = sum(budget_voter[voter] for voter in supporters[c])
-              
-            #     if approver_amount < self.project_cost[c]:
-            #         del remaining[c]
-            #         continue
-
-            #     supporters[c].sort(key = lambda i : budget_voter[i]/self.voters_utilities[i][c])
-            #     amount_so_far = 0
-            #     d = remaining[c]
-     
-            #     for voter in supporters[c]:
-            #         payment_factor = (self.project_cost[c] - amount_so_far)/d
-            #         eff_vote_count = self.project_cost[c] / payment_factor
-            #         if payment_factor*self.voters_utilities[voter][c] > budget_voter[voter]:
-            #             amount_so_far += budget_voter[voter]
-            #             d -= self.voters_utilities[voter][c]
-            #         else:
-            #             remaining[c] = eff_vote_count
-                       
-            #             if eff_vote_count > best_eff_vote_count:
-            #                 best_eff_vote_count = eff_vote_count
-            #                 best = [(c, eff_vote_count, self.project_cost[c])]
-            #             elif eff_vote_count == best_eff_vote_count:
-            #                 best.append((c, eff_vote_count, self.project_cost[c]))
-            #             break
-        
-    
-     

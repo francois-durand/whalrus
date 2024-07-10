@@ -26,7 +26,6 @@ from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGe
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_approval import RuleApproval
 from whalrus.rules.rule import Rule
-from whalrus.participatories_budgeting.voters_wallet import VotersWallet
 from whalrus.participatories_budgeting.participatory_budgeting import ParticipatoryBudgeting
 from whalrus.priorities.priority_budgeting import PriorityBudgetingAscendingCount
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
@@ -42,8 +41,13 @@ class Greedy(ParticipatoryBudgeting):
         self.winners = []
         self.tied = []
 
-    def __call__(self,ballots: list | Profile = None, weights: list = None, voters: list = None, candidates: set = None):
-        return super().__call__(ballots, weights, voters, candidates)
+    def __call__(self,ballots: list | Profile = None, weights: list = None, voters: list = None,
+             budget : int = None, project_cost = None):
+        self.project_cost = project_cost
+        self.budget = budget
+        candidates = NiceSet(self.project_cost.keys())
+        return super().__call__(ballots, weights, voters,candidates)
+        
         
     def prepriority(self, cowinners):
         
@@ -66,23 +70,26 @@ class Greedy(ParticipatoryBudgeting):
     @cached_property
     def greedy_method_(self):
         steps = []
-
+        budget = self.budget
+        project_cost = self.project_cost
         while True:
-
+            
             best = self.base_rule_.cowinners_
+   
             self.tied.append(best)
             best = self.tie_break._choose(self.prepriority(best))
-            candidates = self.candidates_ - set(best)
-            if self.project_cost[best] <= self.budget:
+           
+            if project_cost[best] <= budget:
                 self.winners.append(best)
-                self.budget -= self.project_cost[best]
+                budget -= self.project_cost[best]
             else:
                 self.eliminated.append(best) 
+            del project_cost[best]
             steps.append(copy.deepcopy(self))
-            if len(candidates) == 0:
+            if len(project_cost) == 0:
                 break
-            self(self.profile_converted_, candidates = candidates)
-            
+            self(self.profile_converted_, project_cost = project_cost, budget = budget)
+        steps.append(copy.deepcopy(self)) 
 
         return steps
 

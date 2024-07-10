@@ -65,7 +65,7 @@ class RuleCommitteeScoring(RuleCommittee):
         raise NotImplementedError
 
     @cached_property
-    def scores_(self) -> NiceDict:
+    def gross_scores_(self) -> NiceDict:
         """
         The gross scores of all committees.
 
@@ -75,7 +75,7 @@ class RuleCommitteeScoring(RuleCommittee):
     
     @cached_property
     def order_on_committees_(self) -> list:
-        return [NiceSet(committee for committee in self.scores_.keys() if self.scores_[committee] == v)
-                for v in sorted(set(self.scores_.values()), reverse=True)]
+        return [NiceSet(committee for committee in self.gross_scores_.keys() if self.gross_scores_[committee] == v)
+                for v in sorted(set(self.gross_scores_.values()), reverse=True)]
 
     
