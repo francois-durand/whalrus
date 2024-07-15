@@ -139,3 +139,5 @@ from .participatories_budgeting.participatory_budgeting import ParticipatoryBudg
 from .participatories_budgeting.equal_shares import EqualShares
 from .participatories_budgeting.greedy import Greedy
 from .participatories_budgeting.voters_wallet_equal_shares import VotersWalletEqualShares
+from .participatories_budgeting.mes_utilitarian_completion import MesUtilitarianCompletion
+from .participatories_budgeting.mes_add1 import MesAdd1

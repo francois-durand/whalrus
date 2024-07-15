@@ -26,7 +26,7 @@ def test_multi_quotas():
 def test_pathological():
 
     rule = RuleSTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2, selection = SelectionFirst())
-    assert rule.winning_committee_ == {'a','b'}
+    assert rule.winning_committee_ == {'a','d'}
 
     rule = RuleSTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
     assert rule.winning_committee_ == {'a', 'd'}

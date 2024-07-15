@@ -78,7 +78,7 @@ class RuleSTV(RuleTransfert):
         if quota:
             self.quota = np.floor(sum(self.profile_converted_.weights)/(self.committee_size + 1 )) + 1
         else:
-            self.quota = np.floor(sum(self.profile_converted_.weights)/self.committee_size)
+            self.quota = np.ceil(sum(self.profile_converted_.weights)/self.committee_size)
         if selection is None:
             selection = SelectionAbove()
         self.selection = selection
