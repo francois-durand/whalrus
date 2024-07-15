@@ -8,7 +8,8 @@ from whalrus.rules.rule_borda import RuleBorda
 from whalrus.utils.utils import cached_property, my_division, NiceDict, DeleteCacheMixin, NiceSet
 from whalrus.priorities.priority_budgeting import PriorityBudgeting
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
-from whalrus.participatories_budgeting.equal_shares import EqualShares 
+from whalrus.participatories_budgeting.equal_shares import EqualShares
+from whalrus.participatories_budgeting.mes_utilitarian_completion import MesUtilitarianCompletion
 from typing import Union
 
 import numpy as np
@@ -16,6 +17,7 @@ import numpy as np
 class MesAdd1(EqualShares):
     
     def __init__(self,*args, add1u = False, stop_exhaustion = False, integral_endowments = False, **kwargs) -> None:
+        self.add1u = add1u
         self.stop_exhaustion = stop_exhaustion
         self.integral_endowments = integral_endowments
         super().__init__(*args, **kwargs) 
@@ -40,7 +42,7 @@ class MesAdd1(EqualShares):
                     is_exhaustive = False
                     break
             if is_exhaustive and self.stop_exhaustion:
-                break
+               break
             
             next_budget = budget + len(self.voters_)
             next_mes = list(EqualShares(self.profile_converted_, budget = next_budget, project_cost = self.project_cost, base_rule = self.base_rule_).winners_)
@@ -51,4 +53,6 @@ class MesAdd1(EqualShares):
             else:
                 break 
             
+        if self.add1u:
+            mes = MesUtilitarianCompletion(self.profile_converted_, budget = self.budget, project_cost = self.project_cost, base_rule = self.base_rule_).utilitarian_completion_(mes)[0]
         return mes
