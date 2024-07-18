@@ -108,14 +108,14 @@ class RuleTransfert(DeleteCacheMixin):
         """
         Return the whole set of the eliminated candidates.
         """
-        return NiceFrozenSet(self.scores_last_rounds[1].keys())
+        return NiceFrozenSet(self.scores_last_rounds[2].keys())
 
     @cached_property
     def scores_rounds_(self) -> list:
         """
         Give the scores of both selected and eliminated candidates at each round.
         """
-        return [(scores_elected, scores_eliminated) for _,scores_elected, scores_eliminated in self.get_rounds_]
+        return [(scores_elected, scores_remaining,scores_eliminated) for _,scores_elected,scores_remaining ,scores_eliminated in self.get_rounds_]
 
     @cached_property
     def scores_last_rounds(self):
