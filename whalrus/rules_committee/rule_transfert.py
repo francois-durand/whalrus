@@ -75,6 +75,27 @@ class RuleTransfert(DeleteCacheMixin):
         return len(self.candidates_)
 
     @cached_property
+    def rounds_position_(self):
+        """Use score to convert to candidates position at each rounds"""
+        rounds_position = []
+        for i, round in enumerate(self.get_rounds_):
+            elected_position = {}
+         
+            for j, c in enumerate(round[1]):
+                elected_position[c] = len(self.candidates_) - j
+            eliminated_position = {}
+            for j, c in enumerate(round[3]):
+                eliminated_position[c] = j + 1
+            order = round[0].rule_.strict_order_
+            remaining_position = {}
+            for j, c in enumerate(reversed(order)):
+                remaining_position[c] = j + 1 + len(round[3])
+
+            rounds_position.append((elected_position, remaining_position, eliminated_position))
+        return rounds_position
+
+
+    @cached_property
     def get_rounds_(self) -> list:
         raise NotImplementedError
 
@@ -103,6 +124,8 @@ class RuleTransfert(DeleteCacheMixin):
         L = [NiceFrozenSet(i)
                 for i in combinations(self.candidates_, self.committee_size) if set(i) not in NiceSet({self.winning_committee_})]
         return [self.winning_committee_] + L
+
+
     @cached_property 
     def eliminated_committee_(self) -> set:
         """

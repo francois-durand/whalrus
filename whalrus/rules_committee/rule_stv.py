@@ -101,7 +101,7 @@ class RuleSTV(RuleTransfert):
         rule(new_profile)
         rounds = []
         remaining = {c: rule.gross_scores_[c] for c in self.candidates_ if c not in eliminated and c not in elected}
-        rounds.append((None, elected.copy(), remaining,eliminated.copy()))
+        rounds.append((copy.deepcopy(self.selection(rule=rule, threshold = self.quota)), elected.copy(), remaining,eliminated.copy()))
         while len(elected) < self.committee_size:
             selection = copy.deepcopy(self.selection)
             selection(rule=rule, threshold = self.quota)
@@ -115,13 +115,13 @@ class RuleSTV(RuleTransfert):
                 new_set = elimination.qualified_
                 e = next(iter(elimination.eliminated_))
                 eliminated[e] = rule.gross_scores_[e]
-                selection = copy.deepcopy(elimination)
+                selection = elimination
             else:
                 new_profile = selection.new_profile_
                 new_set = selection.remaining_
             rule(new_profile, candidates=new_set)
             remaining = {c: rule.gross_scores_[c] for c in self.candidates_ if c not in eliminated and c not in elected}
-            rounds.append((selection, elected.copy(), remaining,eliminated.copy()))
+            rounds.append((copy.deepcopy(selection), elected.copy(), remaining,eliminated.copy()))
             if len(rule.candidates_) + len(elected) == self.committee_size:
                 for candidate in rule.candidates_:
                     elected[candidate] = rule.gross_scores_[candidate]

@@ -98,9 +98,6 @@ class SelectionFirst(Selection):
         self.k = k
         super().__init__(*args, **kwargs)
 
-    def __call__(self, rule, threshold = 0):
-        return super().__call__(rule=rule, threshold = threshold)
-
     @cached_property
     def selected_order_(self):
         """

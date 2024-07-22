@@ -58,9 +58,6 @@ class SelectionAbove(Selection):
         self.transfert = transfert
         super().__init__(*args, **kwargs)
 
-    def __call__(self, rule, threshold = 0):
-        return super().__call__(rule=rule, threshold = threshold)
-
     @cached_property
     def selected_order_(self):
         """
