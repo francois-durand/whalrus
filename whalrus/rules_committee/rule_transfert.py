@@ -89,7 +89,8 @@ class RuleTransfert(DeleteCacheMixin):
             order = round[0].rule_.strict_order_
             remaining_position = {}
             for j, c in enumerate(reversed(order)):
-                remaining_position[c] = j + 1 + len(round[3])
+                if len(round[2]) > 0:
+                    remaining_position[c] = j + 1 + len(round[3])
 
             rounds_position.append((elected_position, remaining_position, eliminated_position))
         return rounds_position
