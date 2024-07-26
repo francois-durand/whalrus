@@ -120,12 +120,12 @@ class RuleSTV(RuleTransfert):
                 new_profile = selection.new_profile_
                 new_set = selection.remaining_
             rule(new_profile, candidates=new_set)
-            remaining = {c: rule.gross_scores_[c] for c in self.candidates_ if c not in eliminated and c not in elected}
+            remaining = {c: rule.gross_scores_[c] for c in new_set}
             rounds.append((copy.deepcopy(selection), elected.copy(), remaining,eliminated.copy()))
             if len(rule.candidates_) + len(elected) == self.committee_size:
                 for candidate in rule.candidates_:
                     elected[candidate] = rule.gross_scores_[candidate]
-                rounds[-1] = (selection, elected, remaining, eliminated)
+                rounds[-1] = (selection, elected,{}, eliminated)
 
                 return rounds
         return rounds
