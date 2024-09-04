@@ -65,13 +65,13 @@ class Selection(DeleteCacheMixin):
             
             if len(ballot) >= 1 and ballot.first() not in self.selected_:
                 ballots.append(ballot.restrict(new_set))
-                weights.append(weight)
+                weights.append(float(weight))
             
             elif len(ballot) > 1 and self.get_winner_ratio_[ballot.first()] > 0:
                 
                 ballots.append(ballot.restrict(new_set))
                 weights.append(weight*self.get_winner_ratio_[ballot.first()])
-        
+       
         return Profile(ballots, weights = weights)
 
 
