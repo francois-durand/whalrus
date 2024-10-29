@@ -35,13 +35,11 @@ class VotersWalletEqualShares(DeleteCacheMixin):
         self.total_utility = total_utility
         self.eliminated = {}
         self.winners = []
-        
 
     def __call__(self, remaining, voter_budget):
+        self.remaining = remaining
         self.best_eff_vote_count = 0
         self.best = []
-        self.remaining = remaining
-        
         self.voter_budget = voter_budget
         self.delete_cache()
         return self
@@ -70,6 +68,7 @@ class VotersWalletEqualShares(DeleteCacheMixin):
     def get_share_count(self, c):
         amount_so_far = 0
         d = self.remaining[c]
+        
         for voter in self.sorted_supporters(c):
             payment_factor = (self.project_cost[c] - amount_so_far)/d
             eff_vote_count = self.project_cost[c] / payment_factor
