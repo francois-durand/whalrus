@@ -47,13 +47,13 @@ class RuleCommittee(DeleteCacheMixin):
 
     Cf. :class:`RulePlurality` for some examples.
 
-    :ivar profile_original\_: the profile as it is entered by the user. Since it uses the constructor of
+    :ivar profile_original: the profile as it is entered by the user. Since it uses the constructor of
         :class:`Profile`, it indirectly uses :class:`ConverterBallotGeneral` to ensure, for example, that strings like
         ``'a > b > c'`` are converted to :class:`Ballot` objects.
-    :ivar profile_converted\_: the profile, with ballots that are adapted to the voting rule. For example,
+    :ivar profile_converted: the profile, with ballots that are adapted to the voting rule. For example,
         in :class:`RulePlurality`, it will be :class:`BallotPlurality` objects, even if the original ballots are
         :class:`BallotOrder` objects. This uses the parameter ``converter`` of the rule.
-    :ivar candidates\_: the candidates of the election, as entered in the ``__call__``.
+    :ivar candidates: the candidates of the election, as entered in the ``__call__``.
     """
 
     def __init__(self, *args, tie_break: Priority = Priority.UNAMBIGUOUS, converter: ConverterBallot = None, **kwargs):

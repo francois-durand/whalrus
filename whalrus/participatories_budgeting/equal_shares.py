@@ -58,35 +58,34 @@ class EqualShares(ParticipatoryBudgeting):
 
     @cached_property
     def winners_(self):
-        
-        return NiceSet([winner for step in self.winners_order for winner in step])
+        _,winners = self.shares_
+        return NiceSet(winners)
 
-    @cached_property
-    def winners_order(self):
-        return self.shares_[-1].winners
-
+    
     @cached_property
     def shares_(self):
         steps = []
+        winners = []
         remaining = copy.deepcopy(self.initial_vote_counts)
         budget_voter = copy.deepcopy(self.intial_voters_budget)
         wallet = VotersWalletEqualShares(self.project_cost, self.voters_utilities,self.supporters)
 
         while True:
-
+    
             wallet(remaining, budget_voter)
             best = wallet.best_shares_
             steps.append(copy.deepcopy(wallet))
             if not best:
                 break
+            
             best = self.tie_break._choose(best) 
-
-        
+            winners.append(best)
+            
             del wallet.remaining[best]
             remaining = wallet.remaining
       
             budget_voter = wallet.updated_budget_(best)
             
         steps.append(copy.deepcopy(wallet))
-        
-        return steps
+        return steps,winners
+
