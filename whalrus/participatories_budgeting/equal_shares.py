@@ -40,7 +40,7 @@ class EqualShares(ParticipatoryBudgeting):
         self.budget = budget
         super().__init__(*args, tie_break=tie_break, **kwargs)    
 
-    @cached_property
+    @cached_property 
     def vote_counts(self):
         return [step.remaining_ for step in self.shares_]
 

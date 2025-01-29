@@ -36,6 +36,8 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
 
     def __init__(self,*args,base_rule : Rule,converter = None,tie_break = PriorityBudgeting(), **kwargs):
 
+        if base_rule is None:
+            base_rule = RuleApproval()
         self.base_rule = base_rule
         self.tie_break= tie_break
         self.eliminated = []
