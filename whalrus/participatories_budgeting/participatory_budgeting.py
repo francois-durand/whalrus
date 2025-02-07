@@ -25,6 +25,7 @@ from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGe
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule import Rule
 from whalrus.rules.rule_borda import RuleBorda
+from whalrus.rules.rule_approval import RuleApproval
 from whalrus.utils.utils import cached_property, my_division, NiceDict, DeleteCacheMixin, NiceSet
 from whalrus.priorities.priority_budgeting import PriorityBudgeting
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
