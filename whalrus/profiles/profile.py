@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
-from whalrus.utils.utils import cached_property, DeleteCacheMixin, convert_number
+from whalrus.utils.utils import cached_property, DeleteCacheMixin, convert_number, NiceSet
 from whalrus.ballots.ballot import Ballot
 from whalrus.ballots.ballot_order import BallotOrder
 from typing import Union, Iterator
@@ -412,3 +412,36 @@ class Profile(DeleteCacheMixin):
         other = convert_number(other)
         return Profile(ballots=self.ballots, weights=[convert_number(w * other) for w in self.weights],
                        voters=self.voters)
+
+    def get_first_transfert(self, candidate : str, remaining : set = None):
+        """
+        Give the set of the next best ranked alternatives if the input candidate is ranked first in the ballot
+
+        Parameters
+        ----------
+        candidate : String
+        remaining : Set
+
+        Returns
+        -------
+        Set
+            Set of candidates
+
+        Examples
+        --------
+            >>> profile = Profile(['a > b > c', 'b > a > c'])
+            >>> print(profile.get_first_transfert('a', {'b','c'}))
+            {'b'}
+            
+        """
+
+        next_candidates = []
+        for ballot in self.ballots:
+            if len(ballot.restrict(remaining)) == 0 or candidate != ballot.first():
+                continue
+
+            next_candidates.append(ballot.restrict(remaining).first())
+        
+        return NiceSet(next_candidates)
+
+            

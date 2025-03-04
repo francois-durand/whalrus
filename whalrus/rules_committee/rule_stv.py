@@ -100,6 +100,7 @@ class RuleSTV(RuleTransfert):
         new_set = self.candidates_
         rule(new_profile)
         rounds = []
+        transfert = {}
         remaining = {c: rule.gross_scores_[c] for c in self.candidates_ if c not in eliminated and c not in elected}
         rounds.append((copy.deepcopy(self.selection(rule=rule, threshold = self.quota)), elected.copy(), remaining,eliminated.copy()))
         while len(elected) < self.committee_size:

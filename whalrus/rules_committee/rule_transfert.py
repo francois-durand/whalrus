@@ -148,4 +148,10 @@ class RuleTransfert(DeleteCacheMixin):
         """
         return self.scores_rounds_[-1]
 
-    
+    @cached_property
+    def get_transfert(self):
+
+        d = dict()
+        for rounds in self.get_rounds_:
+            d.update(rounds[0].transfert_)
+        return d

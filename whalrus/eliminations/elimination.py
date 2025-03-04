@@ -85,3 +85,7 @@ class Elimination(DeleteCacheMixin):
     @cached_property
     def qualified_(self) -> NiceSet:
         return NiceSet(self.rule_.candidates_ - self.eliminated_)
+
+    @cached_property
+    def transfert_(self) -> dict:
+        return {c:self.rule_.profile_original_.get_first_transfert(c, self.qualified_) for c in self.eliminated_}
