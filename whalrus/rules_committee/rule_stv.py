@@ -104,8 +104,7 @@ class RuleSTV(RuleTransfert):
         remaining = {c: rule.gross_scores_[c] for c in self.candidates_ if c not in eliminated and c not in elected}
         rounds.append((copy.deepcopy(self.selection(rule=rule, threshold = self.quota)), elected.copy(), remaining,eliminated.copy()))
         while len(elected) < self.committee_size:
-            selection = copy.deepcopy(self.selection)
-            selection(rule=rule, threshold = self.quota)
+            selection = copy.deepcopy(self.selection(rule=rule, threshold = self.quota))
 
             for candidate in selection.selected_:
                 elected[candidate] = float(rule.gross_scores_[candidate])
