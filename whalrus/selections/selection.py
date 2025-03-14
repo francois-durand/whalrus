@@ -99,9 +99,6 @@ class Selection(DeleteCacheMixin):
 
     @cached_property
     def transfert_(self) -> dict:
-        print(self.selected_)
-        for c in self.selected_:
-            print('---',c,self.rule_.profile_original_.get_first_transfert(c, self.remaining_))
 
         return {c:self.rule_.profile_original_.get_first_transfert(c, self.remaining_) for c in self.selected_}
 

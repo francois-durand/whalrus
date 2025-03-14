@@ -1,6 +1,7 @@
 import logging
 from whalrus.rules_committee.rule_committee import RuleCommittee
 from whalrus.priorities.priority import Priority
+from whalrus.priorities.priority_budgeting import PriorityBudgetingDescendingCost
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule import Rule
@@ -21,3 +22,18 @@ def test():
     base_rule = RuleApproval(), add1u = True, stop_exhaustion = True, integral_endowments = True)
 
     assert mes.completed_winners_ == {'p1', 'p3'}
+
+def test_pathological():
+
+    p = Profile([
+        {"F2":1,"F3":1,"P3":0,"S2":0,"V1":0,"M1":1,"M3":1},
+        {"F2":1,"F3":1,"P3":0,"S2":0,"V1":0,"M1":1,"M3":1},
+        {"F2":0,"F3":0,"P3":1,"S2":1,"V1":0,"M1":0,"M3":0},
+        {"F2":1,"F3":1,"P3":0,"S2":1,"V1":0,"M1":0,"M3":0},
+        {"F2":1,"F3":1,"P3":0,"S2":0,"V1":1,"M1":0,"M3":0},
+        {"F2":0,"F3":0,"P3":0,"S2":0,"V1":1,"M1":0,"M3":1},
+        {"F2":0,"F3":0,"P3":0,"S2":0,"V1":1,"M1":1,"M3":1}])
+
+
+    cc = MesAdd1(p, project_cost = {"F2":20,"F3":30,"P3":30, "S2":20,"V1":10,"M1":10,"M3":30},integral_endowments = True, stop_exhaustion = True, budget = 70, base_rule = RuleApproval(), tie_break = PriorityBudgetingDescendingCost(count = True))
+    assert cc.completed_winners_ == {'F2', 'F3', 'M1', 'V1'}

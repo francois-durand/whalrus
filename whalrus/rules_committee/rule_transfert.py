@@ -86,9 +86,9 @@ class RuleTransfert(DeleteCacheMixin):
             eliminated_position = {}
             for j, c in enumerate(round[3]):
                 eliminated_position[c] = j + 1
-            order = round[0].rule_.strict_order_
+            order = NiceSet(round[0].rule_.strict_order_) - round[0].selected_
             remaining_position = {}
-            for j, c in enumerate(reversed(order)):
+            for j, c in enumerate(reversed(list(order))):
                 if len(round[2]) > 0:
                     remaining_position[c] = j + 1 + len(round[3])
 
@@ -152,6 +152,6 @@ class RuleTransfert(DeleteCacheMixin):
     def get_transfert(self):
 
         d = dict()
-        for rounds in self.get_rounds_:
+        for rounds in self.get_rounds_[1:]:
             d.update(rounds[0].transfert_)
         return d

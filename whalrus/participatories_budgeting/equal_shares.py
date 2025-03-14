@@ -78,6 +78,7 @@ class EqualShares(ParticipatoryBudgeting):
             if not best:
                 break
             
+
             best = self.tie_break._choose(best) 
             winners.append(best)
             
