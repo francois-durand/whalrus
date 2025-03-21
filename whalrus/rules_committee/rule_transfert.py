@@ -23,9 +23,11 @@ from whalrus.utils.utils import DeleteCacheMixin, cached_property, NiceSet, Nice
 from whalrus.priorities.priority import Priority
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
 from whalrus.profiles.profile import Profile
+from whalrus.selections.selection import Selection
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
 from itertools import combinations
+from copy import copy
 
 class RuleTransfert(DeleteCacheMixin):
     """
@@ -81,12 +83,19 @@ class RuleTransfert(DeleteCacheMixin):
         for i, round in enumerate(self.get_rounds_):
             elected_position = {}
          
+            selected = set()
+            if isinstance(round[0], Selection):
+                selected = round[0].selected_
             for j, c in enumerate(round[1]):
                 elected_position[c] = len(self.candidates_) - j
             eliminated_position = {}
             for j, c in enumerate(round[3]):
                 eliminated_position[c] = j + 1
-            order = NiceSet(round[0].rule_.strict_order_) - round[0].selected_
+            order = copy(round[0].rule_.strict_order_)
+            if i > 0:
+                for c in selected:
+                    order.remove(c)
+
             remaining_position = {}
             for j, c in enumerate(reversed(list(order))):
                 if len(round[2]) > 0:

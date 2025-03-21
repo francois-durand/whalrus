@@ -23,7 +23,7 @@ from whalrus.rules.rule import Rule
 from whalrus.utils.utils import my_division, NiceDict
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_plurality import RulePlurality
-
+from copy import copy
 class Selection(DeleteCacheMixin):
   
 
@@ -50,7 +50,7 @@ class Selection(DeleteCacheMixin):
                     self.rule_.gross_scores_[candidate]) for candidate in self.selected_})
 
     @cached_property
-    def new_profile_(self):
+    def new_profile_and_tranfert(self):
         
         if len(self.selected_) == 0:
             return self.rule_.profile_original_
@@ -58,7 +58,7 @@ class Selection(DeleteCacheMixin):
         ballots, weights = [], []
         new_set = self.remaining_
         new_set_ = self.rule_.candidates_
-        
+        amount_transfert = {c:{} for c in self.selected_}
         for ballot, weight, _ in self.rule_.profile_original_.items():
             
             ballot = ballot.restrict(new_set_)
@@ -71,9 +71,14 @@ class Selection(DeleteCacheMixin):
                 
                 ballots.append(ballot.restrict(new_set))
                 weights.append(weight*self.get_winner_ratio_[ballot.first()])
-       
-        return Profile(ballots, weights = weights)
+                amount_transfert[ballot.first()][ballot.restrict(new_set).first()] = float(weight*self.get_winner_ratio_[ballot.first()])                 
 
+   
+        return Profile(ballots, weights = weights), amount_transfert
+    
+    @cached_property
+    def new_profile_(self):
+        return self.new_profile_and_tranfert[0]
 
     @cached_property
     def selected_order_(self) -> list:
@@ -99,8 +104,9 @@ class Selection(DeleteCacheMixin):
 
     @cached_property
     def transfert_(self) -> dict:
-
-        return {c:self.rule_.profile_original_.get_first_transfert(c, self.remaining_) for c in self.selected_}
+        
+  
+        return self.new_profile_and_tranfert[1]
 
 
     @cached_property

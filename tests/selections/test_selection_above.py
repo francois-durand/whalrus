@@ -12,6 +12,7 @@ def test():
 
     selection = SelectionAbove(rule = rule, threshold = 30)
     assert selection.selected_ == {'a', 'b'}
+    assert selection.transfert_ == {'a': {'c': 5.0}, 'b':{} }
 
     profile = Profile(ballots = ['c > d', 'c > d','d > c'],
         weights = [5,25,10])

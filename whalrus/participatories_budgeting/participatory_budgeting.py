@@ -35,7 +35,7 @@ import numpy as np
 
 class ParticipatoryBudgeting(DeleteCacheMixin):
 
-    def __init__(self,*args,base_rule : Rule,converter = None,tie_break = PriorityBudgeting(), **kwargs):
+    def __init__(self,*args,base_rule : Rule = None,converter = None,tie_break = PriorityBudgeting(), **kwargs):
 
         if base_rule is None:
             base_rule = RuleApproval()

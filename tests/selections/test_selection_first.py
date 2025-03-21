@@ -13,6 +13,8 @@ def test():
 
     selection = SelectionFirst(rule=rule, k = 1, threshold = 30)
     assert selection.selected_ == {'a'}
+    assert selection.transfert_ == {'a': {'b': 5.0}}
+
 
     profile = Profile(ballots = ['b > c > d','b > c > d', 'c > d > b ','d > b > c'],
         weights = [5,30,25,10])
