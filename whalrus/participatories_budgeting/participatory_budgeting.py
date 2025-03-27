@@ -84,7 +84,7 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
 
     @cached_property
     def base_rule_(self):
-        return self.base_rule(ballots = self.profile_converted_, candidates = self.candidates_)
+        return self.base_rule(ballots = self.profile_original_, candidates = self.candidates_)
 
     @cached_property
     def initial_vote_counts(self):
@@ -97,7 +97,7 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
     @cached_property
     def voters_utilities(self):
         all_utilities = {}
-        for ballot, weight, voter in self.profile_converted_.items():
+        for ballot, weight, voter in self.base_rule_.profile_converted_.items():
             all_utilities[voter] = NiceDict({candidate: self.base_rule.scorer(ballot=ballot, candidates=self.candidates_).scores_[candidate]*weight
                     for candidate in self.candidates_})
 

@@ -16,7 +16,7 @@ import numpy as np
 
 class MesAdd1(EqualShares):
     
-    def __init__(self,*args, add1u = False, stop_exhaustion = False, integral_endowments = False, **kwargs) -> None:
+    def __init__(self,*args, add1u = False, stop_exhaustion = True, integral_endowments = False, **kwargs) -> None:
         self.add1u = add1u
         self.stop_exhaustion = stop_exhaustion
         self.integral_endowments = integral_endowments
@@ -45,7 +45,7 @@ class MesAdd1(EqualShares):
                break
             
             next_budget = budget + len(self.voters_)
-            next_mes = list(EqualShares(self.profile_converted_, budget = next_budget, project_cost = self.project_cost, base_rule = self.base_rule_).winners_)
+            next_mes = list(EqualShares(self.profile_original_, budget = next_budget, project_cost = self.project_cost, base_rule = self.base_rule_).winners_)
             current_cost = sum(self.project_cost[c] for c in next_mes)
             if current_cost <= self.budget:
                 budget = next_budget

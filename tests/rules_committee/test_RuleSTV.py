@@ -32,4 +32,4 @@ def test_pathological():
 
     rule = RuleSTV(['a > b > c > d', 'd > b > a > c', 'a > b > c > d'], committee_size=2)
     assert rule.winning_committee_ == {'a', 'd'}
-    print(rule.rounds_position_)
+ 
