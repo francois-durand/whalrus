@@ -35,9 +35,7 @@ import copy
 
 class EqualShares(ParticipatoryBudgeting):
 
-    def __init__(self,*args ,budget : int = None,project_cost : dict() = None, tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
-        self.project_cost = project_cost
-        self.budget = budget
+    def __init__(self,*args, tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
         super().__init__(*args, tie_break=tie_break, **kwargs)    
 
     @cached_property 

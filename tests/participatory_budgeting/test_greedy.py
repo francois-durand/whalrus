@@ -1,7 +1,10 @@
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_approval import RuleApproval
 from whalrus.rules.rule_borda import RuleBorda
+from whalrus.rules.rule_majority_judgment import RuleMajorityJudgment
+from whalrus.scales.scale_from_list import ScaleFromList
 from whalrus.participatories_budgeting.greedy import Greedy
+from whalrus.ballots.ballot_levels import BallotLevels
 import copy
 
 def test():
@@ -41,4 +44,23 @@ def test():
 
     assert pb.winners_ == {'A', 'C', 'E'}
 
-    
+def test_grades():
+
+      p = Profile([
+            BallotLevels({"A":"Excellent","B":"Good","C":"Bad","D":"Bad","E":"Reject"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])), 
+            BallotLevels({"A":"Excellent","B":"Excellent","C":"Bad","D":"Reject","E":"Reject"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Good","B":"Good","C":"Medium","D":"Bad","E":"Bad"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Excellent","B":"Good","C":"Excellent","D":"Bad","E":"Reject"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Excellent","B":"Good","C":"Bad","D":"Bad","E":"Reject"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Excellent","B":"Excellent","C":"Bad","D":"Reject","E":"Reject"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Reject","B":"Reject","C":"Medium","D":"Good","E":"Excellent"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Bad","B":"Bad","C":"Reject","D":"Excellent","E":"Bad"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Reject","B":"Bad","C":"Bad","D":"Excellent","E":"Good"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),
+            BallotLevels({"A":"Reject","B":"Reject","C":"Medium","D":"Good","E":"Excellent"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent'])),                  
+            BallotLevels({"A":"Excellent","B":"Reject","C":"Bad","D":"Reject","E":"Bad"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent']))
+      ])
+
+      pb = Greedy(p, base_rule = RuleMajorityJudgment(),
+          project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
+
+      assert pb.winners_ == {"A","B"}      

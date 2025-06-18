@@ -51,7 +51,10 @@ class Selection(DeleteCacheMixin):
 
     @cached_property
     def new_profile_and_tranfert(self):
-        
+        """
+        :returns: The new profile after the election of a candidate and how much it gives to the next preference 
+        """
+
         if len(self.selected_) == 0:
             return self.rule_.profile_original_
 
@@ -72,7 +75,6 @@ class Selection(DeleteCacheMixin):
                 ballots.append(ballot.restrict(new_set))
                 weights.append(weight*self.get_winner_ratio_[ballot.first()])
                 amount_transfert[ballot.first()][ballot.restrict(new_set).first()] = float(weight*self.get_winner_ratio_[ballot.first()])                 
-
    
         return Profile(ballots, weights = weights), amount_transfert
     

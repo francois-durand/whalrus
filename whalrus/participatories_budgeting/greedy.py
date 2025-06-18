@@ -37,17 +37,10 @@ class Greedy(ParticipatoryBudgeting):
 
     
     def __init__(self,*args , tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
-        super().__init__(*args, tie_break=tie_break, **kwargs)    
+          
         self.winners = []
         self.tied = []
-
-    def __call__(self,ballots: list | Profile = None, weights: list = None, voters: list = None,
-             budget : int = None, project_cost = None):
-        self.project_cost = project_cost
-        self.budget = budget
-        candidates = NiceSet(self.project_cost.keys())
-        return super().__call__(ballots, weights, voters,candidates)
-        
+        super().__init__(*args, tie_break=tie_break, **kwargs)  
         
     def prepriority(self, cowinners):
         
@@ -73,7 +66,6 @@ class Greedy(ParticipatoryBudgeting):
         budget = self.budget
         project_cost = self.project_cost
         while True:
-            
             best = self.base_rule_.cowinners_
    
             self.tied.append(best)
@@ -88,7 +80,7 @@ class Greedy(ParticipatoryBudgeting):
             steps.append(copy.deepcopy(self))
             if len(project_cost) == 0:
                 break
-            self(self.profile_converted_, project_cost = project_cost, budget = budget)
+            self(self.profile_original_, project_cost = project_cost, budget = budget)
         steps.append(copy.deepcopy(self)) 
 
         return steps

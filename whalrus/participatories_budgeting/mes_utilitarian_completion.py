@@ -27,7 +27,9 @@ class MesUtilitarianCompletion(EqualShares):
         return self.equal_shares[1]
 
     
-    def utilitarian_completion_(self, winners):
+    def utilitarian_completion_(self, winners): #same as doing greddy over Equal Shares output
+        
+        
         cost_so_far = sum(self.project_cost[c] for c in winners)
         sorted_projects = sorted(self.candidates_, key = lambda c: len(self.supporters[c]), reverse = True)
 

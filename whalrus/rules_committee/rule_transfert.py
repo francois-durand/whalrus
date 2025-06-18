@@ -159,7 +159,10 @@ class RuleTransfert(DeleteCacheMixin):
 
     @cached_property
     def get_transfert(self):
-
+        """
+        Returns a dict whose keys are the candidate that will get a ballot transfert from the winner of the round. 
+        The value associated is the amount of ballot transfered
+        """
         d = dict()
         for rounds in self.get_rounds_[1:]:
             d.update(rounds[0].transfert_)

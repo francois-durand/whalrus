@@ -45,7 +45,7 @@ class MesAdd1(EqualShares):
                break
             
             next_budget = budget + len(self.voters_)
-            next_mes = list(EqualShares(self.profile_original_, budget = next_budget, project_cost = self.project_cost, base_rule = self.base_rule_).winners_)
+            next_mes = list(EqualShares(self.profile_converted_, budget = next_budget, project_cost = self.project_cost, base_rule = self.base_rule_).winners_)
             current_cost = sum(self.project_cost[c] for c in next_mes)
             if current_cost <= self.budget:
                 budget = next_budget
