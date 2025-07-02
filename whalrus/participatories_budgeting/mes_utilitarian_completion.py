@@ -13,8 +13,19 @@ from typing import Union
 
 import numpy as np
 
+# Maybe redundant. Could be completly integrated to mes_add1 (unless we really want to do only this completion) and by using
+#     directly the greedy method instead. (not sure about this)
 class MesUtilitarianCompletion(EqualShares):
-    
+    """
+    Using the utilitarian completion when the Add1 completion fails.
+
+    Parameters
+    --------
+    args
+        Cf. parent class.
+    kwargs
+        Cf. parent class.
+    """
     def __init__(self,*args, **kwargs) -> None:
         super().__init__(*args, **kwargs)  
 
@@ -28,8 +39,6 @@ class MesUtilitarianCompletion(EqualShares):
 
     
     def utilitarian_completion_(self, winners): #same as doing greddy over Equal Shares output
-        
-        
         cost_so_far = sum(self.project_cost[c] for c in winners)
         sorted_projects = sorted(self.candidates_, key = lambda c: len(self.supporters[c]), reverse = True)
 

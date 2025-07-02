@@ -72,11 +72,15 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
         The profile, with ballots that are adapted to the voting rule. For example, in :class:`RulePlurality`, it will
         be :class:`BallotPlurality` objects, even if the original ballots are :class:`BallotOrder` objects. This uses
         the parameter ``converter`` of the rule.
-    
     candidates_ : NiceSet
         The candidates of the election, as entered in the ``__call__``.
         Could be explicitly specified by the user or deducted from the project_cost_ keys.
-
+    budget_ : int
+        Used in method when the object is called several times with a different budget.
+        This allows to have a clear distinction between the actual budget and the initial one in parameters.
+    project_cost_ : dict
+        Used in method when the object is called several set of candidates.
+        This allows to have a clear distinction between the actual set of candidates and the initial one in parameters.
     """
 
     def __init__(self,*args,base_rule : Rule = None, budget : int = None, #Might be better if budget and cost were not optional

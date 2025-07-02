@@ -34,8 +34,20 @@ from typing import Union
 import copy
 
 class EqualShares(ParticipatoryBudgeting):
+    """
+    Using the method of Equal Share to solve a participatory budgeting problem.
+    https://equalshares.net/explanation
 
-    def __init__(self,*args, tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    tie_break 
+        Default : PriorityBudgetingAscendingCount
+    kwargs
+        Cf. parent class.
+    """
+    def __init__(self,*args, tie_break = PriorityBudgetingAscendingCount(), **kwargs):
         super().__init__(*args, tie_break=tie_break, **kwargs)    
 
     @cached_property 

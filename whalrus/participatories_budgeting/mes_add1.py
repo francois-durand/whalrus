@@ -15,8 +15,32 @@ from typing import Union
 import numpy as np
 
 class MesAdd1(EqualShares):
+    """
+    Completion method for Method of Equal Shares (MES).
+    Sometimes the method of Equal Share output a suboptimal solution in the sense that the budget hasn't been fully spent.
+    Thus, it's needed to find way to select others projects that can be funded.
+    It virtually adds one currency unit (Add1) to every voters at each step until the sum of selected projects is greater
+    than the total bugdet (initial)
     
-    def __init__(self,*args, add1u = False, stop_exhaustion = True, integral_endowments = False, **kwargs) -> None:
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    add1u : bool
+        Default : False
+        Sometimes, even Add1 fails to complete the completion.
+        Specify if the completition should be followed by an utilitarian completion, which select the remaining projects 
+        available by using a greedy method.
+    stop_exhaustion : bool
+        Default : True
+        Stop the process when exhaustive.
+    integral_endowments : bool
+        Default : False
+        Give each voters an integer when the budget is distributed
+    kwargs
+        Cf. parent class.
+    """
+    def __init__(self,*args, add1u = False, stop_exhaustion = True, integral_endowments = False, **kwargs):
         self.add1u = add1u
         self.stop_exhaustion = stop_exhaustion
         self.integral_endowments = integral_endowments
