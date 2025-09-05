@@ -1,27 +1,20 @@
-def equal_shares(voters, projects, cost, u, total_budget):
-    
-    approvers = {c: [i for i in voters if u[i][c] > 0] for c in projects}
-    total_utility = {c: sum(u[i][c] for i in voters) for c in projects}
-    mes = equal_shares_fixed_budget(voters, projects, cost, u, total_utility, approvers, total_budget)
+from whalrus.participatories_budgeting.mes_add1 import MesAdd1
+
+from whalrus.participatories_budgeting.greedy import Greedy
+from whalrus.profiles.profile import Profile
+from whalrus.converters_ballot.converter_ballot_to_levels_interval import ConverterBallotToLevelsInterval 
+from whalrus.scales.scale_interval import ScaleInterval
+
+def equal_shares(voters, projects, cost, approvers, total_budget):
+
+    mes = equal_shares_fixed_budget(voters, projects, cost, approvers, total_budget)
     # add1 completion
-    # start with integral per-voter budget
-    budget = int(total_budget / len(voters)) * len(voters)
-    current_cost = sum(cost[c] for c in mes)
+    budget = total_budget
     while True:
-        # is current outcome exhaustive?
-        is_exhaustive = True
-        for extra in projects:
-            if extra not in mes and current_cost + cost[extra] <= total_budget:
-                is_exhaustive = False
-                break
-        # if so, stop
-        if is_exhaustive:
-            break
         # would the next highest budget work?
         next_budget = budget + len(voters)
-        next_mes = equal_shares_fixed_budget(voters, projects, cost, u, total_utility, approvers, next_budget)
-        current_cost = sum(cost[c] for c in next_mes)
-        if current_cost <= total_budget:
+        next_mes = equal_shares_fixed_budget(voters, projects, cost, approvers, next_budget)
+        if sum(cost[c] for c in next_mes) <= total_budget:
             # yes, so continue with that budget
             budget = next_budget
             mes = next_mes
@@ -30,21 +23,20 @@ def equal_shares(voters, projects, cost, u, total_budget):
             break
     return mes
 
-def break_ties(voters, projects, cost, total_utility, choices):
+def break_ties(voters, projects, cost, approvers, choices):
     remaining = choices.copy()
     best_cost = min(cost[c] for c in remaining)
     remaining = [c for c in remaining if cost[c] == best_cost]
-    best_count = max(total_utility[c] for c in remaining)
-    remaining = [c for c in remaining if total_utility[c] == best_count]
+    best_count = max(len(approvers[c]) for c in remaining)
+    remaining = [c for c in remaining if len(approvers[c]) == best_count]
     return remaining
 
-def equal_shares_fixed_budget(voters, projects, cost, u, total_utility, approvers, total_budget):
+def equal_shares_fixed_budget(voters, projects, cost, approvers, total_budget):
     budget = {i: total_budget / len(voters) for i in voters}
     remaining = {} # remaining candidate -> previous effective vote count
     for c in projects:
         if cost[c] > 0 and len(approvers[c]) > 0:
-            remaining[c] = total_utility[c]
-
+            remaining[c] = len(approvers[c])
     winners = []
     while True:
         best = []
@@ -62,17 +54,17 @@ def equal_shares_fixed_budget(voters, projects, cost, u, total_utility, approver
                 del remaining[c]
                 continue
             # calculate the effective vote count of c
-            approvers[c].sort(key=lambda i: budget[i] / u[i][c])
+            approvers[c].sort(key=lambda i: budget[i])
             paid_so_far = 0
-            denominator = total_utility[c]
+            denominator = len(approvers[c])
             for i in approvers[c]:
-                # compute payment if remaining approvers pay proportional to their utility
-                payment_factor = (cost[c] - paid_so_far) / denominator
-                eff_vote_count = cost[c] / payment_factor
-                if payment_factor * u[i][c] > budget[i]:
+                # compute payment if remaining approvers pay equally
+                max_payment = (cost[c] - paid_so_far) / denominator
+                eff_vote_count = cost[c] / max_payment
+                if max_payment > budget[i]:
                     # i cannot afford the payment, so pays entire remaining budget
                     paid_so_far += budget[i]
-                    denominator -= u[i][c]
+                    denominator -= 1
                 else:
                     # i (and all later approvers) can afford the payment; stop here
                     remaining[c] = eff_vote_count
@@ -85,19 +77,24 @@ def equal_shares_fixed_budget(voters, projects, cost, u, total_utility, approver
         if not best:
             # no remaining candidates are affordable
             break
-        best = break_ties(voters, projects, cost, total_utility, best)
+        best = break_ties(voters, projects, cost, approvers, best)
         if len(best) > 1:
             raise Exception(f"Tie-breaking failed: tie between projects {best} could not be resolved. Another tie-breaking needs to be added.")
         best = best[0]
         winners.append(best)
         del remaining[best]
         # charge the approvers of best
-        payment_factor = cost[best] / best_eff_vote_count
+        best_max_payment = cost[best] / best_eff_vote_count
         for i in approvers[best]:
-            payment = payment_factor * u[i][best]
-            if budget[i] > payment:
-                budget[i] -= payment
+            if budget[i] > best_max_payment:
+                budget[i] -= best_max_payment
             else:
                 budget[i] = 0
     return winners
-
+# if __name__ == "__main__":
+#     p = Profile([{'a':2,'b':2,'c':0,'d':0,'e':-2},
+#             {'a':0,'b':0,'c':0,'d':0,'e':2}
+#         ])
+    
+#     cc = MesAdd1(p, project_cost = {'a':5,'b':12,'c':15,'d':20,'e':25}, budget = 50, converter = ConverterBallotToLevelsInterval(scale = ScaleInterval(low = 0, high = 2)))
+    

@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Whalrus.  If not, see <http://www.gnu.org/licenses/>.
 """
 from whalrus.priorities.priority import Priority,PriorityAscending
+from whalrus.utils.utils import NiceSet
 from operator import itemgetter
 from typing import Union
 
@@ -43,6 +44,11 @@ class PriorityBudgeting():
             base_priority = PriorityAscending()
         self.base_priority = base_priority
 
+    def sort(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:
+        if len(x) <= 1:
+            return list(x)
+        return self._sort(x, reverse=reverse)
+    
     def _choose(self, x: list[project_cost]):
         raise NotImplementedError
 
@@ -77,8 +83,17 @@ class PriorityBudgetingAscendingCount(PriorityBudgeting):
         return self.base_priority.choice(remaining)
 
 
+    def _sort(self, x: Union[set, list], reverse: bool = True) -> Union[list, None]:
         
-
+        order = [NiceSet(c for c in x if c[1] == v)
+                for v in sorted(set(t[1] for t in x), reverse=reverse)]
+        if self.cost:
+            order = [sub_c for c in order for sub_c in self.next_priority._sort(c)]
+        else:
+            order = [sub_c for c in order for sub_c in self.base_priority.sort(set(t[0] for t in c))]  
+        return order 
+    
+    
 class PriorityBudgetingAscendingCost(PriorityBudgeting):
 
     """
@@ -93,6 +108,8 @@ class PriorityBudgetingAscendingCost(PriorityBudgeting):
     
     def __init__(self, count = False, base_priority = None):
         self.count = count
+        if self.count:
+            self.next_priority = PriorityBudgetingAscendingCount()
         super().__init__(name = 'AscendingCost', count = count,  base_priority = base_priority)
 
     def _choose(self, x: list[project_cost_count]):
@@ -101,9 +118,24 @@ class PriorityBudgetingAscendingCost(PriorityBudgeting):
         if not self.count:
             remaining = [x_[0] for x_ in remaining]
         else:
-            next_priority = PriorityBudgetingAscendingCount()
-            remaining = [next_priority._choose(remaining)]
+            remaining = [self.next_priority._choose(remaining)]
         return self.base_priority.choice(remaining)
+    
+    def _sort(self, x: Union[set, list], reverse: bool = True) -> Union[list, None]:
+        """
+        Auxiliary function for :meth:`sort`.
+
+        Here, ``x`` is assumed to have at least 2 elements.
+        """
+        order = [NiceSet(c for c in x if c[2] == v)
+                for v in sorted(set(t[2] for t in x), reverse=reverse)]
+        if self.count:
+            order = [sub_c for c in order for sub_c in self.next_priority._sort(c)]
+        else:
+            order = [sub_c for c in order for sub_c in self.base_priority.sort(set(t[0] for t in c))]  
+        return order 
+
+
 
 class PriorityBudgetingDescendingCost(PriorityBudgeting):
 
@@ -119,6 +151,8 @@ class PriorityBudgetingDescendingCost(PriorityBudgeting):
     
     def __init__(self, count = False, base_priority = None) :
         self.count = count
+        if self.count:
+            self.next_priority = PriorityBudgetingAscendingCount()
         super().__init__(name = 'DescendingCost', count = count, base_priority = base_priority)
 
     def _choose(self, x: list[project_cost_count]):
@@ -127,6 +161,15 @@ class PriorityBudgetingDescendingCost(PriorityBudgeting):
         if not self.count:
             remaining = [x_[0] for x_ in remaining]
         else:
-            next_priority = PriorityBudgetingAscendingCount()
-            remaining = [next_priority._choose(remaining)]
+            remaining = [self.next_priority._choose(remaining)]
         return self.base_priority.choice(remaining)
+    
+    def _sort(self, x: Union[set, list], reverse: bool = False) -> Union[list, None]:
+
+        order = [NiceSet(c for c in x if c[2] == v)
+                for v in sorted(set(t[2] for t in x), reverse=reverse)]
+        if self.count:
+            order = [sub_c for c in order for sub_c in self.next_priority._sort(c)]
+        else:
+            order = [sub_c for c in order for sub_c in self.base_priority.sort(set(t[0] for t in c))]  
+        return order 

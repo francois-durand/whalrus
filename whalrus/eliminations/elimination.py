@@ -88,4 +88,6 @@ class Elimination(DeleteCacheMixin):
 
     @cached_property
     def transfert_(self) -> dict:
+        """dict: The candidates that received transfert from the eliminated ones
+        """
         return {c:self.rule_.profile_original_.get_first_transfert(c, self.qualified_) for c in self.eliminated_}

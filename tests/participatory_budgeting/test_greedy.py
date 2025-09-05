@@ -25,6 +25,7 @@ def test():
           project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
 
     assert pb.winners_ == {'A', 'B'}
+    assert pb.eliminated_ == {'C','D','E'}
     
 
     p = Profile([   {"A":1,"B":1,"C":0,"D":0,"E":0},
@@ -43,6 +44,7 @@ def test():
           project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
 
     assert pb.winners_ == {'A', 'C', 'E'}
+    assert pb.eliminated_ == {'B','D'}
 
 def test_grades():
 
@@ -63,4 +65,25 @@ def test_grades():
       pb = Greedy(p, base_rule = RuleMajorityJudgment(),
           project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
 
-      assert pb.winners_ == {"A","B"}      
+      assert pb.winners_ == {"A","B"} 
+      assert pb.eliminated_ == {'C','D','E'}     
+
+def test_tie_break():
+      p = Profile([   {"A":1,"B":1,"C":0,"D":1,"E":0},
+                    {"A":1,"B":1,"C":1,"D":1,"E":0},
+                    {"A":1,"B":1,"C":1,"D":0,"E":0},
+                    {"A":1,"B":1,"C":0,"D":0,"E":0},
+                    {"A":1,"B":1,"C":0,"D":1,"E":0},
+                    {"A":1,"B":1,"C":0,"D":0,"E":0},
+                    {"A":0,"B":0,"C":0,"D":1,"E":1},
+                    {"A":0,"B":0,"C":0,"D":1,"E":0},
+                    {"A":0,"B":0,"C":0,"D":1,"E":1},
+                    {"A":0,"B":1,"C":1,"D":0,"E":1},
+                    {"A":1,"B":0,"C":0,"D":1,"E":0}])
+    
+      pb = Greedy(p, base_rule = RuleApproval(),
+          project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
+
+      assert pb.base_rule_.order_ == [{'A', 'B', 'D'}, {'C', 'E'}]
+      assert pb.winners_ == {'D', 'B', 'E', 'C'}
+      assert pb.eliminated_ == {'A'}
