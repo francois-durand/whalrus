@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt install pandoc 
           python -m pip install --upgrade pip
-          pip install setuptools
+          pip install setuptools pyparsing
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           python setup.py install
 
