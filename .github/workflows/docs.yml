@@ -23,9 +23,9 @@ jobs:
         run: |
           sudo apt install pandoc 
           python -m pip install --upgrade pip
-          pip install setuptools pyparsing
+          pip install setuptools 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          python setup.py install
+          pip install . 
 
       - name: Build Sphinx documentation
         run: |
