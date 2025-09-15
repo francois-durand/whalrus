@@ -111,6 +111,7 @@ class ScaleFromList(Scale):
             >>> some_list
             ['Bad', 'Good', 'Excellent']
         """
+        
         some_list.sort(key=lambda level: self.as_dict[level], reverse=reverse)
 
     def argsort(self, some_list: list, reverse: bool = False) -> list:

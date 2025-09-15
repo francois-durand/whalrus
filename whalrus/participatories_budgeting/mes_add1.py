@@ -78,5 +78,6 @@ class MesAdd1(EqualShares):
                 break 
             
         if self.add1u:
+            winners = mes
             mes = MesUtilitarianCompletion(self.profile_converted_, budget = self.budget, project_cost = self.project_cost, base_rule = self.base_rule_).utilitarian_completion_(mes)[0]
         return mes

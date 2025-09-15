@@ -60,7 +60,7 @@ class EqualShares(ParticipatoryBudgeting):
 
     @cached_property
     def eliminated_order_with_count(self):
-        return self.shares_[-1].eliminated
+        return self.shares_[0][-1].eliminated
 
     @cached_property
     def get_budget_round(self):

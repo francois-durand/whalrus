@@ -68,6 +68,8 @@ def test_empty_ballot():
     assert ballot.as_strict_order == []
 
 
+
+
 def test_ballot_mixed_types():
     class Candidate:
         def __init__(self, name, age):

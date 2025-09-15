@@ -73,14 +73,12 @@ class Greedy(ParticipatoryBudgeting):
     @cached_property
     def eliminated_(self):
         return self.greedy_method_[1]
-
-
-    
     
     @cached_property
     def greedy_method_(self):
         winners, eliminated = [],[]
         remaining_budget = self.budget
+        
         for projects in self.base_rule_.order_:
             for project in self.tie_break._sort(self.prepriority(projects)):
                 if self.project_cost_[project] <= remaining_budget:

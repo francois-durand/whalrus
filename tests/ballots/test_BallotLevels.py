@@ -41,6 +41,8 @@ def test():
     assert 'Good' in ballot.values()
     assert ('a', 'Good') in ballot.items()
 
+    ballot = BallotLevels({"A":"Excellent","B":"Good","C":"Bad","D":"Bad","E":"Reject"},scale = ScaleFromList(['Reject','Bad', 'Medium','Good','Excellent']))
+    assert ballot.as_weak_order == [{'A'}, {'B'}, {'C', 'D'}, {'E'}]
 
 def test_inferred_scale():
     assert repr(BallotLevels({'a': 10, 'b': 7, 'c': 0}).scale) == 'Scale()'

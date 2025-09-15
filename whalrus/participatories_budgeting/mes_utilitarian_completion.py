@@ -1,4 +1,5 @@
 import logging
+from whalrus.participatories_budgeting.greedy import Greedy
 from whalrus.rules_committee.rule_committee import RuleCommittee
 from whalrus.priorities.priority import Priority
 from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGeneral
@@ -38,16 +39,27 @@ class MesUtilitarianCompletion(EqualShares):
         return self.equal_shares[1]
 
     
-    def utilitarian_completion_(self, winners): #same as doing greddy over Equal Shares output
-        cost_so_far = sum(self.project_cost[c] for c in winners)
-        sorted_projects = sorted(self.candidates_, key = lambda c: len(self.supporters[c]), reverse = True)
+    # def utilitarian_completion_(self, winners): #same as doing greddy over Equal Shares output
+    #     cost_so_far = sum(self.project_cost[c] for c in winners)
+    #     sorted_projects = sorted(self.candidates_, key = lambda c: len(self.supporters[c]), reverse = True)
 
-        for c in sorted_projects:
-            if c in winners or cost_so_far + self.project_cost[c] > self.budget:
-                continue
-            winners.append(c)
-            cost_so_far += self.project_cost[c]
-        return winners, cost_so_far
+    #     for c in sorted_projects:
+    #         if c in winners or cost_so_far + self.project_cost[c] > self.budget:
+    #             continue
+    #         winners.append(c)
+    #         cost_so_far += self.project_cost[c]
+    #     return winners, cost_so_far
+
+    def utilitarian_completion_(self, winners):
+        
+
+        cost_so_far = sum(self.project_cost[c] for c in winners)
+        budget = self.budget - cost_so_far
+        project_cost = {c:self.project_cost[c] for c in self.eliminated_}
+        result = Greedy(self.profile_converted_, base_rule = self.base_rule, project_cost = project_cost, budget = budget,
+                        tie_break=self.tie_break, converter = self.converter)
+        
+        return winners + list(result.winners_), 0
 
     @cached_property
     def equal_shares(self):

@@ -98,12 +98,11 @@ class BallotLevels(BallotOrder):
 
     @cached_property
     def as_weak_order(self) -> list:
-        if isinstance(self.scale, ScaleFromList):
-            present_val = list(set(self.as_dict.values()))
-            return [NiceSet(k for k in self.as_dict.keys() if self.as_dict[k] == present_val[v])
-                for v in self.scale.argsort(present_val, reverse = True)]
+        present_val = list(set(self.as_dict.values()))
+        self.scale.sort(present_val, reverse = True)
         return [NiceSet(k for k in self.as_dict.keys() if self.as_dict[k] == v)
-                for v in sorted(set(self.as_dict.values()), reverse=True)]
+            for v in present_val]
+
 
     @cached_property
     def candidates_in_b(self) -> NiceSet:
