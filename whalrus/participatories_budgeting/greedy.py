@@ -27,14 +27,14 @@ from whalrus.converters_ballot.converter_ballot_general import ConverterBallotGe
 from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_approval import RuleApproval
 from whalrus.rules.rule import Rule
-from whalrus.participatories_budgeting.participatory_budgeting import ParticipatoryBudgeting
+from whalrus.participatories_budgeting.bugdeting_method import BudgetingMethod
 from whalrus.priorities.priority_budgeting import PriorityBudgetingDescendingCost
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
 import copy
 
 
-class Greedy(ParticipatoryBudgeting):
+class Greedy(BudgetingMethod):
     """
     Participatory budgeting rule that simply all most approved and affordable projects.
 
@@ -65,20 +65,11 @@ class Greedy(ParticipatoryBudgeting):
         
         return [(c, 0, self.project_cost[c]) for c in selection]
 
-    @cached_property
-    def winners_(self):
-
-        return self.greedy_method_[0]
     
     @cached_property
-    def eliminated_(self):
-        return self.greedy_method_[1]
-    
-    @cached_property
-    def greedy_method_(self):
+    def get_results(self):
         winners, eliminated = [],[]
         remaining_budget = self.budget
-        
         for projects in self.base_rule_.order_:
             for project in self.tie_break._sort(self.prepriority(projects)):
                 if self.project_cost_[project] <= remaining_budget:
@@ -86,6 +77,6 @@ class Greedy(ParticipatoryBudgeting):
                     remaining_budget -= self.project_cost_[project]
                 else:
                     eliminated.append(project)
-        return NiceFrozenSet(winners), NiceFrozenSet(eliminated)
+        return NiceFrozenSet(winners), NiceFrozenSet(eliminated), remaining_budget
 
         

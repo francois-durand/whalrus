@@ -27,13 +27,13 @@ from whalrus.profiles.profile import Profile
 from whalrus.rules.rule_approval import RuleApproval
 from whalrus.rules.rule import Rule
 from whalrus.participatories_budgeting.voters_wallet_equal_shares import VotersWalletEqualShares
-from whalrus.participatories_budgeting.participatory_budgeting import ParticipatoryBudgeting
+from whalrus.participatories_budgeting.bugdeting_method import BudgetingMethod
 from whalrus.priorities.priority_budgeting import PriorityBudgetingAscendingCount
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from typing import Union
 import copy
 
-class EqualShares(ParticipatoryBudgeting):
+class EqualShares(BudgetingMethod):
     """
     Using the method of Equal Share to solve a participatory budgeting problem.
     https://equalshares.net/explanation
@@ -50,28 +50,23 @@ class EqualShares(ParticipatoryBudgeting):
     def __init__(self,*args, tie_break = PriorityBudgetingAscendingCount(), **kwargs):
         super().__init__(*args, tie_break=tie_break, **kwargs)    
 
+
     @cached_property 
     def vote_counts(self):
         return [step.remaining_ for step in self.shares_]
 
     @cached_property
-    def eliminated_(self):
-        return NiceSet([eliminated for eliminated in self.eliminated_order_with_count.keys()])
-
-    @cached_property
-    def eliminated_order_with_count(self):
-        return self.shares_[0][-1].eliminated
+    def last_round_(self):
+        return self.shares_[0][-1]
 
     @cached_property
     def get_budget_round(self):
         return [step.voter_budget for step in self.shares_]
 
     @cached_property
-    def winners_(self):
-        _,winners = self.shares_
-        return NiceSet(winners)
+    def get_results(self):
+        return NiceSet(self.shares_[1]), NiceSet(self.last_round_.eliminated), self.last_round_.remaining
 
-    
     @cached_property
     def shares_(self):
         steps = []

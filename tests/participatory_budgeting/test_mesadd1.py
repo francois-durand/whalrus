@@ -10,6 +10,8 @@ from whalrus.utils.utils import cached_property, my_division, NiceDict, DeleteCa
 from whalrus.priorities.priority_budgeting import PriorityBudgeting
 from whalrus.converters_ballot.converter_ballot import ConverterBallot
 from whalrus.participatories_budgeting.mes_add1 import MesAdd1 
+from whalrus.participatories_budgeting.equal_shares import EqualShares
+
 from typing import Union
 
 import numpy as np
@@ -37,3 +39,30 @@ def test_pathological():
 
     cc = MesAdd1(p, project_cost = {"F2":20,"F3":30,"P3":30, "S2":20,"V1":10,"M1":10,"M3":30},integral_endowments = True, stop_exhaustion = True, budget = 70, base_rule = RuleApproval(), tie_break = PriorityBudgetingDescendingCost(count = True))
     assert cc.completed_winners_ == {'F2', 'F3', 'M1', 'V1'}
+
+def test_uncompleted():
+
+    p = Profile([
+        {'Chicken':0, 'Cheese': 0 , 'Pie': 0, 'Cake': 1, 'Gaspacho': 0, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 1 , 'Pie': 1, 'Cake': 1, 'Gaspacho': 1, 'Salad': 0},
+        {'Chicken':0, 'Cheese': 1 , 'Pie': 0, 'Cake': 1, 'Gaspacho': 0, 'Salad': 0},
+        {'Chicken':0, 'Cheese': 1 , 'Pie': 1, 'Cake': 0, 'Gaspacho': 1, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 0 , 'Pie': 1, 'Cake': 1, 'Gaspacho': 1, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 1 , 'Pie': 1, 'Cake': 0, 'Gaspacho': 1, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 1 , 'Pie': 0, 'Cake': 0, 'Gaspacho': 1, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 0 , 'Pie': 0, 'Cake': 1, 'Gaspacho': 1, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 0 , 'Pie': 0, 'Cake': 0, 'Gaspacho': 0, 'Salad': 1},
+        {'Chicken':1, 'Cheese': 1 , 'Pie': 0, 'Cake': 0, 'Gaspacho': 0, 'Salad': 1},
+        {'Chicken':1, 'Cheese': 1 , 'Pie': 0, 'Cake': 1, 'Gaspacho': 0, 'Salad': 1},
+        {'Chicken':0, 'Cheese': 1 , 'Pie': 1, 'Cake': 1, 'Gaspacho': 0, 'Salad': 0}
+    ])
+
+    project_cost = {'Chicken':25, 'Cheese': 30, 'Pie': 15, 'Cake': 15, 'Gaspacho': 10, 'Salad': 20}
+
+    cc = EqualShares(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval())
+    assert cc.winners_ == {'Cake', 'Gaspacho', 'Salad'}
+    cc = MesAdd1(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval())
+    assert cc.completed_winners_ == {'Cake', 'Gaspacho', 'Salad'}
+    cc = MesAdd1(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval(), add1u=True)
+    assert cc.completed_winners_ == {'Cake', 'Gaspacho', 'Pie', 'Salad'}
+    

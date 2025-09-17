@@ -106,16 +106,15 @@ class ParticipatoryBudgeting(DeleteCacheMixin):
     def __call__(self, ballots: Union[list, Profile] = None, weights: list = None, voters: list = None,
                  candidates: set = None, budget : int = None, project_cost : dict() = None):
         self.project_cost_ = self.project_cost
-        self.budget_ = self.budget
         if project_cost is not None:
             self.project_cost_ = project_cost
         if budget is not None:
-            self.budget_ = budget
+            self.budget = budget
         if candidates is None:
             candidates = NiceSet(self.project_cost_.keys())
-
-        self.profile_original_ = Profile(ballots, weights=weights, voters=voters)
-        self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_original_],
+        if ballots is not None:
+            self.profile_original_ = Profile(ballots, weights=weights, voters=voters)
+            self.profile_converted_ = Profile([self.converter(b, candidates) for b in self.profile_original_],
                                           weights=self.profile_original_.weights, voters=self.profile_original_.voters)
         for i in range(len(self.profile_converted_._voters)):
             if self.profile_converted_._voters[i] is None:
