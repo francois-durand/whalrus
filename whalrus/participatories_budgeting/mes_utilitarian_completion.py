@@ -25,19 +25,13 @@ class MesUtilitarianCompletion(BudgetingCompletion):
     --------
     args
         Cf. parent class.
+    tie_break : Priority
+        PriorityBudgetingAscendingCount
     kwargs
         Cf. parent class.
     """
     def __init__(self,*args,tie_break = PriorityBudgetingAscendingCount(), **kwargs) -> None:
         super().__init__(*args,tie_break=tie_break, **kwargs)  
-
-    @cached_property
-    def completed_winners_(self):
-        return NiceSet(self.equal_shares_only[0])
-
-    @cached_property
-    def additionnal_cost(self):
-        return self.equal_shares_only[1]
 
 
     def utilitarian_completion_(self, winners):
@@ -48,9 +42,9 @@ class MesUtilitarianCompletion(BudgetingCompletion):
         result = Greedy(self.profile_converted_, base_rule = self.base_rule, project_cost = project_cost, budget = budget,
                         tie_break=self.tie_break, converter = self.converter)
         
-        return winners + list(result.winners_), self.budget - result.remaining_budget_
+        return winners + list(result.winners_), result.remaining_budget_
 
     @cached_property
-    def equal_shares_only(self): #Only Equal Shares followed by utilitarian completion
-        winners = list(EqualShares(self.profile_converted_, budget = self.budget, project_cost = self.project_cost, base_rule = self.base_rule_).winners_)
+    def completion_(self): #Only Equal Shares followed by utilitarian completion
+        winners = self.rule_winners(self.budget)
         return self.utilitarian_completion_(winners)

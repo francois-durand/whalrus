@@ -62,22 +62,23 @@ class EqualShares(BudgetingMethod):
     @cached_property
     def get_budget_round(self):
         return [step.voter_budget for step in self.shares_]
+    
 
     @cached_property
     def get_results(self):
-        return NiceSet(self.shares_[1]), NiceSet(self.last_round_.eliminated), self.last_round_.remaining
+        return NiceSet(self.shares_[1]), NiceSet(self.last_round_.eliminated), self.last_round_.budget
 
     @cached_property
     def shares_(self):
-        steps = []
-        winners = []
+        steps, winners = [], []
+        new_budget = self.budget
         remaining = copy.deepcopy(self.initial_vote_counts)
         budget_voter = copy.deepcopy(self.intial_voters_budget)
         wallet = VotersWalletEqualShares(self.project_cost, self.voters_utilities,self.supporters)
 
         while True:
     
-            wallet(remaining, budget_voter)
+            wallet(remaining, budget_voter, new_budget)
             best = wallet.best_shares_
             steps.append(copy.deepcopy(wallet))
             if not best:
@@ -89,6 +90,7 @@ class EqualShares(BudgetingMethod):
             
             del wallet.remaining[best]
             remaining = wallet.remaining
+            new_budget -= self.project_cost[best]
       
             budget_voter = wallet.updated_budget_(best)
             

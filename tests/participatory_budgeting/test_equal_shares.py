@@ -28,10 +28,13 @@ def test_approval():
 
      assert pb.winners_ == {'A','D','E'}
      assert pb.eliminated_ == {'B', 'C'}
+     assert pb.remaining_budget_ == 100
 
      pb(budget = 1500)
      assert pb.budget == 1500
      assert pb.winners_ == {'A', 'C', 'D', 'E'}
+     assert pb.eliminated_ == {'B'}
+     assert pb.remaining_budget_ == 250
 
 
      p = Profile([{"A":1,"B":1,"C":0,"D":0,"E":0},
@@ -51,6 +54,7 @@ def test_approval():
 
      assert pb.winners_ == {'B','C','D'}
      assert pb.eliminated_ == {'A', 'E'}
+     assert pb.remaining_budget_ == 250
      
 def test_utility():
 
@@ -59,6 +63,8 @@ def test_utility():
      pb = EqualShares(p, base_rule = RuleBorda(), project_cost = {"p1": 100, "p2": 50, "p3": 50}, budget = 150)
      assert pb.winners_ == {'p1','p3'}
      assert pb.eliminated_ == {'p2'}
+     assert pb.remaining_budget_ == 0 
+     
 
 def test_grades_approval():
 
@@ -80,7 +86,8 @@ def test_grades_approval():
           project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
 
      assert pb.winners_ == {'A', 'D', 'E'}
-     assert pb.eliminated_ == {'B', 'C'}     
+     assert pb.eliminated_ == {'B', 'C'}
+     assert pb.remaining_budget_ == 100     
 
 def test_grades_borda():
 
@@ -104,4 +111,5 @@ def test_grades_borda():
           project_cost = {'A':700, 'B':400, 'C':250, 'D':200, 'E':100}, budget = 1100)
 
      assert pb.winners_ == {'A', 'D', 'E'}
-     assert pb.eliminated_ == {'B', 'C'}   
+     assert pb.eliminated_ == {'B', 'C'}
+     assert pb.remaining_budget_ == 100   

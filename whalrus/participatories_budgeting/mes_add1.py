@@ -49,12 +49,10 @@ class MesAdd1(BudgetingCompletion):
         self.tie_break = tie_break
         super().__init__(*args,tie_break=tie_break, **kwargs) 
 
-    @cached_property
-    def completed_winners_(self):
-        return NiceSet(self.equal_shares) 
+   
 
-    @cached_property
-    def equal_shares(self):
+    @cached_property  
+    def completion_(self):
         
         mes = self.rule_winners(self.budget)
         if self.integral_endowments:
@@ -64,8 +62,9 @@ class MesAdd1(BudgetingCompletion):
         current_cost = sum(self.project_cost[c] for c in mes)
         while True:
             is_exhaustive = True
+            new_budget = self.budget - current_cost
             for extra in self.candidates_:
-                if extra not in mes and current_cost + self.project_cost[extra] <= self.budget:
+                if extra not in mes and current_cost + self.project_cost[extra] <= budget:
                     is_exhaustive = False
                     break
             if is_exhaustive and self.stop_exhaustion:
@@ -79,8 +78,8 @@ class MesAdd1(BudgetingCompletion):
                 mes = next_mes
             else:
                 break 
-            
+        
         if self.add1u:
-            mes = MesUtilitarianCompletion(self.profile_converted_, budget = self.budget, project_cost = self.project_cost,
-                                            base_rule = self.base_rule_, tie_break = self.tie_break).utilitarian_completion_(mes)[0]
-        return mes
+            mes, new_budget  = MesUtilitarianCompletion(self.profile_converted_, budget = self.budget, project_cost = self.project_cost,
+                                            base_rule = self.base_rule_, tie_break = self.tie_break).utilitarian_completion_(mes)
+        return mes, new_budget 

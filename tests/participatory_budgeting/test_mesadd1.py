@@ -61,8 +61,17 @@ def test_uncompleted():
 
     cc = EqualShares(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval())
     assert cc.winners_ == {'Cake', 'Gaspacho', 'Salad'}
+    assert cc.eliminated_ == {'Chicken','Cheese','Pie'}
+    assert cc.remaining_budget_ == 15
+
     cc = MesAdd1(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval())
     assert cc.completed_winners_ == {'Cake', 'Gaspacho', 'Salad'}
+    assert cc.eliminated_ == {'Chicken','Cheese','Pie'}
+    assert cc.remaining_budget_ == 15
+
     cc = MesAdd1(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval(), add1u=True)
     assert cc.completed_winners_ == {'Cake', 'Gaspacho', 'Pie', 'Salad'}
+    assert cc.eliminated_ == {'Chicken','Cheese'}
+    assert cc.remaining_budget_ == 0
+    
     

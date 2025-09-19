@@ -13,6 +13,16 @@ from typing import Union
 import copy
 
 class BudgetingMethod(ParticipatoryBudgeting):
+    """
+    Solving participatory budgeting problem with different methods (such as :class:`EqualShares` and :class:`Greedy`)
+
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    kwargs
+        Cf. parent class.
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

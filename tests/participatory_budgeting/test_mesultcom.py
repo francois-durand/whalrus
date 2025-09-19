@@ -12,6 +12,8 @@ def test():
     mes = MesUtilitarianCompletion(p, project_cost = {"p1": 100, "p2": 50, "p3": 50}, budget = 150, base_rule = RuleApproval())
     
     assert mes.completed_winners_ == {'p1', 'p3'}
+    assert mes.eliminated_ == {'p2'}
+    assert mes.remaining_budget_ == 0
 
 def test_uncompleted():
 
@@ -34,3 +36,5 @@ def test_uncompleted():
 
     mes = MesUtilitarianCompletion(p, project_cost = project_cost, budget = 60, base_rule = RuleApproval())
     assert mes.completed_winners_ == {'Cake', 'Gaspacho', 'Pie', 'Salad'}
+    assert mes.eliminated_ == {'Chicken','Cheese'}
+    assert mes.remaining_budget_ == 0

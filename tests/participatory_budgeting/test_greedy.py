@@ -26,6 +26,7 @@ def test():
 
     assert pb.winners_ == {'A', 'B'}
     assert pb.eliminated_ == {'C','D','E'}
+    assert pb.remaining_budget_ == 0
     
 
     p = Profile([   {"A":1,"B":1,"C":0,"D":0,"E":0},
@@ -45,6 +46,7 @@ def test():
 
     assert pb.winners_ == {'A', 'C', 'E'}
     assert pb.eliminated_ == {'B','D'}
+    assert pb.remaining_budget_ == 50
 
 def test_grades():
 
@@ -67,6 +69,7 @@ def test_grades():
 
       assert pb.winners_ == {"A","B"} 
       assert pb.eliminated_ == {'C','D','E'}     
+      assert pb.remaining_budget_ == 0
 
 def test_tie_break():
       p = Profile([   {"A":1,"B":1,"C":0,"D":1,"E":0},
@@ -87,3 +90,4 @@ def test_tie_break():
       assert pb.base_rule_.order_ == [{'A', 'B', 'D'}, {'C', 'E'}]
       assert pb.winners_ == {'D', 'B', 'E', 'C'}
       assert pb.eliminated_ == {'A'}
+      assert pb.remaining_budget_ == 150

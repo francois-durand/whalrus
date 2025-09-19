@@ -14,6 +14,18 @@ import copy
 
 class BudgetingCompletion(ParticipatoryBudgeting):
 
+    """
+    Completion methods
+    Parameters
+    ----------
+    args
+        Cf. parent class.
+    rule 
+        Default : :class: EqualShares
+    kwargs
+        Cf. parent class.
+    """
+
     def __init__(self, *args,rule = None, **kwargs):
         super().__init__(*args, **kwargs)
         if rule is None:
@@ -26,5 +38,18 @@ class BudgetingCompletion(ParticipatoryBudgeting):
     def rule_winners(self, budget):
         return list(self.rule(self.profile_converted_, budget = budget, project_cost = self.project_cost).winners_)
 
+    @cached_property
+    def completed_winners_(self):
+        return NiceSet(self.completion_[0])
 
-    
+    @cached_property
+    def remaining_budget_(self):
+        return self.completion_[1]
+
+    @cached_property
+    def eliminated_(self):
+        return NiceSet(c for c in self.candidates_ if c not in self.completed_winners_)
+
+    @cached_property
+    def completion_(self):
+        raise NotImplementedError 

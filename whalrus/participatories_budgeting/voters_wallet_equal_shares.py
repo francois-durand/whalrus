@@ -40,14 +40,15 @@ class VotersWalletEqualShares(DeleteCacheMixin):
             project:sum(self.total_utility[voter][project] for voter in self.total_utility.keys()) for project in self.project_cost.keys()
         }
 
-    def __call__(self, remaining, voter_budget):
+    def __call__(self, remaining, voter_budget, new_budget):
         self.remaining = remaining
         self.best_eff_vote_count = 0
         self.best = []
         self.voter_budget = voter_budget
+        self.budget = new_budget
         self.delete_cache()
         return self
-     
+             
     def not_affordable(self, c):
         approver_amount = sum(self.voter_budget[voter] for voter in self.supporters[c])
               
